@@ -24,16 +24,16 @@ scmp_write <- function(scmpObj,
                        filepath = NULL,
                        format = "rds",
                        overwrite = FALSE) {
-  library(assertthat)
-  library(scMaSigPro)
-  library(rhdf5)
-  library(parallel)
-  library(parallelly)
-  scmpObj <- scmp.ob
-  format <- "h5"
-  filename <- "scmpObj_file"
-  path <- "test_dev/"
-  overwrite <- TRUE
+  # library(assertthat)
+  # library(scMaSigPro)
+  # library(rhdf5)
+  # library(parallel)
+  # library(parallelly)
+  # scmpObj <- scmp.ob
+  # format <- "h5"
+  # filename <- "scmpObj_file"
+  # path <- "test_dev/"
+  # overwrite <- TRUE
 
   # Check if supplied object is correct
   assert_that(is(scmpObj, "ScMaSigPro"),
@@ -67,16 +67,10 @@ scmp_write <- function(scmpObj,
   scmp_write_h5(scmpObj, file_path, overwrite = overwrite, verbose = verbose)
 
 
-
-
-
-
-
   # Check for the format
   if (format == "rds") {
     saveRDS(scmpObj, file_path)
   } else if (format == "h5") {
-    source("R/scmp_write_h5.R")
     scmp_write_h5(scmpObj, file_path, overwrite = overwrite)
   } else {
     stop("Please provide a valid file format.")

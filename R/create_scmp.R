@@ -50,6 +50,18 @@ create_scmp <- function(counts,
     )
   }
 
+  # Check count validity
+  assert_that(all(class(counts)[[1]] %in% c("data.frame", "matrix")),
+    msg = paste("Please supply 'counts' as a 'data.frame' or a 'matrix'.")
+  )
+
+  # Type convert
+  if (class(counts)[[1]] == "data.frame") {
+    counts <- as(as.matrix(counts), "dgCMatrix")
+  } else if (class(counts)[[1]] == "matrix") {
+    counts <- as(counts, "dgCMatrix")
+  }
+
   # Create Single-Cell Experiment Object
   sparse_tmp <- SingleCellExperiment(
     list(counts = counts),
@@ -59,7 +71,7 @@ create_scmp <- function(counts,
   # Initate scMaSigPro
   scmpObj <- new("ScMaSigPro",
     Sparse = sparse_tmp,
-    Dense = SingleCellExperiment(assays = list(bulk.counts = matrix(0, nrow = 0, ncol = 0)))
+    Dense = SingleCellExperiment(assays = list(bulk.counts = as(matrix(0, nrow = 0, ncol = 0), "dgCMatrix")))
   )
   sparse_tmp <- NULL
 
@@ -70,7 +82,7 @@ create_scmp <- function(counts,
 
     # Create sparse
     sparse_tmp <- SingleCellExperiment(
-      list(bulk.counts = counts),
+      list(bulk.counts = as(counts, "dgCMatrix")),
       colData = DataFrame(cell_data)
     )
 

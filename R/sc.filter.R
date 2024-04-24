@@ -173,6 +173,10 @@ sc.filter <- function(scmpObj,
   # Update the slot
   scmpObj@Significant <- siggenes.object
 
+  # Update timestamp and the last function call
+  scmpObj@Misc@last_modified <- timestamp(prefix = "", suffix = "", quiet = TRUE)
+  scmpObj@Misc@last_operation <- "sc.filter"
+
   # Return
   return(scmpObj)
 }

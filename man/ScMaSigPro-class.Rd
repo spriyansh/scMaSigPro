@@ -27,6 +27,8 @@ See \pkg{SingleCellExperiment} for more details.}
 \item{\code{Significant}}{Object of Class \code{\link{Significant}}.}
 
 \item{\code{Parameters}}{Object of Class \code{\link{ParameterConfig}}.}
+
+\item{\code{Misc}}{Object of Class \code{\link{Misc}}.}
 }}
 
 \keyword{classes}

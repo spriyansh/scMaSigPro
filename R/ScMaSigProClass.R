@@ -360,6 +360,44 @@ setClass(
   )
 )
 ###############################################################################
+#' @title Misc
+#'
+#' @description
+#' S4 class to store miscellaneous data.
+#'
+#' @slot r_version R version used to instanciate the object.
+#' @slot os Name of the OS in which object was instanciated.
+#' @slot package_version Version of the package used to instanciate the object.
+#' @slot last_modified Last modified date of the object.
+#' @slot last_operation last operation performed on the object.
+#' @slot date_created Date of object creation.
+#'
+#' @name Misc
+#' @aliases Misc-class
+#' @rdname Misc-class
+#' @importFrom methods is new as
+#' @importFrom utils timestamp
+#' @keywords classes
+setClass(
+  "Misc",
+  representation(
+    r_version = "character",
+    last_operation = "character",
+    os = "character",
+    package_version = "character",
+    last_modified = "character",
+    date_created = "character"
+  ),
+  prototype = list(
+    r_version = R.version.string,
+    os = as.character(Sys.info()[["sysname"]]),
+    package_version = as.character(packageVersion("scMaSigPro")),
+    last_modified = as.character(timestamp(prefix = "", suffix = "", quiet = TRUE)),
+    last_operation = "created",
+    date_created = as.character(timestamp(prefix = "", suffix = "", quiet = TRUE))
+  )
+)
+###############################################################################
 #' @title ScMaSigPro
 #'
 #' @description
@@ -375,6 +413,7 @@ setClass(
 #' @slot Estimate Object of Class \code{\link{Estimates}}.
 #' @slot Significant Object of Class \code{\link{Significant}}.
 #' @slot Parameters Object of Class \code{\link{ParameterConfig}}.
+#' @slot Misc Object of Class \code{\link{Misc}}.
 #'
 #' @name ScMaSigPro
 #' @aliases ScMaSigPro-class
@@ -392,7 +431,8 @@ setClass(
     Profile = "VariableProfiles",
     Estimate = "Estimates",
     Significant = "Significant",
-    Parameters = "ParameterConfig"
+    Parameters = "ParameterConfig",
+    Misc = "Misc"
   ),
   validity = function(object) {
     # Check sparse slot
@@ -428,11 +468,16 @@ setClass(
     if (!validObject(object@Significant)) {
       stop("'Significant' slot is not a valid 'Significant' object.")
     }
+
+    if (!validObject(object@Misc)) {
+      stop("'Misc' slot is not a valid 'Misc' object.")
+    }
   },
   prototype = list(
     Profile = new("VariableProfiles"),
     Estimate = new("Estimates"),
     Parameters = new("ParameterConfig"),
-    Significant = new("Significant")
+    Significant = new("Significant"),
+    Misc = new("Misc")
   )
 )

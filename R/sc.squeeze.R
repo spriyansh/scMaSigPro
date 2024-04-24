@@ -499,5 +499,9 @@ sc.squeeze <- function(scmpObj,
   scmpObj@Parameters@bin_col <- bin_col
   scmpObj@Parameters@bin_mem_col <- bin_mem_col
   scmpObj@Parameters@bin_size_col <- bin_size_col
+
+  # Update timestamp and the last function call
+  scmpObj@Misc@last_modified <- timestamp(prefix = "", suffix = "", quiet = TRUE)
+  scmpObj@Misc@last_operation <- "sc.squeeze"
   return(scmpObj)
 }

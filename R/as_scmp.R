@@ -129,7 +129,7 @@ as_scmp <- function(object, from = "cds",
     # Create Object
     scmpObj <- new("ScMaSigPro",
       Sparse = annotated_sce,
-      Dense = SingleCellExperiment(assays = list(bulk.counts = matrix(0, nrow = 0, ncol = 0)))
+      Dense = SingleCellExperiment(assays = list(bulk.counts = as(matrix(0, nrow = 0, ncol = 0), "dgCMatrix")))
     )
 
     # Update the Parametersaram slot

@@ -275,6 +275,10 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
     scmpObj@Parameters@distribution <- family
     scmpObj@Parameters@link <- link
 
+    # Update timestamp and the last function call
+    scmpObj@Misc@last_modified <- timestamp(prefix = "", suffix = "", quiet = TRUE)
+    scmpObj@Misc@last_operation <- "sc.p.vector"
+
     return(scmpObj)
   }
 }

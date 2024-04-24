@@ -1,21 +1,23 @@
 # Define scMaSigPro functions for read-write operations
 
-#' @title Write scMaSigPro object to h5 file.
+#' @title Write scMaSigPro object to file.
 #'
-#' @description Write scMaSigPro object H5 file.
+#' @description Write scMaSigPro object to various file formats.
 #'
-#' @param scmpObject scMaSigPro object.
-#' @param filepath filename with the filepath.
+#' @param object scMaSigPro object.
+#' @param filename filename. Please donot provide extensions.
 #' @param filepath File path.
+#' @param format File format. Default is 'rds'.
 #' @param overwrite Overwrite existing file. Default is FALSE.
 #' @param verbose Print verbose output. Default is FALSE.
 #'
-#' @return Write a scMaSigPro object to H5 file.
+#' @return Write a scMaSigPro object to file.
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}.
 #'
-#' @keywords internal
+#' @export
 #'
+
 scmp_write_h5 <- function(
     scmpObj, file_path, overwrite = FALSE, verbose = TRUE) {
   # Check for the file
@@ -330,6 +332,9 @@ scmp_write_h5 <- function(
       )
     }
   }
+
+
+
   # close the file
   h5closeAll()
 }

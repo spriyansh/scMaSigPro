@@ -108,5 +108,9 @@ sc.set.poly <- function(scmpObj,
   # Update poly degree
   scmpObj@Parameters@poly_degree <- as.integer(poly_degree)
 
+  # Update timestamp and the last function call
+  scmpObj@Misc@last_modified <- timestamp(prefix = "", suffix = "", quiet = TRUE)
+  scmpObj@Misc@last_operation <- "sc.set.poly"
+
   return(scmpObj)
 }
