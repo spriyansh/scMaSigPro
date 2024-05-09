@@ -26,28 +26,28 @@ scmp_write_h5 <- function(
   }
 
   # Create File
-  h5createFile(file_path)
+  rhdf5::h5createFile(file_path)
 
   # Create all required Slots
-  h5createGroup(file_path, group = "dense")
-  h5createGroup(file_path, group = "sparse")
-  h5createGroup(file_path, group = "design")
-  h5createGroup(file_path, group = "profile")
-  h5createGroup(file_path, group = "estimate")
-  h5createGroup(file_path, group = "significant")
-  h5createGroup(file_path, group = "parameters")
-  h5createGroup(file_path, group = "misc")
+  rhdf5::h5createGroup(file_path, group = "dense")
+  rhdf5::h5createGroup(file_path, group = "sparse")
+  rhdf5::h5createGroup(file_path, group = "design")
+  rhdf5::h5createGroup(file_path, group = "profile")
+  rhdf5::h5createGroup(file_path, group = "estimate")
+  rhdf5::h5createGroup(file_path, group = "significant")
+  rhdf5::h5createGroup(file_path, group = "parameters")
+  rhdf5::h5createGroup(file_path, group = "misc")
 
   # Add Misc Details
   ## Add Package Version
-  h5write(as.character(packageVersion("scMaSigPro")),
+  rhdf5::h5write(as.character(packageVersion("scMaSigPro")),
     file = file_path, name = "misc/package_version",
     write.attributes = T,
     createnewfile = F, native = TRUE
   )
 
   ## Add R Version
-  h5write(R.version$version.string,
+  rhdf5::h5write(R.version$version.string,
     file = file_path,
     name = "misc/r_version",
     write.attributes = T,
@@ -55,7 +55,7 @@ scmp_write_h5 <- function(
   )
 
   # Write Date
-  h5write(as.character(Sys.Date()),
+  rhdf5::h5write(as.character(Sys.Date()),
     file = file_path,
     name = "misc/date",
     write.attributes = T,
@@ -63,7 +63,7 @@ scmp_write_h5 <- function(
   )
 
   # Write os
-  h5write(as.character(Sys.info()[["sysname"]]),
+  rhdf5::h5write(as.character(Sys.info()[["sysname"]]),
     file = file_path,
     name = "misc/os",
     write.attributes = T,
@@ -83,7 +83,7 @@ scmp_write_h5 <- function(
     slot_name <- paste0("parameters/", key)
 
     # Write to file
-    h5write(value,
+    rhdf5::h5write(value,
       file = file_path,
       name = slot_name,
       write.attributes = T,
@@ -109,7 +109,7 @@ scmp_write_h5 <- function(
       # stop()
 
       # Create Slot
-      h5createGroup(file_path, group = paste0(sce_slot, "/", i))
+      rhdf5::h5createGroup(file_path, group = paste0(sce_slot, "/", i))
 
       if (sce_slot == "dense") {
         csr_mat <- as(scmpObj@Dense@assays@data@listData[[i]], "dgCMatrix")
@@ -118,7 +118,7 @@ scmp_write_h5 <- function(
       }
 
       ## data
-      h5write(
+      rhdf5::h5write(
         obj = as.vector(csr_mat@x),
         file = file_path,
         name = paste0(sce_slot, "/", i, "/data"),
@@ -127,7 +127,7 @@ scmp_write_h5 <- function(
       )
 
       ## indices
-      h5write(
+      rhdf5::h5write(
         obj = as.integer(csr_mat@i),
         file = file_path,
         name = paste0(sce_slot, "/", i, "/indices"),
@@ -136,7 +136,7 @@ scmp_write_h5 <- function(
       )
 
       ## indptr
-      h5write(
+      rhdf5::h5write(
         obj = as.integer(csr_mat@p),
         file = file_path,
         name = paste0(sce_slot, "/", i, "/indptr"),
@@ -145,7 +145,7 @@ scmp_write_h5 <- function(
       )
 
       ## dim
-      h5write(as.integer(csr_mat@Dim),
+      rhdf5::h5write(as.integer(csr_mat@Dim),
         file = file_path,
         name = paste0(sce_slot, "/", i, "/dim"),
         write.attributes = T,
@@ -153,11 +153,11 @@ scmp_write_h5 <- function(
       )
 
       ## Create Slot for names
-      h5createGroup(file_path, group = paste0(sce_slot, "/", i, "/labels"))
+      rhdf5::h5createGroup(file_path, group = paste0(sce_slot, "/", i, "/labels"))
 
       ## Write Ids
       ## feature ids
-      h5write(
+      rhdf5::h5write(
         obj = c(csr_mat@Dimnames[[1]]),
         file = file_path,
         name = paste0(sce_slot, "/", i, "/labels/feature_ids"),
@@ -165,7 +165,7 @@ scmp_write_h5 <- function(
         createnewfile = F, native = TRUE
       )
       ## cell ids
-      h5write(
+      rhdf5::h5write(
         obj = c(csr_mat@Dimnames[[2]]),
         file = file_path,
         name = paste0(sce_slot, "/", i, "/labels/cell_ids"),
@@ -177,11 +177,11 @@ scmp_write_h5 <- function(
 
   # Write Design Matrix
   ## Create hig level slots
-  h5createGroup(file_path, group = "design/predictors")
-  h5createGroup(file_path, group = "design/assigments")
+  rhdf5::h5createGroup(file_path, group = "design/predictors")
+  rhdf5::h5createGroup(file_path, group = "design/assigments")
 
   # Write offsets
-  h5write(
+  rhdf5::h5write(
     obj = as.vector(scmpObj@Design@offset),
     file = file_path,
     name = "design/offset",
@@ -190,7 +190,7 @@ scmp_write_h5 <- function(
   )
 
   # Write group_vectors
-  h5write(
+  rhdf5::h5write(
     obj = as.character(scmpObj@Design@groups.vector),
     file = file_path,
     name = "design/groups",
@@ -204,7 +204,7 @@ scmp_write_h5 <- function(
   # Write
   for (i in predictor_columns) {
     # Write
-    h5write(
+    rhdf5::h5write(
       obj = as.numeric(scmpObj@Design@predictor_matrix[, i, drop = TRUE]),
       file = file_path,
       name = paste0("design/predictors/", i),
@@ -219,7 +219,7 @@ scmp_write_h5 <- function(
   # Write
   for (i in assignment_columns) {
     # Write
-    h5write(
+    rhdf5::h5write(
       obj = as.integer(scmpObj@Design@assignment_matrix[, i, drop = TRUE]),
       file = file_path,
       name = paste0("design/assigments/", i),
@@ -230,7 +230,7 @@ scmp_write_h5 <- function(
 
   # Write estimates
   ## Create high level slots
-  h5write(
+  rhdf5::h5write(
     obj = as.character(scmpObj@Estimate@path),
     file = file_path,
     name = "estimate/path",
@@ -244,7 +244,7 @@ scmp_write_h5 <- function(
   # Write
   for (i in estimate_slots) {
     # Create Groups
-    h5createGroup(file_path, group = paste0("estimate/", i))
+    rhdf5::h5createGroup(file_path, group = paste0("estimate/", i))
 
     # Get data
     matrix <- slot(scmpObj@Estimate, i)
@@ -252,7 +252,7 @@ scmp_write_h5 <- function(
     # Write
     for (j in colnames(matrix)) {
       # Write
-      h5write(
+      rhdf5::h5write(
         obj = as.numeric(matrix[, j, drop = TRUE]),
         file = file_path,
         name = paste0("estimate/", i, "/", j),
@@ -271,7 +271,7 @@ scmp_write_h5 <- function(
     vec <- slot(scmpObj@Profile, i)
 
     # Write
-    h5write(
+    rhdf5::h5write(
       obj = vec,
       file = file_path,
       name = paste0("profile/", i),
@@ -286,7 +286,7 @@ scmp_write_h5 <- function(
   # Write
   for (i in significant_slots) {
     # Create Groups
-    h5createGroup(file_path, group = paste0("significant/", i))
+    rhdf5::h5createGroup(file_path, group = paste0("significant/", i))
 
     if (i == "genes") {
       # Get slots
@@ -298,7 +298,7 @@ scmp_write_h5 <- function(
         value <- i_slot[[j]]
 
         # write
-        h5write(
+        rhdf5::h5write(
           obj = value,
           file = file_path,
           name = paste0("significant/", i, "/", j),
@@ -314,14 +314,14 @@ scmp_write_h5 <- function(
       names(cluster_values) <- NULL
 
       # Write
-      h5write(
+      rhdf5::h5write(
         obj = cluster_values,
         file = file_path,
         name = paste0("significant/", i, "/cluster_values"),
         write.attributes = T,
         createnewfile = F, native = TRUE
       )
-      h5write(
+      rhdf5::h5write(
         obj = gene_names,
         file = file_path,
         name = paste0("significant/", i, "/gene_names"),
@@ -331,5 +331,5 @@ scmp_write_h5 <- function(
     }
   }
   # close the file
-  h5closeAll()
+  rhdf5::h5closeAll()
 }

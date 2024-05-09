@@ -23,7 +23,8 @@ scmp_write <- function(scmpObj,
                        filename,
                        filepath = NULL,
                        format = "rds",
-                       overwrite = FALSE) {
+                       overwrite = FALSE,
+                       verbose = TRUE) {
   # library(assertthat)
   # library(scMaSigPro)
   # library(rhdf5)
