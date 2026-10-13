@@ -62,7 +62,7 @@ sc.filter <- function(scmpObj,
         all(
             vars %in% c("all", "each", "groups")
         ),
-        msg = "Invalid selction for 'vars'"
+        msg = "Invalid selection for 'vars'"
     )
 
     # Initiate empty list

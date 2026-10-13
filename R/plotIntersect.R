@@ -36,7 +36,7 @@ plotIntersect <- function(scmpObj,
 
     # Check if siggenes results exist for groups
     assertthat::assert_that(!isEmpty(scmpObj@Significant@genes),
-        msg = "'sig.genes@Summary' slot is empty, please run 'sc.get.siggenes'"
+        msg = "'Significant' slot is empty, please run 'sc.filter()' first."
     )
 
     if (!keep_empty_groups) {

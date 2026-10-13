@@ -1,10 +1,13 @@
 #' @title Restructure the binned data.
 #'
 #' @description
-#' `sc.restruct()` Add Description
+#' `sc.restruct()` rebuilds the binned data so that every end path starts at
+#' the root: the bins of each link node are added to the paths it links, the
+#' root bins are added to every end node, the binned pseudotime of the later
+#' bins is shifted to follow them, and the pseudo-bulk counts are recomputed
+#' with [pb_counts()].
 #'
 #' @param scmpObj An object of class \code{\link{ScMaSigPro}}.
-#' path assignment in 'Sparse' or 'Dense' data.
 #' @param end_node_list A list of end nodes in of the branch.
 #' @param root_node A character string specifying the root node.
 #' @param link_node_list A list of links between two nodes.
@@ -34,7 +37,7 @@ sc.restruct <- function(scmpObj,
                         verbose = TRUE) {
     # Check Object Validity
     assertthat::assert_that(is(scmpObj, "ScMaSigPro"),
-        msg = "Please provide object of class 'scMaSigPro'."
+        msg = "Please provide object of class 'ScMaSigPro'."
     )
 
     # Check if values are binned
@@ -47,7 +50,7 @@ sc.restruct <- function(scmpObj,
         all(
             assay_name %in% names(scmpObj@Sparse@assays@data@listData)
         ),
-        msg = paste0("'", assay_name, "' ", "doesn't exit in scmpObj.")
+        msg = paste0("'", assay_name, "' ", "doesn't exist in scmpObj.")
     )
 
     # Extract bin information
@@ -162,7 +165,7 @@ sc.restruct <- function(scmpObj,
         bin_root_tmp <- rbind(bin_root_tmp, tmp)
 
         if (verbose) {
-            message("Linking bins root bins to '", i)
+            message("Linking root bins to '", i, "'")
         }
     }
 

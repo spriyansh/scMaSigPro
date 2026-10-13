@@ -30,7 +30,7 @@
 showCoeff <- function(scmpObj, includeInflu = TRUE) {
     # Check Object Validity
     assertthat::assert_that(is(scmpObj, "ScMaSigPro"),
-        msg = "Please provide object of class 'scMaSigPro'"
+        msg = "Please provide object of class 'ScMaSigPro'"
     )
 
     # Check if the sol exist
@@ -66,7 +66,7 @@ showCoeff <- function(scmpObj, includeInflu = TRUE) {
 showInflu <- function(scmpObj) {
     # Check Object Validity
     assertthat::assert_that(is(scmpObj, "ScMaSigPro"),
-        msg = "Please provide object of class 'scMaSigPro'"
+        msg = "Please provide object of class 'ScMaSigPro'"
     )
 
     # Check if the sol exist
@@ -98,7 +98,7 @@ showInflu <- function(scmpObj) {
 showTS <- function(scmpObj, includeInflu = TRUE) {
     # Check Object Validity
     assertthat::assert_that(is(scmpObj, "ScMaSigPro"),
-        msg = "Please provide object of class 'scMaSigPro'"
+        msg = "Please provide object of class 'ScMaSigPro'"
     )
 
     # Check if the sol exist
@@ -135,7 +135,7 @@ showTS <- function(scmpObj, includeInflu = TRUE) {
 showSol <- function(scmpObj, includeInflu = TRUE) {
     # Check Object Validity
     assertthat::assert_that(is(scmpObj, "ScMaSigPro"),
-        msg = "Please provide object of class 'scMaSigPro'"
+        msg = "Please provide object of class 'ScMaSigPro'"
     )
 
     # Check if the sol exist
@@ -172,7 +172,7 @@ showSol <- function(scmpObj, includeInflu = TRUE) {
 showSigProf <- function(scmpObj, includeInflu = FALSE) {
     # Check Object Validity
     assertthat::assert_that(is(scmpObj, "ScMaSigPro"),
-        msg = "Please provide object of class 'scMaSigPro'"
+        msg = "Please provide object of class 'ScMaSigPro'"
     )
 
     # Check if the sol exist
@@ -210,7 +210,7 @@ showSigProf <- function(scmpObj, includeInflu = FALSE) {
 showPoly <- function(scmpObj) {
     # Check Object Validity
     assertthat::assert_that(is(scmpObj, "ScMaSigPro"),
-        msg = "Please provide object of class 'scMaSigPro'"
+        msg = "Please provide object of class 'ScMaSigPro'"
     )
 
     # Check if the sol exist
@@ -218,14 +218,14 @@ showPoly <- function(scmpObj) {
         all(!is.na(colnames(scmpObj@Design@predictor_matrix)) | length(
             colnames(scmpObj@Design@predictor_matrix) > 1
         )),
-        msg = "Please setup the model first, using 'sc.make.design.matrix()'"
+        msg = "Please setup the model first, using 'sc.set.poly()'"
     )
 
     # Extract columns
     df.col <- colnames(scmpObj@Design@predictor_matrix)
 
     # Extract betas
-    beta_names <- paste0("beta", seq(1:length(df.col)))
+    beta_names <- paste0("beta", seq_along(df.col))
 
     # Generate formula string
     formula_parts <- vapply(seq_along(df.col),
@@ -258,7 +258,7 @@ showPoly <- function(scmpObj) {
 showParams <- function(scmpObj) {
     # Check Object Validity
     assertthat::assert_that(is(scmpObj, "ScMaSigPro"),
-        msg = "Please provide object of class 'scMaSigPro'"
+        msg = "Please provide object of class 'ScMaSigPro'"
     )
 
     # Get slot names, assuming 'param' is a slot within 'scmpObj'
@@ -313,7 +313,7 @@ showParams <- function(scmpObj) {
 showGroupCoeff <- function(scmpObj, includeInflu = TRUE) {
     # Check Object Validity
     assertthat::assert_that(is(scmpObj, "ScMaSigPro"),
-        msg = "Please provide object of class 'scMaSigPro'"
+        msg = "Please provide object of class 'ScMaSigPro'"
     )
 
     # Check if the sol exist

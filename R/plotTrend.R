@@ -72,8 +72,13 @@ plotTrend <- function(scmpObj,
     )
 
     if (significant) {
-        assertthat::assert_that(any(feature_id %in% unique(unlist(scmpObj@Significant@genes))),
-            msg = "Feature Id didn't pass the R2 threshold, please re-run sc.filter, with lower a value or set 'significant' to 'FALSE'"
+        assertthat::assert_that(
+            any(feature_id %in% unique(unlist(scmpObj@Significant@genes))),
+            msg = paste(
+                "Feature Id didn't pass the R2 threshold, please re-run",
+                "sc.filter() with a lower 'rsq' value or set 'significant' to",
+                "'FALSE'"
+            )
         )
     }
 

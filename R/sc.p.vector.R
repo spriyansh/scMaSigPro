@@ -128,7 +128,7 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
             numCores <- n_cores
         }
         if (verbose) {
-            message(paste("Running with", numCores, "cores..."))
+            message("Running with ", numCores, " cores...")
         }
     } else {
         numCores <- 1
@@ -188,7 +188,7 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
     }, mc.cores = numCores)
 
     names(p.vector.list) <- rownames(dat)
-    sc.p.vector <- unlist(p.vector.list, recursive = T, use.names = T)
+    sc.p.vector <- unlist(p.vector.list, recursive = TRUE, use.names = TRUE)
     #----------------------------------------------------------------------
     # Correct p-values using FDR correction and select significant genes
     p.adjusted <- unlist(
@@ -196,7 +196,7 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
             method = mt_correction,
             n = length(sc.p.vector)
         ),
-        recursive = T, use.names = T
+        recursive = TRUE, use.names = TRUE
     )
     names(p.adjusted) <- names(sc.p.vector)
     genes.selected <- rownames(dat)[which(p.adjusted <= p_value)]

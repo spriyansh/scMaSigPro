@@ -77,7 +77,7 @@ sc.t.fit <- function(scmpObj,
     G <- scmpObj@Parameters@g
 
     dat.all <- scmpObj@Dense@assays@data@listData$bulk.counts
-    dat <- dat.all[scmpObj@Profile@non_flat, , drop = F]
+    dat <- dat.all[scmpObj@Profile@non_flat, , drop = FALSE]
     dat <- rbind(c(rep(1, ncol(dat))), dat)
     dat <- dat[, as.character(rownames(dis))]
 
@@ -119,7 +119,7 @@ sc.t.fit <- function(scmpObj,
             numCores <- n_cores
         }
         if (verbose) {
-            message(paste("Running with", numCores, "cores..."))
+            message("Running with ", numCores, " cores...")
         }
     } else {
         numCores <- 1
@@ -190,7 +190,7 @@ sc.t.fit <- function(scmpObj,
                     influ.info = influ.info_lapply
                 ))
             },
-            mc.cores = numCores, mc.set.seed = 2023
+            mc.cores = numCores
         )
     } else if (selection_method == "forward") {
         result_list <- parallel::mclapply(names(y_input),
@@ -244,7 +244,7 @@ sc.t.fit <- function(scmpObj,
                     alfa = Q_lapply, influ.info = influ.info_lapply
                 ))
             },
-            mc.cores = numCores, mc.set.seed = 2023
+            mc.cores = numCores
         )
     } else if (selection_method == "two.ways.backward") {
         result_list <- parallel::mclapply(names(y_input),
@@ -300,7 +300,7 @@ sc.t.fit <- function(scmpObj,
                     alfa = Q_lapply, influ.info = influ.info_lapply
                 ))
             },
-            mc.cores = numCores, mc.set.seed = 2023
+            mc.cores = numCores
         )
     } else if (selection_method == "two.ways.forward") {
         result_list <- parallel::mclapply(names(y_input),
@@ -354,7 +354,7 @@ sc.t.fit <- function(scmpObj,
                     alfa = Q_lapply, influ.info = influ.info_lapply
                 ))
             },
-            mc.cores = numCores, mc.set.seed = 2023
+            mc.cores = numCores
         )
     } else {
         stop("stepwise method must be one of backward, forward, two.ways.backward, two.ways.forward")
@@ -421,14 +421,14 @@ sc.t.fit <- function(scmpObj,
             vars.in,
             sep = ""
         ))
-        if (!is.null(groups.vector) & !is.null(alloc)) {
+        if (!is.null(groups.vector) && !is.null(alloc)) {
             groups <- colnames(alloc)[3:ncol(alloc)]
             degree <- (length(groups.vector) / length(groups)) -
                 1
-            for (w in 1:nrow(coefficients)) {
+            for (w in seq_len(nrow(coefficients))) {
                 A <- NULL
                 col.names <- NULL
-                for (l in 1:length(groups)) {
+                for (l in seq_along(groups)) {
                     B <- reg.coeffs(
                         coefficients = coefficients[w, ],
                         groups.vector = groups.vector, group = groups[l]
@@ -449,15 +449,15 @@ sc.t.fit <- function(scmpObj,
 
     if (!is.null(influ.info)) {
         if (verbose) {
-            message(paste(
-                "\nInfluence:",
-                ncol(influ.info),
-                "genes with influential onservations detected. Model validation for these genes is recommended"
-            ))
+            message(
+                "\nInfluence: ", ncol(influ.info), " genes with influential ",
+                "observations detected. Model validation for these genes is ",
+                "recommended"
+            )
         }
     } else {
         if (verbose) {
-            message(paste("\nNo genes with influential observations detected"))
+            message("\nNo genes with influential observations detected")
         }
         influ.info <- matrix(data = NA, nrow = 0, ncol = 0)
     }

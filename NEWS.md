@@ -11,6 +11,9 @@
 * Dependency Changes
     * `shiny`, `plotly`, `igraph` and `scales` are no longer dependencies, so installing scMaSigPro pulls in 55 non-base packages instead of 98.
 
+* Minor changes
+    * Error and progress messages are corrected: misspellings ("doesn't exit", "Overwritting", "onservations", "selction", "select on of"), the class name (`ScMaSigPro`, not `scMaSigPro`), and pointers to functions that do not exist (`plotIntersect()` now points to `sc.filter()`, `showPoly()` to `sc.set.poly()`). `plotDiagnostics()` reports an invalid `model` instead of a missing gene, and messages no longer contain line breaks and indentation copied from the source code. Code that matches the old wording, such as the "Overwritting assay" warning of `eSparse<-` and `eDense<-`, must be updated.
+
 * Internal
     * Unused code is removed: debugging leftovers, commented-out code, the never-enabled `useWeights` branches of `sc.p.vector()` and `sc.t.fit()`, the unexported and broken `ScMaSigPro()` constructor, and 19 unused `importFrom` directives. Results are unchanged.
 
