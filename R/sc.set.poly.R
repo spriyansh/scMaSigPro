@@ -65,9 +65,6 @@ sc.set.poly <- function(scmpObj,
     col.vec <- colnames(com.cell.meta)[colnames(com.cell.meta) != bin_ptime_col]
 
     # Add Replicate Column
-    # com.cell.meta <- com.cell.meta %>%
-    #   mutate(Replicate = data.table::rleid(Reduce(paste, com.cell.meta))) %>%
-    #   as.data.frame()
     com.cell.meta$Replicate <- with(com.cell.meta, {
         # Create a concatenated string of all columns
         combined <- apply(com.cell.meta, 1, paste, collapse = "-")

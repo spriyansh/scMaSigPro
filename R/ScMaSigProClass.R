@@ -1,6 +1,5 @@
 # ScMaSigProClass with all the super-classes
 # Author: Priyansh Srivastava
-# Date: 2019-05-01
 
 ###############################################################################
 #' @title ParameterConfig
@@ -107,8 +106,6 @@ setClass(
         if (!is.integer(object@g)) {
             stop("Slot 'g' must be an integer.")
         }
-
-        if (!is.numeric(object@p_value)) {}
 
         if (!is.numeric(object@epsilon)) {
             stop("Slot 'epsilon' must be numeric.")
@@ -230,8 +227,7 @@ setClass(
 #' @keywords classes
 
 #' @author Priyansh Srivastava <spriyansh29@@gmail.com>
-#' @importFrom stats family gaussian poisson
-#' @importFrom utils data combn
+#' @importFrom stats gaussian
 #' @importFrom MASS negative.binomial
 
 # Define the VariableProfiles with the following slots:

@@ -474,22 +474,3 @@ setMethod(
         .ScMaSigPro_show(object)
     }
 )
-###############################################################################
-# Constructor
-ScMaSigPro <- function(Sparse = new("SingleCellExperiment"),
-                       Profile = new("VariableProfiles"),
-                       Estimate = new("Estimates"),
-                       Dense = new("SingleCellExperiment"),
-                       Design = new("MatrixDesign"),
-                       Parameters = new("ParameterConfig"),
-                       Significant = new("Significant")) {
-    new("ScMaSigPro",
-        Sparse = Sparse,
-        Profile = Profile,
-        Estimate = Estimate,
-        Dense = Dense,
-        Design = Design,
-        ParameterConfig = Parameters,
-        Significant = Significant # new("Significant"),
-    )
-}

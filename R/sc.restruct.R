@@ -32,14 +32,6 @@ sc.restruct <- function(scmpObj,
                         aggregate = "sum",
                         link_sep = "_links_",
                         verbose = TRUE) {
-    # scmpObj <- multi_scmp_ob
-    # root_node <- "root"
-    # end_node_list <- list("path_Y_15", "path_Y_18", "path_Y_52")
-    # link_node_list <- list("path_Y_18|path_Y_15")
-    # assay_name <- "counts"
-    # aggregate <- "sum"
-    # verbose = TRUE
-
     # Check Object Validity
     assertthat::assert_that(is(scmpObj, "ScMaSigPro"),
         msg = "Please provide object of class 'scMaSigPro'."
@@ -71,9 +63,6 @@ sc.restruct <- function(scmpObj,
 
     # Add Links to paths
     for (i in link_node_list) {
-        ## remove
-        # i <- link_node_list[[1]]
-
         # Extract link group
         link_value <- link_node_list[[i]]
         names(link_value) <- link_value
@@ -83,9 +72,6 @@ sc.restruct <- function(scmpObj,
 
         # Traverse for each of the link
         for (j in link_vec) {
-            ## remove
-            # j <- link_vec[1]
-
             # Extract end_bin_info
             link_end_bin_info <- bin_info[bin_info[[scmpObj@Parameters@path_col]] == j, ]
 
@@ -145,9 +131,6 @@ sc.restruct <- function(scmpObj,
 
     # Run end-point wise operation
     for (i in end_node_list) {
-        ## remove
-        # leaf <- end_node_list[[1]]
-
         # Extract end_bin_info for leaf
         leaf <- end_node_list[[i]]
 

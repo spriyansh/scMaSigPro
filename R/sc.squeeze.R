@@ -5,13 +5,12 @@
 #' of equal size using entropy-based binning method. It automatically calculates
 #' the optimal number of bins using one of the supported methods.
 #'
-#' @importFrom parallel mclapply detectCores
+#' @importFrom parallel mclapply
 #' @importFrom entropy discretize
-#' @importFrom dplyr left_join join_by mutate select bind_rows group_by_at
-#' @importFrom dplyr summarise rename_with
+#' @importFrom dplyr bind_rows group_by_at
 #' @importFrom magrittr %>%
 #' @importFrom rlang :=
-#' @importFrom dplyr group_by filter row_number ungroup summarise summarize
+#' @importFrom dplyr group_by filter ungroup summarise summarize
 #' @importFrom SummarizedExperiment assay colData<-
 #'
 #' @param scmpObj An object of class \code{\link{ScMaSigPro}}.
@@ -76,9 +75,6 @@ sc.squeeze <- function(scmpObj,
                        aggregate = "sum",
                        fill_gaps = FALSE,
                        additional_params = list(use_unique_time_points = FALSE)) {
-    # suppressPackageStartupMessages(library(entropy))
-    # suppressPackageStartupMessages(library(assertthat))
-    # suppressPackageStartupMessages(library(SingleCellExperiment))
     # Initiate Variable
     scmp_bin_lower_bound <- "scmp_l_bound"
     scmp_bin_upper_bound <- "scmp_u_bound"
@@ -304,13 +300,7 @@ sc.squeeze <- function(scmpObj,
         for (i in 1:nrow(path.frame)) {
             # Get row from the Path frame
             raw_i <- path.frame[i, , drop = FALSE]
-            # print(paste("Completed raw_i <- path.frame[i, , drop = FALSE] for", path))
-
-
-            # View(raw_i)
-            # stop()
             pseudotime_i <- raw_i[[ptime_col]]
-            # print(paste("Completed pseudotime_i <- raw_i[[ptime_col]] for", path))
 
             # Check limits
             if (pseudotime_i >= min(bin_table[, lbound]) & pseudotime_i <= max(bin_table[, ubound])) {
@@ -353,14 +343,8 @@ sc.squeeze <- function(scmpObj,
         processed.path.frame <- as.data.frame(path.frame)
         processed.path.frame <- processed.path.frame[!is.na(processed.path.frame[[bin_ptime_col]]), , drop = FALSE]
 
-        # print(paste("processed.path.frame <- as.data.frame(path.frame)", path))
-
         # Set the 'cell' column as rownames
         rownames(processed.path.frame) <- processed.path.frame$cell
-
-        # print(paste("rownames(processed.path.frame) <- processed.path.frame$cell", path))
-
-        # print(paste("setted rownames for", path))
 
         # Create Binned Path Frame
         binned.path.frame <- processed.path.frame %>%
