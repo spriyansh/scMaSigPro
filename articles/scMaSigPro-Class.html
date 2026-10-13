@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scMaSigPro</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.4.9000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.5</span>
       </span>
     </div>
 
@@ -166,7 +166,7 @@ as the dimensions, number of non-flat profiles etc.</p>
 <span><span class="co">## nCells: 200</span></span>
 <span><span class="co">## nFeatures: 100</span></span>
 <span><span class="co">## Pseudotime Range: 1 100</span></span>
-<span><span class="co">## Branching Paths: Path1, Path2</span></span>
+<span><span class="co">## Branching Paths: Path2, Path1</span></span>
 <span><span class="co">## Binned Pseudotime: 1-8(Range), 4.5(Mean), </span></span>
 <span><span class="co">## Number of bins-&gt; Path1: 8 Path2: 8</span></span>
 <span><span class="co">## Average bin Size-&gt; Path1: 12 Path2: 13</span></span>
@@ -232,9 +232,9 @@ cell level information from the <code>Sparse</code> and
 <code class="sourceCode R"><span><span class="co"># Get cell level metadata</span></span>
 <span><span class="fu"><a href="../reference/cSparse.html">cSparse</a></span><span class="op">(</span><span class="va">scmp.ob</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
 <pre><code><span><span class="co">##        Cell  Batch  Path</span></span>
+<span><span class="co">## Cell1 Cell1 Batch1 Path2</span></span>
 <span><span class="co">## Cell2 Cell2 Batch1 Path1</span></span>
-<span><span class="co">## Cell3 Cell3 Batch1 Path1</span></span>
-<span><span class="co">## Cell4 Cell4 Batch1 Path1</span></span></code></pre>
+<span><span class="co">## Cell3 Cell3 Batch1 Path1</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="design-slot">
@@ -484,7 +484,7 @@ refer to other vignettes for more in-depth analysis.</p>
 <span><span class="co">## character(0)</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] scMaSigPro_0.0.4.9000</span></span>
+<span><span class="co">## [1] scMaSigPro_0.0.5</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
 <span><span class="co">##   [1] rlang_1.3.0                 magrittr_2.0.5             </span></span>
