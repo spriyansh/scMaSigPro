@@ -2,11 +2,10 @@
 #'
 #' @description
 #' `sc.squeeze()` discretizes a continuous time series column into bins
-#' of equal size using entropy-based binning method. It automatically calculates
-#' the optimal number of bins using one of the supported methods.
+#' of equal width. It automatically calculates the optimal number of bins
+#' using one of the supported methods.
 #'
 #' @importFrom parallel mclapply
-#' @importFrom entropy discretize
 #' @importFrom dplyr bind_rows group_by_at
 #' @importFrom magrittr %>%
 #' @importFrom rlang :=
@@ -54,8 +53,7 @@
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
 #'
-#' @seealso \code{\link{estBinSize}}, \code{\link[entropy]{discretize}},
-#' \code{\link{create_range}}
+#' @seealso \code{\link{estBinSize}}, \code{\link{create_range}}
 #'
 #' @export
 sc.squeeze <- function(scmpObj,

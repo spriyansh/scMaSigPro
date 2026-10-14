@@ -51,10 +51,6 @@ exportMethods(pathAssign)
 exportMethods(predictors)
 import(ggplot2)
 importFrom(MASS,negative.binomial)
-importFrom(MatrixGenerics,
-  rowMeans,
-  rowSums
-)
 importFrom(S4Vectors,
   DataFrame,
   isEmpty
@@ -76,8 +72,6 @@ importFrom(dplyr,
   summarize,
   ungroup
 )
-importFrom(e1071,skewness)
-importFrom(entropy,discretize)
 importFrom(maSigPro,
   make.design.matrix,
   reg.coeffs
