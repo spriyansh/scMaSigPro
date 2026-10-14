@@ -6,8 +6,6 @@
 #' 2006), with a dummy for every path but the first, the reference, and its
 #' products with each power of the binned pseudotime up to `poly_degree`.
 #'
-#' @importFrom maSigPro make.design.matrix
-#'
 #' @param scmpObj An object of class \code{\link{ScMaSigPro}}.
 #' @param poly_degree Degree of the polynomial.
 #' @param bin_ptime_col A character string representing the column name

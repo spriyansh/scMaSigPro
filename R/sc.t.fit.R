@@ -6,7 +6,6 @@
 #' \code{scMaSigPro::sc.p.vector()}.
 #'
 #' @importFrom BiocParallel bplapply bpnworkers SerialParam
-#' @importFrom maSigPro reg.coeffs
 #' @importFrom stats influence.measures
 #'
 #' @param scmpObj An object of class \code{\link{ScMaSigPro}}.
