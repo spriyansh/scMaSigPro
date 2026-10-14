@@ -406,11 +406,16 @@ setClass(
 #' @slot Significant Object of Class \code{\link{Significant}}.
 #' @slot Parameters Object of Class \code{\link{ParameterConfig}}.
 #'
+#' @details
+#' `validObject()` checks every slot with the validity method of its class
+#' and reports each problem with the name of the slot. Objects are created
+#' with [create_scmp()] or [as_scmp()].
+#'
 #' @name ScMaSigPro
 #' @aliases ScMaSigPro-class
 #' @rdname ScMaSigPro-class
 #' @exportClass ScMaSigPro
-#' @importFrom methods is new as
+#' @importFrom methods is new as validObject
 #' @keywords classes
 
 setClass(
@@ -425,41 +430,20 @@ setClass(
         Parameters = "ParameterConfig"
     ),
     validity = function(object) {
-        # Check sparse slot
-        if (!validObject(object@Sparse)) {
-            stop("'Sparse' slot is not a valid 'SingleCellExperiment' class object.")
+        msg <- character()
+        # By default validObject() checks only the class of each slot.
+        for (s in slotNames(object)) {
+            problems <- validObject(slot(object, s), test = TRUE)
+            if (!isTRUE(problems)) {
+                msg <- c(msg, paste0("slot '", s, "': ", problems))
+            }
         }
-
-        # Check VariableProfiles slot
-        if (!validObject(object@Profile)) {
-            stop("'Profile' slot is not a valid 'VariableProfiles' class object.")
-        }
-
-        # Check Estimates slot
-        if (!validObject(object@Estimate)) {
-            stop("'Estimates' slot is not a valid 'Estimates' class object.")
-        }
-
-        # Check dense slot
-        if (!validObject(object@Dense)) {
-            stop("'Dense' slot is not a valid 'SingleCellExperiment' class object.")
-        }
-
-        # Check MatrixDesign slot
-        if (!validObject(object@Design)) {
-            stop("'Design' slot is not a valid 'MatrixDesign' class object.")
-        }
-
-        # Check ParameterConfig slot
-        if (!validObject(object@Parameters)) {
-            stop("'Parameters' slot is not a valid 'ParameterConfig' class object.")
-        }
-        # Check ParameterConfig slot
-        if (!validObject(object@Significant)) {
-            stop("'Significant' slot is not a valid 'Significant' object.")
-        }
+        if (length(msg)) msg else TRUE
     },
     prototype = list(
+        # new("SingleCellExperiment") is not a valid object; the constructor is.
+        Sparse = SingleCellExperiment(),
+        Dense = SingleCellExperiment(),
         Profile = new("VariableProfiles"),
         Estimate = new("Estimates"),
         Parameters = new("ParameterConfig"),

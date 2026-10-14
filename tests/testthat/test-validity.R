@@ -160,3 +160,21 @@ test_that("validity methods return every problem instead of stopping", {
         "'clusters' must hold one value per gene, named by gene"
     ))
 })
+
+test_that("a new ScMaSigPro object is valid", {
+    expect_true(validObject(new("ScMaSigPro"), test = TRUE))
+})
+
+test_that("validObject() names the slot of each problem in an ScMaSigPro", {
+    ob <- splat_clustered()
+    ob@Parameters@p_value <- c(0.05, 0.01)
+    ob@Dense@colData <- ob@Dense@colData[-1, ]
+    problems <- validObject(ob, test = TRUE)
+    expect_length(problems, 2)
+    expect_match(problems[1], "^slot 'Dense': ")
+    expect_identical(
+        problems[2],
+        "slot 'Parameters': 'p_value' must be a single non-missing value"
+    )
+    expect_error(validObject(ob), "slot 'Parameters'", fixed = TRUE)
+})
