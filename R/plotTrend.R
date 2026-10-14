@@ -189,15 +189,15 @@ plotTrend <- function(scmpObj,
     # Generate line.df
     line.df <- points.df
 
-    # Apply Summary Operation
+    # Apply Summary Operation: one value per binned time and path
     if (summary_mode == "mean") {
-        line.df <- line.df %>%
-            dplyr::group_by(pooled.time, path) %>%
-            dplyr::summarize(pb.counts = mean(pb.counts), .groups = "drop")
+        line.df <- .summarise_by(
+            line.df, c("pooled.time", "path"), "pb.counts", mean
+        )
     } else if (summary_mode == "median") {
-        line.df <- line.df %>%
-            dplyr::group_by(pooled.time, path) %>%
-            dplyr::summarize(pb.counts = median(pb.counts), .groups = "drop")
+        line.df <- .summarise_by(
+            line.df, c("pooled.time", "path"), "pb.counts", median
+        )
     }
 
     if (sum(offset_vector) != 0) {

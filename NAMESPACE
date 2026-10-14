@@ -63,15 +63,6 @@ importFrom(SummarizedExperiment,
   "colData<-",
   assay
 )
-importFrom(dplyr,
-  bind_rows,
-  filter,
-  group_by,
-  group_by_at,
-  summarise,
-  summarize,
-  ungroup
-)
 importFrom(maSigPro,
   make.design.matrix,
   reg.coeffs
@@ -87,7 +78,6 @@ importFrom(methods,
 )
 importFrom(parallel,mclapply)
 importFrom(parallelly,availableCores)
-importFrom(rlang,":=")
 importFrom(stats,
   IQR,
   anova,

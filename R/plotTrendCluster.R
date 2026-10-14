@@ -229,38 +229,29 @@ plotTrendCluster <- function(scmpObj,
         }
 
 
-        # Grouping and summarizing with .data pronoun
+        # Summarise y_axis within each x_axis and group (path)
+        summarise_y <- function(df, fun) {
+            .summarise_by(df, c("x_axis", "group"), "y_axis", fun, na.rm = TRUE)
+        }
         if (summary == "mean") {
             if (!is.null(line.df)) {
-                line.df <- line.df %>%
-                    dplyr::group_by(.data$x_axis, .data$group) %>%
-                    dplyr::summarize(y_axis = mean(.data$y_axis, na.rm = TRUE), .groups = "drop")
+                line.df <- summarise_y(line.df, mean)
             }
             if (!is.null(point.df)) {
-                point.df <- point.df %>%
-                    dplyr::group_by(.data$x_axis, .data$group) %>%
-                    dplyr::summarize(y_axis = mean(.data$y_axis, na.rm = TRUE), .groups = "drop")
+                point.df <- summarise_y(point.df, mean)
             }
             if (!is.null(curve.df)) {
-                curve.df <- curve.df %>%
-                    dplyr::group_by(.data$x_axis, .data$group) %>%
-                    dplyr::summarize(y_axis = mean(.data$y_axis, na.rm = TRUE), .groups = "drop")
+                curve.df <- summarise_y(curve.df, mean)
             }
         } else if (summary == "median") {
             if (!is.null(line.df)) {
-                line.df <- line.df %>%
-                    dplyr::group_by(.data$x_axis, .data$group) %>%
-                    dplyr::summarize(y_axis = median(.data$y_axis, na.rm = TRUE), .groups = "drop")
+                line.df <- summarise_y(line.df, median)
             }
             if (!is.null(point.df)) {
-                point.df <- point.df %>%
-                    dplyr::group_by(.data$x_axis, .data$group) %>%
-                    dplyr::summarize(y_axis = median(.data$y_axis, na.rm = TRUE), .groups = "drop")
+                point.df <- summarise_y(point.df, median)
             }
             if (!is.null(curve.df)) {
-                curve.df <- curve.df %>%
-                    dplyr::group_by(.data$x_axis, .data$group) %>%
-                    dplyr::summarize(y_axis = median(.data$y_axis, na.rm = TRUE), .groups = "drop")
+                curve.df <- summarise_y(curve.df, median)
             }
         }
 
