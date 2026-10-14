@@ -70,8 +70,8 @@ sc.restruct <- function(scmpObj,
         link_value <- link_node_list[[i]]
         names(link_value) <- link_value
 
-        # Split
-        link_vec <- unlist(stringr::str_split(link_value, link_sep))
+        # Split; link_sep is a regular expression
+        link_vec <- unlist(strsplit(link_value, link_sep))
 
         # Traverse for each of the link
         for (j in link_vec) {

@@ -76,7 +76,7 @@ plotDiagnostics <- function(scmpObj,
         all_terms <- colnames(coeff_matrix_sub)[-1]
 
         # Remove any occurance of beta
-        all_terms <- stringr::str_remove(string = all_terms, pattern = "beta")
+        all_terms <- sub("beta", "", all_terms, fixed = TRUE)
 
         # Remove intercept
         all_terms <- all_terms[-1]

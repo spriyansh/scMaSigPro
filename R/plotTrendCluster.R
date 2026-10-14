@@ -299,12 +299,20 @@ plotTrendCluster <- function(scmpObj,
         }
     }
 
+    # Cluster number: the second "_"-separated piece of "cluster_<n>"; the
+    # column is a factor after merge(), hence as.character()
+    cluster_no <- function(x) {
+        vapply(strsplit(as.character(x), "_", fixed = TRUE), "[", "", 2)
+    }
+
     # Combine the data frames of the same type
     if (lines) {
         lines_combined <- do.call(rbind, lines_list) %>% as.data.frame()
         lines_combined <- merge(freq.table, lines_combined, by = "cluster")
         lines_combined[["cluster"]] <- paste0(
-            paste("Cluster", stringr::str_split_i(string = lines_combined[["cluster"]], pattern = "_", i = 2), sep = ": "),
+            paste("Cluster", cluster_no(lines_combined[["cluster"]]),
+                sep = ": "
+            ),
             " (", lines_combined[["num"]], " Features)"
         )
     }
@@ -312,7 +320,9 @@ plotTrendCluster <- function(scmpObj,
         curves_combined <- do.call(rbind, curves_list) %>% as.data.frame()
         curves_combined <- merge(freq.table, curves_combined, by = "cluster")
         curves_combined[["cluster"]] <- paste0(
-            paste("Cluster", stringr::str_split_i(string = curves_combined[["cluster"]], pattern = "_", i = 2), sep = ": "),
+            paste("Cluster", cluster_no(curves_combined[["cluster"]]),
+                sep = ": "
+            ),
             " (", curves_combined[["num"]], " Features)"
         )
     }
@@ -321,7 +331,9 @@ plotTrendCluster <- function(scmpObj,
         points_combined <- merge(freq.table, points_combined, by = "cluster")
         # Fix cluster info
         points_combined[["cluster"]] <- paste0(
-            paste("Cluster", stringr::str_split_i(string = points_combined[["cluster"]], pattern = "_", i = 2), sep = ": "),
+            paste("Cluster", cluster_no(points_combined[["cluster"]]),
+                sep = ": "
+            ),
             " (", points_combined[["num"]], " Features)"
         )
     }

@@ -90,7 +90,9 @@ queryCoeff <- function(scmpObj,
     compare_groups_vector <- unique(scmpObj@Design@groups.vector)
 
     # Generate group name vector
-    avail_groups_vector <- unique(unlist(stringr::str_split(compare_groups_vector, "vs")))
+    avail_groups_vector <- unique(unlist(
+        strsplit(compare_groups_vector, "vs", fixed = TRUE)
+    ))
 
     # Verbose
     if (verbose) {
