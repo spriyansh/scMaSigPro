@@ -463,12 +463,12 @@ pb_counts <- function(scmpObj,
                       assay_name = "counts",
                       cluster_count_by = "sum") {
     # Check Object Validity
-    assertthat::assert_that(is(scmpObj, "ScMaSigPro"),
+    .check(is(scmpObj, "ScMaSigPro"),
         msg = "Please provide object of class 'ScMaSigPro'."
     )
 
     # Count slot
-    assertthat::assert_that(
+    .check(
         all(
             assay_name %in% names(scmpObj@Sparse@assays@data@listData)
         ),
@@ -482,10 +482,10 @@ pb_counts <- function(scmpObj,
     bin_data <- colData(scmpObj@Dense)
     pseudo_bulk_profile <- as.data.frame(bin_data)
 
-    assertthat::assert_that(bin_mem_col %in% colnames(pseudo_bulk_profile),
+    .check(bin_mem_col %in% colnames(pseudo_bulk_profile),
         msg = paste0("'", bin_mem_col, "' does not exist in level.meta.data")
     )
-    assertthat::assert_that(bin_col %in% colnames(pseudo_bulk_profile),
+    .check(bin_col %in% colnames(pseudo_bulk_profile),
         msg = paste0("'", bin_col, "' does not exist in level.meta.data")
     )
 
@@ -496,8 +496,11 @@ pb_counts <- function(scmpObj,
         bin_ids <- as.character(bin_data[[bin_col]])
         rownames(bin_data) <- bin_ids
     }
-    assertthat::assert_that(anyDuplicated(bin_ids) == 0,
-        msg = "Bin names (the rownames of the 'Dense' cell metadata) must be unique."
+    .check(anyDuplicated(bin_ids) == 0,
+        msg = paste(
+            "Bin names (the rownames of the 'Dense' cell metadata) must be",
+            "unique."
+        )
     )
 
     # Get the meta-information for pseudobulking

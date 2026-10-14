@@ -59,14 +59,16 @@ plotTrendCluster <- function(scmpObj,
     offset_vector <- scmpObj@Design@offset
 
     # Check
-    assertthat::assert_that(!isEmpty(scmpObj@Significant@clusters),
+    .check(!isEmpty(scmpObj@Significant@clusters),
         msg = "Please run 'sc.cluster.trend', before plotting cluster trends"
     )
 
     # Check Assertion
-    assertthat::assert_that(curves || lines || points, msg = "At least one of 'curves', 'lines', or 'points' must be TRUE.")
+    .check(curves || lines || points,
+        msg = "At least one of 'curves', 'lines', or 'points' must be TRUE."
+    )
 
-    assertthat::assert_that(any(plot %in% c("coeff", "counts")),
+    .check(any(plot %in% c("coeff", "counts")),
         msg = paste(
             paste0("'", plot, "'"), "is not a valid option. Please use one of",
             paste(c("coeff", "counts"), collapse = ", ")
