@@ -33,7 +33,6 @@ Imports:
     ggplot2,
     parallel,
     parallelly,
-    magrittr,
     mclust
 Depends: R (>= 4.0)
 Encoding: UTF-8

@@ -298,7 +298,7 @@ plotTrendCluster <- function(scmpObj,
 
     # Combine the data frames of the same type
     if (lines) {
-        lines_combined <- do.call(rbind, lines_list) %>% as.data.frame()
+        lines_combined <- as.data.frame(do.call(rbind, lines_list))
         lines_combined <- merge(freq.table, lines_combined, by = "cluster")
         lines_combined[["cluster"]] <- paste0(
             paste("Cluster", cluster_no(lines_combined[["cluster"]]),
@@ -308,7 +308,7 @@ plotTrendCluster <- function(scmpObj,
         )
     }
     if (curves) {
-        curves_combined <- do.call(rbind, curves_list) %>% as.data.frame()
+        curves_combined <- as.data.frame(do.call(rbind, curves_list))
         curves_combined <- merge(freq.table, curves_combined, by = "cluster")
         curves_combined[["cluster"]] <- paste0(
             paste("Cluster", cluster_no(curves_combined[["cluster"]]),
@@ -318,7 +318,7 @@ plotTrendCluster <- function(scmpObj,
         )
     }
     if (points) {
-        points_combined <- do.call(rbind, points_list) %>% as.data.frame()
+        points_combined <- as.data.frame(do.call(rbind, points_list))
         points_combined <- merge(freq.table, points_combined, by = "cluster")
         # Fix cluster info
         points_combined[["cluster"]] <- paste0(

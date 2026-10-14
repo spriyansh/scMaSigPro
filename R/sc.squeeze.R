@@ -6,7 +6,6 @@
 #' using one of the supported methods.
 #'
 #' @importFrom parallel mclapply
-#' @importFrom magrittr %>%
 #' @importFrom SummarizedExperiment assay colData<-
 #'
 #' @param scmpObj An object of class \code{\link{ScMaSigPro}}.

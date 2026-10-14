@@ -48,8 +48,7 @@ plotDiagnostics <- function(scmpObj,
     y_mat <- as.matrix(scmpObj@Dense@assays@data$bulk.counts)
 
     # Extract gene counts
-    y_df <- y_mat[feature_id, , drop = TRUE] %>%
-        as.data.frame()
+    y_df <- as.data.frame(y_mat[feature_id, , drop = TRUE])
     colnames(y_df) <- "y"
 
     # Set theme for the plot
@@ -68,8 +67,7 @@ plotDiagnostics <- function(scmpObj,
         regression_matrix <- scmpObj@Design@predictor_matrix
     } else {
         # Get coefficients
-        coeff_matrix <- showCoeff(scmpObj) %>%
-            data.frame()
+        coeff_matrix <- data.frame(showCoeff(scmpObj))
 
         # Subset
         coeff_matrix_sub <- coeff_matrix[feature_id, , drop = FALSE]

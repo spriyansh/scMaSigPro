@@ -67,7 +67,6 @@ importFrom(maSigPro,
   make.design.matrix,
   reg.coeffs
 )
-importFrom(magrittr,"%>%")
 importFrom(mclust,Mclust)
 importFrom(methods,
   as,

@@ -64,7 +64,7 @@ plotTrend <- function(scmpObj,
     )
 
     # Extract edisgn
-    alloc.frame <- scmpObj@Design@assignment_matrix %>% as.data.frame()
+    alloc.frame <- as.data.frame(scmpObj@Design@assignment_matrix)
 
     # Extract the bulk counts
     bulk.counts <- scmpObj@Dense@assays@data@listData$bulk.counts
