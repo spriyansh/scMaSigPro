@@ -209,7 +209,7 @@ sc.t.fit <- function(scmpObj,
                 A <- NULL
                 col.names <- NULL
                 for (l in seq_along(groups)) {
-                    B <- reg.coeffs(
+                    B <- .path_coeffs(
                         coefficients = coefficients[w, ],
                         groups.vector = groups.vector, group = groups[l]
                     )
