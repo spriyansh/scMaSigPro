@@ -5,6 +5,9 @@
 #' diagnostics of optimized model or full model.
 #'
 #' @importFrom stats residuals fitted rstandard predict
+#' @importFrom ggplot2 .data aes element_blank element_line geom_abline
+#'   geom_hline geom_point geom_smooth ggplot labs stat_qq stat_qq_line theme
+#'   theme_minimal
 #'
 #' @param scmpObj An object of class \code{\link{ScMaSigPro}}.
 #' @param feature_id Name of the gene to be plotted.

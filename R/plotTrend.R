@@ -3,7 +3,9 @@
 #' @description
 #' Plot trend of the single gene across the binned pseudotime.
 #'
-#' @import ggplot2
+#' @importFrom ggplot2 aes element_blank element_line geom_line geom_point
+#'   ggplot ggtitle labs scale_color_manual scale_x_continuous theme
+#'   theme_classic xlab ylab
 #'
 #' @param scmpObj An object of class \code{\link{ScMaSigPro}}.
 #' @param feature_id Name of the gene to be plotted.

@@ -49,7 +49,7 @@ exportMethods(eDense)
 exportMethods(eSparse)
 exportMethods(pathAssign)
 exportMethods(predictors)
-import(ggplot2)
+importClassesFrom(Matrix,dgCMatrix)
 importFrom(MASS,negative.binomial)
 importFrom(S4Vectors,
   DataFrame,
@@ -63,11 +63,39 @@ importFrom(SummarizedExperiment,
   "colData<-",
   assay
 )
+importFrom(ggplot2,
+  .data,
+  aes,
+  element_blank,
+  element_line,
+  element_text,
+  facet_wrap,
+  geom_abline,
+  geom_hline,
+  geom_line,
+  geom_path,
+  geom_point,
+  geom_smooth,
+  geom_text,
+  geom_tile,
+  ggplot,
+  ggtitle,
+  labs,
+  scale_color_manual,
+  scale_fill_gradient,
+  scale_x_continuous,
+  stat_qq,
+  stat_qq_line,
+  theme,
+  theme_classic,
+  theme_minimal,
+  xlab,
+  ylab
+)
 importFrom(maSigPro,
   make.design.matrix,
   reg.coeffs
 )
-importFrom(mclust,Mclust)
 importFrom(methods,
   as,
   is,

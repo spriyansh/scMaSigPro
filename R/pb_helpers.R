@@ -483,6 +483,8 @@ optimize_bin_max <- function(bin_table, max_allowed, verbose = TRUE,
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
 #'
+#' @importClassesFrom Matrix dgCMatrix
+#'
 #' @export
 
 pb_counts <- function(scmpObj,

@@ -3,10 +3,9 @@
 #' @description
 #' Plot trends of multiple genes (clustered) across the binned pseudotime.
 #'
-#' @import ggplot2
-#' @importFrom stats cutree hclust
-#' @importFrom mclust Mclust
-#' @importFrom stats as.dist cor kmeans
+#' @importFrom ggplot2 .data aes element_blank element_line element_text
+#'   facet_wrap geom_path geom_point geom_smooth ggplot labs scale_color_manual
+#'   theme theme_classic xlab ylab
 #'
 #' @param scmpObj An object of class \code{\link{ScMaSigPro}}.
 #' @param xlab X-axis label. (Default is "Pooled Pseudotime")
