@@ -80,3 +80,12 @@ test_that("updateObject() refuses an object binned by 0.0.4", {
     expect_valid_scmp(new_ob)
     expect_identical(eDense(new_ob), eDense(splat_binned()))
 })
+
+test_that("as_scmp() stores an up-to-date SingleCellExperiment", {
+    # splat.sim was saved by an older SingleCellExperiment. colData<- updates
+    # it when labels_exist = TRUE; as_scmp() now does so on both routes.
+    sce <- load_dataset("splat.sim")
+    ob <- as_scmp(sce, verbose = FALSE)
+    expect_identical(ob@Sparse, updateObject(sce))
+    expect_identical(updateObject(ob), ob)
+})
