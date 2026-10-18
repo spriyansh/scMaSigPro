@@ -22,3 +22,54 @@
     }
     invisible(TRUE)
 }
+
+#' Stop unless an object can go through a function of the package
+#'
+#' `.check_scmp()` opens every exported function that takes an
+#' `ScMaSigPro` object, before any work is done: the object must be of that
+#' class and have the `version` slot, which objects saved by scMaSigPro
+#' 0.0.5 and earlier lack until [updateObject()] adds it.
+#' `.check_dense_counts()` opens the functions that read the pseudo-bulk
+#' counts: the `Dense` slot must hold a `bulk.counts` assay, which it lacks
+#' after [cDense<-] changed the number of bins and before [pb_counts()] was
+#' run. Given `bins`, the bins of the design, the assay must also have a
+#' column for each of them, as the fits select the columns by name.
+#'
+#' @param scmpObj The object given to the function.
+#' @param bins `NULL`, or the names of the bins the function reads.
+#'
+#' @return `invisible(TRUE)` if the check passes; otherwise it signals an
+#'   error.
+#'
+#' @noRd
+.check_scmp <- function(scmpObj) {
+    .check(is(scmpObj, "ScMaSigPro"),
+        msg = "Please provide object of class 'ScMaSigPro'"
+    )
+    .check(.hasSlot(scmpObj, "version"),
+        msg = paste(
+            "This ScMaSigPro object was saved by an earlier version of",
+            "scMaSigPro: update it with updateObject() first."
+        )
+    )
+}
+
+.check_dense_counts <- function(scmpObj, bins = NULL) {
+    dense <- scmpObj@Dense
+    .check("bulk.counts" %in% assayNames(dense),
+        msg = paste(
+            "The 'Dense' slot has no 'bulk.counts' assay: run pb_counts()",
+            "after changing the bins with cDense<-."
+        )
+    )
+    if (!is.null(bins)) {
+        counts <- assay(dense, "bulk.counts", withDimnames = FALSE)
+        .check(all(bins %in% colnames(counts)),
+            msg = paste(
+                "The 'bulk.counts' assay has no counts for some bins of the",
+                "design: run pb_counts() after changing the bins with",
+                "cDense<-, then sc.set.poly()."
+            )
+        )
+    }
+}

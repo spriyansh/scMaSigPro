@@ -35,9 +35,7 @@ sc.restruct <- function(scmpObj,
                         link_sep = "_links_",
                         verbose = TRUE) {
     # Check Object Validity
-    .check(is(scmpObj, "ScMaSigPro"),
-        msg = "Please provide object of class 'ScMaSigPro'."
-    )
+    .check_scmp(scmpObj)
 
     # Check if values are binned
     .check(nrow(as.data.frame(colData(scmpObj@Dense))) >= 1,

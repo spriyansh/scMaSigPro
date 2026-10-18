@@ -48,6 +48,9 @@ plotTrend <- function(scmpObj,
     pooled.time <- "pooled.time"
     path <- "path"
 
+    # Check Object Validity
+    .check_scmp(scmpObj)
+
     # Offset
     offset_vector <- scmpObj@Design@offset
 
@@ -69,6 +72,7 @@ plotTrend <- function(scmpObj,
     alloc.frame <- as.data.frame(scmpObj@Design@assignment_matrix)
 
     # Extract the bulk counts
+    .check_dense_counts(scmpObj)
     bulk.counts <- assay(scmpObj@Dense, "bulk.counts", withDimnames = FALSE)
 
     # Check

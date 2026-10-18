@@ -31,9 +31,7 @@ queryCoeff <- function(scmpObj,
                        strictly = FALSE,
                        verbose = TRUE) {
     # Check Validity of the object
-    .check(is(scmpObj, "ScMaSigPro"),
-        msg = "Please provide object of class 'ScMaSigPro'"
-    )
+    .check_scmp(scmpObj)
     # Check for group_vector
     .check(!isEmpty(scmpObj@Design@groups.vector),
         msg = "'scmpObj@Design@groups.vector' is empty"

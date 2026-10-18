@@ -491,9 +491,7 @@ pb_counts <- function(scmpObj,
                       assay_name = "counts",
                       cluster_count_by = "sum") {
     # Check Object Validity
-    .check(is(scmpObj, "ScMaSigPro"),
-        msg = "Please provide object of class 'ScMaSigPro'."
-    )
+    .check_scmp(scmpObj)
 
     # Count slot
     .check(

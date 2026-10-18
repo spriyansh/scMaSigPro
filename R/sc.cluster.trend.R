@@ -56,6 +56,14 @@ sc.cluster.trend <- function(scmpObj,
     # Global vars
     scmp_clusters <- "scmp_clusters"
 
+    # Check Object Validity
+    .check_scmp(scmpObj)
+
+    # The gene sets come from sc.filter()
+    .check(!isEmpty(scmpObj@Significant@genes),
+        msg = "'Significant' slot is empty, please run 'sc.filter()' first."
+    )
+
     # Check if the gene set exists
     .check(
         any(geneSet %in% c(

@@ -23,6 +23,9 @@
 plotDiagnostics <- function(scmpObj,
                             feature_id,
                             model = "optimized") {
+    # Check Object Validity
+    .check_scmp(scmpObj)
+
     # Check if the results exist
     .check(!isEmpty(scmpObj@Significant@genes),
         msg = paste("No Significant genes found, please run the workflow first")
@@ -48,6 +51,7 @@ plotDiagnostics <- function(scmpObj,
     )
 
     # Get the counts for the genes
+    .check_dense_counts(scmpObj)
     y_mat <- as.matrix(
         assay(scmpObj@Dense, "bulk.counts", withDimnames = FALSE)
     )

@@ -28,7 +28,7 @@
       eval(cases[[nm]])
     Condition
       Error:
-      ! Please provide object of class 'ScMaSigPro'.
+      ! Please provide object of class 'ScMaSigPro'
 
 # sc.squeeze rejects an unknown pseudotime column
 

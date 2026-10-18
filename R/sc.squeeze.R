@@ -74,9 +74,7 @@ sc.squeeze <- function(scmpObj,
     cell <- "cell"
 
     # Check Object Validity
-    .check(is(scmpObj, "ScMaSigPro"),
-        msg = "Please provide object of class 'ScMaSigPro'."
-    )
+    .check_scmp(scmpObj)
 
     # Extract cell metadata
     raw_cell_metadata <- as.data.frame(colData(scmpObj@Sparse))
