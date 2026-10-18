@@ -55,7 +55,7 @@ plotTrend <- function(scmpObj,
     offset_vector <- scmpObj@Design@offset
 
     # Check summary_mode
-    .check(any(summary_mode %in% c("median", "mean")),
+    summary_mode <- .check_choice(summary_mode, c("median", "mean"),
         msg = paste(
             paste0("'", summary_mode, "'"),
             "is not a valid option. Please use one of",
@@ -67,6 +67,11 @@ plotTrend <- function(scmpObj,
     .check(curves || lines || points,
         msg = "At least one of 'curves', 'lines', or 'points' must be TRUE."
     )
+    if (logs) {
+        logType <- .check_choice(logType, c("log", "log2", "log10"),
+            msg = "'logType' should be one of 'log2', 'log10', 'log'"
+        )
+    }
 
     # Extract edisgn
     alloc.frame <- as.data.frame(scmpObj@Design@assignment_matrix)
@@ -187,8 +192,6 @@ plotTrend <- function(scmpObj,
                 } else if (logType == "log10") {
                     points.df$pb.counts <- log10(points.df$pb.counts + pseudoCount)
                     ylab <- paste0("log10(", ylab, ")")
-                } else {
-                    stop("'logType' should be one of 'log2', 'log10', 'log'")
                 }
             }
         }

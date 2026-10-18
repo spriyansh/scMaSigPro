@@ -32,7 +32,7 @@ plotDiagnostics <- function(scmpObj,
     )
 
     # Check model type
-    .check(all(model %in% c("optimized", "full", "intercept")),
+    model <- .check_choice(model, c("optimized", "full", "intercept"),
         msg = paste(
             "Invalid 'model', please select one of 'optimized', 'full' or",
             "'intercept'"

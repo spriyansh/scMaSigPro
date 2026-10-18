@@ -39,10 +39,7 @@ queryCoeff <- function(scmpObj,
 
     # Check for requested change
     if (!is.null(change)) {
-        .check(
-            all(
-                change %in% c("increasing", "decreasing")
-            ),
+        change <- .check_choice(change, c("increasing", "decreasing"),
             msg = paste(
                 "Invalid change, please select one of 'increasing' or",
                 "'decreasing'"
@@ -51,12 +48,8 @@ queryCoeff <- function(scmpObj,
     }
 
     # Check query
-    .check(
-        all(
-            query %in% c(
-                "pseudotime", "pseudotime_path", "path", "path_pseudotime"
-            )
-        ),
+    query <- .check_choice(query,
+        c("pseudotime", "pseudotime_path", "path", "path_pseudotime"),
         msg = paste(
             "Invalid query, please select one of 'pseudotime',",
             "'pseudotime_path' or 'path'"

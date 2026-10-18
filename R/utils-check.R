@@ -73,3 +73,37 @@
         )
     }
 }
+
+#' Check the arguments that take a choice or a name
+#'
+#' `.check_choice()` returns `x` if it is one of `choices`, given once, and
+#' otherwise stops with `msg`, the message of the calling function. Unlike
+#' [match.arg()], it does not match partially and keeps that message.
+#'
+#' `.check_strings()` stops unless each of its named arguments is a single
+#' non-missing character string, such as a column name or a label.
+#'
+#' @param x The value of the argument.
+#' @param choices A character vector, the accepted values.
+#' @param msg A character vector: the error message.
+#' @param ... Named arguments to check.
+#'
+#' @return `.check_choice()`: `x`. `.check_strings()`: `invisible(TRUE)`.
+#'   Both signal an error if a check fails.
+#'
+#' @noRd
+.check_choice <- function(x, choices, msg) {
+    .check(length(x) == 1L && x %in% choices, msg = msg)
+    x
+}
+
+.check_strings <- function(...) {
+    args <- list(...)
+    for (name in names(args)) {
+        x <- args[[name]]
+        .check(is.character(x) && length(x) == 1L && !is.na(x),
+            msg = paste0("'", name, "' must be a single character string.")
+        )
+    }
+    invisible(TRUE)
+}

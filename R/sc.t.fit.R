@@ -74,6 +74,13 @@ sc.t.fit <- function(scmpObj,
     .check(link %in% c("log", "identity"),
         msg = "link function should be either 'log' or 'identity'"
     )
+    selection_method <- .check_choice(selection_method,
+        c("backward", "forward", "two.ways.backward", "two.ways.forward"),
+        msg = paste(
+            "stepwise method must be one of backward, forward,",
+            "two.ways.backward, two.ways.forward"
+        )
+    )
 
     # Update the family
     family[["link"]] <- link
@@ -131,8 +138,6 @@ sc.t.fit <- function(scmpObj,
         step_fun <- sc.two.ways.stepback
     } else if (selection_method == "two.ways.forward") {
         step_fun <- sc.two.ways.stepfor
-    } else {
-        stop("stepwise method must be one of backward, forward, two.ways.backward, two.ways.forward")
     }
 
     if (verbose) {

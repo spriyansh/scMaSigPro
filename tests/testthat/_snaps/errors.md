@@ -91,7 +91,7 @@
     Code
       eval(cases[[nm]])
     Condition
-      Error in `sc.t.fit()`:
+      Error:
       ! stepwise method must be one of backward, forward, two.ways.backward, two.ways.forward
 
 # sc.filter rejects an unknown vars

@@ -36,6 +36,10 @@ sc.restruct <- function(scmpObj,
                         verbose = TRUE) {
     # Check Object Validity
     .check_scmp(scmpObj)
+    .check_strings(assay_name = assay_name)
+    aggregate <- .check_choice(aggregate, c("sum", "mean"),
+        msg = "Invalid 'aggregate' value. Please choose either 'mean' or 'sum'."
+    )
 
     # Check if values are binned
     .check(nrow(as.data.frame(colData(scmpObj@Dense))) >= 1,

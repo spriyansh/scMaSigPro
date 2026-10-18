@@ -32,6 +32,7 @@ sc.set.poly <- function(scmpObj,
                         path_col = scmpObj@Parameters@path_col) {
     # Check Object Validity
     .check_scmp(scmpObj)
+    .check_strings(bin_ptime_col = bin_ptime_col, path_col = path_col)
 
     # Extract cell metadata
     comp.cell.metadata <- as.data.frame(colData(scmpObj@Dense))
