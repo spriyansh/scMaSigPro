@@ -77,7 +77,7 @@ cell level metadata, and other optional parameters.</p>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">create_scmp</span><span class="op">(</span></span>
 <span>  <span class="va">counts</span>,</span>
 <span>  <span class="va">cell_data</span>,</span>
-<span>  <span class="va">feature_data</span>,</span>
+<span>  feature_data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bin_counts <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  bin_cell_data <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  <span class="va">ptime_col</span>,</span>
@@ -99,17 +99,24 @@ cell level metadata, and other optional parameters.</p>
 
 
 <dt id="arg-feature-data">feature_data<a class="anchor" aria-label="anchor" href="#arg-feature-data"></a></dt>
-<dd><p>A data frame containing the feature level metadata.</p></dd>
+<dd><p>Optional data frame of gene metadata, one row per gene
+of <code>counts</code> (named like them, or with automatic row names). It becomes the
+<code>rowData()</code> of the <code>Sparse</code> slot, and of the <code>Dense</code> slot when this
+function builds it.</p></dd>
 
 
 <dt id="arg-bin-counts">bin_counts<a class="anchor" aria-label="anchor" href="#arg-bin-counts"></a></dt>
-<dd><p>A matrix containing the binned counts. (Only if
-use_as_bin == TRUE)</p></dd>
+<dd><p>Optional pseudo-bulk counts of bins made outside
+scMaSigPro: a matrix with the genes of <code>counts</code> as rows, in the same
+order, and one column per bin. Requires <code>bin_cell_data</code>; not with
+<code>use_as_bin = TRUE</code>.</p></dd>
 
 
 <dt id="arg-bin-cell-data">bin_cell_data<a class="anchor" aria-label="anchor" href="#arg-bin-cell-data"></a></dt>
-<dd><p>A data frame containing the binned cell level metadata.
-(Only if use_as_bin == TRUE)</p></dd>
+<dd><p>A data frame with one row per bin, named like the
+columns of <code>bin_counts</code>, holding the binned pseudotime in <code>ptime_col</code> and
+the path in <code>path_col</code>. A <code>scmp_bin_size</code> column gives the number of cells
+of each bin; without it the sizes are <code>NA</code>.</p></dd>
 
 
 <dt id="arg-ptime-col">ptime_col<a class="anchor" aria-label="anchor" href="#arg-ptime-col"></a></dt>
@@ -130,6 +137,14 @@ pseudotime binning. Defaults to FALSE.</p></dd>
     <div id="value">
     <h2>Value</h2>
     <p>An object of class <code><a href="ScMaSigPro-class.html">ScMaSigPro</a></code>, with aligned pseudotime.</p>
+    </div>
+    <div id="details">
+    <h2>Details</h2>
+    <p>The <code>Dense</code> slot holds the bins. By default it is empty and
+<code><a href="sc.squeeze.html">sc.squeeze()</a></code> bins the cells. With <code>use_as_bin = TRUE</code> every cell is a
+bin. With <code>bin_counts</code> and <code>bin_cell_data</code> it holds bins made outside
+scMaSigPro, and the workflow continues with <code><a href="sc.set.poly.html">sc.set.poly()</a></code>; such bins
+have no member cells, so <code><a href="pb_counts.html">pb_counts()</a></code> and <code><a href="sc.restruct.html">sc.restruct()</a></code> do not apply.</p>
     </div>
     <div id="author">
     <h2>Author</h2>

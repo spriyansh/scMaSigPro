@@ -87,9 +87,9 @@ ScMaSigPro object."><meta property="og:image" content="/logo.png"><!-- mathjax -
 
 
 <dt id="arg-i">i<a class="anchor" aria-label="anchor" href="#arg-i"></a></dt>
-<dd><p>The name of the assay to retrieve expression counts for.
-The default value "counts" is a placeholder that results in the method returning
-the first assay's data found in the Sparse slot.</p></dd>
+<dd><p>The name of the assay to retrieve expression counts for. The
+default, "counts", returns the counts, or the first assay when the Sparse
+slot has no assay called "counts".</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
@@ -98,8 +98,7 @@ the first assay's data found in the Sparse slot.</p></dd>
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An expression matrix for the specified (or first, by default) assay
-from the Sparse slot.</p>
+    <p>An expression matrix for the specified assay from the Sparse slot.</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>

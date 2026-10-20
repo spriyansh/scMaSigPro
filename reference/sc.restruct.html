@@ -123,7 +123,10 @@ within each cluster. Available options are 'mean' or 'sum'. (Default = "sum").</
 
 
 <dt id="arg-link-sep">link_sep<a class="anchor" aria-label="anchor" href="#arg-link-sep"></a></dt>
-<dd><p>A character string to separate the link nodes. (Default = "<em>links</em>")</p></dd>
+<dd><p>A character string that separates the two nodes in the
+label of a link node. It is matched as fixed text when the label contains
+it, and as a regular expression otherwise, so <code>"|"</code> and <code>"\\|"</code> both work.
+(Default = <code>"_links_"</code>)</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
