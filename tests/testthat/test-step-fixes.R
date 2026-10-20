@@ -156,3 +156,56 @@ test_that("hclust with another distance clusters the genes (ledger S4)", {
         splat_clustered()@Significant@clusters
     )
 })
+
+test_that("split_bins stops when splitting makes no progress (ledger Q2)", {
+    # Freedman-Diaconis and Scott split each large bin of splat.sim into one
+    # bin, so the loop never ended: the time limit guards a regression
+    on.exit(setTimeLimit(elapsed = Inf), add = TRUE)
+    for (method in c("Freedman.Diaconis", "Scott.Normal")) {
+        setTimeLimit(elapsed = 30, transient = TRUE)
+        expect_error(
+            sc.squeeze(splat_scmp(), bin_method = method, split_bins = TRUE),
+            paste0("with bin_method = '", method, "' makes no progress"),
+            fixed = TRUE
+        )
+        setTimeLimit(elapsed = Inf)
+    }
+    # Control: a rule whose splits make progress
+    split <- sc.squeeze(splat_scmp(), bin_method = "Sturges", split_bins = TRUE)
+    expect_identical(ncol(split@Dense), 25L)
+})
+
+restruct_multi <- function(ob, link, sep) {
+    sc.restruct(ob,
+        end_node_list = list("Y_15", "Y_18", "Y_52"), root_node = "Root",
+        link_node_list = list(link), link_sep = sep, verbose = FALSE
+    )
+}
+
+test_that("sc.restruct() uses the path column of the object (ledger i)", {
+    x <- multi_cell_data()
+    names(x$cell_data)[names(x$cell_data) == "group"] <- "lineage"
+    ob <- sc.squeeze(create_scmp(
+        counts = x$counts, cell_data = x$cell_data,
+        ptime_col = "Monocle3_Pseudotime", path_col = "lineage"
+    ))
+    rs <- restruct_multi(ob, "Y_18_links_Y_15", "_links_")
+    ref <- multi_restruct()
+    expect_identical(eDense(rs), eDense(ref))
+    bins <- cDense(rs)
+    names(bins)[names(bins) == "lineage"] <- "group"
+    expect_identical(bins, cDense(ref))
+})
+
+test_that("sc.restruct() splits on a fixed link_sep (ledger B5)", {
+    x <- multi_cell_data()
+    x$cell_data$group <- gsub("_links_", "|", x$cell_data$group, fixed = TRUE)
+    ob <- sc.squeeze(create_scmp(
+        counts = x$counts, cell_data = x$cell_data,
+        ptime_col = "Monocle3_Pseudotime", path_col = "group"
+    ))
+    fixed <- restruct_multi(ob, "Y_18|Y_15", "|")
+    expect_identical(eDense(fixed), eDense(multi_restruct()))
+    # Control: the escaped regular expression
+    expect_identical(restruct_multi(ob, "Y_18|Y_15", "\\|"), fixed)
+})
