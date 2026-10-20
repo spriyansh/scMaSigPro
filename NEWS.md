@@ -74,6 +74,7 @@
 
 * Documentation
     * The `ScMaSigPro` class help page explains why the class holds two `SingleCellExperiment` objects and its own result classes instead of extending `SingleCellExperiment`, and no longer says that it inherits from it. The help page of `assign_paths()` describes the input contract: the cell table of pseudotime and path labels that `create_scmp()` and `as_scmp()` take, which code outside the package, such as a companion package for Monocle3, should return. `as_scmp()` and `create_scmp()` point to `assign_paths()` and `paths_from_graph()`.
+    * The vignettes read the bundled data and the results through accessors instead of slots: `colData()` and `rowData()` for `splat.sim`, `predictors()` for the design and `scmpResults()` for the p-values and gene lists. Their results are unchanged.
 
 * Internal
     * Unused code is removed: debugging leftovers, commented-out code, the never-enabled `useWeights` branches of `sc.p.vector()` and `sc.t.fit()`, the unexported and broken `ScMaSigPro()` constructor, and 19 unused `importFrom` directives. Results are unchanged.
