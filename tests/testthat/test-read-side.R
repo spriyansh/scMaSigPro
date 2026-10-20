@@ -90,3 +90,69 @@ test_that("printing a restructured object lists its bin paths (ledger S8)", {
     out <- capture.output(print(splat_scmp()))
     expect_true("Branching Paths: Path2, Path1" %in% out)
 })
+
+test_that("plotTrend() uses every power of the degree (ledger d)", {
+    ob <- sc.squeeze(splat_scmp(), bin_method = "Sqrt")
+    ob <- sc.p.vector(sc.set.poly(ob, poly_degree = 7), verbose = FALSE)
+    ob <- sc.filter(sc.t.fit(ob, verbose = FALSE), vars = "groups")
+    gene <- sort(unique(unlist(ob@Significant@genes)))[1]
+    curve <- plotTrend(ob, gene)$layers$curves$data
+    curve <- curve[curve$path == "Path1", ]
+    beta <- unlist(showGroupCoeff(ob)[gene, paste0("Path1_beta", 0:7)])
+    beta[is.na(beta)] <- 0
+    expected <- vapply(curve$x, function(x) sum(beta * x^(0:7)), numeric(1))
+    expect_equal(curve$y, expected, tolerance = 1e-10)
+})
+
+test_that("plotTrendCluster() names the genes it leaves out (ledger m)", {
+    ob <- splat_clustered()
+    left_out <- names(ob@Significant@clusters)[1]
+    ob@Significant@genes <- lapply(ob@Significant@genes, setdiff, left_out)
+    expect_warning(
+        plotTrendCluster(ob, significant = TRUE, verbose = FALSE),
+        paste("No trend for 1 gene(s), left out of the plot:", left_out),
+        fixed = TRUE
+    )
+    # Control: no warning when every gene has a trend
+    expect_no_warning(plotTrendCluster(splat_clustered(), verbose = FALSE))
+})
+
+test_that("plotTrendCluster() draws lines with or without offset (ledger L2)", {
+    ob <- splat_clustered()
+    # With an offset the lines are the points, also without the points layer
+    p <- plotTrendCluster(ob, lines = TRUE, verbose = FALSE)
+    lines_only <- plotTrendCluster(ob,
+        lines = TRUE, points = FALSE, verbose = FALSE
+    )
+    expect_identical(lines_only$layers[[1]]$data, p$layers[[1]]$data)
+    # Without an offset the lines summarise the counts of each path
+    ob@Design@offset[] <- 0
+    p <- plotTrendCluster(ob, lines = TRUE, verbose = FALSE)
+    lines <- p$layers[[2]]$data
+    expect_type(lines$y_axis, "double")
+    expect_setequal(lines$group, c("Path1", "Path2"))
+})
+
+test_that("plotTrendCluster() titles each cluster by its genes (ledger S5)", {
+    set.seed(1)
+    ob <- sc.cluster.trend(splat_filtered(),
+        geneSet = "union", k = 4, cluster_method = "kmeans"
+    )
+    clusters <- unlist(ob@Significant@clusters)
+    p <- plotTrendCluster(ob, verbose = FALSE)
+    points <- p$layers[[1]]$data
+    for (id in unique(clusters)) {
+        genes <- names(clusters)[clusters == id]
+        title <- paste0("Cluster: ", id, " (", length(genes), " Features)")
+        # The median over the genes of the cluster, per bin and path
+        each <- do.call(rbind, lapply(genes, function(g) {
+            plotTrend(ob, g, significant = FALSE)$layers$points$data
+        }))
+        expected <- .summarise_by(
+            each, c("pooled.time", "path"), "pb.counts", median
+        )
+        got <- points[points$cluster == title, ]
+        got <- got[order(got$x_axis, got$group), ]
+        expect_identical(got$y_axis, expected$pb.counts, info = title)
+    }
+})
