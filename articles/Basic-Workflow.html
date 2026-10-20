@@ -166,8 +166,8 @@ using a simulated dataset included in the package, simulated via <a href="https:
 <span></span>
 <span><span class="co"># Extract PCA</span></span>
 <span><span class="va">df</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SingleCellExperiment/man/reducedDims.html" class="external-link">reducedDim</a></span><span class="op">(</span><span class="va">splat.sim</span><span class="op">)</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">2</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span>
-<span><span class="va">df</span><span class="op">$</span><span class="va">Step</span> <span class="op">&lt;-</span> <span class="va">splat.sim</span><span class="op">@</span><span class="va">colData</span><span class="op">$</span><span class="va">Step</span></span>
-<span><span class="va">df</span><span class="op">$</span><span class="va">Group</span> <span class="op">&lt;-</span> <span class="va">splat.sim</span><span class="op">@</span><span class="va">colData</span><span class="op">$</span><span class="va">Group</span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">Step</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">splat.sim</span><span class="op">)</span><span class="op">$</span><span class="va">Step</span></span>
+<span><span class="va">df</span><span class="op">$</span><span class="va">Group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">splat.sim</span><span class="op">)</span><span class="op">$</span><span class="va">Group</span></span>
 <span></span>
 <span><span class="co"># Plot the data</span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span></span>
@@ -215,7 +215,7 @@ each path, which we can treat as a pseudotime variable, and the
 <em>Group</em> column has information regarding branching path, i.e., to
 which branching path each of the cell belongs. We can view this
 information by executing
-<code>View(as.data.frame(splat.sim@colData)).</code></p>
+<code>View(as.data.frame(colData(splat.sim)))</code>.</p>
 <pre><code><span><span class="co">##        Cell  Batch Group ExpLibSize Step sizeFactor</span></span>
 <span><span class="co">## Cell1 Cell1 Batch1 Path2   56391.37   42  0.8847501</span></span>
 <span><span class="co">## Cell2 Cell2 Batch1 Path1   54923.49   41  0.7779386</span></span>
@@ -493,7 +493,7 @@ providing insights into their behavior in different paths. Fortunately,
 since we are using simulated data, we can validate these trends by
 extracting gene-level metadata from our simulated object:</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">groundTruth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="va">splat.sim</span><span class="op">@</span><span class="va">rowRanges</span><span class="op">@</span><span class="va">elementMetadata</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">groundTruth</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">rowData</a></span><span class="op">(</span><span class="va">splat.sim</span><span class="op">)</span>, row.names <span class="op">=</span> <span class="cn">NULL</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">groundTruth</span><span class="op">[</span><span class="va">groundTruth</span><span class="op">$</span><span class="va">Gene</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Gene9"</span>, <span class="st">"Gene95"</span>, <span class="st">"Gene10"</span>, <span class="st">"Gene92"</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">6</span>, <span class="fl">8</span><span class="op">)</span><span class="op">]</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##      Gene BaseGeneMean DEFacPath1 DEFacPath2</span></span>
 <span><span class="co">## 9   Gene9    0.5478075  1.5743095  1.0000000</span></span>
