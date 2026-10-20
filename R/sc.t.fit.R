@@ -87,7 +87,6 @@ sc.t.fit <- function(scmpObj,
 
     # Transfer Data
     dis <- scmpObj@Design@predictor_matrix
-    p_value <- scmpObj@Parameters@p_value
     groups.vector <- scmpObj@Design@groups.vector
     groups.vector <- c(
         groups.vector[nchar(groups.vector) == min(nchar(groups.vector))][1],
@@ -147,11 +146,14 @@ sc.t.fit <- function(scmpObj,
         )
     }
 
+    # The fits name the terms by their position (see .fit_frame()); vars.in
+    # keeps the design names for the columns of the results
+    fit_dis <- .fit_frame(dis)
     result_list <- bplapply(names(y_input), .tfit_gene,
-        y_input = y_input, step_fun = step_fun, dis = dis, family = family,
-        epsilon = epsilon, offset_data = offsetData, vars_in = vars.in,
-        alfa = p_value, influ_info = influ.info, max_it = max_it,
-        BPPARAM = BPPARAM
+        y_input = y_input, step_fun = step_fun, dis = fit_dis,
+        family = family, epsilon = epsilon, offset_data = offsetData,
+        vars_in = names(fit_dis), alfa = p_value, influ_info = influ.info,
+        max_it = max_it, BPPARAM = BPPARAM
     )
 
     #--------------------------------------------
@@ -188,6 +190,12 @@ sc.t.fit <- function(scmpObj,
 
     # Create scmpObjframe
     sol <- do.call("rbind", sol.list)
+    .check(!is.null(sol),
+        msg = paste0(
+            "No gene has a coefficient significant at p_value = ", p_value,
+            ". Try a larger 'p_value'."
+        )
+    )
     coefficients <- do.call("rbind", coeff.list)
     t.score <- do.call("rbind", t.list)
     influ.info <- do.call("cbind", influ.info.list)
