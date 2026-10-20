@@ -75,6 +75,20 @@ trajectory beyond the root, such as two of three lineages that split at
 the root; their label is built the same way, so relabel or remove them
 before \code{\link[=sc.restruct]{sc.restruct()}} if they are not a link.
 }
+\section{Input contract}{
+
+scMaSigPro needs one pseudotime value and one path label per cell, and
+nothing else from the tool that inferred the trajectory. \code{\link[=create_scmp]{create_scmp()}}
+takes them as a data frame named by cell, such as the result of
+\code{assign_paths()}, and \code{\link[=as_scmp]{as_scmp()}} as two \code{colData()} columns of a
+\code{SingleCellExperiment}. Code outside this package that reads a
+trajectory, such as a companion package for Monocle3 objects or an
+interactive branch selector, returns that data frame, or the R code that
+builds it with \code{\link[=paths_from_graph]{paths_from_graph()}} and \code{assign_paths()}. Its path labels
+follow the rules in Details, so that \code{\link[=sc.restruct]{sc.restruct()}} can rebuild the
+paths that share a root.
+}
+
 \examples{
 # Three lineages: cells 1 and 2 are on all of them, cell 3 on A and B
 weights <- matrix(

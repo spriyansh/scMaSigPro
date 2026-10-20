@@ -47,6 +47,18 @@
 #' the root; their label is built the same way, so relabel or remove them
 #' before [sc.restruct()] if they are not a link.
 #'
+#' @section Input contract:
+#' scMaSigPro needs one pseudotime value and one path label per cell, and
+#' nothing else from the tool that inferred the trajectory. [create_scmp()]
+#' takes them as a data frame named by cell, such as the result of
+#' `assign_paths()`, and [as_scmp()] as two `colData()` columns of a
+#' `SingleCellExperiment`. Code outside this package that reads a
+#' trajectory, such as a companion package for Monocle3 objects or an
+#' interactive branch selector, returns that data frame, or the R code that
+#' builds it with [paths_from_graph()] and `assign_paths()`. Its path labels
+#' follow the rules in Details, so that [sc.restruct()] can rebuild the
+#' paths that share a root.
+#'
 #' @return A data frame with one row per cell that is on at least one
 #' lineage, in the order of the rows of `weights` and named by cell, and two
 #' columns: `Pseudotime` (numeric) and `Path` (character). Pass it to
