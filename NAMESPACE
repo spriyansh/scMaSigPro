@@ -30,6 +30,8 @@ export(sc.restruct)
 export(sc.set.poly)
 export(sc.squeeze)
 export(sc.t.fit)
+export(scmpResults)
+export(scmpToRowData)
 export(showCoeff)
 export(showGroupCoeff)
 export(showInflu)
@@ -71,8 +73,10 @@ importFrom(SingleCellExperiment,
 importFrom(SummarizedExperiment,
   "assay<-",
   "colData<-",
+  "rowData<-",
   assay,
-  assayNames
+  assayNames,
+  rowData
 )
 importFrom(ggplot2,
   .data,
