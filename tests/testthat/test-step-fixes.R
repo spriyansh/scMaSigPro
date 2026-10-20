@@ -122,3 +122,37 @@ test_that("the fits do not depend on the design names (ledger N1)", {
         }
     }
 })
+
+test_that("Mclust names one-component clusters by gene (ledger C1)", {
+    skip_if_not_installed("mclust")
+    ob <- splat_filtered()
+    genes <- rownames(showCoeff(ob))
+    genes <- genes[genes %in% Reduce(union, ob@Significant@genes)]
+    clusters <- sc.cluster.trend(ob,
+        geneSet = "union", k = 1, cluster_method = "Mclust"
+    )@Significant@clusters
+    expect_identical(clusters, as.list(setNames(rep(1, length(genes)), genes)))
+})
+
+test_that("hclust with another distance clusters the genes (ledger S4)", {
+    ob <- splat_filtered()
+    genes <- Reduce(union, ob@Significant@genes)
+    coeff <- as.matrix(showCoeff(ob))
+    coeff <- coeff[rownames(coeff) %in% genes, , drop = FALSE]
+    coeff[is.na(coeff)] <- 0
+    for (method in c("euclidean", "manhattan")) {
+        expected <- cutree(
+            hclust(dist(coeff, method = method), method = "ward.D"),
+            k = 4
+        )
+        clusters <- sc.cluster.trend(ob,
+            geneSet = "union", k = 4, hclust.distance = method
+        )@Significant@clusters
+        expect_identical(clusters, as.list(expected), info = method)
+    }
+    # Control: the default correlation distance
+    expect_identical(
+        sc.cluster.trend(ob, geneSet = "union", k = 4)@Significant@clusters,
+        splat_clustered()@Significant@clusters
+    )
+})
