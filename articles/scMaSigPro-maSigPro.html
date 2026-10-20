@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scMaSigPro</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.5.9000</span>
       </span>
     </div>
 
@@ -98,7 +98,7 @@ maSigPro workflow with scMaSigPro</h3>
 Srivastava</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/BioBam/scMaSigPro/blob/devel/vignettes/scMaSigPro-maSigPro.Rmd" class="external-link"><code>vignettes/scMaSigPro-maSigPro.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/BioBam/scMaSigPro/blob/main/vignettes/scMaSigPro-maSigPro.Rmd" class="external-link"><code>vignettes/scMaSigPro-maSigPro.Rmd</code></a></small>
       <div class="hidden name"><code>scMaSigPro-maSigPro.Rmd</code></div>
 
     </div>
@@ -162,7 +162,7 @@ installed as follows:</p>
 <code class="sourceCode R"><span><span class="co"># Install BiocManager if needed, then scMaSigPro together with its</span></span>
 <span><span class="co"># Bioconductor dependencies from GitHub</span></span>
 <span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"BioBam/scMaSigPro"</span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
@@ -173,7 +173,7 @@ the following steps:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Install Bioconductor if not already installed</span></span>
 <span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st"><a href="https://bioconductor.github.io/BiocManager/" class="external-link">"BiocManager"</a></span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="co"># install maSigPro</span></span>
@@ -244,13 +244,13 @@ internally, reducing the likelihood of errors.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Add group column</span></span>
 <span><span class="va">metadata</span><span class="op">$</span><span class="va">Group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/apply.html" class="external-link">apply</a></span><span class="op">(</span><span class="va">metadata</span><span class="op">[</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3</span><span class="op">:</span><span class="fl">6</span><span class="op">)</span><span class="op">]</span>, <span class="fl">1</span>, FUN <span class="op">=</span> <span class="kw">function</span><span class="op">(</span><span class="va">x</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="va">x</span> <span class="op">==</span> <span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
+<span>    <span class="kw"><a href="https://rdrr.io/r/base/function.html" class="external-link">return</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">x</span><span class="op">[</span><span class="va">x</span> <span class="op">==</span> <span class="fl">1</span><span class="op">]</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">}</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Remove binary columns</span></span>
-<span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="va">metadata</span><span class="op">[</span>, <span class="op">!</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">metadata</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Control"</span>, <span class="st">"Cold"</span>, <span class="st">"Heat"</span>, <span class="st">"Salt"</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>drop <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span><span class="va">metadata</span> <span class="op">&lt;-</span> <span class="va">metadata</span><span class="op">[</span>,</span>
+<span>    <span class="op">!</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">metadata</span><span class="op">)</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Control"</span>, <span class="st">"Cold"</span>, <span class="st">"Heat"</span>, <span class="st">"Salt"</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    drop <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">]</span></span>
 <span></span>
 <span><span class="co"># View</span></span>
@@ -281,11 +281,11 @@ scmpObject, allowing us to proceed with the analysis without using
 pseudo-bulking.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">scmp_ob</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/create_scmp.html">create_scmp</a></span><span class="op">(</span></span>
-<span>  counts <span class="op">=</span> <span class="va">count</span>,</span>
-<span>  cell_data <span class="op">=</span> <span class="va">metadata</span>,</span>
-<span>  ptime_col <span class="op">=</span> <span class="st">"Time"</span>,</span>
-<span>  path_col <span class="op">=</span> <span class="st">"Group"</span>,</span>
-<span>  use_as_bin <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    counts <span class="op">=</span> <span class="va">count</span>,</span>
+<span>    cell_data <span class="op">=</span> <span class="va">metadata</span>,</span>
+<span>    ptime_col <span class="op">=</span> <span class="st">"Time"</span>,</span>
+<span>    path_col <span class="op">=</span> <span class="st">"Group"</span>,</span>
+<span>    use_as_bin <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Print Console output</span></span>
@@ -312,8 +312,8 @@ mismatches; if everything is identical, it will not throw an error. The
 the <code>scMaSigPro</code> object.</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html" class="external-link">expect_identical</a></span><span class="op">(</span></span>
-<span>  object <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="../reference/eDense.html">eDense</a></span><span class="op">(</span><span class="va">scmp_ob</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  expected <span class="op">=</span> <span class="va">data.abiotic</span></span>
+<span>    object <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="../reference/eDense.html">eDense</a></span><span class="op">(</span><span class="va">scmp_ob</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>    expected <span class="op">=</span> <span class="va">data.abiotic</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>No errors were thrown, indicating that our setup is correct and we
 can proceed with the analysis.</p>
@@ -360,30 +360,31 @@ Since we are not dealing with scRNA-Seq data, we will disable this
 parameter.</p>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Using maSigPro</span></span>
-<span><span class="va">gc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://testthat.r-lib.org/reference/capture_output.html" class="external-link">capture_output</a></span><span class="op">(</span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/maSigPro/man/p.vector.html" class="external-link">p.vector</a></span><span class="op">(</span><span class="va">data.abiotic</span>, <span class="va">design</span>,</span>
-<span>  Q <span class="op">=</span> <span class="fl">0.05</span>,</span>
-<span>  MT.adjust <span class="op">=</span> <span class="st">"BH"</span>, min.obs <span class="op">=</span> <span class="fl">20</span></span>
+<span><span class="va">gc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://testthat.r-lib.org/reference/capture_output.html" class="external-link">capture_output</a></span><span class="op">(</span><span class="va">fit</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/maSigPro/man/p.vector.html" class="external-link">p.vector</a></span><span class="op">(</span></span>
+<span>    <span class="va">data.abiotic</span>, <span class="va">design</span>,</span>
+<span>    Q <span class="op">=</span> <span class="fl">0.05</span>,</span>
+<span>    MT.adjust <span class="op">=</span> <span class="st">"BH"</span>, min.obs <span class="op">=</span> <span class="fl">20</span></span>
 <span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Using ScMaSigPro</span></span>
 <span><span class="va">scmp_ob</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sc.p.vector.html">sc.p.vector</a></span><span class="op">(</span><span class="va">scmp_ob</span>,</span>
-<span>  min_na <span class="op">=</span> <span class="fl">20</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  link <span class="op">=</span> <span class="st">"identity"</span>,</span>
-<span>  offset <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  max_it <span class="op">=</span> <span class="fl">25</span>,</span>
-<span>  epsilon <span class="op">=</span> <span class="fl">0.00001</span>,</span>
-<span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">gaussian</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>    min_na <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>    verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    link <span class="op">=</span> <span class="st">"identity"</span>,</span>
+<span>    offset <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    max_it <span class="op">=</span> <span class="fl">25</span>,</span>
+<span>    epsilon <span class="op">=</span> <span class="fl">0.00001</span>,</span>
+<span>    family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">gaussian</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>Now, we’ll compare the S3 object
 <code>fit from</code>maSigPro::p.vector()<code>with the  results from</code>sc.p.vector()`:</p>
 <div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Compare p-values</span></span>
 <span><span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html" class="external-link">expect_identical</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="va">scmp_ob</span><span class="op">@</span><span class="va">Profile</span><span class="op">@</span><span class="va">p_values</span>,</span>
-<span>    dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">scmp_ob</span><span class="op">@</span><span class="va">Profile</span><span class="op">@</span><span class="va">p_values</span><span class="op">)</span>, <span class="st">"p.value"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span>,</span>
-<span>  expected <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">fit</span><span class="op">$</span><span class="va">p.vector</span><span class="op">[</span>, <span class="fl">1</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">matrix</a></span><span class="op">(</span><span class="va">scmp_ob</span><span class="op">@</span><span class="va">Profile</span><span class="op">@</span><span class="va">p_values</span>,</span>
+<span>        dimnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/names.html" class="external-link">names</a></span><span class="op">(</span><span class="va">scmp_ob</span><span class="op">@</span><span class="va">Profile</span><span class="op">@</span><span class="va">p_values</span><span class="op">)</span>, <span class="st">"p.value"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span>,</span>
+<span>    expected <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html" class="external-link">as.matrix</a></span><span class="op">(</span><span class="va">fit</span><span class="op">$</span><span class="va">p.vector</span><span class="op">[</span>, <span class="fl">1</span>, drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Compare adjusted p-values</span></span>
@@ -404,10 +405,10 @@ polynomial terms for each gene, using <code><a href="https://rdrr.io/pkg/maSigPr
 <span></span>
 <span><span class="co"># Using scMaSigPro</span></span>
 <span><span class="va">scmp_ob</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sc.t.fit.html">sc.t.fit</a></span><span class="op">(</span><span class="va">scmp_ob</span>,</span>
-<span>  offset <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  epsilon <span class="op">=</span> <span class="fl">0.00001</span>,</span>
-<span>  family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">gaussian</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>    offset <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    epsilon <span class="op">=</span> <span class="fl">0.00001</span>,</span>
+<span>    family <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/family.html" class="external-link">gaussian</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>We will compare the s3 object <code>tstep</code> from
 <code><a href="https://rdrr.io/pkg/maSigPro/man/T.fit.html" class="external-link">maSigPro::T.fit()</a></code> with the results from
@@ -443,22 +444,22 @@ with the results from sc.filter()’:</p>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Compare Cold vs Control</span></span>
 <span><span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html" class="external-link">expect_identical</a></span><span class="op">(</span><span class="va">scmp_ob</span><span class="op">@</span><span class="va">Significant</span><span class="op">@</span><span class="va">genes</span><span class="op">$</span><span class="va">ColdvsControl</span>,</span>
-<span>  expected <span class="op">=</span> <span class="va">sigs</span><span class="op">$</span><span class="va">summary</span><span class="op">$</span><span class="va">ColdvsControl</span></span>
+<span>    expected <span class="op">=</span> <span class="va">sigs</span><span class="op">$</span><span class="va">summary</span><span class="op">$</span><span class="va">ColdvsControl</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Compare Heat vs Control</span></span>
 <span><span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html" class="external-link">expect_identical</a></span><span class="op">(</span><span class="va">scmp_ob</span><span class="op">@</span><span class="va">Significant</span><span class="op">@</span><span class="va">genes</span><span class="op">$</span><span class="va">HeatvsControl</span>,</span>
-<span>  expected <span class="op">=</span> <span class="va">sigs</span><span class="op">$</span><span class="va">summary</span><span class="op">$</span><span class="va">HeatvsControl</span><span class="op">[</span><span class="va">sigs</span><span class="op">$</span><span class="va">summary</span><span class="op">$</span><span class="va">HeatvsControl</span> <span class="op">!=</span> <span class="st">" "</span><span class="op">]</span></span>
+<span>    expected <span class="op">=</span> <span class="va">sigs</span><span class="op">$</span><span class="va">summary</span><span class="op">$</span><span class="va">HeatvsControl</span><span class="op">[</span><span class="va">sigs</span><span class="op">$</span><span class="va">summary</span><span class="op">$</span><span class="va">HeatvsControl</span> <span class="op">!=</span> <span class="st">" "</span><span class="op">]</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Compare Salt vs Control</span></span>
 <span><span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html" class="external-link">expect_identical</a></span><span class="op">(</span><span class="va">scmp_ob</span><span class="op">@</span><span class="va">Significant</span><span class="op">@</span><span class="va">genes</span><span class="op">$</span><span class="va">SaltvsControl</span>,</span>
-<span>  expected <span class="op">=</span> <span class="va">sigs</span><span class="op">$</span><span class="va">summary</span><span class="op">$</span><span class="va">SaltvsControl</span><span class="op">[</span><span class="va">sigs</span><span class="op">$</span><span class="va">summary</span><span class="op">$</span><span class="va">SaltvsControl</span> <span class="op">!=</span> <span class="st">" "</span><span class="op">]</span></span>
+<span>    expected <span class="op">=</span> <span class="va">sigs</span><span class="op">$</span><span class="va">summary</span><span class="op">$</span><span class="va">SaltvsControl</span><span class="op">[</span><span class="va">sigs</span><span class="op">$</span><span class="va">summary</span><span class="op">$</span><span class="va">SaltvsControl</span> <span class="op">!=</span> <span class="st">" "</span><span class="op">]</span></span>
 <span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># Compare Control</span></span>
 <span><span class="fu"><a href="https://testthat.r-lib.org/reference/equality-expectations.html" class="external-link">expect_identical</a></span><span class="op">(</span><span class="va">scmp_ob</span><span class="op">@</span><span class="va">Significant</span><span class="op">@</span><span class="va">genes</span><span class="op">$</span><span class="va">Control</span>,</span>
-<span>  expected <span class="op">=</span> <span class="va">sigs</span><span class="op">$</span><span class="va">summary</span><span class="op">$</span><span class="va">Control</span><span class="op">[</span><span class="va">sigs</span><span class="op">$</span><span class="va">summary</span><span class="op">$</span><span class="va">Control</span> <span class="op">!=</span> <span class="st">" "</span><span class="op">]</span></span>
+<span>    expected <span class="op">=</span> <span class="va">sigs</span><span class="op">$</span><span class="va">summary</span><span class="op">$</span><span class="va">Control</span><span class="op">[</span><span class="va">sigs</span><span class="op">$</span><span class="va">summary</span><span class="op">$</span><span class="va">Control</span> <span class="op">!=</span> <span class="st">" "</span><span class="op">]</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p>All comparisons indicate equality, confirming that the results are
 reproducible up to this point.</p>
@@ -479,8 +480,8 @@ consistent.</p>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Upset plot of scMaSigPro</span></span>
 <span><span class="fu"><a href="../reference/plotIntersect.html">plotIntersect</a></span><span class="op">(</span></span>
-<span>  scmpObj <span class="op">=</span> <span class="va">scmp_ob</span>,</span>
-<span>  min_intersection_size <span class="op">=</span> <span class="fl">0</span></span>
+<span>    scmpObj <span class="op">=</span> <span class="va">scmp_ob</span>,</span>
+<span>    min_intersection_size <span class="op">=</span> <span class="fl">0</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="scMaSigPro-maSigPro_files/figure-html/upset%20and%20venn-2.png" class="r-plt" alt="" width="700"></p>
 </div>
@@ -501,17 +502,17 @@ achieved using <code><a href="../reference/plotTrend.html">plotTrend()</a></code
 <span></span>
 <span><span class="co"># Plotting with maSigPro</span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/maSigPro/man/PlotGroups.html" class="external-link">PlotGroups</a></span><span class="op">(</span><span class="va">STMDE66</span>,</span>
-<span>  edesign <span class="op">=</span> <span class="va">edesign.abiotic</span>, show.fit <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  dis <span class="op">=</span> <span class="va">design</span><span class="op">$</span><span class="va">dis</span>, groups.vector <span class="op">=</span> <span class="va">design</span><span class="op">$</span><span class="va">groups.vector</span></span>
+<span>    edesign <span class="op">=</span> <span class="va">edesign.abiotic</span>, show.fit <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    dis <span class="op">=</span> <span class="va">design</span><span class="op">$</span><span class="va">dis</span>, groups.vector <span class="op">=</span> <span class="va">design</span><span class="op">$</span><span class="va">groups.vector</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="scMaSigPro-maSigPro_files/figure-html/STMDE66-1.png" class="r-plt" alt="" width="700"></p>
 <div class="sourceCode" id="cb25"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Plotting the same gene with scMaSigPro</span></span>
 <span><span class="fu"><a href="../reference/plotTrend.html">plotTrend</a></span><span class="op">(</span><span class="va">scmp_ob</span>, <span class="st">"STMDE66"</span>,</span>
-<span>  logs <span class="op">=</span> <span class="cn">FALSE</span>, pseudoCount <span class="op">=</span> <span class="fl">0</span>,</span>
-<span>  smoothness <span class="op">=</span> <span class="fl">0.01</span>, significant <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  summary_mode <span class="op">=</span> <span class="st">"mean"</span>,</span>
-<span>  curves <span class="op">=</span> <span class="cn">TRUE</span>, lines <span class="op">=</span> <span class="cn">TRUE</span>, points <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    logs <span class="op">=</span> <span class="cn">FALSE</span>, pseudoCount <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>    smoothness <span class="op">=</span> <span class="fl">0.01</span>, significant <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    summary_mode <span class="op">=</span> <span class="st">"mean"</span>,</span>
+<span>    curves <span class="op">=</span> <span class="cn">TRUE</span>, lines <span class="op">=</span> <span class="cn">TRUE</span>, points <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="scMaSigPro-maSigPro_files/figure-html/STMDE66-2.png" class="r-plt" alt="" width="700"></p>
 </div>
@@ -522,17 +523,17 @@ achieved using <code><a href="../reference/plotTrend.html">plotTrend()</a></code
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Plot clustered Trend</span></span>
 <span><span class="va">gc</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://testthat.r-lib.org/reference/capture_output.html" class="external-link">capture_output</a></span><span class="op">(</span></span>
-<span>  <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/maSigPro/man/see.genes.html" class="external-link">see.genes</a></span><span class="op">(</span><span class="va">sigs</span><span class="op">$</span><span class="va">sig.genes</span><span class="op">$</span><span class="va">ColdvsControl</span>,</span>
-<span>    show.fit <span class="op">=</span> <span class="cn">TRUE</span>, dis <span class="op">=</span> <span class="va">design</span><span class="op">$</span><span class="va">dis</span>,</span>
-<span>    cluster.method <span class="op">=</span> <span class="st">"hclust"</span>, cluster.data <span class="op">=</span> <span class="fl">1</span>, k <span class="op">=</span> <span class="fl">9</span></span>
-<span>  <span class="op">)</span></span>
+<span>    <span class="va">res</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/maSigPro/man/see.genes.html" class="external-link">see.genes</a></span><span class="op">(</span><span class="va">sigs</span><span class="op">$</span><span class="va">sig.genes</span><span class="op">$</span><span class="va">ColdvsControl</span>,</span>
+<span>        show.fit <span class="op">=</span> <span class="cn">TRUE</span>, dis <span class="op">=</span> <span class="va">design</span><span class="op">$</span><span class="va">dis</span>,</span>
+<span>        cluster.method <span class="op">=</span> <span class="st">"hclust"</span>, cluster.data <span class="op">=</span> <span class="fl">1</span>, k <span class="op">=</span> <span class="fl">9</span></span>
+<span>    <span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="scMaSigPro-maSigPro_files/figure-html/Cluster%20Plots-1.png" class="r-plt" alt="" width="672"><img src="scMaSigPro-maSigPro_files/figure-html/Cluster%20Plots-2.png" class="r-plt" alt="" width="672"></p>
 <div class="sourceCode" id="cb27"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Compute Clusters</span></span>
 <span><span class="va">scmp_ob</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sc.cluster.trend.html">sc.cluster.trend</a></span><span class="op">(</span><span class="va">scmp_ob</span>,</span>
-<span>  geneSet <span class="op">=</span> <span class="st">"ColdvsControl"</span>,</span>
-<span>  cluster_by <span class="op">=</span> <span class="st">"counts"</span></span>
+<span>    geneSet <span class="op">=</span> <span class="st">"ColdvsControl"</span>,</span>
+<span>    cluster_by <span class="op">=</span> <span class="st">"counts"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
@@ -540,9 +541,9 @@ achieved using <code><a href="../reference/plotTrend.html">plotTrend()</a></code
 </h3>
 <div class="sourceCode" id="cb28"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotTrendCluster.html">plotTrendCluster</a></span><span class="op">(</span></span>
-<span>  scmpObj <span class="op">=</span> <span class="va">scmp_ob</span>,</span>
-<span>  plot <span class="op">=</span> <span class="st">"coeff"</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>    scmpObj <span class="op">=</span> <span class="va">scmp_ob</span>,</span>
+<span>    plot <span class="op">=</span> <span class="st">"coeff"</span>,</span>
+<span>    verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <p><img src="scMaSigPro-maSigPro_files/figure-html/Plot%20Clustered%20Trends-1.png" class="r-plt" alt="" width="768"></p>
 <hr>
@@ -574,65 +575,53 @@ achieved using <code><a href="../reference/plotTrend.html">plotTrend()</a></code
 <span><span class="co">## character(0)</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] scMaSigPro_0.0.5</span></span>
+<span><span class="co">## [1] scMaSigPro_0.0.5.9000</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##   [1] gridExtra_2.3.1             testthat_3.3.2             </span></span>
-<span><span class="co">##   [3] rlang_1.3.0                 magrittr_2.0.5             </span></span>
-<span><span class="co">##   [5] otel_0.2.0                  matrixStats_1.5.0          </span></span>
-<span><span class="co">##   [7] e1071_1.7-17                compiler_4.6.1             </span></span>
-<span><span class="co">##   [9] mgcv_1.9-4                  venn_1.13                  </span></span>
-<span><span class="co">##  [11] systemfonts_1.3.2           vctrs_0.7.3                </span></span>
-<span><span class="co">##  [13] stringr_1.6.0               pkgconfig_2.0.3            </span></span>
-<span><span class="co">##  [15] fastmap_1.2.0               XVector_0.52.0             </span></span>
-<span><span class="co">##  [17] labeling_0.4.3              promises_1.5.0             </span></span>
-<span><span class="co">##  [19] rmarkdown_2.32              grDevices_4.6.1            </span></span>
-<span><span class="co">##  [21] ragg_1.5.2                  UpSetR_1.4.1               </span></span>
-<span><span class="co">##  [23] purrr_1.2.2                 waldo_0.6.2                </span></span>
-<span><span class="co">##  [25] xfun_0.61                   cachem_1.1.0               </span></span>
-<span><span class="co">##  [27] graphics_4.6.1              jsonlite_2.0.0             </span></span>
-<span><span class="co">##  [29] later_1.4.8                 DelayedArray_0.38.2        </span></span>
-<span><span class="co">##  [31] parallel_4.6.1              R6_2.6.1                   </span></span>
-<span><span class="co">##  [33] bslib_0.12.0                stringi_1.8.9              </span></span>
-<span><span class="co">##  [35] RColorBrewer_1.1-3          parallelly_1.48.0          </span></span>
-<span><span class="co">##  [37] pkgload_1.5.3               brio_1.1.5                 </span></span>
-<span><span class="co">##  [39] GenomicRanges_1.64.0        jquerylib_0.1.4            </span></span>
-<span><span class="co">##  [41] Rcpp_1.1.2                  Seqinfo_1.2.0              </span></span>
-<span><span class="co">##  [43] bookdown_0.48               assertthat_0.2.1           </span></span>
-<span><span class="co">##  [45] SummarizedExperiment_1.42.0 knitr_1.52                 </span></span>
-<span><span class="co">##  [47] IRanges_2.46.0              splines_4.6.1              </span></span>
-<span><span class="co">##  [49] httpuv_1.6.17               Matrix_1.7-5               </span></span>
-<span><span class="co">##  [51] igraph_2.3.4                tidyselect_1.2.1           </span></span>
-<span><span class="co">##  [53] abind_1.4-8                 yaml_2.3.12                </span></span>
-<span><span class="co">##  [55] admisc_0.41                 lattice_0.22-9             </span></span>
-<span><span class="co">##  [57] tibble_3.3.1                plyr_1.8.9                 </span></span>
-<span><span class="co">##  [59] Biobase_2.72.0              shiny_1.14.0               </span></span>
-<span><span class="co">##  [61] withr_3.0.3                 S7_0.2.2                   </span></span>
-<span><span class="co">##  [63] evaluate_1.0.5              base_4.6.1                 </span></span>
-<span><span class="co">##  [65] desc_1.4.3                  proxy_0.4-29               </span></span>
-<span><span class="co">##  [67] mclust_6.1.3                pillar_1.11.1              </span></span>
-<span><span class="co">##  [69] BiocManager_1.30.27         MatrixGenerics_1.24.0      </span></span>
-<span><span class="co">##  [71] stats4_4.6.1                plotly_4.12.1              </span></span>
-<span><span class="co">##  [73] generics_0.1.4              rprojroot_2.1.1            </span></span>
-<span><span class="co">##  [75] S4Vectors_0.50.3            ggplot2_4.0.3              </span></span>
-<span><span class="co">##  [77] scales_1.4.0                BiocStyle_2.40.0           </span></span>
-<span><span class="co">##  [79] stats_4.6.1                 xtable_1.8-8               </span></span>
-<span><span class="co">##  [81] class_7.3-23                glue_1.8.1                 </span></span>
-<span><span class="co">##  [83] tools_4.6.1                 datasets_4.6.1             </span></span>
-<span><span class="co">##  [85] data.table_1.18.6.1         fs_2.1.0                   </span></span>
-<span><span class="co">##  [87] grid_4.6.1                  utils_4.6.1                </span></span>
-<span><span class="co">##  [89] tidyr_1.3.2                 methods_4.6.1              </span></span>
-<span><span class="co">##  [91] SingleCellExperiment_1.34.0 nlme_3.1-169               </span></span>
-<span><span class="co">##  [93] cli_3.6.6                   textshaping_1.0.5          </span></span>
-<span><span class="co">##  [95] S4Arrays_1.12.1             viridisLite_0.4.3          </span></span>
-<span><span class="co">##  [97] dplyr_1.2.1                 gtable_0.3.6               </span></span>
-<span><span class="co">##  [99] sass_0.4.10                 digest_0.6.39              </span></span>
-<span><span class="co">## [101] BiocGenerics_0.58.1         SparseArray_1.12.3         </span></span>
-<span><span class="co">## [103] htmlwidgets_1.6.4           farver_2.1.2               </span></span>
-<span><span class="co">## [105] maSigPro_1.84.0             entropy_1.3.2              </span></span>
-<span><span class="co">## [107] htmltools_0.5.9             pkgdown_2.2.1              </span></span>
-<span><span class="co">## [109] lifecycle_1.0.5             httr_1.4.9                 </span></span>
-<span><span class="co">## [111] mime_0.13                   MASS_7.3-65</span></span></code></pre>
+<span><span class="co">##  [1] SummarizedExperiment_1.42.0 gtable_0.3.6               </span></span>
+<span><span class="co">##  [3] xfun_0.62                   bslib_0.12.0               </span></span>
+<span><span class="co">##  [5] ggplot2_4.0.3               Biobase_2.72.0             </span></span>
+<span><span class="co">##  [7] lattice_0.22-9              vctrs_0.7.3                </span></span>
+<span><span class="co">##  [9] tools_4.6.1                 generics_0.1.4             </span></span>
+<span><span class="co">## [11] stats4_4.6.1                parallel_4.6.1             </span></span>
+<span><span class="co">## [13] methods_4.6.1               Matrix_1.7-5               </span></span>
+<span><span class="co">## [15] RColorBrewer_1.1-3          S7_0.2.2                   </span></span>
+<span><span class="co">## [17] desc_1.4.3                  S4Vectors_0.50.3           </span></span>
+<span><span class="co">## [19] lifecycle_1.0.5             compiler_4.6.1             </span></span>
+<span><span class="co">## [21] farver_2.1.2                textshaping_1.0.5          </span></span>
+<span><span class="co">## [23] brio_1.1.5                  BiocStyle_2.40.0           </span></span>
+<span><span class="co">## [25] Seqinfo_1.2.0               codetools_0.2-20           </span></span>
+<span><span class="co">## [27] htmltools_0.5.9             sass_0.4.10                </span></span>
+<span><span class="co">## [29] yaml_2.3.12                 pillar_1.11.1              </span></span>
+<span><span class="co">## [31] venn_1.13                   pkgdown_2.2.1              </span></span>
+<span><span class="co">## [33] jquerylib_0.1.4             MASS_7.3-65                </span></span>
+<span><span class="co">## [35] admisc_0.41                 BiocParallel_1.46.0        </span></span>
+<span><span class="co">## [37] SingleCellExperiment_1.34.0 DelayedArray_0.38.2        </span></span>
+<span><span class="co">## [39] cachem_1.1.0                abind_1.4-8                </span></span>
+<span><span class="co">## [41] mclust_6.1.3                nlme_3.1-169               </span></span>
+<span><span class="co">## [43] maSigPro_1.84.0             digest_0.6.39              </span></span>
+<span><span class="co">## [45] bookdown_0.48               splines_4.6.1              </span></span>
+<span><span class="co">## [47] labeling_0.4.3              rprojroot_2.1.1            </span></span>
+<span><span class="co">## [49] fastmap_1.2.0               grid_4.6.1                 </span></span>
+<span><span class="co">## [51] cli_3.6.6                   SparseArray_1.12.3         </span></span>
+<span><span class="co">## [53] magrittr_2.0.5              S4Arrays_1.12.1            </span></span>
+<span><span class="co">## [55] grDevices_4.6.1             withr_3.0.3                </span></span>
+<span><span class="co">## [57] waldo_0.6.2                 utils_4.6.1                </span></span>
+<span><span class="co">## [59] scales_1.4.0                rmarkdown_2.32             </span></span>
+<span><span class="co">## [61] XVector_0.52.0              matrixStats_1.5.0          </span></span>
+<span><span class="co">## [63] otel_0.2.0                  gridExtra_2.3.1            </span></span>
+<span><span class="co">## [65] datasets_4.6.1              ragg_1.5.2                 </span></span>
+<span><span class="co">## [67] stats_4.6.1                 graphics_4.6.1             </span></span>
+<span><span class="co">## [69] evaluate_1.0.5              UpSetR_1.4.1               </span></span>
+<span><span class="co">## [71] knitr_1.52                  GenomicRanges_1.64.0       </span></span>
+<span><span class="co">## [73] IRanges_2.46.0              testthat_3.3.2             </span></span>
+<span><span class="co">## [75] mgcv_1.9-4                  rlang_1.3.0                </span></span>
+<span><span class="co">## [77] Rcpp_1.1.2                  glue_1.8.1                 </span></span>
+<span><span class="co">## [79] BiocManager_1.30.27         BiocGenerics_0.58.1        </span></span>
+<span><span class="co">## [81] pkgload_1.5.3               base_4.6.1                 </span></span>
+<span><span class="co">## [83] jsonlite_2.0.0              plyr_1.8.9                 </span></span>
+<span><span class="co">## [85] R6_2.6.1                    MatrixGenerics_1.24.0      </span></span>
+<span><span class="co">## [87] systemfonts_1.3.2           fs_2.1.0</span></span></code></pre>
 <div class="sourceCode" id="cb31"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span>package <span class="op">=</span> <span class="st">"maSigPro"</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## R version 4.6.1 (2026-06-24)</span></span>
@@ -659,62 +648,50 @@ achieved using <code><a href="../reference/plotTrend.html">plotTrend()</a></code
 <span><span class="co">## [1] maSigPro_1.84.0</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##   [1] gridExtra_2.3.1             testthat_3.3.2             </span></span>
-<span><span class="co">##   [3] rlang_1.3.0                 magrittr_2.0.5             </span></span>
-<span><span class="co">##   [5] otel_0.2.0                  matrixStats_1.5.0          </span></span>
-<span><span class="co">##   [7] e1071_1.7-17                compiler_4.6.1             </span></span>
-<span><span class="co">##   [9] mgcv_1.9-4                  venn_1.13                  </span></span>
-<span><span class="co">##  [11] systemfonts_1.3.2           vctrs_0.7.3                </span></span>
-<span><span class="co">##  [13] stringr_1.6.0               pkgconfig_2.0.3            </span></span>
-<span><span class="co">##  [15] fastmap_1.2.0               XVector_0.52.0             </span></span>
-<span><span class="co">##  [17] labeling_0.4.3              promises_1.5.0             </span></span>
-<span><span class="co">##  [19] rmarkdown_2.32              grDevices_4.6.1            </span></span>
-<span><span class="co">##  [21] ragg_1.5.2                  UpSetR_1.4.1               </span></span>
-<span><span class="co">##  [23] purrr_1.2.2                 waldo_0.6.2                </span></span>
-<span><span class="co">##  [25] xfun_0.61                   cachem_1.1.0               </span></span>
-<span><span class="co">##  [27] graphics_4.6.1              jsonlite_2.0.0             </span></span>
-<span><span class="co">##  [29] later_1.4.8                 DelayedArray_0.38.2        </span></span>
-<span><span class="co">##  [31] parallel_4.6.1              R6_2.6.1                   </span></span>
-<span><span class="co">##  [33] bslib_0.12.0                stringi_1.8.9              </span></span>
-<span><span class="co">##  [35] RColorBrewer_1.1-3          parallelly_1.48.0          </span></span>
-<span><span class="co">##  [37] pkgload_1.5.3               brio_1.1.5                 </span></span>
-<span><span class="co">##  [39] GenomicRanges_1.64.0        jquerylib_0.1.4            </span></span>
-<span><span class="co">##  [41] Rcpp_1.1.2                  Seqinfo_1.2.0              </span></span>
-<span><span class="co">##  [43] bookdown_0.48               scMaSigPro_0.0.5           </span></span>
-<span><span class="co">##  [45] assertthat_0.2.1            SummarizedExperiment_1.42.0</span></span>
-<span><span class="co">##  [47] knitr_1.52                  IRanges_2.46.0             </span></span>
-<span><span class="co">##  [49] splines_4.6.1               httpuv_1.6.17              </span></span>
-<span><span class="co">##  [51] Matrix_1.7-5                igraph_2.3.4               </span></span>
-<span><span class="co">##  [53] tidyselect_1.2.1            abind_1.4-8                </span></span>
-<span><span class="co">##  [55] yaml_2.3.12                 admisc_0.41                </span></span>
-<span><span class="co">##  [57] lattice_0.22-9              tibble_3.3.1               </span></span>
-<span><span class="co">##  [59] plyr_1.8.9                  Biobase_2.72.0             </span></span>
-<span><span class="co">##  [61] shiny_1.14.0                withr_3.0.3                </span></span>
-<span><span class="co">##  [63] S7_0.2.2                    evaluate_1.0.5             </span></span>
-<span><span class="co">##  [65] base_4.6.1                  desc_1.4.3                 </span></span>
-<span><span class="co">##  [67] proxy_0.4-29                mclust_6.1.3               </span></span>
-<span><span class="co">##  [69] pillar_1.11.1               BiocManager_1.30.27        </span></span>
-<span><span class="co">##  [71] MatrixGenerics_1.24.0       stats4_4.6.1               </span></span>
-<span><span class="co">##  [73] plotly_4.12.1               generics_0.1.4             </span></span>
-<span><span class="co">##  [75] rprojroot_2.1.1             S4Vectors_0.50.3           </span></span>
-<span><span class="co">##  [77] ggplot2_4.0.3               scales_1.4.0               </span></span>
-<span><span class="co">##  [79] BiocStyle_2.40.0            stats_4.6.1                </span></span>
-<span><span class="co">##  [81] xtable_1.8-8                class_7.3-23               </span></span>
-<span><span class="co">##  [83] glue_1.8.1                  tools_4.6.1                </span></span>
-<span><span class="co">##  [85] datasets_4.6.1              data.table_1.18.6.1        </span></span>
-<span><span class="co">##  [87] fs_2.1.0                    grid_4.6.1                 </span></span>
-<span><span class="co">##  [89] utils_4.6.1                 tidyr_1.3.2                </span></span>
-<span><span class="co">##  [91] methods_4.6.1               SingleCellExperiment_1.34.0</span></span>
-<span><span class="co">##  [93] nlme_3.1-169                cli_3.6.6                  </span></span>
-<span><span class="co">##  [95] textshaping_1.0.5           S4Arrays_1.12.1            </span></span>
-<span><span class="co">##  [97] viridisLite_0.4.3           dplyr_1.2.1                </span></span>
-<span><span class="co">##  [99] gtable_0.3.6                sass_0.4.10                </span></span>
-<span><span class="co">## [101] digest_0.6.39               BiocGenerics_0.58.1        </span></span>
-<span><span class="co">## [103] SparseArray_1.12.3          htmlwidgets_1.6.4          </span></span>
-<span><span class="co">## [105] farver_2.1.2                entropy_1.3.2              </span></span>
-<span><span class="co">## [107] htmltools_0.5.9             pkgdown_2.2.1              </span></span>
-<span><span class="co">## [109] lifecycle_1.0.5             httr_1.4.9                 </span></span>
-<span><span class="co">## [111] mime_0.13                   MASS_7.3-65</span></span></code></pre>
+<span><span class="co">##  [1] SummarizedExperiment_1.42.0 gtable_0.3.6               </span></span>
+<span><span class="co">##  [3] xfun_0.62                   bslib_0.12.0               </span></span>
+<span><span class="co">##  [5] ggplot2_4.0.3               Biobase_2.72.0             </span></span>
+<span><span class="co">##  [7] lattice_0.22-9              vctrs_0.7.3                </span></span>
+<span><span class="co">##  [9] tools_4.6.1                 generics_0.1.4             </span></span>
+<span><span class="co">## [11] stats4_4.6.1                parallel_4.6.1             </span></span>
+<span><span class="co">## [13] methods_4.6.1               Matrix_1.7-5               </span></span>
+<span><span class="co">## [15] RColorBrewer_1.1-3          S7_0.2.2                   </span></span>
+<span><span class="co">## [17] desc_1.4.3                  S4Vectors_0.50.3           </span></span>
+<span><span class="co">## [19] lifecycle_1.0.5             compiler_4.6.1             </span></span>
+<span><span class="co">## [21] farver_2.1.2                textshaping_1.0.5          </span></span>
+<span><span class="co">## [23] brio_1.1.5                  BiocStyle_2.40.0           </span></span>
+<span><span class="co">## [25] Seqinfo_1.2.0               codetools_0.2-20           </span></span>
+<span><span class="co">## [27] htmltools_0.5.9             sass_0.4.10                </span></span>
+<span><span class="co">## [29] yaml_2.3.12                 pillar_1.11.1              </span></span>
+<span><span class="co">## [31] venn_1.13                   pkgdown_2.2.1              </span></span>
+<span><span class="co">## [33] jquerylib_0.1.4             MASS_7.3-65                </span></span>
+<span><span class="co">## [35] admisc_0.41                 BiocParallel_1.46.0        </span></span>
+<span><span class="co">## [37] SingleCellExperiment_1.34.0 DelayedArray_0.38.2        </span></span>
+<span><span class="co">## [39] cachem_1.1.0                abind_1.4-8                </span></span>
+<span><span class="co">## [41] mclust_6.1.3                nlme_3.1-169               </span></span>
+<span><span class="co">## [43] digest_0.6.39               bookdown_0.48              </span></span>
+<span><span class="co">## [45] splines_4.6.1               labeling_0.4.3             </span></span>
+<span><span class="co">## [47] scMaSigPro_0.0.5.9000       rprojroot_2.1.1            </span></span>
+<span><span class="co">## [49] fastmap_1.2.0               grid_4.6.1                 </span></span>
+<span><span class="co">## [51] cli_3.6.6                   SparseArray_1.12.3         </span></span>
+<span><span class="co">## [53] magrittr_2.0.5              S4Arrays_1.12.1            </span></span>
+<span><span class="co">## [55] grDevices_4.6.1             withr_3.0.3                </span></span>
+<span><span class="co">## [57] waldo_0.6.2                 utils_4.6.1                </span></span>
+<span><span class="co">## [59] scales_1.4.0                rmarkdown_2.32             </span></span>
+<span><span class="co">## [61] XVector_0.52.0              matrixStats_1.5.0          </span></span>
+<span><span class="co">## [63] otel_0.2.0                  gridExtra_2.3.1            </span></span>
+<span><span class="co">## [65] datasets_4.6.1              ragg_1.5.2                 </span></span>
+<span><span class="co">## [67] stats_4.6.1                 graphics_4.6.1             </span></span>
+<span><span class="co">## [69] evaluate_1.0.5              UpSetR_1.4.1               </span></span>
+<span><span class="co">## [71] knitr_1.52                  GenomicRanges_1.64.0       </span></span>
+<span><span class="co">## [73] IRanges_2.46.0              testthat_3.3.2             </span></span>
+<span><span class="co">## [75] mgcv_1.9-4                  rlang_1.3.0                </span></span>
+<span><span class="co">## [77] Rcpp_1.1.2                  glue_1.8.1                 </span></span>
+<span><span class="co">## [79] BiocManager_1.30.27         BiocGenerics_0.58.1        </span></span>
+<span><span class="co">## [81] pkgload_1.5.3               base_4.6.1                 </span></span>
+<span><span class="co">## [83] jsonlite_2.0.0              plyr_1.8.9                 </span></span>
+<span><span class="co">## [85] R6_2.6.1                    MatrixGenerics_1.24.0      </span></span>
+<span><span class="co">## [87] systemfonts_1.3.2           fs_2.1.0</span></span></code></pre>
 </div>
   </div>
 

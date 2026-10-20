@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scMaSigPro</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.5.9000</span>
       </span>
     </div>
 
@@ -63,7 +63,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Extract Fitting</h1>
-    <small class="dont-index">Source: <a href="https://github.com/BioBam/scMaSigPro/blob/devel/R/pb_helpers.R" class="external-link"><code>R/pb_helpers.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/BioBam/scMaSigPro/blob/main/R/pb_helpers.R" class="external-link"><code>R/pb_helpers.R</code></a></small>
     <div class="hidden name"><code>extract_fitting.Rd</code></div>
     </div>
 
@@ -90,7 +90,7 @@
 
 
 <dl><dt id="arg-reg">reg<a class="anchor" aria-label="anchor" href="#arg-reg"></a></dt>
-<dd><p>Regression Result form <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">stats::glm()</a></code></p></dd>
+<dd><p>Regression Result from <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">stats::glm()</a></code></p></dd>
 
 
 <dt id="arg-lmf">lmf<a class="anchor" aria-label="anchor" href="#arg-lmf"></a></dt>
@@ -110,11 +110,13 @@
 
 
 <dt id="arg-name">name<a class="anchor" aria-label="anchor" href="#arg-name"></a></dt>
-<dd><p>description</p></dd>
+<dd><p>Feature (gene) name, used as the row name of <code>sol</code> and as
+the column name of the gene's entry in <code>influ.info</code>.</p></dd>
 
 
 <dt id="arg-vars-in">vars.in<a class="anchor" aria-label="anchor" href="#arg-vars-in"></a></dt>
-<dd><p>description</p></dd>
+<dd><p>Names of the predictors (the columns of <code>dis</code>); they fix
+the order of the returned coefficients, p-values and t-scores.</p></dd>
 
 
 <dt id="arg-alfa">alfa<a class="anchor" aria-label="anchor" href="#arg-alfa"></a></dt>
@@ -122,7 +124,8 @@
 
 
 <dt id="arg-influ-info">influ.info<a class="anchor" aria-label="anchor" href="#arg-influ-info"></a></dt>
-<dd><p>description</p></dd>
+<dd><p>Matrix of influential observations collected so far;
+a column for this gene is appended when it has influential observations.</p></dd>
 
 </dl></div>
 

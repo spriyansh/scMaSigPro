@@ -19,7 +19,7 @@ scMaSigPro::sc.p.vector()."><meta property="og:image" content="/logo.png"><!-- m
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scMaSigPro</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.5.9000</span>
       </span>
     </div>
 
@@ -65,7 +65,7 @@ scMaSigPro::sc.p.vector()."><meta property="og:image" content="/logo.png"><!-- m
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Perform stepwise regression fit to select for significant terms.</h1>
-    <small class="dont-index">Source: <a href="https://github.com/BioBam/scMaSigPro/blob/devel/R/sc.t.fit.R" class="external-link"><code>R/sc.t.fit.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/BioBam/scMaSigPro/blob/main/R/sc.t.fit.R" class="external-link"><code>R/sc.t.fit.R</code></a></small>
     <div class="hidden name"><code>sc.t.fit.Rd</code></div>
     </div>
 
@@ -85,11 +85,10 @@ from the full polynomial model. This function is succeeded by
 <span>  epsilon <span class="op">=</span> <span class="va">scmpObj</span><span class="op">@</span><span class="va">Parameters</span><span class="op">@</span><span class="va">epsilon</span>,</span>
 <span>  offset <span class="op">=</span> <span class="va">scmpObj</span><span class="op">@</span><span class="va">Parameters</span><span class="op">@</span><span class="va">offset</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  parallel <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>  n_cores <span class="op">=</span> <span class="fu">availableCores</span><span class="op">(</span><span class="op">)</span> <span class="op">-</span> <span class="fl">2</span>,</span>
 <span>  log_offset <span class="op">=</span> <span class="va">scmpObj</span><span class="op">@</span><span class="va">Parameters</span><span class="op">@</span><span class="va">log_offset</span>,</span>
 <span>  max_it <span class="op">=</span> <span class="va">scmpObj</span><span class="op">@</span><span class="va">Parameters</span><span class="op">@</span><span class="va">max_it</span>,</span>
-<span>  link <span class="op">=</span> <span class="va">scmpObj</span><span class="op">@</span><span class="va">Parameters</span><span class="op">@</span><span class="va">link</span></span>
+<span>  link <span class="op">=</span> <span class="va">scmpObj</span><span class="op">@</span><span class="va">Parameters</span><span class="op">@</span><span class="va">link</span>,</span>
+<span>  BPPARAM <span class="op">=</span> <span class="fu">SerialParam</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -130,16 +129,6 @@ regression.</p></dd>
 <dd><p>Print detailed output in the console. (Default is TRUE)</p></dd>
 
 
-<dt id="arg-parallel">parallel<a class="anchor" aria-label="anchor" href="#arg-parallel"></a></dt>
-<dd><p>Use forking process to run parallelly. (Default is FALSE)
-(Currently, Windows is not supported)</p></dd>
-
-
-<dt id="arg-n-cores">n_cores<a class="anchor" aria-label="anchor" href="#arg-n-cores"></a></dt>
-<dd><p>Explicitly specify the number of cores to use for parallel model
-fitting. (Default is inferred from the system using availableCores()-2)</p></dd>
-
-
 <dt id="arg-log-offset">log_offset<a class="anchor" aria-label="anchor" href="#arg-log-offset"></a></dt>
 <dd><p>A logical value specifying whether to take the logarithm of
 the offsets.</p></dd>
@@ -151,6 +140,17 @@ the offsets.</p></dd>
 
 <dt id="arg-link">link<a class="anchor" aria-label="anchor" href="#arg-link"></a></dt>
 <dd><p>Type of link function to use in the model. Default is "log".</p></dd>
+
+
+<dt id="arg-bpparam">BPPARAM<a class="anchor" aria-label="anchor" href="#arg-bpparam"></a></dt>
+<dd><p>A <code>BiocParallelParam</code> object that runs the per-gene
+fits, such as
+<code><a href="https://rdrr.io/pkg/BiocParallel/man/MulticoreParam-class.html" class="external-link">MulticoreParam</a>(2)</code> (Linux
+and macOS) or <code><a href="https://rdrr.io/pkg/BiocParallel/man/SnowParam-class.html" class="external-link">SnowParam</a>(2)</code>
+(any system, including Windows). The default,
+<code><a href="https://rdrr.io/pkg/BiocParallel/man/SerialParam-class.html" class="external-link">SerialParam()</a></code>, fits the genes
+one after another. Create it with <code>progressbar = TRUE</code> for a progress
+bar. The results do not depend on the backend.</p></dd>
 
 </dl></div>
     <div id="value">

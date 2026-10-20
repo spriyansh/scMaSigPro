@@ -1,6 +1,5 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>/404.html</loc></url>
-<url><loc>/CLAUDE.html</loc></url>
 <url><loc>/LICENSE.html</loc></url>
 <url><loc>/articles/Basic-Workflow.html</loc></url>
 <url><loc>/articles/Common-Root-Cells.html</loc></url>
@@ -16,7 +15,6 @@
 <url><loc>/reference/ScMaSigPro-class.html</loc></url>
 <url><loc>/reference/Significant-class.html</loc></url>
 <url><loc>/reference/VariableProfiles-class.html</loc></url>
-<url><loc>/reference/align_pseudotime.html</loc></url>
 <url><loc>/reference/annotate_sce.html</loc></url>
 <url><loc>/reference/as_scmp.html</loc></url>
 <url><loc>/reference/cDense-ScMaSigPro-method.html</loc></url>
@@ -28,8 +26,6 @@
 <url><loc>/reference/cSparse-set.html</loc></url>
 <url><loc>/reference/cSparse.html</loc></url>
 <url><loc>/reference/calc_bin_size.html</loc></url>
-<url><loc>/reference/clean_string.html</loc></url>
-<url><loc>/reference/convert_to_path.html</loc></url>
 <url><loc>/reference/create_range.html</loc></url>
 <url><loc>/reference/create_scmp.html</loc></url>
 <url><loc>/reference/dot-ScMaSigPro_show.html</loc></url>
@@ -46,9 +42,7 @@
 <url><loc>/reference/extract_info.html</loc></url>
 <url><loc>/reference/extract_interval.html</loc></url>
 <url><loc>/reference/fromListWithNames.html</loc></url>
-<url><loc>/reference/get_os.html</loc></url>
 <url><loc>/reference/index.html</loc></url>
-<url><loc>/reference/m3_select_path.html</loc></url>
 <url><loc>/reference/multi.lin.sce.html</loc></url>
 <url><loc>/reference/optimize_bin_max.html</loc></url>
 <url><loc>/reference/pathAssign-ScMaSigPro-method.html</loc></url>
@@ -73,12 +67,8 @@
 <url><loc>/reference/sc.set.poly.html</loc></url>
 <url><loc>/reference/sc.squeeze.html</loc></url>
 <url><loc>/reference/sc.t.fit.html</loc></url>
-<url><loc>/reference/sc.two.ways.stepback.html</loc></url>
 <url><loc>/reference/scmp.ob.html</loc></url>
 <url><loc>/reference/scmp_colors.html</loc></url>
-<url><loc>/reference/scmp_estimateSizeFactorsForMatrix.html</loc></url>
-<url><loc>/reference/select_longer_vector.html</loc></url>
-<url><loc>/reference/shinySelect.html</loc></url>
 <url><loc>/reference/showCoeff.html</loc></url>
 <url><loc>/reference/showGroupCoeff.html</loc></url>
 <url><loc>/reference/showInflu.html</loc></url>
@@ -88,5 +78,6 @@
 <url><loc>/reference/showSol.html</loc></url>
 <url><loc>/reference/showTS.html</loc></url>
 <url><loc>/reference/splat.sim.html</loc></url>
+<url><loc>/reference/updateObject-ScMaSigPro-method.html</loc></url>
 </urlset>
 

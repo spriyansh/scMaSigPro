@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scMaSigPro</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.5.9000</span>
       </span>
     </div>
 
@@ -63,7 +63,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Replacement method for cSparse</h1>
-    <small class="dont-index">Source: <a href="https://github.com/BioBam/scMaSigPro/blob/devel/R/scmpGenerics.R" class="external-link"><code>R/scmpGenerics.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/BioBam/scMaSigPro/blob/main/R/scmpGenerics.R" class="external-link"><code>R/scmpGenerics.R</code></a></small>
     <div class="hidden name"><code>cSparse-set-ScMaSigPro-method.Rd</code></div>
     </div>
 
@@ -91,6 +91,14 @@
     <div id="value">
     <h2>Value</h2>
     <p>Modified <code>ScMaSigPro</code> object.</p>
+    </div>
+    <div id="details">
+    <h2>Details</h2>
+    <p><code>value</code> must have one row per cell, named after the cells of the <code>Sparse</code>
+slot and in their order, as <code><a href="cSparse.html">cSparse()</a></code> returns it; a table without
+rownames is taken in the order of the cells. Anything else is an error:
+the cells are the columns of the count matrix, and <code><a href="sc.squeeze.html">sc.squeeze()</a></code> finds
+them by name.</p>
     </div>
     <div id="author">
     <h2>Author</h2>

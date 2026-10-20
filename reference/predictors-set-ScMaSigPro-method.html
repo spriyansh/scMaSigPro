@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scMaSigPro</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.5.9000</span>
       </span>
     </div>
 
@@ -63,7 +63,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Replacement method for predictors</h1>
-    <small class="dont-index">Source: <a href="https://github.com/BioBam/scMaSigPro/blob/devel/R/scmpGenerics.R" class="external-link"><code>R/scmpGenerics.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/BioBam/scMaSigPro/blob/main/R/scmpGenerics.R" class="external-link"><code>R/scmpGenerics.R</code></a></small>
     <div class="hidden name"><code>predictors-set-ScMaSigPro-method.Rd</code></div>
     </div>
 
@@ -91,6 +91,13 @@
     <div id="value">
     <h2>Value</h2>
     <p>Modified <code>ScMaSigPro</code> object.</p>
+    </div>
+    <div id="details">
+    <h2>Details</h2>
+    <p>The new object is checked with <code>validObject()</code>: <code>value</code> must have the
+rows of the assignment matrix, one per bin and with the same names, and
+one column per term of the design (see <a href="MatrixDesign-class.html">MatrixDesign</a>). Anything else is
+an error.</p>
     </div>
     <div id="author">
     <h2>Author</h2>

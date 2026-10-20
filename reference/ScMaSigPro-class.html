@@ -18,7 +18,7 @@ parameters and associated data. Inherits slots from SingleCellExperiment."><meta
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scMaSigPro</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.5.9000</span>
       </span>
     </div>
 
@@ -64,7 +64,7 @@ parameters and associated data. Inherits slots from SingleCellExperiment."><meta
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>ScMaSigPro</h1>
-    <small class="dont-index">Source: <a href="https://github.com/BioBam/scMaSigPro/blob/devel/R/ScMaSigProClass.R" class="external-link"><code>R/ScMaSigProClass.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/BioBam/scMaSigPro/blob/main/R/ScMaSigProClass.R" class="external-link"><code>R/ScMaSigProClass.R</code></a></small>
     <div class="hidden name"><code>ScMaSigPro-class.Rd</code></div>
     </div>
 
@@ -74,6 +74,19 @@ parameters and associated data. Inherits slots from <code>SingleCellExperiment</
     </div>
 
 
+    <div id="details">
+    <h2>Details</h2>
+    <p><code>validObject()</code> checks every slot with the validity method of its class
+and reports each problem with the name of the slot; <code>version</code> must be a
+single version number. Objects are created with <code><a href="create_scmp.html">create_scmp()</a></code> or
+<code><a href="as_scmp.html">as_scmp()</a></code>, which stamp them with the version of the package. These
+constructors, the steps of the workflow, <code><a href="pb_counts.html">pb_counts()</a></code> and the setters
+check the object they return with <code>validObject()</code>, so a step or setter
+that would return an invalid object stops with these problems instead.</p>
+<p>Objects saved by an earlier version of the package, for example with
+<code><a href="https://rdrr.io/r/base/readRDS.html" class="external-link">saveRDS()</a></code>, are brought up to date with
+<code><a href="updateObject-ScMaSigPro-method.html">updateObject()</a></code>.</p>
+    </div>
     <div id="slots">
     <h2>Slots</h2>
 
@@ -106,6 +119,12 @@ See <span class="pkg">SingleCellExperiment</span> for more details.</p></dd>
 
 <dt><code>Parameters</code></dt>
 <dd><p>Object of Class <code><a href="ParameterConfig-class.html">ParameterConfig</a></code>.</p></dd>
+
+
+<dt><code>version</code></dt>
+<dd><p>A character string, the version of <span class="pkg">scMaSigPro</span> that
+created the object or last changed its structure in
+<code><a href="updateObject-ScMaSigPro-method.html">updateObject()</a></code>.</p></dd>
 
 
 </dl></div>

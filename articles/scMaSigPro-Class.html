@@ -37,7 +37,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scMaSigPro</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.5.9000</span>
       </span>
     </div>
 
@@ -98,7 +98,7 @@ Queries</h3>
 Srivastava</h4>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/BioBam/scMaSigPro/blob/devel/vignettes/scMaSigPro-Class.Rmd" class="external-link"><code>vignettes/scMaSigPro-Class.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/BioBam/scMaSigPro/blob/main/vignettes/scMaSigPro-Class.Rmd" class="external-link"><code>vignettes/scMaSigPro-Class.Rmd</code></a></small>
       <div class="hidden name"><code>scMaSigPro-Class.Rmd</code></div>
 
     </div>
@@ -135,7 +135,7 @@ installed as follows:</p>
 <code class="sourceCode R"><span><span class="co"># Install BiocManager if needed, then scMaSigPro together with its</span></span>
 <span><span class="co"># Bioconductor dependencies from GitHub</span></span>
 <span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"BioBam/scMaSigPro"</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -392,15 +392,16 @@ rather than their independent contributions.</p></li>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Increasing effect along Pseudotime</span></span>
 <span><span class="va">pTime_up</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/queryCoeff.html">queryCoeff</a></span><span class="op">(</span><span class="va">scmp.ob</span>,</span>
-<span>  query <span class="op">=</span> <span class="st">"pseudotime"</span>,</span>
-<span>  change <span class="op">=</span> <span class="st">"increasing"</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>    query <span class="op">=</span> <span class="st">"pseudotime"</span>,</span>
+<span>    change <span class="op">=</span> <span class="st">"increasing"</span>,</span>
+<span>    verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Polynomial-GLM Formula: beta0 + beta1*Path2vsPath1 + beta2*scmp_binned_pseudotime + beta3*scmp_binned_pseudotimexPath2</span></span></code></pre>
 <div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Order</span></span>
-<span><span class="va">pTime_up</span> <span class="op">&lt;-</span> <span class="va">pTime_up</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">pTime_up</span><span class="op">$</span><span class="va">betascmp_binned_pseudotime</span>,</span>
-<span>  decreasing <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="va">pTime_up</span> <span class="op">&lt;-</span> <span class="va">pTime_up</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span></span>
+<span>    <span class="va">pTime_up</span><span class="op">$</span><span class="va">betascmp_binned_pseudotime</span>,</span>
+<span>    decreasing <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
 <span></span>
 <span><span class="co"># View</span></span>
@@ -414,26 +415,26 @@ rather than their independent contributions.</p></li>
 <code class="sourceCode R"><span><span class="co"># Plot</span></span>
 <span><span class="va">pTime_up.plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pTime_up</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">pTime_up.plots</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotTrend.html">plotTrend</a></span><span class="op">(</span><span class="va">scmp.ob</span>, <span class="va">i</span><span class="op">)</span></span>
+<span>    <span class="va">pTime_up.plots</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotTrend.html">plotTrend</a></span><span class="op">(</span><span class="va">scmp.ob</span>, <span class="va">i</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="co"># Plot combined</span></span>
-<span><span class="fu">ggpubr</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/ggarrange.html" class="external-link">ggarrange</a></span><span class="op">(</span><span class="va">pTime_up.plots</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="va">pTime_up.plots</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, <span class="va">pTime_up.plots</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span>, <span class="va">pTime_up.plots</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span>,</span>
-<span>  ncol <span class="op">=</span> <span class="fl">2</span>, nrow <span class="op">=</span> <span class="fl">2</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">patchwork</span><span class="fu">::</span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html" class="external-link">wrap_plots</a></span><span class="op">(</span><span class="va">pTime_up.plots</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">patchwork</span><span class="fu">::</span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html" class="external-link">plot_annotation</a></span><span class="op">(</span>tag_levels <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="scMaSigPro-Class_files/figure-html/Pseudotime-1.png" class="r-plt" alt="" width="700"></p>
 <div class="sourceCode" id="cb19"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Increasing effect along Pseudotime * Path</span></span>
 <span><span class="va">pTime_path_up</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/queryCoeff.html">queryCoeff</a></span><span class="op">(</span><span class="va">scmp.ob</span>,</span>
-<span>  query <span class="op">=</span> <span class="st">"pseudotime_path"</span>,</span>
-<span>  change <span class="op">=</span> <span class="st">"increasing"</span>,</span>
-<span>  verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
+<span>    query <span class="op">=</span> <span class="st">"pseudotime_path"</span>,</span>
+<span>    change <span class="op">=</span> <span class="st">"increasing"</span>,</span>
+<span>    verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Polynomial-GLM Formula: beta0 + beta1*Path2vsPath1 + beta2*scmp_binned_pseudotime + beta3*scmp_binned_pseudotimexPath2</span></span></code></pre>
 <div class="sourceCode" id="cb21"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Order</span></span>
-<span><span class="va">pTime_path_up</span> <span class="op">&lt;-</span> <span class="va">pTime_path_up</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span><span class="va">pTime_path_up</span><span class="op">$</span><span class="va">betascmp_binned_pseudotimexPath2</span>,</span>
-<span>  decreasing <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="va">pTime_path_up</span> <span class="op">&lt;-</span> <span class="va">pTime_path_up</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/order.html" class="external-link">order</a></span><span class="op">(</span></span>
+<span>    <span class="va">pTime_path_up</span><span class="op">$</span><span class="va">betascmp_binned_pseudotimexPath2</span>,</span>
+<span>    decreasing <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span>, , drop <span class="op">=</span> <span class="cn">FALSE</span><span class="op">]</span></span>
 <span></span>
 <span><span class="co"># View</span></span>
@@ -447,11 +448,12 @@ rather than their independent contributions.</p></li>
 <code class="sourceCode R"><span><span class="co"># Plot</span></span>
 <span><span class="va">pTime_path_up.plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="kw">for</span> <span class="op">(</span><span class="va">i</span> <span class="kw">in</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pTime_path_up</span>, <span class="fl">4</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span>  <span class="va">pTime_path_up.plots</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotTrend.html">plotTrend</a></span><span class="op">(</span><span class="va">scmp.ob</span>, <span class="va">i</span><span class="op">)</span></span>
+<span>    <span class="va">pTime_path_up.plots</span><span class="op">[[</span><span class="va">i</span><span class="op">]</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotTrend.html">plotTrend</a></span><span class="op">(</span><span class="va">scmp.ob</span>, <span class="va">i</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="co"># Plot combined</span></span>
-<span><span class="fu">ggpubr</span><span class="fu">::</span><span class="fu"><a href="https://rpkgs.datanovia.com/ggpubr/reference/ggarrange.html" class="external-link">ggarrange</a></span><span class="op">(</span><span class="va">pTime_path_up.plots</span><span class="op">[[</span><span class="fl">1</span><span class="op">]</span><span class="op">]</span>, <span class="va">pTime_path_up.plots</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, <span class="va">pTime_path_up.plots</span><span class="op">[[</span><span class="fl">3</span><span class="op">]</span><span class="op">]</span>, <span class="va">pTime_path_up.plots</span><span class="op">[[</span><span class="fl">4</span><span class="op">]</span><span class="op">]</span>, ncol <span class="op">=</span> <span class="fl">2</span>, nrow <span class="op">=</span> <span class="fl">2</span>, labels <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>, <span class="st">"D"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">patchwork</span><span class="fu">::</span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/wrap_plots.html" class="external-link">wrap_plots</a></span><span class="op">(</span><span class="va">pTime_path_up.plots</span><span class="op">[</span><span class="fl">1</span><span class="op">:</span><span class="fl">4</span><span class="op">]</span>, ncol <span class="op">=</span> <span class="fl">2</span><span class="op">)</span> <span class="op">+</span></span>
+<span>    <span class="fu">patchwork</span><span class="fu">::</span><span class="fu"><a href="https://patchwork.data-imaginist.com/reference/plot_annotation.html" class="external-link">plot_annotation</a></span><span class="op">(</span>tag_levels <span class="op">=</span> <span class="st">"A"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="scMaSigPro-Class_files/figure-html/Pseudotime_path-1.png" class="r-plt" alt="" width="700"></p>
 <p>This concludes the vignette of <code>scMaSigPro-Class</code>. Please
 refer to other vignettes for more in-depth analysis.</p>
@@ -484,64 +486,45 @@ refer to other vignettes for more in-depth analysis.</p>
 <span><span class="co">## character(0)</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">## [1] scMaSigPro_0.0.5</span></span>
+<span><span class="co">## [1] scMaSigPro_0.0.5.9000</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
-<span><span class="co">##   [1] rlang_1.3.0                 magrittr_2.0.5             </span></span>
-<span><span class="co">##   [3] otel_0.2.0                  matrixStats_1.5.0          </span></span>
-<span><span class="co">##   [5] e1071_1.7-17                compiler_4.6.1             </span></span>
-<span><span class="co">##   [7] venn_1.13                   systemfonts_1.3.2          </span></span>
-<span><span class="co">##   [9] vctrs_0.7.3                 stringr_1.6.0              </span></span>
-<span><span class="co">##  [11] pkgconfig_2.0.3             fastmap_1.2.0              </span></span>
-<span><span class="co">##  [13] backports_1.5.1             XVector_0.52.0             </span></span>
-<span><span class="co">##  [15] labeling_0.4.3              promises_1.5.0             </span></span>
-<span><span class="co">##  [17] rmarkdown_2.32              grDevices_4.6.1            </span></span>
-<span><span class="co">##  [19] ragg_1.5.2                  purrr_1.2.2                </span></span>
-<span><span class="co">##  [21] xfun_0.61                   cachem_1.1.0               </span></span>
-<span><span class="co">##  [23] graphics_4.6.1              jsonlite_2.0.0             </span></span>
-<span><span class="co">##  [25] later_1.4.8                 DelayedArray_0.38.2        </span></span>
-<span><span class="co">##  [27] broom_1.0.13                parallel_4.6.1             </span></span>
-<span><span class="co">##  [29] R6_2.6.1                    bslib_0.12.0               </span></span>
-<span><span class="co">##  [31] stringi_1.8.9               RColorBrewer_1.1-3         </span></span>
-<span><span class="co">##  [33] parallelly_1.48.0           car_3.1-5                  </span></span>
-<span><span class="co">##  [35] GenomicRanges_1.64.0        jquerylib_0.1.4            </span></span>
-<span><span class="co">##  [37] Rcpp_1.1.2                  Seqinfo_1.2.0              </span></span>
-<span><span class="co">##  [39] bookdown_0.48               assertthat_0.2.1           </span></span>
-<span><span class="co">##  [41] SummarizedExperiment_1.42.0 knitr_1.52                 </span></span>
-<span><span class="co">##  [43] IRanges_2.46.0              httpuv_1.6.17              </span></span>
-<span><span class="co">##  [45] Matrix_1.7-5                igraph_2.3.4               </span></span>
-<span><span class="co">##  [47] tidyselect_1.2.1            abind_1.4-8                </span></span>
-<span><span class="co">##  [49] yaml_2.3.12                 admisc_0.41                </span></span>
-<span><span class="co">##  [51] lattice_0.22-9              tibble_3.3.1               </span></span>
-<span><span class="co">##  [53] Biobase_2.72.0              shiny_1.14.0               </span></span>
-<span><span class="co">##  [55] withr_3.0.3                 S7_0.2.2                   </span></span>
-<span><span class="co">##  [57] evaluate_1.0.5              base_4.6.1                 </span></span>
-<span><span class="co">##  [59] desc_1.4.3                  proxy_0.4-29               </span></span>
-<span><span class="co">##  [61] mclust_6.1.3                pillar_1.11.1              </span></span>
-<span><span class="co">##  [63] BiocManager_1.30.27         ggpubr_1.0.0               </span></span>
-<span><span class="co">##  [65] MatrixGenerics_1.24.0       carData_3.0-6              </span></span>
-<span><span class="co">##  [67] stats4_4.6.1                plotly_4.12.1              </span></span>
-<span><span class="co">##  [69] generics_0.1.4              S4Vectors_0.50.3           </span></span>
-<span><span class="co">##  [71] ggplot2_4.0.3               scales_1.4.0               </span></span>
-<span><span class="co">##  [73] BiocStyle_2.40.0            stats_4.6.1                </span></span>
-<span><span class="co">##  [75] xtable_1.8-8                class_7.3-23               </span></span>
-<span><span class="co">##  [77] glue_1.8.1                  tools_4.6.1                </span></span>
-<span><span class="co">##  [79] datasets_4.6.1              data.table_1.18.6.1        </span></span>
-<span><span class="co">##  [81] ggsignif_0.6.4              fs_2.1.0                   </span></span>
-<span><span class="co">##  [83] cowplot_1.2.0               grid_4.6.1                 </span></span>
-<span><span class="co">##  [85] utils_4.6.1                 tidyr_1.3.2                </span></span>
-<span><span class="co">##  [87] methods_4.6.1               SingleCellExperiment_1.34.0</span></span>
-<span><span class="co">##  [89] Formula_1.2-6               cli_3.6.6                  </span></span>
-<span><span class="co">##  [91] textshaping_1.0.5           S4Arrays_1.12.1            </span></span>
-<span><span class="co">##  [93] viridisLite_0.4.3           dplyr_1.2.1                </span></span>
-<span><span class="co">##  [95] gtable_0.3.6                rstatix_1.1.0              </span></span>
-<span><span class="co">##  [97] sass_0.4.10                 digest_0.6.39              </span></span>
-<span><span class="co">##  [99] BiocGenerics_0.58.1         SparseArray_1.12.3         </span></span>
-<span><span class="co">## [101] htmlwidgets_1.6.4           farver_2.1.2               </span></span>
-<span><span class="co">## [103] maSigPro_1.84.0             entropy_1.3.2              </span></span>
-<span><span class="co">## [105] htmltools_0.5.9             pkgdown_2.2.1              </span></span>
-<span><span class="co">## [107] lifecycle_1.0.5             httr_1.4.9                 </span></span>
-<span><span class="co">## [109] mime_0.13                   MASS_7.3-65</span></span></code></pre>
+<span><span class="co">##  [1] methods_4.6.1               graphics_4.6.1             </span></span>
+<span><span class="co">##  [3] sass_0.4.10                 generics_0.1.4             </span></span>
+<span><span class="co">##  [5] SparseArray_1.12.3          lattice_0.22-9             </span></span>
+<span><span class="co">##  [7] digest_0.6.39               RColorBrewer_1.1-3         </span></span>
+<span><span class="co">##  [9] evaluate_1.0.5              grid_4.6.1                 </span></span>
+<span><span class="co">## [11] grDevices_4.6.1             bookdown_0.48              </span></span>
+<span><span class="co">## [13] fastmap_1.2.0               jsonlite_2.0.0             </span></span>
+<span><span class="co">## [15] Matrix_1.7-5                BiocManager_1.30.27        </span></span>
+<span><span class="co">## [17] SingleCellExperiment_1.34.0 scales_1.4.0               </span></span>
+<span><span class="co">## [19] codetools_0.2-20            textshaping_1.0.5          </span></span>
+<span><span class="co">## [21] jquerylib_0.1.4             abind_1.4-8                </span></span>
+<span><span class="co">## [23] cli_3.6.6                   rlang_1.3.0                </span></span>
+<span><span class="co">## [25] BiocStyle_2.40.0            XVector_0.52.0             </span></span>
+<span><span class="co">## [27] Biobase_2.72.0              withr_3.0.3                </span></span>
+<span><span class="co">## [29] utils_4.6.1                 cachem_1.1.0               </span></span>
+<span><span class="co">## [31] DelayedArray_0.38.2         yaml_2.3.12                </span></span>
+<span><span class="co">## [33] otel_0.2.0                  stats_4.6.1                </span></span>
+<span><span class="co">## [35] S4Arrays_1.12.1             tools_4.6.1                </span></span>
+<span><span class="co">## [37] base_4.6.1                  parallel_4.6.1             </span></span>
+<span><span class="co">## [39] BiocParallel_1.46.0         ggplot2_4.0.3              </span></span>
+<span><span class="co">## [41] SummarizedExperiment_1.42.0 BiocGenerics_0.58.1        </span></span>
+<span><span class="co">## [43] vctrs_0.7.3                 R6_2.6.1                   </span></span>
+<span><span class="co">## [45] matrixStats_1.5.0           stats4_4.6.1               </span></span>
+<span><span class="co">## [47] lifecycle_1.0.5             Seqinfo_1.2.0              </span></span>
+<span><span class="co">## [49] S4Vectors_0.50.3            fs_2.1.0                   </span></span>
+<span><span class="co">## [51] IRanges_2.46.0              MASS_7.3-65                </span></span>
+<span><span class="co">## [53] ragg_1.5.2                  desc_1.4.3                 </span></span>
+<span><span class="co">## [55] pkgdown_2.2.1               bslib_0.12.0               </span></span>
+<span><span class="co">## [57] gtable_0.3.6                glue_1.8.1                 </span></span>
+<span><span class="co">## [59] systemfonts_1.3.2           xfun_0.62                  </span></span>
+<span><span class="co">## [61] GenomicRanges_1.64.0        MatrixGenerics_1.24.0      </span></span>
+<span><span class="co">## [63] knitr_1.52                  farver_2.1.2               </span></span>
+<span><span class="co">## [65] datasets_4.6.1              patchwork_1.3.2            </span></span>
+<span><span class="co">## [67] htmltools_0.5.9             labeling_0.4.3             </span></span>
+<span><span class="co">## [69] rmarkdown_2.32              compiler_4.6.1             </span></span>
+<span><span class="co">## [71] S7_0.2.2</span></span></code></pre>
 </div>
   </div>
 

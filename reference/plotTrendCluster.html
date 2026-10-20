@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">scMaSigPro</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.5</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.0.5.9000</span>
       </span>
     </div>
 
@@ -63,7 +63,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot multiple trends of the multiple genes.</h1>
-    <small class="dont-index">Source: <a href="https://github.com/BioBam/scMaSigPro/blob/devel/R/plotTrendCluster.R" class="external-link"><code>R/plotTrendCluster.R</code></a></small>
+    <small class="dont-index">Source: <a href="https://github.com/BioBam/scMaSigPro/blob/main/R/plotTrendCluster.R" class="external-link"><code>R/plotTrendCluster.R</code></a></small>
     <div class="hidden name"><code>plotTrendCluster.Rd</code></div>
     </div>
 
@@ -88,7 +88,6 @@
 <span>  curves <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  lines <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  points <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  parallel <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  loess_span <span class="op">=</span> <span class="fl">0.8</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -160,11 +159,6 @@ higher values will result in more linear trends. (Default is 0.01)</p></dd>
 
 <dt id="arg-points">points<a class="anchor" aria-label="anchor" href="#arg-points"></a></dt>
 <dd><p>Whether to plot the points. (Default is TRUE)</p></dd>
-
-
-<dt id="arg-parallel">parallel<a class="anchor" aria-label="anchor" href="#arg-parallel"></a></dt>
-<dd><p>Use forking process to run parallelly. (Default is FALSE)
-(Currently, Windows is not supported)</p></dd>
 
 
 <dt id="arg-loess-span">loess_span<a class="anchor" aria-label="anchor" href="#arg-loess-span"></a></dt>
