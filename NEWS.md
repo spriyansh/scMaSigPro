@@ -66,6 +66,7 @@
     * `parallel` and `parallelly` are replaced by `BiocParallel`, and `utils` is no longer imported. Installing scMaSigPro pulls in 48 non-base packages instead of 41.
     * `maSigPro` moves from Imports to Suggests: only the tests that compare scMaSigPro with maSigPro and the "Bridging maSigPro Analysis" vignette use it, and the vignette shows its code without running it when maSigPro is not installed. Installing scMaSigPro pulls in 44 non-base packages instead of 48 (`maSigPro`, `mclust`, `venn` and `admisc` are no longer installed with it).
     * `igraph` is suggested again, for `paths_from_graph()` only. Installing scMaSigPro still pulls in 44 non-base packages.
+    * `slingshot` is suggested, for the test that runs a slingshot trajectory of `multi.lin.sce` through `assign_paths()` and the workflow; the test is skipped when slingshot is not installed.
 
 * Minor changes
     * Error and progress messages are corrected: misspellings ("doesn't exit", "Overwritting", "onservations", "selction", "select on of"), the class name (`ScMaSigPro`, not `scMaSigPro`), and pointers to functions that do not exist (`plotIntersect()` now points to `sc.filter()`, `showPoly()` to `sc.set.poly()`). `plotDiagnostics()` reports an invalid `model` instead of a missing gene, and messages no longer contain line breaks and indentation copied from the source code. Code that matches the old wording, such as the "Overwritting assay" warning of `eSparse<-` and `eDense<-`, must be updated.
