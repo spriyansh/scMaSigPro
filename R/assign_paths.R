@@ -16,7 +16,7 @@
 #' @param weights A matrix or data frame of non-negative weights with one row
 #' per cell, named by cell, and one column per lineage, named by lineage and
 #' at least two of them, such as `slingshot::slingCurveWeights()`, the cell
-#' weights of tradeSeq.
+#' weights of tradeSeq or the result of [paths_from_graph()].
 #' @param min_weight A single positive number: a cell is on a lineage when its
 #' weight there is at least `min_weight` and its pseudotime there is a finite
 #' number. (Default is 0.5)
@@ -55,7 +55,8 @@
 #' `SingleCellExperiment` with the same cells for [as_scmp()], whose default
 #' column names they are.
 #'
-#' @seealso [sc.restruct()] for the root and link paths.
+#' @seealso [paths_from_graph()] for weights from a trajectory graph;
+#' [sc.restruct()] for the root and link paths.
 #'
 #' @examples
 #' # Three lineages: cells 1 and 2 are on all of them, cell 3 on A and B

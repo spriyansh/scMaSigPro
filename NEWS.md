@@ -14,6 +14,7 @@
 
 * New features
     * `assign_paths()` turns the lineage weights and pseudotimes of a trajectory tool, one column per lineage as slingshot and tradeSeq give them, into one pseudotime value and one path label per cell. A cell is on a lineage when its weight there is at least `min_weight` (0.5). Cells on every lineage are labelled as the root, cells on some of the lineages get the names of those lineages joined by `shared_sep` (`"_links_"`, the separator `sc.restruct()` expects), and cells on one lineage get its name, so the result is the cell table that `create_scmp()` takes and the root and link paths that `sc.restruct()` restructures.
+    * `paths_from_graph()` gives the lineage weights of the cells of a trajectory graph, such as the principal graph of Monocle3 or a minimum spanning tree of clusters: each lineage is the shortest path from the root node to an end node, and a cell has weight 1 on the lineages that pass through its node. With a pseudotime, `assign_paths()` turns these weights into path labels. It needs the suggested package `igraph`.
 
 * Bug Fixes
     * `sc.t.fit()` with `selection_method = "forward"`, `"two.ways.backward"` or `"two.ways.forward"` failed on R >= 4.3 unless `parallel = TRUE` was set, with the error "'length = <n>' in coercion to 'logical(1)'" raised by its progress-bar code. The three methods now run with the default arguments and, like `"backward"`, reproduce `maSigPro::T.fit()` exactly on the package's Gaussian and negative binomial test data.
@@ -63,6 +64,7 @@
     * The ggplot2 functions in use are imported one by one instead of the whole package, and the `dgCMatrix` class is imported from `Matrix`. With these changes installing scMaSigPro pulls in 41 non-base packages instead of 52, and Imports lists 12 packages instead of 18.
     * `parallel` and `parallelly` are replaced by `BiocParallel`, and `utils` is no longer imported. Installing scMaSigPro pulls in 48 non-base packages instead of 41.
     * `maSigPro` moves from Imports to Suggests: only the tests that compare scMaSigPro with maSigPro and the "Bridging maSigPro Analysis" vignette use it, and the vignette shows its code without running it when maSigPro is not installed. Installing scMaSigPro pulls in 44 non-base packages instead of 48 (`maSigPro`, `mclust`, `venn` and `admisc` are no longer installed with it).
+    * `igraph` is suggested again, for `paths_from_graph()` only. Installing scMaSigPro still pulls in 44 non-base packages.
 
 * Minor changes
     * Error and progress messages are corrected: misspellings ("doesn't exit", "Overwritting", "onservations", "selction", "select on of"), the class name (`ScMaSigPro`, not `scMaSigPro`), and pointers to functions that do not exist (`plotIntersect()` now points to `sc.filter()`, `showPoly()` to `sc.set.poly()`). `plotDiagnostics()` reports an invalid `model` instead of a missing gene, and messages no longer contain line breaks and indentation copied from the source code. Code that matches the old wording, such as the "Overwritting assay" warning of `eSparse<-` and `eDense<-`, must be updated.

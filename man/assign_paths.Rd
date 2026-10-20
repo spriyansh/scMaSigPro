@@ -23,7 +23,7 @@ named by cell.}
 \item{weights}{A matrix or data frame of non-negative weights with one row
 per cell, named by cell, and one column per lineage, named by lineage and
 at least two of them, such as \code{slingshot::slingCurveWeights()}, the cell
-weights of tradeSeq.}
+weights of tradeSeq or the result of \code{\link[=paths_from_graph]{paths_from_graph()}}.}
 
 \item{min_weight}{A single positive number: a cell is on a lineage when its
 weight there is at least \code{min_weight} and its pseudotime there is a finite
@@ -96,6 +96,7 @@ assign_paths(pseudotime, weights, shared_sep = "|")
 
 }
 \seealso{
+\code{\link[=paths_from_graph]{paths_from_graph()}} for weights from a trajectory graph;
 \code{\link[=sc.restruct]{sc.restruct()}} for the root and link paths.
 }
 \author{
