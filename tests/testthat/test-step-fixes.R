@@ -209,3 +209,13 @@ test_that("sc.restruct() splits on a fixed link_sep (ledger B5)", {
     # Control: the escaped regular expression
     expect_identical(restruct_multi(ob, "Y_18|Y_15", "\\|"), fixed)
 })
+
+test_that("sc.t.fit() keeps the coefficients of the genes of sol (ledger T2)", {
+    # At this level one gene keeps no significant coefficient
+    tf <- sc.t.fit(splat_fitted("default"), p_value = 1e-10, verbose = FALSE)
+    genes <- rownames(showSol(tf))
+    expect_length(genes, 48L)
+    expect_identical(rownames(showCoeff(tf)), genes)
+    expect_identical(rownames(showTS(tf)), genes)
+    expect_identical(rownames(showGroupCoeff(tf)), genes)
+})

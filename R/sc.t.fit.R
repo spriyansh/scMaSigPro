@@ -172,6 +172,13 @@ sc.t.fit <- function(scmpObj,
     t.list <- lapply(result_list, function(element) {
         return(element[["t"]])
     })
+
+    # A gene whose selected model has no significant coefficient has no row
+    # in sol, and none in the coefficient and t-score matrices (as maSigPro)
+    in_sol <- !vapply(sol.list, is.null, logical(1))
+    feature_names <- feature_names[in_sol]
+    coeff.list <- coeff.list[in_sol]
+    t.list <- t.list[in_sol]
     # Get influ.info
     influ.info.list <- lapply(result_list, function(element) {
         return(element[["influ.info"]])
