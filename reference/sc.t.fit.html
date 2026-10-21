@@ -114,7 +114,9 @@ regression.</p></dd>
 
 
 <dt id="arg-family">family<a class="anchor" aria-label="anchor" href="#arg-family"></a></dt>
-<dd><p>Distribution of the error term.</p></dd>
+<dd><p>Distribution of the error term, a <code><a href="https://rdrr.io/r/stats/family.html" class="external-link">family</a></code>
+object. The default is the family that <code><a href="sc.p.vector.html">sc.p.vector()</a></code> used, with its
+link.</p></dd>
 
 
 <dt id="arg-epsilon">epsilon<a class="anchor" aria-label="anchor" href="#arg-epsilon"></a></dt>
@@ -122,7 +124,8 @@ regression.</p></dd>
 
 
 <dt id="arg-offset">offset<a class="anchor" aria-label="anchor" href="#arg-offset"></a></dt>
-<dd><p>A logical value specifying whether to use offset during fitting.</p></dd>
+<dd><p>A logical value specifying whether to use offset during fitting.
+As in <code><a href="sc.p.vector.html">sc.p.vector()</a></code>, <code>offset = TRUE</code> needs the log link.</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
@@ -139,7 +142,9 @@ the offsets.</p></dd>
 
 
 <dt id="arg-link">link<a class="anchor" aria-label="anchor" href="#arg-link"></a></dt>
-<dd><p>Type of link function to use in the model. Default is "log".</p></dd>
+<dd><p>The link of <code>family</code>. The default is the link that
+<code><a href="sc.p.vector.html">sc.p.vector()</a></code> used; when given, it must be the link of
+<code>family</code>. Choose the link in <code><a href="sc.p.vector.html">sc.p.vector()</a></code>.</p></dd>
 
 
 <dt id="arg-bpparam">BPPARAM<a class="anchor" aria-label="anchor" href="#arg-bpparam"></a></dt>

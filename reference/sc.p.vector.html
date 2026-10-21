@@ -79,7 +79,7 @@ model.</p>
 <span>  p_value <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  mt_correction <span class="op">=</span> <span class="st">"BH"</span>,</span>
 <span>  min_na <span class="op">=</span> <span class="fl">6</span>,</span>
-<span>  family <span class="op">=</span> <span class="fu">negative.binomial</span><span class="op">(</span>theta <span class="op">=</span> <span class="fl">10</span><span class="op">)</span>,</span>
+<span>  family <span class="op">=</span> <span class="fu">negative.binomial</span><span class="op">(</span>theta <span class="op">=</span> <span class="fl">10</span>, link <span class="op">=</span> <span class="va">link</span><span class="op">)</span>,</span>
 <span>  epsilon <span class="op">=</span> <span class="fl">1e-08</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  offset <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -114,7 +114,10 @@ model.</p></dd>
 
 
 <dt id="arg-family">family<a class="anchor" aria-label="anchor" href="#arg-family"></a></dt>
-<dd><p>Distribution of the error term.</p></dd>
+<dd><p>Distribution of the error term, a <code><a href="https://rdrr.io/r/stats/family.html" class="external-link">family</a></code>
+object. The default is the negative binomial family with <code>theta = 10</code>
+and the link given by <code>link</code>. A family given here is used with its
+own link.</p></dd>
 
 
 <dt id="arg-epsilon">epsilon<a class="anchor" aria-label="anchor" href="#arg-epsilon"></a></dt>
@@ -126,7 +129,11 @@ model.</p></dd>
 
 
 <dt id="arg-offset">offset<a class="anchor" aria-label="anchor" href="#arg-offset"></a></dt>
-<dd><p>logical value specifying whether to use offset during fitting.</p></dd>
+<dd><p>logical value specifying whether to use offset during fitting.
+The offset, the size factor of each bin (or its logarithm, see
+<code>log_offset</code>), is added to the linear predictor, where it scales the
+fitted mean under the log link only: with any other link the fits stop
+with an error unless <code>offset = FALSE</code>.</p></dd>
 
 
 <dt id="arg-log-offset">log_offset<a class="anchor" aria-label="anchor" href="#arg-log-offset"></a></dt>
@@ -139,7 +146,11 @@ the offsets.</p></dd>
 
 
 <dt id="arg-link">link<a class="anchor" aria-label="anchor" href="#arg-link"></a></dt>
-<dd><p>Type of link function to use in the model. Default is "log".</p></dd>
+<dd><p>Link function of the default family: "log" (the default, the
+model of the paper) or "identity". When <code>family</code> is also given,
+<code>link</code> must be the link of that family. The identity link needs
+<code>offset = FALSE</code>; under it the fitted mean of a gene can become
+negative, and <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm()</a></code> then warns.</p></dd>
 
 
 <dt id="arg-bpparam">BPPARAM<a class="anchor" aria-label="anchor" href="#arg-bpparam"></a></dt>
