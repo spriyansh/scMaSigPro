@@ -21,14 +21,18 @@
 #' * `sc.two.ways.stepback()`: as `sc.stepback()`, but after each removal
 #'   the removed term with the smallest p-value when added back re-enters if
 #'   that p-value is at most `alfa`, one at a time. Aliased terms are dropped.
+#'   When a state comes back (a cycle), the re-entries stop and the worst
+#'   term is removed while above `alfa`, as in `sc.stepback()`, so every term
+#'   of the returned model is significant.
 #' * `sc.two.ways.stepfor()`: as `sc.stepfor()` with "at most `alfa`"; after
 #'   each entry the worst term is removed while above `alfa` and queued as a
 #'   candidate again. The fit in which the last candidate enters is returned
 #'   unchecked; removing every term gives the intercept-only model.
 #'
 #' Ties go to the first term. With no p-value at all, [max()] and [min()]
-#' warn as in maSigPro. The two-ways methods stop with the current model when
-#' a state comes back, where maSigPro loops for ever. The forward methods keep
+#' warn as in maSigPro. Where maSigPro loops for ever, the two-ways methods
+#' stop when a state comes back: forward with the current model, backward
+#' after the final removals described above. The forward methods keep
 #' the row names of `d`, so the influential observations of their fits are
 #' named by bin (maSigPro numbers the rows, so its influence matrix lists the
 #' genes but every entry is NA); as in maSigPro, the backward methods keep the
@@ -159,10 +163,23 @@ sc.two.ways.stepback <- function(y, d, alfa = 0.05, family = gaussian(),
             return(fit)
         }
         # Removals and re-entries can cycle, and maSigPro then never returns:
-        # stop when the terms in and out of the model come back
+        # when the terms in and out of the model come back, stop the
+        # re-entries and remove the worst term while it is above alfa
         state <- paste(c(cols, 0L, out), collapse = " ")
         if (state %in% seen) {
-            return(fit)
+            repeat {
+                worst <- which.max(p)
+                cols <- cols[.term_estimable(fit) & seq_along(cols) != worst]
+                if (length(cols) == 0L) {
+                    return(fit_cols(integer(0)))
+                }
+                reset_rows <- reset_rows || length(cols) == 1L
+                fit <- fit_cols(cols)
+                p <- .term_p(fit)
+                if (max(p, na.rm = TRUE) <= alfa) {
+                    return(fit)
+                }
+            }
         }
         seen <- c(seen, state)
         worst <- which.max(p)
