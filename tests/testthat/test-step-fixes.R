@@ -731,3 +731,27 @@ test_that("the bins are closed on the left and open on the right (ledger n2)", {
     at_end <- ptime == upper & upper == path_end[bin_of]
     expect_true(all(ptime >= lower & (ptime < upper | at_end)))
 })
+
+test_that("split_bins keeps a path with a single bin (ledger D-1)", {
+    # Path1 has 30 of its 40 cells at 0.5, an interquartile range of 0, so
+    # Freedman-Diaconis gives it one bin. The sizes of one bin have no
+    # standard deviation, and the split failed with "missing value where
+    # TRUE/FALSE needed"; Path2 has 4 bins of 10 cells
+    cd <- data.frame(
+        Pseudotime = c(rep(0.5, 30), seq(0, 1, length.out = 10), (0:39) / 39),
+        Path = rep(c("Path1", "Path2"), each = 40),
+        row.names = paste0("cell", 1:80)
+    )
+    counts <- matrix(1, 2, 80, dimnames = list(c("g1", "g2"), rownames(cd)))
+    ob <- create_scmp(
+        counts = counts, cell_data = cd, ptime_col = "Pseudotime",
+        path_col = "Path"
+    )
+    method <- "Freedman.Diaconis"
+    split <- suppressMessages(sc.squeeze(ob,
+        bin_method = method, split_bins = TRUE
+    ))
+    nosplit <- suppressMessages(sc.squeeze(ob, bin_method = method))
+    expect_identical(cDense(split), cDense(nosplit))
+    expect_identical(ncol(split@Sparse), 80L)
+})

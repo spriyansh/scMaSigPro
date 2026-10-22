@@ -288,8 +288,9 @@ sc.squeeze <- function(scmpObj,
         new_max <- max.allowed + 1
         it <- 1
 
-        # Split bins
-        if (split) {
+        # Split bins; the sizes of a path with a single bin have no standard
+        # deviation, and its bin is kept
+        if (split && nrow(bin_table) > 1) {
             if (verbose) {
                 message(
                     "Optimizing bin sizes, with maximum allowed bin size as ",
