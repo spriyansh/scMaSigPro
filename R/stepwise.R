@@ -28,9 +28,11 @@
 #'
 #' Ties go to the first term. With no p-value at all, [max()] and [min()]
 #' warn as in maSigPro. The two-ways methods stop with the current model when
-#' a state comes back, where maSigPro loops for ever. As in maSigPro, the
-#' backward methods keep the row names of `d` until one column is left and
-#' the forward methods number the rows.
+#' a state comes back, where maSigPro loops for ever. The forward methods keep
+#' the row names of `d`, so the influential observations of their fits are
+#' named by bin (maSigPro numbers the rows, so its influence matrix lists the
+#' genes but every entry is NA); as in maSigPro, the backward methods keep the
+#' row names of `d` until one column is left.
 #'
 #' @param y Numeric response, one value per row of `d`.
 #' @param d A data frame of numeric predictors, one column per term.
@@ -121,7 +123,7 @@ sc.stepfor <- function(y, d, alfa = 0.05, family = gaussian(),
                        max_it = 25) {
     fit_cols <- function(cols) {
         .term_fit(y, d, cols, family, epsilon, useOffset, useWeight, max_it,
-            reset_rows = TRUE
+            reset_rows = FALSE
         )
     }
     cand <- which(.term_estimable(fit_cols(seq_len(ncol(d)))))
@@ -189,7 +191,7 @@ sc.two.ways.stepfor <- function(y, d, alfa = 0.05, family = gaussian(),
                                 useWeight = NULL, max_it = 25) {
     fit_cols <- function(cols) {
         .term_fit(y, d, cols, family, epsilon, useOffset, useWeight, max_it,
-            reset_rows = TRUE
+            reset_rows = FALSE
         )
     }
     cand <- which(.term_estimable(fit_cols(seq_len(ncol(d)))))

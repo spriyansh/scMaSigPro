@@ -422,3 +422,14 @@ test_that("full-model p-values do not depend on the reference (ledger L1)", {
     expect_equal(p_of("a"), p_b, tolerance = 1e-8)
     expect_equal(p_of("c"), p_b, tolerance = 1e-8)
 })
+
+test_that("the forward methods name the influential bins (ledger N2)", {
+    ob <- splat_fitted("default")
+    for (m in c("forward", "two.ways.forward")) {
+        inf <- showInflu(sc.t.fit(ob, selection_method = m, verbose = FALSE))
+        expect_gt(ncol(inf), 0)
+        expect_identical(rownames(inf), rownames(predictors(ob)))
+        expect_false(anyNA(inf), info = m)
+        expect_true(all(colSums(inf == "dffit/cook.d") > 0), info = m)
+    }
+})

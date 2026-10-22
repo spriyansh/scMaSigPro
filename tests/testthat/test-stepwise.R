@@ -133,11 +133,14 @@ test_that("a column that is not estimable is kept by backward only", {
     }
 })
 
-test_that("backward methods keep the row names of the design", {
+test_that("the selectors keep the row names of the design (ledger N2)", {
     y <- 1 + 0.3 * x1 + 3 * x3 + e
     expect_identical(rownames(sc.stepback(y, d)$model), rownames(d))
-    expect_identical(rownames(sc.stepfor(y, d)$model), as.character(1:8))
-    # With one column left, the rows are numbered (as in maSigPro)
+    # The forward methods keep them too, so influence.measures() names the
+    # bins (maSigPro numbers the rows of forward fits)
+    expect_identical(rownames(sc.stepfor(y, d)$model), rownames(d))
+    expect_identical(rownames(sc.two.ways.stepfor(y, d)$model), rownames(d))
+    # With one column left, backward numbers the rows (as in maSigPro)
     y <- 1 + 2 * x1 + e
     expect_identical(rownames(sc.stepback(y, d)$model), as.character(1:8))
 })
