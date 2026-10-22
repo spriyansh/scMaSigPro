@@ -517,3 +517,105 @@ test_that("sc.t.fit() refuses a family relabelled by 0.0.5 (ledger LK-4)", {
         suppressWarnings(sc.t.fit(refit, verbose = FALSE)), "ScMaSigPro"
     )
 })
+
+# The fitted means of the selected model of `gene`, refitted on the columns
+# of the design whose term the model kept, one per bin
+selected_means <- function(ob, gene) {
+    sol <- showSol(ob)[gene, -(1:3)]
+    terms <- !is.na(unlist(sol))
+    x <- predictors(ob)[, terms, drop = FALSE]
+    fit <- stats::glm.fit(cbind(1, x), eDense(ob)[gene, rownames(x)],
+        family = ob@Parameters@distribution,
+        control = stats::glm.control(
+            epsilon = ob@Parameters@epsilon, maxit = ob@Parameters@max_it
+        )
+    )
+    fit$fitted.values
+}
+
+test_that("identity-link fits are drawn on the count scale (ledger LK-1)", {
+    design <- splat_design(2)
+    # glm() warns for genes whose identity-link mean becomes negative
+    pv <- suppressWarnings(sc.p.vector(design,
+        link = "identity", offset = FALSE, verbose = FALSE
+    ))
+    id <- suppressWarnings(sc.t.fit(pv, verbose = FALSE))
+    gene <- rownames(showSol(id))[1]
+    p <- plotTrend(id, gene, significant = FALSE)
+    built <- ggplot2::ggplot_build(p)$data
+    expect_identical(p$labels$y, "Pseudobulk Expression")
+    # The points are the counts, not their logs
+    bins <- cDense(id)
+    counts <- eDense(id)[gene, rownames(bins)]
+    expect_identical(built[[1]]$y, unname(counts))
+    # The curve of each path passes through the fitted means of its bins
+    means <- selected_means(id, gene)
+    curve <- p$layers$curves$data
+    for (path in unique(bins$Path)) {
+        on_path <- bins$Path == path
+        at_bins <- stats::approx(
+            curve$x[curve$path == path], curve$y[curve$path == path],
+            xout = bins$scmp_binned_pseudotime[on_path]
+        )$y
+        expect_equal(at_bins, unname(means[rownames(bins)[on_path]]),
+            tolerance = 1e-6
+        )
+    }
+    # Explicit logs = TRUE logs the points as before
+    logged <- plotTrend(id, gene, significant = FALSE, logs = TRUE)
+    expect_identical(
+        ggplot2::ggplot_build(logged)$data[[1]]$y, unname(log(counts + 1))
+    )
+    # A size factor left in the design by an earlier log-link fit is not
+    # used for an identity-link fit
+    stale <- id
+    stale@Design@offset <- splat_fitted("default")@Design@offset
+    expect_identical(
+        ggplot2::ggplot_build(plotTrend(stale, gene, significant = FALSE))$data,
+        built
+    )
+})
+
+test_that("log-link fits are drawn on the log scale (ledger LK-1)", {
+    cl <- splat_clustered()
+    gene <- splat_sig_gene()
+    default <- plotTrend(cl, gene, lines = TRUE)
+    logged <- plotTrend(cl, gene, lines = TRUE, logs = TRUE)
+    expect_identical(
+        ggplot2::ggplot_build(default)$data,
+        ggplot2::ggplot_build(logged)$data
+    )
+    expect_identical(default$labels$y, "log(Pseudobulk Expression)")
+    expect_identical(
+        plotTrendCluster(cl, verbose = FALSE)$labels$y,
+        "log(Pseudobulk Expression)"
+    )
+    # Explicit logs = FALSE keeps the label of plotTrendCluster()
+    expect_identical(
+        plotTrendCluster(cl, logs = FALSE, verbose = FALSE)$labels$y,
+        "log(Pseudobulk Expression)"
+    )
+})
+
+test_that("plotTrendCluster() resolves logs as plotTrend() (ledger LK-1)", {
+    design <- splat_design(2)
+    pv <- suppressWarnings(sc.p.vector(design,
+        link = "identity", offset = FALSE, verbose = FALSE
+    ))
+    id <- suppressWarnings(sc.t.fit(pv, verbose = FALSE))
+    id <- sc.filter(id, rsq = 0)
+    id <- sc.cluster.trend(id, geneSet = "all", k = 2)
+    p <- plotTrendCluster(id, verbose = FALSE)
+    expect_identical(p$labels$y, "Pseudobulk Expression")
+    raw <- ggplot2::ggplot_build(p)$data
+    expect_identical(
+        ggplot2::ggplot_build(plotTrendCluster(id,
+            logs = FALSE, verbose = FALSE
+        ))$data,
+        raw
+    )
+    expect_identical(
+        plotTrendCluster(id, logs = TRUE, verbose = FALSE)$labels$y,
+        "log(Pseudobulk Expression)"
+    )
+})
