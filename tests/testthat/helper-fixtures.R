@@ -263,3 +263,17 @@ splat_theta_gene <- function() {
         sc.t.fit(pv, verbose = FALSE)
     })
 }
+
+# An object as scMaSigPro 0.0.5 left it after sc.p.vector(link = "identity")
+# and sc.t.fit(): fits made with the log link, recorded under the identity
+# label (ledger LK-4)
+splat_relabelled <- function() {
+    fixture("splat_relabelled", function() {
+        ob <- splat_fitted("no_offset")
+        family <- ob@Parameters@distribution
+        family$link <- "identity"
+        ob@Parameters@distribution <- family
+        ob@Parameters@link <- "identity"
+        ob
+    })
+}

@@ -470,3 +470,44 @@ test_that("theta_estimate is one of three values (decision D16)", {
         fixed = TRUE
     )
 })
+
+test_that("a relabelled family is refused (ledger LK-4)", {
+    design <- splat_design(2)
+    msg <- "'family' is labelled with the 'identity' link but has the link"
+    nb <- MASS::negative.binomial(10)
+    nb$link <- "identity"
+    expect_error(
+        sc.p.vector(design, family = nb, offset = FALSE, verbose = FALSE),
+        msg,
+        fixed = TRUE
+    )
+    expect_error(sc.t.fit(splat_relabelled(), verbose = FALSE), msg,
+        fixed = TRUE
+    )
+    expect_error(
+        sc.t.fit(splat_fitted("no_offset"), family = nb, verbose = FALSE),
+        msg,
+        fixed = TRUE
+    )
+    # The other direction: identity functions under the log label
+    gauss <- gaussian()
+    gauss$link <- "log"
+    expect_error(
+        sc.p.vector(design, family = gauss, offset = FALSE, verbose = FALSE),
+        "'family' is labelled with the 'log' link but has the link functions",
+        fixed = TRUE
+    )
+    # Controls: families with their own link, and a link make.link() does
+    # not know, which is not checked
+    expect_identical(
+        .true_link(MASS::negative.binomial(10, link = "sqrt")), "sqrt"
+    )
+    expect_identical(.true_link(poisson(link = power(1 / 3))), NA_character_)
+    expect_s4_class(
+        sc.p.vector(design,
+            family = poisson(link = power(1 / 3)), offset = FALSE,
+            verbose = FALSE
+        ),
+        "ScMaSigPro"
+    )
+})

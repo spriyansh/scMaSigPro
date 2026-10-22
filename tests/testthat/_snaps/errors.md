@@ -126,6 +126,14 @@
       Error:
       ! 1000 for 'min_na' is too high. Try lowering the threshold.
 
+# sc.t.fit refuses a family relabelled by an earlier version
+
+    Code
+      eval(cases[[nm]])
+    Condition
+      Error:
+      ! 'family' is labelled with the 'identity' link but has the link functions of the 'log' link. scMaSigPro 0.0.5 and earlier renamed the link of the family without changing its functions, so an object fitted by them with link = "identity" holds fits made with the 'log' link: run sc.p.vector() on it again.
+
 # sc.t.fit rejects an unknown selection method
 
     Code

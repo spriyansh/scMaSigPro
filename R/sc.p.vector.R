@@ -4,7 +4,7 @@
 #' Performs a regression fit for each gene taking all variables present in the
 #' model.
 #'
-#' @importFrom stats anova dist glm median p.adjust
+#' @importFrom stats anova dist glm make.link median p.adjust
 #' @importFrom BiocParallel bplapply bpnworkers SerialParam
 #' @importFrom MASS negative.binomial
 #'
@@ -321,9 +321,11 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
 # The family of the fits of sc.p.vector() and sc.t.fit(). glm() uses the
 # link functions of a family (linkfun, linkinv, mu.eta), so a family is used
 # with its own link, and renaming its `link` entry would only relabel it
-# (ledger S6). `link`, when given, must be that link. The size-factor offset
-# is added to the linear predictor, where it scales the mean under the log
-# link only, so offset = TRUE needs the log link.
+# (ledger S6). A relabelled family, such as the one an object fitted with
+# link = "identity" by scMaSigPro 0.0.5 or earlier holds, is refused (ledger
+# LK-4). `link`, when given, must be the link of the family. The size-factor
+# offset is added to the linear predictor, where it scales the mean under
+# the log link only, so offset = TRUE needs the log link.
 .fit_family <- function(family, link, link_given, offset) {
     .check(inherits(family, "family"),
         msg = paste(
@@ -331,6 +333,7 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
             "MASS::negative.binomial(theta = 10)."
         )
     )
+    .check(!.relabelled(family), msg = .relabelled_message(family))
     .check(!link_given || identical(family$link, link),
         msg = paste0(
             "'family' has the '", family$link, "' link, not link = '", link,
@@ -346,6 +349,57 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
         )
     )
     family
+}
+
+# The link whose functions `family` has: its own link label when the
+# functions are those of make.link() for that label, otherwise the first of
+# the links of make.link() whose linkfun and linkinv give the same values on
+# a few test points, or NA when there is none (a link make.link() does not
+# know, such as a power link, is not checked).
+.true_link <- function(family) {
+    x <- c(0.25, 0.5, 0.75)
+    links <- c(
+        family$link, "log", "identity", "logit", "probit", "cauchit",
+        "cloglog", "sqrt", "inverse", "1/mu^2"
+    )
+    for (name in unique(links)) {
+        same <- tryCatch(
+            {
+                ref <- make.link(name)
+                isTRUE(all.equal(family$linkfun(x), ref$linkfun(x))) &&
+                    isTRUE(all.equal(family$linkinv(x), ref$linkinv(x)))
+            },
+            error = function(e) FALSE,
+            warning = function(w) FALSE
+        )
+        if (same) {
+            return(name)
+        }
+    }
+    NA_character_
+}
+
+# TRUE for a family whose link functions are those of another link than its
+# label: earlier versions renamed the link of a family without changing its
+# functions (ledger S6), so an object fitted by them with a link other than
+# the family's holds such a family
+.relabelled <- function(family) {
+    if (!inherits(family, "family")) {
+        return(FALSE)
+    }
+    actual <- .true_link(family)
+    !is.na(actual) && !identical(actual, family$link)
+}
+
+.relabelled_message <- function(family) {
+    paste0(
+        "'family' is labelled with the '", family$link, "' link but has the ",
+        "link functions of the '", .true_link(family), "' link. scMaSigPro ",
+        "0.0.5 and earlier renamed the link of the family without changing ",
+        "its functions, so an object fitted by them with link = \"",
+        family$link, "\" holds fits made with the '", .true_link(family),
+        "' link: run sc.p.vector() on it again."
+    )
 }
 
 # The design as a data frame whose columns are named by position: x1, x2, ...

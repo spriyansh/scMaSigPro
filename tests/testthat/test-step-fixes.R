@@ -499,3 +499,21 @@ test_that("sc.p.vector() fits an object with one gene (decision D17)", {
     expect_identical(fit@Profile@p_values, full@Profile@p_values[gene])
     expect_identical(fit@Parameters@g, 1L)
 })
+
+test_that("sc.t.fit() refuses a family relabelled by 0.0.5 (ledger LK-4)", {
+    old <- splat_relabelled()
+    expect_error(sc.t.fit(old, verbose = FALSE),
+        "run sc.p.vector() on it again.",
+        fixed = TRUE
+    )
+    # The functions are those of the log link, with which the fits were made
+    expect_identical(.true_link(old@Parameters@distribution), "log")
+    # Running sc.p.vector() again fits with the identity link
+    refit <- suppressWarnings(sc.p.vector(old,
+        link = "identity", offset = FALSE, verbose = FALSE
+    ))
+    expect_identical(.true_link(refit@Parameters@distribution), "identity")
+    expect_s4_class(
+        suppressWarnings(sc.t.fit(refit, verbose = FALSE)), "ScMaSigPro"
+    )
+})

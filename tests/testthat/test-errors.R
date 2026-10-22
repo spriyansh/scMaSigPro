@@ -43,6 +43,8 @@ cases <- list(
         )),
     "sc.p.vector rejects min_na larger than the number of bins" =
         quote(sc.p.vector(splat_design(2), min_na = 1000, verbose = FALSE)),
+    "sc.t.fit refuses a family relabelled by an earlier version" =
+        quote(sc.t.fit(splat_relabelled(), verbose = FALSE)),
     "sc.t.fit rejects an unknown selection method" =
         quote(sc.t.fit(splat_fitted("default"), selection_method = "sideways", verbose = FALSE)),
     "sc.filter rejects an unknown vars" =

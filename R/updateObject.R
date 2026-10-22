@@ -26,6 +26,11 @@
 #' ([sc.p.vector()] had no such filter then), and the version of the
 #' package that is running.
 #'
+#' Objects fitted with `link = "identity"` by scMaSigPro 0.0.5 or earlier
+#' hold a family labelled with the identity link but with the link functions
+#' of the log link, with which their fits were made: `updateObject()` warns,
+#' and [sc.t.fit()] stops on them, until [sc.p.vector()] is run again.
+#'
 #' Objects binned by scMaSigPro 0.0.4 cannot be updated: their `Dense` slot
 #' is not a valid `SingleCellExperiment`, and the cell metadata of their
 #' `Sparse` slot may not be in the order of the counts. `updateObject()`
@@ -82,6 +87,12 @@ setMethod("updateObject", "ScMaSigPro", function(object, ...,
         }
         object@Parameters <- params
         object@version <- .scmp_version()
+    }
+    # Fitted with a relabelled family (ledger LK-4)
+    if (.relabelled(object@Parameters@distribution)) {
+        warning(.relabelled_message(object@Parameters@distribution),
+            call. = FALSE
+        )
     }
     object@Sparse <- updateObject(object@Sparse, ..., verbose = verbose)
     object@Dense <- updateObject(object@Dense, ..., verbose = verbose)

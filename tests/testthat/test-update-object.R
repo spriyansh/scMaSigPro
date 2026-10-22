@@ -113,3 +113,22 @@ test_that("updateObject() adds the count filter parameters (decision D17)", {
     older <- without_version(old)
     expect_identical(updateObject(older), ob)
 })
+
+test_that("updateObject() warns about a relabelled family (ledger LK-4)", {
+    old <- splat_relabelled()
+    msg <- paste(
+        "'family' is labelled with the 'identity' link but has the link",
+        "functions of the 'log' link."
+    )
+    expect_warning(up <- updateObject(old), msg, fixed = TRUE)
+    expect_identical(up, old)
+    expect_warning(updateObject(without_version(old)), "run sc.p.vector()",
+        fixed = TRUE
+    )
+    # sc.p.vector() again gives a family with the identity link
+    refit <- suppressWarnings(sc.p.vector(old,
+        link = "identity", offset = FALSE, verbose = FALSE
+    ))
+    expect_no_warning(updateObject(refit))
+    expect_no_warning(updateObject(splat_clustered()))
+})
