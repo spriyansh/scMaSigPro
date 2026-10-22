@@ -347,7 +347,7 @@ extract_interval <- function(time.vector, nBins = 1, bin.size, lbound,
     time_range <- range(time.vector)
     breaks <- seq(time_range[1], time_range[2], length.out = nBins + 1)
     codes <- cut(time.vector,
-        breaks = breaks, include.lowest = TRUE, labels = FALSE
+        breaks = breaks, right = FALSE, include.lowest = TRUE, labels = FALSE
     )
     new_bin_table_current <- data.frame(
         breaks[-length(breaks)], breaks[-1],
@@ -361,10 +361,11 @@ extract_interval <- function(time.vector, nBins = 1, bin.size, lbound,
 #' @title Assign Points to Bins
 #'
 #' @description
-#' `.assign_bins()` gives each point the first bin whose closed interval
-#' `[lower, upper]` holds it, so that a point on the bound of two bins goes
-#' to the lower one: on contiguous bins, these are the intervals of
-#' `cut(include.lowest = TRUE)`, (a, b] and the first one [a, b].
+#' `.assign_bins()` gives each point the bin whose interval `[lower, upper)`
+#' holds it, the last bin being closed on both ends, as in Srivastava et al.
+#' (2024), Section 2.1: a point on the bound of two bins goes to the upper
+#' one. On contiguous bins, these are the intervals of
+#' `cut(right = FALSE, include.lowest = TRUE)`.
 #'
 #' @param x Numeric vector of points (pseudotime values).
 #' @param lower,upper Numeric vectors: the bounds of the bins, in increasing
@@ -378,8 +379,10 @@ extract_interval <- function(time.vector, nBins = 1, bin.size, lbound,
 #' @noRd
 .assign_bins <- function(x, lower, upper) {
     idx <- rep(NA_integer_, length(x))
-    for (j in rev(seq_along(lower))) {
-        idx[x >= lower[j] & x <= upper[j]] <- j
+    last <- length(lower)
+    for (j in seq_along(lower)) {
+        below <- if (j == last) x <= upper[j] else x < upper[j]
+        idx[x >= lower[j] & below] <- j
     }
     idx
 }
@@ -389,11 +392,11 @@ extract_interval <- function(time.vector, nBins = 1, bin.size, lbound,
 #'
 #' @description
 #' `optimize_bin_max()` splits every bin that holds more than `max_allowed`
-#' points. The points within the bounds of the bin get the number of bins
-#' that `method` and `drop` give for them ([estBinSize()]) and are divided
-#' into that many bins of equal width over their range; the first new bin
-#' starts at the lower bound of the bin and the last ends at its upper bound,
-#' so that the new bins cover the bin without gaps. The other bins are kept.
+#' points. The points of the bin get the number of bins that `method` and
+#' `drop` give for them ([estBinSize()]) and are divided into that many bins
+#' of equal width over their range; the first new bin starts at the lower
+#' bound of the bin and the last ends at its upper bound, so that the new
+#' bins cover the bin without gaps. The other bins are kept.
 #'
 #' @param bin_table A dataframe containing the bin data.
 #' @param max_allowed The maximum allowed size for a bin.
@@ -416,6 +419,11 @@ optimize_bin_max <- function(bin_table, max_allowed, verbose = TRUE,
     uniform_bin_df <- data.frame(matrix(NA, ncol = ncol(bin_table)))
     colnames(uniform_bin_df) <- colnames(bin_table)
 
+    # The bin of every point, by the intervals of .assign_bins()
+    bin_of <- .assign_bins(
+        time_vector, bin_table[[lbound]], bin_table[[ubound]]
+    )
+
     # Binning one-by one
     for (i in seq_len(nrow(bin_table))) {
         # histo_bin
@@ -427,7 +435,7 @@ optimize_bin_max <- function(bin_table, max_allowed, verbose = TRUE,
         # Check if the bin size is big
         if (current_bin_size > max_allowed) {
             # get pseudotime
-            pTime.for.big.interval <- time_vector[(time_vector >= current_bin_df[[lbound]] & time_vector <= current_bin_df[[ubound]])]
+            pTime.for.big.interval <- time_vector[which(bin_of == i)]
 
             # Estimate how many splits are required
             potential_splits <- ceiling(estBinSize(

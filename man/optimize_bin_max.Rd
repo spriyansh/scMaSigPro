@@ -42,10 +42,10 @@ with updated values for the bin size and bounds.
 }
 \description{
 \code{optimize_bin_max()} splits every bin that holds more than \code{max_allowed}
-points. The points within the bounds of the bin get the number of bins
-that \code{method} and \code{drop} give for them (\code{\link[=estBinSize]{estBinSize()}}) and are divided
-into that many bins of equal width over their range; the first new bin
-starts at the lower bound of the bin and the last ends at its upper bound,
-so that the new bins cover the bin without gaps. The other bins are kept.
+points. The points of the bin get the number of bins that \code{method} and
+\code{drop} give for them (\code{\link[=estBinSize]{estBinSize()}}) and are divided into that many bins
+of equal width over their range; the first new bin starts at the lower
+bound of the bin and the last ends at its upper bound, so that the new
+bins cover the bin without gaps. The other bins are kept.
 }
 \keyword{internal}

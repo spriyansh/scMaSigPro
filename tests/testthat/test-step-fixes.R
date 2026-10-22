@@ -27,7 +27,7 @@ test_that("sc.filter(vars = 'each') gives one list per term (ledger F1)", {
     # Control: terms that select different numbers of genes
     some <- sc.filter(ob, vars = "each")@Significant@genes
     expect_identical(
-        lengths(some), setNames(c(31L, 9L, 14L, 23L, 8L, 13L), terms)
+        lengths(some), setNames(c(32L, 10L, 16L, 24L, 8L, 14L), terms)
     )
 })
 
@@ -694,4 +694,40 @@ test_that("split_bins keeps every cell (ledger Q1)", {
     expect_identical(bins$upper[c(1, 6, 7)], c(2, 4, 10))
     expect_identical(bins$lower[3:6], bins$upper[2:5])
     expect_equal(bins$upper[2:5], seq(2.2366, 3.95, length.out = 6)[2:5])
+})
+
+test_that("the bins are closed on the left and open on the right (ledger n2)", {
+    # Srivastava et al. (2024), Section 2.1: "bins are structured as
+    # left-closed and right-open intervals, except for the last bin, which is
+    # closed on both ends". A test meant to apply this rule compared a
+    # logical vector with max(), so every bin was closed on both ends and a
+    # cell on the bound of two bins went to the earlier one.
+    # 0 to 10, Sturges: 5 bins, breaks 0, 2, 4, 6, 8 and 10
+    bins <- toy_bins(0:10)
+    expect_identical(bins$members, list(0:1, 2:3, 4:5, 6:7, 8:10))
+    expect_identical(bins$lower, c(0, 2, 4, 6, 8))
+    # 7 points, 4 bins, breaks 0, 2.5, 5, 7.5 and 10: 5 is in the third bin
+    bins <- toy_bins(c(0, 2, 4, 5, 6, 8, 10))
+    expect_identical(bins$members, list(c(0, 2), 4, c(5, 6), c(8, 10)))
+    # splat.sim, Sturges: Cell169, at the break 50 of Path1, opens bin 5
+    ob <- splat_binned()
+    bins <- cDense(ob)
+    members <- strsplit(bins[[ob@Parameters@bin_mem_col]], "|", fixed = TRUE)
+    names(members) <- rownames(bins)
+    expect_true("Cell169" %in% members[["Path1_bin_5"]])
+    expect_identical(bins["Path1_bin_5", "scmp_l_bound"], 50)
+    # The bins of a split follow the rule too: every cell of splat.sim, whose
+    # pseudotime takes whole values, lies in [lower, upper) of its bin or at
+    # the end of the last bin of its path
+    ob <- sc.squeeze(splat_scmp(), split_bins = TRUE)
+    p <- ob@Parameters
+    bins <- cDense(ob)
+    members <- strsplit(bins[[p@bin_mem_col]], "|", fixed = TRUE)
+    bin_of <- rep(seq_len(nrow(bins)), lengths(members))
+    ptime <- cSparse(ob)[unlist(members), p@ptime_col]
+    lower <- bins$scmp_l_bound[bin_of]
+    upper <- bins$scmp_u_bound[bin_of]
+    path_end <- ave(bins$scmp_u_bound, bins[[p@path_col]], FUN = max)
+    at_end <- ptime == upper & upper == path_end[bin_of]
+    expect_true(all(ptime >= lower & (ptime < upper | at_end)))
 })

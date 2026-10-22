@@ -16,23 +16,29 @@ test_that("extract_interval() counts equal-width bins over the range", {
     breaks <- seq(0, 1, length.out = 4)
     expect_identical(bins$lo, breaks[-4])
     expect_identical(bins$hi, breaks[-1])
-    # the first bin is closed on both sides, the others on the right only
     two <- extract_interval(c(2, 4, 4, 9),
         nBins = 2, bin.size = "size", lbound = "lo", ubound = "hi"
     )
     expect_identical(two$size, c(3, 1))
     expect_identical(two$lo, c(2, 5.5))
+    # the last bin is closed on both sides, the others on the left only: the
+    # point on the break 2 is counted in the second bin
+    on_break <- extract_interval(0:4,
+        nBins = 2, bin.size = "size", lbound = "lo", ubound = "hi"
+    )
+    expect_identical(on_break$size, c(2, 3))
 })
 
 test_that(".assign_bins() puts each point in its bin", {
-    # (0, 2], (2, 4] and (4, 6], the first closed: a point on the bound of two
-    # bins goes to the lower one, as with cut(include.lowest = TRUE)
+    # [0, 2), [2, 4) and [4, 6], the last closed: a point on the bound of two
+    # bins goes to the upper one, as with cut(right = FALSE,
+    # include.lowest = TRUE)
     x <- 0:6
     bin <- .assign_bins(x, c(0, 2, 4), c(2, 4, 6))
-    expect_identical(bin, c(1L, 1L, 1L, 2L, 2L, 3L, 3L))
-    expect_identical(
-        bin, cut(x, c(0, 2, 4, 6), include.lowest = TRUE, labels = FALSE)
-    )
+    expect_identical(bin, c(1L, 1L, 2L, 2L, 3L, 3L, 3L))
+    expect_identical(bin, cut(x, c(0, 2, 4, 6),
+        right = FALSE, include.lowest = TRUE, labels = FALSE
+    ))
     # bins with a gap between them, and points outside every bin
     expect_identical(
         .assign_bins(c(-1, 1, 2.5, 3, 7), c(0, 3), c(2, 6)),

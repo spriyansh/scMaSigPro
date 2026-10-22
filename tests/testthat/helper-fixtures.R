@@ -166,6 +166,7 @@ build_golden <- function() {
     binned <- splat_binned()
     bounds_note <- "0.6.0, ledger S3: bounds are the numeric breaks"
     cells_note <- "0.6.0, ledger S3: cells binned by the numeric breaks"
+    n2_note <- "0.6.0, ledger n2: bins [a, b), the last [a, b]"
 
     methods <- c("Sturges", "Sqrt", "Rice", "Doane", "Freedman.Diaconis", "Scott.Normal")
     by_method <- lapply(methods, function(m) {
@@ -248,7 +249,23 @@ build_golden <- function() {
                 "squeeze/options/drop_trails/bins" = bounds_note,
                 "squeeze/options/mean/bins" = bounds_note,
                 "multi/squeeze" = cells_note,
-                "multi/restruct" = cells_note
+                "multi/restruct" = cells_note,
+                "sparse_cells" = n2_note,
+                "squeeze/default" = n2_note,
+                "squeeze/by_method/Sturges" = n2_note,
+                "squeeze/by_method/Sqrt" = n2_note,
+                "squeeze/by_method/Rice" = n2_note,
+                "squeeze/options/split_bins" = n2_note,
+                "squeeze/options/prune_bins" = n2_note,
+                "squeeze/options/fill_gaps" = n2_note,
+                "squeeze/options/mean" = n2_note,
+                "fits/default" = paste(n2_note, "(all but path)"),
+                "fits/vignette" = paste(n2_note, "(all but path)"),
+                "fits/no_offset" =
+                    paste(n2_note, "(all but offset, influential, path)"),
+                "filters" = n2_note,
+                "clusters" = n2_note,
+                "plots" = n2_note
             )
         ),
         sparse_cells = sorted_df(cSparse(binned)),
