@@ -22,6 +22,8 @@ cases <- list(
         quote(sc.squeeze(splat_scmp(), drop_fac = 0.1)),
     "sc.set.poly rejects a non-ScMaSigPro input" =
         quote(sc.set.poly(list())),
+    "sc.set.poly rejects a reference that is not a path" =
+        quote(sc.set.poly(splat_binned(), reference = "Path3")),
     "sc.p.vector rejects an unknown link" =
         quote(sc.p.vector(splat_design(2), link = "probit", verbose = FALSE)),
     "sc.p.vector refuses the offset with the identity link" =

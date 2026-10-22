@@ -391,3 +391,22 @@ test_that("sc.cluster.trend() needs enough genes for k (ledger V6)", {
         sort(unique(unlist(ob@Significant@genes)))[1:3]
     )
 })
+
+test_that("sc.set.poly() takes one of the paths as reference (ledger L1)", {
+    binned <- splat_binned()
+    expect_error(sc.set.poly(binned, reference = "Path3"),
+        "'reference' must be one of the paths: Path1, Path2.",
+        fixed = TRUE
+    )
+    for (bad in list(c("Path1", "Path2"), NA_character_, 1, character())) {
+        expect_error(sc.set.poly(binned, reference = bad),
+            "'reference' must be a single character string.",
+            fixed = TRUE
+        )
+    }
+    # Control: the first path given as reference is the default
+    expect_identical(
+        sc.set.poly(binned, reference = "Path1")@Design,
+        splat_design(2)@Design
+    )
+})

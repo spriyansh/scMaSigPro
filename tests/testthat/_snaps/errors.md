@@ -70,6 +70,14 @@
       Error:
       ! Please provide object of class 'ScMaSigPro'
 
+# sc.set.poly rejects a reference that is not a path
+
+    Code
+      eval(cases[[nm]])
+    Condition
+      Error:
+      ! 'reference' must be one of the paths: Path1, Path2.
+
 # sc.p.vector rejects an unknown link
 
     Code

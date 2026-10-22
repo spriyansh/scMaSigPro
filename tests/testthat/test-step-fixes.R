@@ -314,3 +314,111 @@ test_that("a family given to the fits keeps its own link (ledger S6)", {
     expect_identical(tf@Parameters@link, "identity")
     expect_identical(tf@Parameters@distribution$family, "gaussian")
 })
+
+# Three binned paths whose labels sort differently in the C locale ("B",
+# "a", "c") and in a case-insensitive collation ("a", "B", "c"); `levels`
+# makes the path column a factor with these levels
+three_paths_binned <- function(labels = c("a", "B", "c"), levels = NULL) {
+    n <- 20
+    cells <- paste0("cell", seq_len(n * length(labels)))
+    path <- rep(labels, each = n)
+    if (!is.null(levels)) {
+        path <- factor(path, levels = levels)
+    }
+    cell_data <- data.frame(
+        Pseudotime = rep(seq_len(n), length(labels)),
+        Path = path,
+        row.names = cells
+    )
+    # Deterministic counts: gene i rises along path k with slope i * k / 400
+    time <- cell_data$Pseudotime
+    k <- match(as.character(cell_data$Path), labels)
+    counts <- t(vapply(seq_len(10), function(i) {
+        round(exp(2 + i * k * time / 400 + sin(i * time) / 4))
+    }, numeric(length(cells))))
+    dimnames(counts) <- list(paste0("g", 1:10), cells)
+    ob <- create_scmp(
+        counts = counts, cell_data = cell_data,
+        ptime_col = "Pseudotime", path_col = "Path"
+    )
+    sc.squeeze(ob)
+}
+
+# The reference path of a design: its shortest groups.vector label
+reference_of <- function(ob) {
+    gv <- ob@Design@groups.vector
+    gv[nchar(gv) == min(nchar(gv))][1]
+}
+
+# `code` evaluated with LC_COLLATE = `locale`; NULL when it is not available
+with_collate <- function(locale, code) {
+    old <- Sys.getlocale("LC_COLLATE")
+    on.exit(Sys.setlocale("LC_COLLATE", old), add = TRUE)
+    if (!nzchar(suppressWarnings(Sys.setlocale("LC_COLLATE", locale)))) {
+        return(NULL)
+    }
+    force(code)
+}
+
+test_that("sc.squeeze() orders the paths in C-locale order (ledger L1)", {
+    in_c <- with_collate("C", sc.set.poly(three_paths_binned(), 1))
+    expect_identical(reference_of(in_c), "B")
+    expect_identical(unique(cDense(in_c)$Path), c("B", "a", "c"))
+    expect_identical(colnames(predictors(in_c))[1:2], c("avsB", "cvsB"))
+    # The same design in a locale that collates case-insensitively
+    in_en <- with_collate("en_US.UTF-8", {
+        if (identical(order(c("B", "a")), c(2L, 1L))) {
+            sc.set.poly(three_paths_binned(), 1)
+        }
+    })
+    skip_if(is.null(in_en), "no case-insensitive en_US.UTF-8 collation")
+    expect_identical(in_en@Design, in_c@Design)
+    expect_identical(cDense(in_en), cDense(in_c))
+})
+
+test_that("a factor path column keeps its level order (ledger L1)", {
+    binned <- three_paths_binned(levels = c("c", "a", "B"))
+    expect_identical(unique(cDense(binned)$Path), c("c", "a", "B"))
+    expect_identical(reference_of(sc.set.poly(binned, 1)), "c")
+})
+
+test_that("sc.set.poly(reference = ) names the reference path (ledger L1)", {
+    binned <- three_paths_binned()
+    ob <- sc.set.poly(binned, 1, reference = "c")
+    expect_identical(reference_of(ob), "c")
+    expect_identical(
+        colnames(predictors(ob)),
+        c(
+            "Bvsc", "avsc", "scmp_binned_pseudotime",
+            "scmp_binned_pseudotimexB", "scmp_binned_pseudotimexa"
+        )
+    )
+    expect_identical(colnames(pathAssign(ob))[3:5], c("c", "B", "a"))
+    # The bins keep their order; only the parameterisation changes
+    expect_identical(
+        rownames(predictors(ob)), rownames(predictors(sc.set.poly(binned, 1)))
+    )
+    # The first path given again is the default
+    expect_identical(
+        sc.set.poly(binned, 1, reference = "B")@Design,
+        sc.set.poly(binned, 1)@Design
+    )
+    # The path polynomials of sc.t.fit() use the same reference
+    design <- sc.set.poly(binned, 2, reference = "c")
+    tf <- sc.t.fit(sc.p.vector(design, verbose = FALSE), verbose = FALSE)
+    expect_identical(tf@Estimate@path[1], "c")
+    expect_identical(
+        colnames(showGroupCoeff(tf))[1:3], c("c_beta0", "c_beta1", "c_beta2")
+    )
+})
+
+test_that("full-model p-values do not depend on the reference (ledger L1)", {
+    binned <- three_paths_binned()
+    p_of <- function(ref) {
+        ob <- sc.set.poly(binned, 2, reference = ref)
+        sc.p.vector(ob, verbose = FALSE)@Profile@p_values
+    }
+    p_b <- p_of("B")
+    expect_equal(p_of("a"), p_b, tolerance = 1e-8)
+    expect_equal(p_of("c"), p_b, tolerance = 1e-8)
+})
