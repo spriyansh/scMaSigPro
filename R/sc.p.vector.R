@@ -36,6 +36,13 @@
 #' \code{link} must be the link of that family. The identity link needs
 #' \code{offset = FALSE}; under it the fitted mean of a gene can become
 #' negative, and \code{glm()} then warns.
+#' @param theta_estimate For a negative binomial `family`: \code{"none"}
+#' (the default) fits every gene with the theta of `family` (10 by default,
+#' as maSigPro). \code{"gene"} estimates theta by maximum likelihood on each
+#' gene's full model and fits the gene with it; \code{"global"} fits every
+#' gene with the median of these estimates. The estimates are kept in the
+#' `distribution` parameter, for [sc.t.fit()] and [plotDiagnostics()]:
+#' `theta_gene` holds one per gene and `theta_estimate` the choice.
 #' @param epsilon Model convergence tolerance.
 #' @param offset logical value specifying whether to use offset during fitting.
 #' The offset, the size factor of each bin (or its logarithm, see
@@ -90,6 +97,7 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
                         log_offset = FALSE,
                         max_it = 100,
                         link = "log",
+                        theta_estimate = "none",
                         BPPARAM = SerialParam()) {
     # Check Object Validity
     .check_scmp(scmpObj)
@@ -121,6 +129,16 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
     # The fits use the link functions of the family (ledger S6)
     family <- .fit_family(family, link, link_given, offset)
     link <- family$link
+    theta_estimate <- .check_choice(theta_estimate,
+        c("none", "gene", "global"),
+        msg = "'theta_estimate' must be one of 'none', 'gene' or 'global'"
+    )
+    .check(theta_estimate == "none" || .is_nb_family(family),
+        msg = paste(
+            "'theta_estimate' needs a negative binomial family, such as",
+            "MASS::negative.binomial(10)."
+        )
+    )
 
     # Add check
     .check(min_na <= ncol(dat),
@@ -200,9 +218,45 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
         )
     }
 
+    # Estimated theta (decision D16): one per gene on its full model, then
+    # each gene's own (gene) or their median (global)
+    theta_gene <- NULL
+    if (theta_estimate != "none") {
+        est <- bplapply(seq_len(g), .theta_gene,
+            dat = dat, dis = dis, family = family, epsilon = epsilon,
+            offset_data = offsetData, max_it = max_it, BPPARAM = BPPARAM
+        )
+        est <- matrix(as.numeric(unlist(est)),
+            ncol = 4L, byrow = TRUE,
+            dimnames = list(
+                rownames(dat), c("theta", "at_bound", "converged", "n_alt")
+            )
+        )
+        thetas <- est[, "theta"]
+        names(thetas) <- rownames(dat)
+        if (verbose && g > 0L) {
+            message(
+                "Estimated theta (", theta_estimate, "): median ",
+                signif(median(thetas), 4), ", range ",
+                signif(min(thetas), 4), " to ", signif(max(thetas), 4),
+                "; ", sum(est[, "at_bound"] == 1), " of ", g,
+                " at a bound, ", sum(est[, "converged"] == 0),
+                " not converged"
+            )
+        }
+        if (theta_estimate == "gene") {
+            theta_gene <- thetas
+        } else if (g > 0L) {
+            family <- .nb_with_theta(family, median(thetas))
+        }
+        family$theta_estimate <- theta_estimate
+        family$theta_gene <- thetas
+    }
+
     p.vector.list <- bplapply(seq_len(g), .pvector_gene,
         dat = dat, dis = dis, family = family, epsilon = epsilon,
-        offset_data = offsetData, max_it = max_it, BPPARAM = BPPARAM
+        offset_data = offsetData, max_it = max_it, theta = theta_gene,
+        BPPARAM = BPPARAM
     )
 
     names(p.vector.list) <- rownames(dat)
@@ -307,10 +361,15 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
 
 # Full-model p-value of gene i (row i of dat): glm(y ~ .) against glm(y ~ 1),
 # with an F test for the Gaussian family and a chi-squared test otherwise.
+# With `theta` (one estimate per gene) both models of gene i use theta[[i]].
 # sc.p.vector() runs it through bplapply(), so it takes all its data as
 # arguments: SnowParam workers are new R sessions.
-.pvector_gene <- function(i, dat, dis, family, epsilon, offset_data, max_it) {
+.pvector_gene <- function(i, dat, dis, family, epsilon, offset_data, max_it,
+                          theta = NULL) {
     y <- as.numeric(dat[i, ])
+    if (!is.null(theta)) {
+        family <- .nb_with_theta(family, theta[[i]])
+    }
 
     # Set full Model
     model.glm <- glm(y ~ .,

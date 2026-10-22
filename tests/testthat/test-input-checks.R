@@ -451,3 +451,22 @@ test_that("an object saved before the count filter stops before any work", {
     }
     expect_output(print(old), "update it with updateObject()", fixed = TRUE)
 })
+
+test_that("theta_estimate is one of three values (decision D16)", {
+    design <- splat_design(2)
+    for (bad in list("each", c("gene", "global"), NA_character_, 1)) {
+        expect_error(
+            sc.p.vector(design, theta_estimate = bad, verbose = FALSE),
+            "'theta_estimate' must be one of 'none', 'gene' or 'global'",
+            fixed = TRUE
+        )
+    }
+    expect_error(
+        sc.p.vector(design,
+            theta_estimate = "gene", family = gaussian(), offset = FALSE,
+            verbose = FALSE
+        ),
+        "'theta_estimate' needs a negative binomial family",
+        fixed = TRUE
+    )
+})

@@ -37,6 +37,10 @@ cases <- list(
         quote(sc.p.vector(splat_design(2),
             family = "gaussian", verbose = FALSE
         )),
+    "sc.p.vector rejects an unknown theta_estimate" =
+        quote(sc.p.vector(splat_design(2),
+            theta_estimate = "each", verbose = FALSE
+        )),
     "sc.p.vector rejects min_na larger than the number of bins" =
         quote(sc.p.vector(splat_design(2), min_na = 1000, verbose = FALSE)),
     "sc.t.fit rejects an unknown selection method" =

@@ -110,6 +110,14 @@
       Error:
       ! 'family' must be a family object, such as MASS::negative.binomial(theta = 10).
 
+# sc.p.vector rejects an unknown theta_estimate
+
+    Code
+      eval(cases[[nm]])
+    Condition
+      Error:
+      ! 'theta_estimate' must be one of 'none', 'gene' or 'global'
+
 # sc.p.vector rejects min_na larger than the number of bins
 
     Code

@@ -18,6 +18,7 @@ sc.p.vector(
   log_offset = FALSE,
   max_it = 100,
   link = "log",
+  theta_estimate = "none",
   BPPARAM = SerialParam()
 )
 }
@@ -72,6 +73,14 @@ model of the paper) or "identity". When \code{family} is also given,
 \code{link} must be the link of that family. The identity link needs
 \code{offset = FALSE}; under it the fitted mean of a gene can become
 negative, and \code{glm()} then warns.}
+
+\item{theta_estimate}{For a negative binomial \code{family}: \code{"none"}
+(the default) fits every gene with the theta of \code{family} (10 by default,
+as maSigPro). \code{"gene"} estimates theta by maximum likelihood on each
+gene's full model and fits the gene with it; \code{"global"} fits every
+gene with the median of these estimates. The estimates are kept in the
+\code{distribution} parameter, for \code{\link[=sc.t.fit]{sc.t.fit()}} and \code{\link[=plotDiagnostics]{plotDiagnostics()}}:
+\code{theta_gene} holds one per gene and \code{theta_estimate} the choice.}
 
 \item{BPPARAM}{A \code{BiocParallelParam} object that runs the per-gene
 fits, such as

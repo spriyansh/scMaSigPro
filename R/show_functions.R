@@ -268,9 +268,14 @@ showParams <- function(scmpObj) {
     )
 
     # Add family
+    distribution <- scmpObj@Parameters@distribution
     distribution.f <- data.frame(
         parameters = "distribution",
-        value = paste0(scmpObj@Parameters@distribution[["family"]])
+        value = if (identical(distribution$theta_estimate, "gene")) {
+            "Negative Binomial(theta per gene)"
+        } else {
+            paste0(distribution[["family"]])
+        }
     )
 
 

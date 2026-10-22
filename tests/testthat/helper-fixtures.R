@@ -252,3 +252,14 @@ build_golden <- function() {
         plots = plots
     )
 }
+
+# sc.p.vector(theta_estimate = "gene") and sc.t.fit() on splat_design(2),
+# fitted serially: the reference of the parallel backends (decision D16)
+splat_theta_gene <- function() {
+    fixture("splat_theta_gene", function() {
+        pv <- sc.p.vector(splat_design(2),
+            verbose = FALSE, theta_estimate = "gene"
+        )
+        sc.t.fit(pv, verbose = FALSE)
+    })
+}
