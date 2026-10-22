@@ -9,6 +9,8 @@ sc.p.vector(
   p_value = 0.05,
   mt_correction = "BH",
   min_na = 6,
+  min_counts = 0,
+  min_bins_expressed = 0,
   family = negative.binomial(theta = 10, link = link),
   epsilon = 1e-08,
   verbose = TRUE,
@@ -28,8 +30,22 @@ regression.}
 \item{mt_correction}{A character string specifying the p-value correction
 method.}
 
-\item{min_na}{Minimum values needed per gene across cells to estimate the
-model.}
+\item{min_na}{Minimum number of bins with a value (not \code{NA}) that a gene
+needs to be fitted, as \code{min.obs} in \code{maSigPro::p.vector()}. It only
+matters for counts with missing values, such as microarray data given to
+\code{\link[=create_scmp]{create_scmp()}} with \code{use_as_bin = TRUE}: the pseudo-bulk counts of
+\code{\link[=sc.squeeze]{sc.squeeze()}} and \code{\link[=pb_counts]{pb_counts()}} have a value in every bin, so every gene
+passes whenever \code{min_na} is at most the number of bins. It cannot be more
+than the number of bins of the design.}
+
+\item{min_counts}{Minimum total count of a gene, summed over the bins of
+the design. Genes with fewer counts are left out of the fit. The default,
+0, keeps every gene.}
+
+\item{min_bins_expressed}{Minimum number of bins of the design in which a
+gene has a count above 0. Genes expressed in fewer bins are left out of
+the fit. The default, 0, keeps every gene; it can be at most the number of
+bins.}
 
 \item{family}{Distribution of the error term, a \code{\link[stats]{family}}
 object. The default is the negative binomial family with \code{theta = 10}
@@ -73,6 +89,16 @@ slot.
 \description{
 Performs a regression fit for each gene taking all variables present in the
 model.
+}
+\details{
+Genes are left out of the fit when they have fewer than \code{min_na} values,
+when all their counts are zero, and when they are below \code{min_counts} or
+\code{min_bins_expressed}. Genes left out have no p-value and do not count in
+the multiple-testing correction; \code{\link[=scmpResults]{scmpResults()}} gives them \code{NA}. The size
+factors of the offset are computed before \code{min_counts} and
+\code{min_bins_expressed} are applied, on every gene left by the first two
+rules, so these two filters change the results of the genes they keep
+only through the multiple-testing correction.
 }
 \references{
 Conesa, A., Nueda M.J., Alberto Ferrer, A., Talon, T. 2006.

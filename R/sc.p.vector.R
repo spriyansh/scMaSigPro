@@ -13,8 +13,20 @@
 #' regression.
 #' @param mt_correction A character string specifying the p-value correction
 #' method.
-#' @param min_na Minimum values needed per gene across cells to estimate the
-#' model.
+#' @param min_na Minimum number of bins with a value (not `NA`) that a gene
+#' needs to be fitted, as `min.obs` in \code{maSigPro::p.vector()}. It only
+#' matters for counts with missing values, such as microarray data given to
+#' [create_scmp()] with `use_as_bin = TRUE`: the pseudo-bulk counts of
+#' [sc.squeeze()] and [pb_counts()] have a value in every bin, so every gene
+#' passes whenever `min_na` is at most the number of bins. It cannot be more
+#' than the number of bins of the design.
+#' @param min_counts Minimum total count of a gene, summed over the bins of
+#' the design. Genes with fewer counts are left out of the fit. The default,
+#' 0, keeps every gene.
+#' @param min_bins_expressed Minimum number of bins of the design in which a
+#' gene has a count above 0. Genes expressed in fewer bins are left out of
+#' the fit. The default, 0, keeps every gene; it can be at most the number of
+#' bins.
 #' @param family Distribution of the error term, a \code{\link[stats]{family}}
 #' object. The default is the negative binomial family with \code{theta = 10}
 #' and the link given by \code{link}. A family given here is used with its
@@ -43,6 +55,16 @@
 #' one after another. Create it with \code{progressbar = TRUE} for a progress
 #' bar. The results do not depend on the backend.
 #'
+#' @details
+#' Genes are left out of the fit when they have fewer than `min_na` values,
+#' when all their counts are zero, and when they are below `min_counts` or
+#' `min_bins_expressed`. Genes left out have no p-value and do not count in
+#' the multiple-testing correction; [scmpResults()] gives them `NA`. The size
+#' factors of the offset are computed before `min_counts` and
+#' `min_bins_expressed` are applied, on every gene left by the first two
+#' rules, so these two filters change the results of the genes they keep
+#' only through the multiple-testing correction.
+#'
 #' @return An object of class \code{\link{ScMaSigPro}}, with updated `Profile`
 #' slot.
 #'
@@ -59,6 +81,8 @@
 #' @export
 sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
                         min_na = 6,
+                        min_counts = 0,
+                        min_bins_expressed = 0,
                         family = negative.binomial(theta = 10, link = link),
                         epsilon = 1e-8,
                         verbose = TRUE,
@@ -85,7 +109,7 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
 
     # Convert 'scmpObj' to matrix and select relevant columns based on 'design' rows
     dat <- as.matrix(assay(scmpObj@Dense, "bulk.counts", withDimnames = FALSE))
-    dat <- dat[, as.character(rownames(dis))]
+    dat <- dat[, as.character(rownames(dis)), drop = FALSE]
     G <- nrow(dat)
 
     # The link of the default family, checked before the family is built
@@ -105,8 +129,22 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
             "for 'min_na' is too high. Try lowering the threshold."
         )
     )
+    .check(
+        is.numeric(min_counts) && length(min_counts) == 1L &&
+            !is.na(min_counts) && min_counts >= 0,
+        msg = "'min_counts' must be a single number of at least 0."
+    )
+    .check(
+        is.numeric(min_bins_expressed) && length(min_bins_expressed) == 1L &&
+            !is.na(min_bins_expressed) && min_bins_expressed >= 0 &&
+            min_bins_expressed <= ncol(dat),
+        msg = paste0(
+            "'min_bins_expressed' must be a single number from 0 to ",
+            ncol(dat), ", the number of bins of the design."
+        )
+    )
 
-    # Removing rows with many missings:
+    # Removing rows with many missings (only counts with NA values have any):
     count.na <- function(x) (length(x) - length(x[is.na(x)]))
     dat <- dat[apply(dat, 1, count.na) >= min_na, , drop = FALSE]
 
@@ -117,11 +155,16 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
         dat <- dat[-counts0, , drop = FALSE]
     }
 
-    # Get dimensions for the input
-    g <- dim(dat)[1]
-    n <- dim(dat)[2]
-    p <- dim(dis)[2]
-    sc.p.vector <- vector(mode = "numeric", length = g)
+    # The count filter (decision D17). It is applied after the size factors
+    # below, so it changes the results of the genes it keeps only through
+    # the multiple-testing correction; a threshold of 0 keeps every gene
+    keep <- rep(TRUE, nrow(dat))
+    if (min_counts > 0) {
+        keep <- keep & rowSums(dat, na.rm = TRUE) >= min_counts
+    }
+    if (min_bins_expressed > 0) {
+        keep <- keep & rowSums(dat > 0, na.rm = TRUE) >= min_bins_expressed
+    }
 
     # Calculate  offset
     if (offset) {
@@ -134,6 +177,21 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
     } else {
         offsetData <- NULL
     }
+
+    # The genes below min_counts or min_bins_expressed are not fitted
+    if (verbose && !all(keep)) {
+        message(
+            "Leaving out ", sum(!keep), " of ", length(keep), " genes ",
+            "below 'min_counts' or 'min_bins_expressed'"
+        )
+    }
+    dat <- dat[keep, , drop = FALSE]
+
+    # Get dimensions for the input
+    g <- dim(dat)[1]
+    n <- dim(dat)[2]
+    p <- dim(dis)[2]
+    sc.p.vector <- vector(mode = "numeric", length = g)
 
     if (verbose) {
         message(
@@ -190,6 +248,8 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
     scmpObj@Parameters@offset <- offset
     scmpObj@Parameters@p_value <- p_value
     scmpObj@Parameters@min_na <- min_na
+    scmpObj@Parameters@min_counts <- as.numeric(min_counts)
+    scmpObj@Parameters@min_bins_expressed <- as.numeric(min_bins_expressed)
     scmpObj@Parameters@g <- g
     scmpObj@Parameters@mt_correction <- mt_correction
     scmpObj@Parameters@epsilon <- epsilon

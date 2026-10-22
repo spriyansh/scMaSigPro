@@ -433,3 +433,69 @@ test_that("the forward methods name the influential bins (ledger N2)", {
         expect_true(all(colSums(inf == "dffit/cook.d") > 0), info = m)
     }
 })
+
+test_that("the count filter keeps every gene by default (decision D17)", {
+    design <- splat_design(2)
+    fitted <- splat_fitted("default")
+    expect_identical(fitted@Parameters@g, nrow(eDense(design)))
+    expect_identical(fitted@Parameters@min_counts, 0)
+    expect_identical(fitted@Parameters@min_bins_expressed, 0)
+    expect_identical(
+        sc.p.vector(design,
+            min_counts = 0, min_bins_expressed = 0, verbose = FALSE
+        )@Profile,
+        fitted@Profile
+    )
+})
+
+test_that("the count filter leaves out the genes below it (decision D17)", {
+    design <- splat_design(2)
+    fitted <- sc.p.vector(design, verbose = FALSE)
+    counts <- eDense(design)[, rownames(predictors(design))]
+    total <- rowSums(counts)
+    cut <- sort(total)[11]
+    msgs <- capture_messages(
+        by_total <- sc.p.vector(design, min_counts = cut)
+    )
+    expect_match(msgs,
+        paste("Leaving out", sum(total < cut), "of 100 genes below"),
+        fixed = TRUE, all = FALSE
+    )
+    kept <- rownames(counts)[total >= cut]
+    expect_identical(names(by_total@Profile@p_values), kept)
+    expect_identical(by_total@Parameters@g, length(kept))
+    expect_identical(by_total@Parameters@min_counts, as.numeric(cut))
+    # The size factors are those of every gene, so the kept genes keep their
+    # p-values; only the multiple-testing correction changes
+    expect_identical(by_total@Design@offset, fitted@Design@offset)
+    expect_identical(
+        by_total@Profile@p_values, fitted@Profile@p_values[kept]
+    )
+    expect_identical(
+        by_total@Profile@adj_p_values,
+        p.adjust(fitted@Profile@p_values[kept], method = "BH")
+    )
+    # Bins with a count above 0
+    expressed <- rowSums(counts > 0)
+    nbins <- ncol(counts)
+    by_bins <- sc.p.vector(design,
+        min_bins_expressed = nbins, verbose = FALSE
+    )
+    expect_identical(
+        names(by_bins@Profile@p_values), rownames(counts)[expressed >= nbins]
+    )
+    expect_identical(by_bins@Parameters@min_bins_expressed, as.numeric(nbins))
+})
+
+test_that("sc.p.vector() fits an object with one gene (decision D17)", {
+    design <- splat_design(2)
+    gene <- rownames(eDense(design))[1]
+    one <- design
+    one@Sparse <- one@Sparse[gene, ]
+    one@Dense <- one@Dense[gene, ]
+    expect_valid_scmp(one)
+    full <- sc.p.vector(design, offset = FALSE, verbose = FALSE)
+    fit <- sc.p.vector(one, offset = FALSE, verbose = FALSE)
+    expect_identical(fit@Profile@p_values, full@Profile@p_values[gene])
+    expect_identical(fit@Parameters@g, 1L)
+})

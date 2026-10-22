@@ -410,3 +410,44 @@ test_that("sc.set.poly() takes one of the paths as reference (ledger L1)", {
         splat_design(2)@Design
     )
 })
+
+test_that("sc.p.vector() checks the count filter (decision D17)", {
+    design <- splat_design(2)
+    nbins <- nrow(predictors(design))
+    msg <- paste0(
+        "'min_bins_expressed' must be a single number from 0 to ", nbins,
+        ", the number of bins of the design."
+    )
+    for (bad in list(nbins + 1, -1, NA, c(1, 2), "1")) {
+        expect_error(
+            sc.p.vector(design, min_bins_expressed = bad, verbose = FALSE),
+            msg,
+            fixed = TRUE
+        )
+    }
+    for (bad in list(-1, NA_real_, c(1, 2), "1", TRUE)) {
+        expect_error(sc.p.vector(design, min_counts = bad, verbose = FALSE),
+            "'min_counts' must be a single number of at least 0.",
+            fixed = TRUE
+        )
+    }
+    # Control: the largest threshold is the number of bins
+    expect_s4_class(
+        sc.p.vector(design, min_bins_expressed = nbins, verbose = FALSE),
+        "ScMaSigPro"
+    )
+})
+
+test_that("an object saved before the count filter stops before any work", {
+    old <- splat_clustered()
+    params <- old@Parameters
+    attr(params, "min_counts") <- NULL
+    attr(params, "min_bins_expressed") <- NULL
+    old@Parameters <- params
+    for (f in calls_on(old, splat_sig_gene())) {
+        expect_error(f(), "update it with updateObject() first.",
+            fixed = TRUE
+        )
+    }
+    expect_output(print(old), "update it with updateObject()", fixed = TRUE)
+})

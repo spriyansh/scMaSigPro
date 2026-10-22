@@ -33,6 +33,11 @@ and \code{Dense} slots are passed to the \code{updateObject()} method of
 \code{validObject()}. A current object, such as one created by this version
 of the package, is returned unchanged.
 
+Objects saved before the \code{min_counts} and \code{min_bins_expressed}
+parameters existed get both set to 0, the values that keep every gene
+(\code{\link[=sc.p.vector]{sc.p.vector()}} had no such filter then), and the version of the
+package that is running.
+
 Objects binned by scMaSigPro 0.0.4 cannot be updated: their \code{Dense} slot
 is not a valid \code{SingleCellExperiment}, and the cell metadata of their
 \code{Sparse} slot may not be in the order of the counts. \code{updateObject()}

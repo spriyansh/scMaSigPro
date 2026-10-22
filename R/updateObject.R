@@ -21,6 +21,11 @@
 #' `validObject()`. A current object, such as one created by this version
 #' of the package, is returned unchanged.
 #'
+#' Objects saved before the `min_counts` and `min_bins_expressed`
+#' parameters existed get both set to 0, the values that keep every gene
+#' ([sc.p.vector()] had no such filter then), and the version of the
+#' package that is running.
+#'
 #' Objects binned by scMaSigPro 0.0.4 cannot be updated: their `Dense` slot
 #' is not a valid `SingleCellExperiment`, and the cell metadata of their
 #' `Sparse` slot may not be in the order of the counts. `updateObject()`
@@ -57,6 +62,25 @@ setMethod("updateObject", "ScMaSigPro", function(object, ...,
                 "object saved by an earlier version of scMaSigPro."
             )
         }
+        object@version <- .scmp_version()
+    }
+    # Saved before the count filter of sc.p.vector() (decision D17)
+    params <- object@Parameters
+    missing_params <- c("min_counts", "min_bins_expressed")
+    missing_params <- missing_params[
+        !vapply(missing_params, .hasSlot, logical(1), object = params)
+    ]
+    if (length(missing_params) > 0L) {
+        if (verbose) {
+            message(
+                "[updateObject] Adding the parameters ",
+                paste(missing_params, collapse = " and "), " (0)."
+            )
+        }
+        for (s in missing_params) {
+            attr(params, s) <- 0
+        }
+        object@Parameters <- params
         object@version <- .scmp_version()
     }
     object@Sparse <- updateObject(object@Sparse, ..., verbose = verbose)

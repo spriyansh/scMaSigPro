@@ -89,3 +89,27 @@ test_that("as_scmp() stores an up-to-date SingleCellExperiment", {
     expect_identical(ob@Sparse, updateObject(sce))
     expect_identical(updateObject(ob), ob)
 })
+
+test_that("updateObject() adds the count filter parameters (decision D17)", {
+    ob <- load_dataset("scmp.ob")
+    old <- ob
+    params <- old@Parameters
+    attr(params, "min_counts") <- NULL
+    attr(params, "min_bins_expressed") <- NULL
+    old@Parameters <- params
+    old@version <- "0.6.0"
+    expect_error(validObject(old), "but not in object", fixed = TRUE)
+    msgs <- capture_messages(up <- updateObject(old, verbose = TRUE))
+    expect_match(msgs,
+        "Adding the parameters min_counts and min_bins_expressed (0).",
+        fixed = TRUE, all = FALSE
+    )
+    expect_valid_scmp(up)
+    expect_identical(up@Parameters@min_counts, 0)
+    expect_identical(up@Parameters@min_bins_expressed, 0)
+    expect_identical(up@version, current_version())
+    expect_identical(up, ob)
+    # An object saved before the version slot gets both
+    older <- without_version(old)
+    expect_identical(updateObject(older), ob)
+})
