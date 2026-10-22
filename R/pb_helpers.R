@@ -31,64 +31,6 @@ calc_bin_size <- function(x, clus_mem_col = "scmp_cluster_members") {
     return(as.numeric(size))
 }
 ###############################################################################
-#' @title Create Range Function
-#'
-#' @description
-#' `create_range()` converts a factor column "bin" into a character vector, extracts
-#' numeric range values from the character vector, and combines them with
-#' additional columns "bin_size" and "binned_time" to return a numeric vector
-#' representing the range information.
-#'
-#' @param x A data frame that should contain the following columns:
-#'   \describe{
-#'     \item{bin}{A factor column representing the bin intervals in the format `"[x, y]"`.}
-#'     \item{bin_size}{A numeric column representing the bin size.}
-#'     \item{binned_time}{A numeric column representing the binned time.}
-#'   }
-#' @param bin_size_colname The name of the column containing the bin size.
-#' @param bin_col The name of the column containing the bin intervals.
-#' @param verbose Logical; if TRUE, prints detailed output.
-#'
-#' @return A numeric vector containing four elements:
-#'   \describe{
-#'     \item{lower_bound}{The lower bound of the bin interval.}
-#'     \item{upper_bound}{The upper bound of the bin interval.}
-#'     \item{bin_size}{The bin size.}
-#'     \item{binned_time}{The binned time.}
-#'   }
-#'
-#' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
-#'
-#'
-#' @keywords internal
-create_range <- function(x, bin_size_colname = "scmp_bin_size",
-                         bin_col = "scmp_bin", verbose = TRUE) {
-    # Convert the factor column "bin" to character
-    y <- as.character(x[[bin_col]])
-
-    # Remove square and round brackets from the character string
-    y <- gsub("\\[|\\]|\\(|\\)", "", y)
-
-    # Split the character string by comma and extract the first element (lower bound of the range)
-    y1 <- as.numeric(vapply(strsplit(y, ","), function(z) z[1], character(1)))
-
-    # Split the character string by comma and extract the second element (upper bound of the range)
-    y2 <- as.numeric(vapply(strsplit(y, ","), function(z) z[2], character(1)))
-
-    if (verbose) {
-        message(
-            "Lower Bound:", y1, ", Upper Bound:", y2, ", Number of cells:",
-            x[[bin_size_colname]]
-        )
-    }
-
-    # Combine the lower bound, upper bound, bin size, and binned time into a numeric vector
-    rangeVec <- c(y1, y2, x[[bin_size_colname]])
-
-    # Return the numeric vector
-    return(as.numeric(rangeVec))
-}
-###############################################################################
 #' @title estBinSize
 #'
 #' @description
@@ -382,42 +324,64 @@ extract_fitting <- function(reg, lmf, model.glm.0, dis, family, name, vars.in, a
 ###############################################################################
 #' @title Extract Intervals
 #'
+#' @description
+#' `extract_interval()` divides the range of `time.vector` into `nBins` bins
+#' of equal width and counts the points of each bin. The bounds of the bins
+#' are the breaks `seq(min, max, length.out = nBins + 1)` themselves.
+#'
 #' @param time.vector Numeric vector of Pseudotime values.
 #' @param nBins Expected number of bins.
-#' @param bin Column name for the bin column.
 #' @param bin.size Column name for the bin size column.
 #' @param lbound Column name for the lower bound column.
 #' @param ubound Column name for the upper bound column.
+#'
+#' @return A data frame with one row per bin, in increasing order, and the
+#' columns `lbound`, `ubound` and `bin.size`.
+#'
 #' @keywords internal
-
-extract_interval <- function(time.vector, nBins = 1, bin, bin.size, lbound, ubound) {
-    # Count the points in nBins bins of equal width spanning the range. cut()
-    # labels them "[a,b]" (first) and "(a,b]" with 3 significant digits, and
-    # create_range() reads the bounds back from these labels
+extract_interval <- function(time.vector, nBins = 1, bin.size, lbound,
+                             ubound) {
+    # Count the points in nBins bins of equal width spanning the range, with
+    # the intervals of .assign_bins(). The bounds are the numeric breaks, not
+    # the labels of cut(), which round them to 3 significant digits
     time_range <- range(time.vector)
     breaks <- seq(time_range[1], time_range[2], length.out = nBins + 1)
-    new_range_current <- as.data.frame(table(
-        cut(time.vector, breaks = breaks, include.lowest = TRUE)
-    ))
-    # Set columns
-    colnames(new_range_current) <- c(bin, bin.size)
-
-    # Current bin new table
-    new_bin_table_current <- as.data.frame(
-        t(as.data.frame(
-            apply(
-                new_range_current, 1, create_range,
-                bin_size_colname = bin.size,
-                bin_col = bin,
-                verbose = FALSE
-            )
-        ))
+    codes <- cut(time.vector,
+        breaks = breaks, include.lowest = TRUE, labels = FALSE
     )
-    # Set column names
+    new_bin_table_current <- data.frame(
+        breaks[-length(breaks)], breaks[-1],
+        as.numeric(tabulate(codes, nbins = length(breaks) - 1L))
+    )
     colnames(new_bin_table_current) <- c(lbound, ubound, bin.size)
-
-    # Return
     return(new_bin_table_current)
+}
+
+###############################################################################
+#' @title Assign Points to Bins
+#'
+#' @description
+#' `.assign_bins()` gives each point the first bin whose closed interval
+#' `[lower, upper]` holds it, so that a point on the bound of two bins goes
+#' to the lower one: on contiguous bins, these are the intervals of
+#' `cut(include.lowest = TRUE)`, (a, b] and the first one [a, b].
+#'
+#' @param x Numeric vector of points (pseudotime values).
+#' @param lower,upper Numeric vectors: the bounds of the bins, in increasing
+#' order.
+#'
+#' @return An integer vector: the bin of each point (its position in `lower`),
+#' `NA` for a point that no bin holds.
+#'
+#' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
+#'
+#' @noRd
+.assign_bins <- function(x, lower, upper) {
+    idx <- rep(NA_integer_, length(x))
+    for (j in rev(seq_along(lower))) {
+        idx[x >= lower[j] & x <= upper[j]] <- j
+    }
+    idx
 }
 
 ###############################################################################
@@ -436,7 +400,6 @@ extract_interval <- function(time.vector, nBins = 1, bin, bin.size, lbound, ubou
 #' @param time_vector A vector representing time or a sequence that bins refer to.
 #' @param lbound The name of the lower bound column in `bin_table`.
 #' @param ubound The name of the upper bound column in `bin_table`.
-#' @param bin The name of the bin identifier column in `bin_table`.
 #' @param bin.size The name of the bin size column in `bin_table`.
 #' @param method The method for handling small bins: 'merge' to merge with previous or next bin,
 #' 'drop' to remove small bins, or 'ignore' to leave small bins as they are.
@@ -446,7 +409,7 @@ extract_interval <- function(time.vector, nBins = 1, bin, bin.size, lbound, ubou
 #' with updated values for the bin size and bounds.
 #' @keywords internal
 optimize_bin_max <- function(bin_table, max_allowed, verbose = TRUE,
-                             time_vector, lbound, ubound, bin, bin.size, method,
+                             time_vector, lbound, ubound, bin.size, method,
                              drop) {
     # Initiate an empty uniform bin
     uniform_bin_df <- data.frame(matrix(NA, ncol = ncol(bin_table)))
@@ -475,7 +438,7 @@ optimize_bin_max <- function(bin_table, max_allowed, verbose = TRUE,
             small_splitted_bin_df <- extract_interval(
                 time.vector = pTime.for.big.interval,
                 nBins = potential_splits,
-                bin = bin, bin.size = bin.size, lbound = lbound, ubound = ubound
+                bin.size = bin.size, lbound = lbound, ubound = ubound
             )
             # Validation
             if (verbose) {

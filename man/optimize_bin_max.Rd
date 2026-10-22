@@ -11,7 +11,6 @@ optimize_bin_max(
   time_vector,
   lbound,
   ubound,
-  bin,
   bin.size,
   method,
   drop
@@ -29,8 +28,6 @@ optimize_bin_max(
 \item{lbound}{The name of the lower bound column in \code{bin_table}.}
 
 \item{ubound}{The name of the upper bound column in \code{bin_table}.}
-
-\item{bin}{The name of the bin identifier column in \code{bin_table}.}
 
 \item{bin.size}{The name of the bin size column in \code{bin_table}.}
 

@@ -619,3 +619,72 @@ test_that("plotTrendCluster() resolves logs as plotTrend() (ledger LK-1)", {
         "log(Pseudobulk Expression)"
     )
 })
+
+# sc.squeeze() on two paths with the same pseudotime values p: the bins of
+# Path1 in order, with their stored bounds and the pseudotime of their cells
+toy_bins <- function(p, ...) {
+    cd <- data.frame(
+        Pseudotime = c(p, p), Path = rep(c("Path1", "Path2"), each = length(p)),
+        row.names = paste0("cell", seq_along(c(p, p)))
+    )
+    counts <- matrix(1, 2, nrow(cd),
+        dimnames = list(c("g1", "g2"), rownames(cd))
+    )
+    ob <- create_scmp(
+        counts = counts, cell_data = cd, ptime_col = "Pseudotime",
+        path_col = "Path"
+    )
+    ob <- suppressMessages(sc.squeeze(ob, ...))
+    bins <- cDense(ob)
+    bins <- bins[bins[[ob@Parameters@path_col]] == "Path1", ]
+    members <- strsplit(bins[[ob@Parameters@bin_mem_col]], "|", fixed = TRUE)
+    list(
+        ob = ob, lower = bins$scmp_l_bound, upper = bins$scmp_u_bound,
+        members = lapply(members, function(m) cd[m, "Pseudotime"])
+    )
+}
+
+test_that("sc.squeeze() bins the cells by the numeric breaks (ledger S3)", {
+    # 4 points, Sturges: 3 bins, breaks 0, 1/3, 2/3 and 1. The bounds were
+    # read back from the cut() labels "[0,0.333]", "(0.333,0.667]" and
+    # "(0.667,1]", which put 0.3332 and 0.6668 in the middle bin
+    bins <- toy_bins(c(0, 0.3332, 0.6668, 1))
+    expect_identical(bins$members, list(c(0, 0.3332), c(0.6668, 1)))
+    expect_equal(bins$lower, c(0, 2 / 3))
+    expect_equal(bins$upper, c(1 / 3, 1))
+    # multi.lin.sce, Sturges: five cells of Y_52 lie between the label 30.5
+    # and the break 30.53546 between its bins 4 and 5
+    ob <- multi_binned()
+    bins <- cDense(ob)
+    members <- strsplit(bins[[ob@Parameters@bin_mem_col]], "|", fixed = TRUE)
+    bin_of <- setNames(rep(rownames(bins), lengths(members)), unlist(members))
+    cells <- c("C520", "C910", "C966", "C1500", "C1723")
+    expect_identical(unname(bin_of[cells]), rep("Y_52_bin_4", 5))
+    expect_equal(bins["Y_52_bin_4", "scmp_u_bound"], 30.53546, tolerance = 1e-6)
+    # The bins do not depend on the origin of the pseudotime: shifted by
+    # 1000, 50 of the 200 cells of splat.sim were in another bin
+    shifted <- splat_scmp()
+    ptime_col <- shifted@Parameters@ptime_col
+    cd <- cSparse(shifted)
+    cd[[ptime_col]] <- cd[[ptime_col]] + 1000
+    cSparse(shifted) <- cd
+    mem_col <- shifted@Parameters@bin_mem_col
+    expect_identical(
+        cDense(sc.squeeze(shifted))[[mem_col]],
+        cDense(splat_binned())[[mem_col]]
+    )
+})
+
+test_that("split_bins keeps every cell (ledger Q1)", {
+    # 13 points, Sturges: 5 bins of width 2. The bin from 2 to 4 holds 10
+    # cells, more than the 7 allowed, and is split over the range of its
+    # cells; the first new bin read "[2.24,2.58]" from its cut() label, so
+    # the cell at 2.2366 was in no bin and was removed from the object
+    p <- c(0, 0.5, 2.2366, 2.5, 2.7, 2.9, 3.1, 3.3, 3.5, 3.7, 3.9, 3.95, 10)
+    expect_no_warning(bins <- toy_bins(p, split_bins = TRUE))
+    expect_identical(ncol(bins$ob@Sparse), 26L)
+    expect_identical(bins$members, list(
+        c(0, 0.5), c(2.2366, 2.5), c(2.7, 2.9), 3.1, c(3.3, 3.5),
+        c(3.7, 3.9, 3.95), 10
+    ))
+})

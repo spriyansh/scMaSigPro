@@ -164,6 +164,8 @@ layer_snapshot <- function(p) lapply(p$layers, function(l) l$data)
 
 build_golden <- function() {
     binned <- splat_binned()
+    bounds_note <- "0.6.0, ledger S3: bounds are the numeric breaks"
+    cells_note <- "0.6.0, ledger S3: cells binned by the numeric breaks"
 
     methods <- c("Sturges", "Sqrt", "Rice", "Doane", "Freedman.Diaconis", "Scott.Normal")
     by_method <- lapply(methods, function(m) {
@@ -224,15 +226,28 @@ build_golden <- function() {
             # Frozen as they are today, known to be wrong; these move in Phase 5.
             known_wrong = c(
                 "fits/default" = "ledger h: raw size factors as log-link offset",
-                "fits/vignette" = "ledger h: offsets recomputed in sc.t.fit",
-                "squeeze" = "ledger S3: breaks parsed from rounded cut() labels"
+                "fits/vignette" = "ledger h: offsets recomputed in sc.t.fit"
             ),
             # Changed on purpose after 0.0.4; every other leaf is still 0.0.4.
             regenerated = c(
                 "squeeze/by_method/Freedman.Diaconis" =
                     "0.0.5.9000, ledger g: number of bins = range / width",
                 "squeeze/by_method/Scott.Normal" =
-                    "0.0.5.9000, ledger g: number of bins = range / width"
+                    "0.0.5.9000, ledger g: number of bins = range / width",
+                "squeeze/default/bins" = bounds_note,
+                "squeeze/by_method/Sturges/bins" = bounds_note,
+                "squeeze/by_method/Sqrt/bins" = bounds_note,
+                "squeeze/by_method/Rice/bins" = bounds_note,
+                "squeeze/by_method/Doane/bins" = bounds_note,
+                "squeeze/by_method/Freedman.Diaconis/bins" = bounds_note,
+                "squeeze/by_method/Scott.Normal/bins" = bounds_note,
+                "squeeze/options/split_bins/bins" = bounds_note,
+                "squeeze/options/prune_bins/bins" = bounds_note,
+                "squeeze/options/fill_gaps/bins" = bounds_note,
+                "squeeze/options/drop_trails/bins" = bounds_note,
+                "squeeze/options/mean/bins" = bounds_note,
+                "multi/squeeze" = cells_note,
+                "multi/restruct" = cells_note
             )
         ),
         sparse_cells = sorted_df(cSparse(binned)),
