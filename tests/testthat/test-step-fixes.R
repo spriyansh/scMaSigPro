@@ -687,4 +687,11 @@ test_that("split_bins keeps every cell (ledger Q1)", {
         c(0, 0.5), c(2.2366, 2.5), c(2.7, 2.9), 3.1, c(3.3, 3.5),
         c(3.7, 3.9, 3.95), 10
     ))
+    # The 5 new bins have equal width over 2.2366 to 3.95, the range of the
+    # cells, but the first starts at 2 and the last ends at 4: they cover
+    # the bin from 2 to 4 without gaps
+    expect_identical(bins$lower[c(1, 2, 7)], c(0, 2, 8))
+    expect_identical(bins$upper[c(1, 6, 7)], c(2, 4, 10))
+    expect_identical(bins$lower[3:6], bins$upper[2:5])
+    expect_equal(bins$upper[2:5], seq(2.2366, 3.95, length.out = 6)[2:5])
 })

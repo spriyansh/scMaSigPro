@@ -241,7 +241,8 @@ build_golden <- function() {
                 "squeeze/by_method/Doane/bins" = bounds_note,
                 "squeeze/by_method/Freedman.Diaconis/bins" = bounds_note,
                 "squeeze/by_method/Scott.Normal/bins" = bounds_note,
-                "squeeze/options/split_bins/bins" = bounds_note,
+                "squeeze/options/split_bins/bins" =
+                    "0.6.0, ledger S3 and Q1: split bins cover the bin split",
                 "squeeze/options/prune_bins/bins" = bounds_note,
                 "squeeze/options/fill_gaps/bins" = bounds_note,
                 "squeeze/options/drop_trails/bins" = bounds_note,

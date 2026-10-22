@@ -388,11 +388,12 @@ extract_interval <- function(time.vector, nBins = 1, bin.size, lbound,
 #' @title Homogenize Bins of a Dataframe
 #'
 #' @description
-#' Adjust the bins of a dataframe based on a specified maximum bin size threshold.
-#' It checks if the bin size is too large relative to this threshold.
-#' If a bin is too large, it will be split into two equal parts until all bins are
-#' below the maximum allowed size. Optionally, bins too small can be merged with
-#' adjacent bins based on the provided method.
+#' `optimize_bin_max()` splits every bin that holds more than `max_allowed`
+#' points. The points within the bounds of the bin get the number of bins
+#' that `method` and `drop` give for them ([estBinSize()]) and are divided
+#' into that many bins of equal width over their range; the first new bin
+#' starts at the lower bound of the bin and the last ends at its upper bound,
+#' so that the new bins cover the bin without gaps. The other bins are kept.
 #'
 #' @param bin_table A dataframe containing the bin data.
 #' @param max_allowed The maximum allowed size for a bin.
@@ -401,9 +402,9 @@ extract_interval <- function(time.vector, nBins = 1, bin.size, lbound,
 #' @param lbound The name of the lower bound column in `bin_table`.
 #' @param ubound The name of the upper bound column in `bin_table`.
 #' @param bin.size The name of the bin size column in `bin_table`.
-#' @param method The method for handling small bins: 'merge' to merge with previous or next bin,
-#' 'drop' to remove small bins, or 'ignore' to leave small bins as they are.
-#' @param drop The threshold below which a bin is considered too small and subject to the method.
+#' @param method The rule that gives the number of new bins (see
+#' [estBinSize()]).
+#' @param drop The factor that multiplies that number (`drop_fac`).
 #'
 #' @return A dataframe with adjusted bins. The structure of the dataframe will be the same as `bin_table`
 #' with updated values for the bin size and bounds.
@@ -440,6 +441,12 @@ optimize_bin_max <- function(bin_table, max_allowed, verbose = TRUE,
                 nBins = potential_splits,
                 bin.size = bin.size, lbound = lbound, ubound = ubound
             )
+            # The new bins span the range of the cells; the outer two take
+            # the bounds of the bin, so that the bins of the path follow
+            # each other without gaps
+            n_new <- nrow(small_splitted_bin_df)
+            small_splitted_bin_df[[lbound]][1] <- current_bin_df[[lbound]]
+            small_splitted_bin_df[[ubound]][n_new] <- current_bin_df[[ubound]]
             # Validation
             if (verbose) {
                 message(
