@@ -79,6 +79,8 @@ model.</p>
 <span>  p_value <span class="op">=</span> <span class="fl">0.05</span>,</span>
 <span>  mt_correction <span class="op">=</span> <span class="st">"BH"</span>,</span>
 <span>  min_na <span class="op">=</span> <span class="fl">6</span>,</span>
+<span>  min_counts <span class="op">=</span> <span class="fl">0</span>,</span>
+<span>  min_bins_expressed <span class="op">=</span> <span class="fl">0</span>,</span>
 <span>  family <span class="op">=</span> <span class="fu">negative.binomial</span><span class="op">(</span>theta <span class="op">=</span> <span class="fl">10</span>, link <span class="op">=</span> <span class="va">link</span><span class="op">)</span>,</span>
 <span>  epsilon <span class="op">=</span> <span class="fl">1e-08</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -86,6 +88,7 @@ model.</p>
 <span>  log_offset <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  max_it <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  link <span class="op">=</span> <span class="st">"log"</span>,</span>
+<span>  theta_estimate <span class="op">=</span> <span class="st">"none"</span>,</span>
 <span>  BPPARAM <span class="op">=</span> <span class="fu">SerialParam</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -109,8 +112,26 @@ method.</p></dd>
 
 
 <dt id="arg-min-na">min_na<a class="anchor" aria-label="anchor" href="#arg-min-na"></a></dt>
-<dd><p>Minimum values needed per gene across cells to estimate the
-model.</p></dd>
+<dd><p>Minimum number of bins with a value (not <code>NA</code>) that a gene
+needs to be fitted, as <code>min.obs</code> in <code><a href="https://rdrr.io/pkg/maSigPro/man/p.vector.html" class="external-link">maSigPro::p.vector()</a></code>. It only
+matters for counts with missing values, such as microarray data given to
+<code><a href="create_scmp.html">create_scmp()</a></code> with <code>use_as_bin = TRUE</code>: the pseudo-bulk counts of
+<code><a href="sc.squeeze.html">sc.squeeze()</a></code> and <code><a href="pb_counts.html">pb_counts()</a></code> have a value in every bin, so every gene
+passes whenever <code>min_na</code> is at most the number of bins. It cannot be more
+than the number of bins of the design.</p></dd>
+
+
+<dt id="arg-min-counts">min_counts<a class="anchor" aria-label="anchor" href="#arg-min-counts"></a></dt>
+<dd><p>Minimum total count of a gene, summed over the bins of
+the design. Genes with fewer counts are left out of the fit. The default,
+0, keeps every gene.</p></dd>
+
+
+<dt id="arg-min-bins-expressed">min_bins_expressed<a class="anchor" aria-label="anchor" href="#arg-min-bins-expressed"></a></dt>
+<dd><p>Minimum number of bins of the design in which a
+gene has a count above 0. Genes expressed in fewer bins are left out of
+the fit. The default, 0, keeps every gene; it can be at most the number of
+bins.</p></dd>
 
 
 <dt id="arg-family">family<a class="anchor" aria-label="anchor" href="#arg-family"></a></dt>
@@ -153,6 +174,16 @@ model of the paper) or "identity". When <code>family</code> is also given,
 negative, and <code><a href="https://rdrr.io/r/stats/glm.html" class="external-link">glm()</a></code> then warns.</p></dd>
 
 
+<dt id="arg-theta-estimate">theta_estimate<a class="anchor" aria-label="anchor" href="#arg-theta-estimate"></a></dt>
+<dd><p>For a negative binomial <code>family</code>: <code>"none"</code>
+(the default) fits every gene with the theta of <code>family</code> (10 by default,
+as maSigPro). <code>"gene"</code> estimates theta by maximum likelihood on each
+gene's full model and fits the gene with it; <code>"global"</code> fits every
+gene with the median of these estimates. The estimates are kept in the
+<code>distribution</code> parameter, for <code><a href="sc.t.fit.html">sc.t.fit()</a></code> and <code><a href="plotDiagnostics.html">plotDiagnostics()</a></code>:
+<code>theta_gene</code> holds one per gene and <code>theta_estimate</code> the choice.</p></dd>
+
+
 <dt id="arg-bpparam">BPPARAM<a class="anchor" aria-label="anchor" href="#arg-bpparam"></a></dt>
 <dd><p>A <code>BiocParallelParam</code> object that runs the per-gene
 fits, such as
@@ -168,6 +199,17 @@ bar. The results do not depend on the backend.</p></dd>
     <h2>Value</h2>
     <p>An object of class <code><a href="ScMaSigPro-class.html">ScMaSigPro</a></code>, with updated <code>Profile</code>
 slot.</p>
+    </div>
+    <div id="details">
+    <h2>Details</h2>
+    <p>Genes are left out of the fit when they have fewer than <code>min_na</code> values,
+when all their counts are zero, and when they are below <code>min_counts</code> or
+<code>min_bins_expressed</code>. Genes left out have no p-value and do not count in
+the multiple-testing correction; <code><a href="scmpResults.html">scmpResults()</a></code> gives them <code>NA</code>. The size
+factors of the offset are computed before <code>min_counts</code> and
+<code>min_bins_expressed</code> are applied, on every gene left by the first two
+rules, so these two filters change the results of the genes they keep
+only through the multiple-testing correction.</p>
     </div>
     <div id="references">
     <h2>References</h2>

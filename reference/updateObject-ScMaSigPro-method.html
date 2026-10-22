@@ -113,6 +113,14 @@ and <code>Dense</code> slots are passed to the <code>updateObject()</code> metho
 <span class="pkg">SingleCellExperiment</span>, and the result is checked with
 <code>validObject()</code>. A current object, such as one created by this version
 of the package, is returned unchanged.</p>
+<p>Objects saved before the <code>min_counts</code> and <code>min_bins_expressed</code>
+parameters existed get both set to 0, the values that keep every gene
+(<code><a href="sc.p.vector.html">sc.p.vector()</a></code> had no such filter then), and the version of the
+package that is running.</p>
+<p>Objects fitted with <code>link = "identity"</code> by scMaSigPro 0.0.5 or earlier
+hold a family labelled with the identity link but with the link functions
+of the log link, with which their fits were made: <code>updateObject()</code> warns,
+and <code><a href="sc.t.fit.html">sc.t.fit()</a></code> stops on them, until <code><a href="sc.p.vector.html">sc.p.vector()</a></code> is run again.</p>
 <p>Objects binned by scMaSigPro 0.0.4 cannot be updated: their <code>Dense</code> slot
 is not a valid <code>SingleCellExperiment</code>, and the cell metadata of their
 <code>Sparse</code> slot may not be in the order of the counts. <code>updateObject()</code>

@@ -77,8 +77,8 @@ as the analysis progresses.</p>
     <div id="details">
     <h2>Details</h2>
     <p><code>validObject()</code> checks that every slot except <code>distribution</code> holds a
-single non-missing value and that <code>distribution</code> is a <code><a href="https://rdrr.io/r/stats/family.html" class="external-link">stats::family()</a></code>
-object.</p>
+single non-missing value, that <code>min_counts</code> and <code>min_bins_expressed</code> are
+at least 0 and that <code>distribution</code> is a <code><a href="https://rdrr.io/r/stats/family.html" class="external-link">stats::family()</a></code> object.</p>
     </div>
     <div id="slots">
     <h2>Slots</h2>
@@ -140,8 +140,8 @@ metadata containing cell level annotations. (Default is "cell_type").</p></dd>
 
 <dt><code>g</code></dt>
 <dd><p>An integer, the number of features that <code><a href="sc.p.vector.html">sc.p.vector()</a></code> fitted:
-those left after removing features with fewer than <code>min_na</code> values or with
-zero counts in every bin.</p></dd>
+those left after removing features with fewer than <code>min_na</code> values, with
+zero counts in every bin, or below <code>min_counts</code> or <code>min_bins_expressed</code>.</p></dd>
 
 
 <dt><code>p_value</code></dt>
@@ -149,8 +149,9 @@ zero counts in every bin.</p></dd>
 
 
 <dt><code>min_na</code></dt>
-<dd><p>Minimum values needed per gene across cells to estimate the
-model.</p></dd>
+<dd><p>The minimum number of bins with a value (not <code>NA</code>) that
+<code><a href="sc.p.vector.html">sc.p.vector()</a></code> required; it only removes features from counts with
+missing values.</p></dd>
 
 
 <dt><code>mt_correction</code></dt>
@@ -203,6 +204,16 @@ clustering.</p></dd>
 
 <dt><code>fill_na</code></dt>
 <dd><p>Method to fill the missing values.</p></dd>
+
+
+<dt><code>min_counts</code></dt>
+<dd><p>The minimum total count over the bins that
+<code><a href="sc.p.vector.html">sc.p.vector()</a></code> required of a feature (0: no minimum).</p></dd>
+
+
+<dt><code>min_bins_expressed</code></dt>
+<dd><p>The minimum number of bins with a count above 0
+that <code><a href="sc.p.vector.html">sc.p.vector()</a></code> required of a feature (0: no minimum).</p></dd>
 
 
 </dl></div>

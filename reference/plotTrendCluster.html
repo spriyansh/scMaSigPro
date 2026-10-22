@@ -75,10 +75,10 @@
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">plotTrendCluster</span><span class="op">(</span></span>
 <span>  <span class="va">scmpObj</span>,</span>
 <span>  xlab <span class="op">=</span> <span class="st">"Pooled Pseudotime"</span>,</span>
-<span>  ylab <span class="op">=</span> <span class="st">"log(Pseudobulk Expression)"</span>,</span>
+<span>  ylab <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  plot <span class="op">=</span> <span class="st">"counts"</span>,</span>
 <span>  summary_mode <span class="op">=</span> <span class="st">"median"</span>,</span>
-<span>  logs <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  logs <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  logType <span class="op">=</span> <span class="st">"log"</span>,</span>
 <span>  smoothness <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  includeInflu <span class="op">=</span> <span class="cn">TRUE</span>,</span>
@@ -105,7 +105,9 @@
 
 
 <dt id="arg-ylab">ylab<a class="anchor" aria-label="anchor" href="#arg-ylab"></a></dt>
-<dd><p>Y-axis label. (Default is "Pseudobulk Expression")</p></dd>
+<dd><p>Y-axis label. The default, <code>NULL</code>, is
+"log(Pseudobulk Expression)" for log-link fits and when the points are
+logged, and "Pseudobulk Expression" otherwise.</p></dd>
 
 
 <dt id="arg-plot">plot<a class="anchor" aria-label="anchor" href="#arg-plot"></a></dt>
@@ -118,7 +120,8 @@ per binned pseudotime point. Default is 'median'. Other option 'mean'</p></dd>
 
 
 <dt id="arg-logs">logs<a class="anchor" aria-label="anchor" href="#arg-logs"></a></dt>
-<dd><p>Whether to log transform counts. (Default is TRUE)</p></dd>
+<dd><p>Whether to log the points, as in <code><a href="plotTrend.html">plotTrend()</a></code>. The default,
+<code>NULL</code>, logs them when the fits used the log link.</p></dd>
 
 
 <dt id="arg-logtype">logType<a class="anchor" aria-label="anchor" href="#arg-logtype"></a></dt>

@@ -293,15 +293,17 @@ Monocle3 is not a dependency of <code>scMaSigPro</code>.</p>
 branch labels: the <code>path_</code> prefix is dropped, the shared
 segment is written as <code>Y_18_links_Y_15</code> (the separator that
 <code><a href="../reference/sc.restruct.html">sc.restruct()</a></code> expects by default), and the root is
-capitalised so that it sorts first and therefore becomes the reference
-path of the model.</p>
+capitalised so that it comes first in the C-locale order of the labels,
+which <code><a href="../reference/sc.squeeze.html">sc.squeeze()</a></code> uses in every locale, and therefore
+becomes the reference path of the model
+(<code>sc.set.poly(reference = )</code> can also name it).</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">cellData</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/as.data.frame.html" class="external-link">as.data.frame</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData</a></span><span class="op">(</span><span class="va">multi.lin.sce</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="va">cellData</span><span class="op">$</span><span class="va">group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"path_"</span>, <span class="st">""</span>, <span class="va">cellData</span><span class="op">$</span><span class="va">group</span>, fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="va">cellData</span><span class="op">$</span><span class="va">group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"|"</span>, <span class="st">"_links_"</span>, <span class="va">cellData</span><span class="op">$</span><span class="va">group</span>, fixed <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co"># The alphabetically first label becomes the reference path. Capitalising</span></span>
-<span><span class="co"># "Root" keeps it first in every locale (uppercase sorts before lowercase in</span></span>
-<span><span class="co"># the C locale that R CMD build uses, and alphabetically elsewhere).</span></span>
+<span><span class="co"># The first label in C-locale (byte) order becomes the reference path, in</span></span>
+<span><span class="co"># every locale. Uppercase comes before lowercase in that order, so "Root"</span></span>
+<span><span class="co"># comes before "Y_15"; "root" would come after "Y_52".</span></span>
 <span><span class="va">cellData</span><span class="op">$</span><span class="va">group</span><span class="op">[</span><span class="va">cellData</span><span class="op">$</span><span class="va">group</span> <span class="op">==</span> <span class="st">"root"</span><span class="op">]</span> <span class="op">&lt;-</span> <span class="st">"Root"</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/base/table.html" class="external-link">table</a></span><span class="op">(</span><span class="va">cellData</span><span class="op">$</span><span class="va">group</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## </span></span>
