@@ -104,7 +104,8 @@ bins cover the bin without gaps. The other bins are kept.</p>
 
 
 <dt id="arg-max-allowed">max_allowed<a class="anchor" aria-label="anchor" href="#arg-max-allowed"></a></dt>
-<dd><p>The maximum allowed size for a bin.</p></dd>
+<dd><p>The maximum allowed size for a bin: a bin with more
+points is split.</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
@@ -140,6 +141,16 @@ bins cover the bin without gaps. The other bins are kept.</p>
     <h2>Value</h2>
     <p>A dataframe with adjusted bins. The structure of the dataframe will be the same as <code>bin_table</code>
 with updated values for the bin size and bounds.</p>
+    </div>
+    <div id="details">
+    <h2>Details</h2>
+    <p><code><a href="sc.squeeze.html">sc.squeeze()</a></code> passes as <code>max_allowed</code> the maximum of Srivastava et al.
+(2024), Section 2.2: the mean plus the standard deviation of the sizes of
+all bins of the path, set once from the bins of the rule. "Bins larger
+than the maximum size are divided", and "The process is repeated until all
+bins conform to the established size criteria": <code><a href="sc.squeeze.html">sc.squeeze()</a></code> calls
+<code>optimize_bin_max()</code> again, with the same <code>max_allowed</code>, until no bin is
+larger.</p>
     </div>
 
   </div>
