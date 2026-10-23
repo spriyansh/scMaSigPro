@@ -41,7 +41,8 @@
 #' binning. Available options: "Freedman.Diaconis",
 #' "Sqrt", "Sturges", "Rice", "Doane", and "Scott.Normal". (Default = "Sturges")
 #' @param drop_fac A numeric value specifying the factor by which to adjust the
-#' number of bins if the initial binning results in too many/few bins.
+#' number of bins if the initial binning results in too many/few bins: the
+#' drop factor of Srivastava et al. (2024), Section 2.1, at least 0.3.
 #' (Default = 1).
 #' @param assay_name Name of the Assay in sparse data from which the counts are
 #' used. (Default = "counts").
@@ -158,7 +159,7 @@ sc.squeeze <- function(scmpObj,
         )
     )
     .check(drop_fac >= 0.3,
-        msg = "Invalid value for 'drop_fac'. It should be between 0.3 and 1."
+        msg = "Invalid value for 'drop_fac'. It should be at least 0.3."
     )
     bin_method <- .check_choice(bin_method,
         c(

@@ -38,7 +38,8 @@ binning. Available options: "Freedman.Diaconis",
 "Sqrt", "Sturges", "Rice", "Doane", and "Scott.Normal". (Default = "Sturges")}
 
 \item{drop_fac}{A numeric value specifying the factor by which to adjust the
-number of bins if the initial binning results in too many/few bins.
+number of bins if the initial binning results in too many/few bins: the
+drop factor of Srivastava et al. (2024), Section 2.1, at least 0.3.
 (Default = 1).}
 
 \item{verbose}{Print detailed output in the console. (Default is TRUE)}
