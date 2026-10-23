@@ -39,8 +39,10 @@ binning. Available options: "Freedman.Diaconis",
 
 \item{drop_fac}{A numeric value specifying the factor by which to adjust the
 number of bins if the initial binning results in too many/few bins: the
-drop factor of Srivastava et al. (2024), Section 2.1, at least 0.3.
-(Default = 1).}
+drop factor of Srivastava et al. (2024), Section 2.1, at least 0.3. The
+number of bins that \code{bin_method} gives a path (for "Sturges", rounded up to
+a whole number) is multiplied by \code{drop_fac} and rounded up (see
+\code{\link[=estBinSize]{estBinSize()}}). (Default = 1).}
 
 \item{verbose}{Print detailed output in the console. (Default is TRUE)}
 

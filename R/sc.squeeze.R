@@ -42,8 +42,10 @@
 #' "Sqrt", "Sturges", "Rice", "Doane", and "Scott.Normal". (Default = "Sturges")
 #' @param drop_fac A numeric value specifying the factor by which to adjust the
 #' number of bins if the initial binning results in too many/few bins: the
-#' drop factor of Srivastava et al. (2024), Section 2.1, at least 0.3.
-#' (Default = 1).
+#' drop factor of Srivastava et al. (2024), Section 2.1, at least 0.3. The
+#' number of bins that `bin_method` gives a path (for "Sturges", rounded up to
+#' a whole number) is multiplied by `drop_fac` and rounded up (see
+#' [estBinSize()]). (Default = 1).
 #' @param assay_name Name of the Assay in sparse data from which the counts are
 #' used. (Default = "counts").
 #' @param split_bins If `TRUE`, divide the bins of a path that hold more cells
