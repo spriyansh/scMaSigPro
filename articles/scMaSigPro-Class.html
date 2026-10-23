@@ -225,9 +225,9 @@ cell level information from the <code>Sparse</code> and
 <span><span class="co">## Path1_bin_2 Cell3|Cell7|Cell49|Cell61|Cell77|Cell97|Cell101|Cell119|Cell122|Cell144|Cell157|Cell165|Cell173|Cell175|Cell182</span></span>
 <span><span class="co">## Path1_bin_3                                                           Cell38|Cell39|Cell108|Cell124|Cell133|Cell146|Cell188</span></span>
 <span><span class="co">##                scmp_bin  Path scmp_bin_size scmp_l_bound scmp_u_bound</span></span>
-<span><span class="co">## Path1_bin_1 Path1_bin_1 Path1            14          1.0         13.2</span></span>
-<span><span class="co">## Path1_bin_2 Path1_bin_2 Path1            15         13.2         25.5</span></span>
-<span><span class="co">## Path1_bin_3 Path1_bin_3 Path1             7         25.5         37.8</span></span></code></pre>
+<span><span class="co">## Path1_bin_1 Path1_bin_1 Path1            14         1.00        13.25</span></span>
+<span><span class="co">## Path1_bin_2 Path1_bin_2 Path1            15        13.25        25.50</span></span>
+<span><span class="co">## Path1_bin_3 Path1_bin_3 Path1             7        25.50        37.75</span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Get cell level metadata</span></span>
 <span><span class="fu"><a href="../reference/cSparse.html">cSparse</a></span><span class="op">(</span><span class="va">scmp.ob</span><span class="op">)</span><span class="op">[</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span><span class="op">:</span><span class="fl">3</span><span class="op">)</span><span class="op">]</span></span></code></pre></div>
@@ -407,10 +407,10 @@ rather than their independent contributions.</p></li>
 <span><span class="co"># View</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pTime_up</span>, <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##        betascmp_binned_pseudotime</span></span>
-<span><span class="co">## Gene46                 0.11753328</span></span>
-<span><span class="co">## Gene86                 0.11606199</span></span>
-<span><span class="co">## Gene18                 0.08252258</span></span>
-<span><span class="co">## Gene89                 0.06665634</span></span></code></pre>
+<span><span class="co">## Gene46                 0.11716106</span></span>
+<span><span class="co">## Gene86                 0.11590683</span></span>
+<span><span class="co">## Gene18                 0.08197727</span></span>
+<span><span class="co">## Gene89                 0.06633323</span></span></code></pre>
 <div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Plot</span></span>
 <span><span class="va">pTime_up.plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -440,10 +440,10 @@ rather than their independent contributions.</p></li>
 <span><span class="co"># View</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">pTime_path_up</span>, <span class="fl">4</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##        betascmp_binned_pseudotimexPath2</span></span>
-<span><span class="co">## Gene10                        0.1989694</span></span>
-<span><span class="co">## Gene3                         0.1617452</span></span>
-<span><span class="co">## Gene95                        0.1254349</span></span>
-<span><span class="co">## Gene72                        0.1092380</span></span></code></pre>
+<span><span class="co">## Gene10                        0.1994188</span></span>
+<span><span class="co">## Gene95                        0.1259134</span></span>
+<span><span class="co">## Gene3                         0.1140589</span></span>
+<span><span class="co">## Gene72                        0.1098556</span></span></code></pre>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Plot</span></span>
 <span><span class="va">pTime_path_up.plots</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span></span>
