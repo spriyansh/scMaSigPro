@@ -167,6 +167,7 @@ build_golden <- function() {
     bounds_note <- "0.6.0, ledger S3: bounds are the numeric breaks"
     cells_note <- "0.6.0, ledger S3: cells binned by the numeric breaks"
     n2_note <- "0.6.0, ledger n2: bins [a, b), the last [a, b]"
+    prune_note <- "0.6.0, Section 2.2: prune below mean - sd of each path"
 
     methods <- c("Sturges", "Sqrt", "Rice", "Doane", "Freedman.Diaconis", "Scott.Normal")
     by_method <- lapply(methods, function(m) {
@@ -267,7 +268,9 @@ build_golden <- function() {
                 "clusters" = n2_note,
                 "plots" = n2_note,
                 "squeeze/options/split_bins" =
-                    "0.6.0, Section 2.2: split above mean + sd, not rounded"
+                    "0.6.0, Section 2.2: split above mean + sd, not rounded",
+                "squeeze/options/prune_bins" = prune_note,
+                "squeeze/options/fill_gaps" = prune_note
             )
         ),
         sparse_cells = sorted_df(cSparse(binned)),

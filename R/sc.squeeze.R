@@ -48,8 +48,9 @@
 #' @param split_bins If `TRUE`, divide the bins of a path that hold more cells
 #' than the mean plus the standard deviation of the bin sizes of the path
 #' (Srivastava et al. (2024), Section 2.2; see Details). (Default = FALSE).
-#' @param prune_bins If bin sizes are smaller than mean - sd, remove the bin.
-#' (Default = FALSE).
+#' @param prune_bins If `TRUE`, remove the bins of a path that hold fewer cells
+#' than the mean minus the standard deviation of the bin sizes of the path
+#' (Srivastava et al. (2024), Section 2.2; see Details). (Default = FALSE).
 #' @param drop_trails If the paths have different lengths of the binned pseudotime,
 #' drop the bins from the path with more bins. (Default = FALSE).
 #' @param fill_gaps If corresponding bin is missing for a time-point, pull the
@@ -61,19 +62,28 @@
 #' See examples
 #'
 #' @details
-#' With `split_bins = TRUE`, the bins of each path are divided as Section 2.2
-#' of Srivastava et al. (2024) describes: the mean (\eqn{\mu}) and the
-#' standard deviation (\eqn{\sigma}) "of the sizes of all bins per path"
-#' establish the maximum allowable bin size, \eqn{\mu+\sigma}; "Bins larger
-#' than the maximum size are divided", and "The process is repeated until all
-#' bins conform to the established size criteria." The mean and the standard
-#' deviation are those of the sizes of the bins that `bin_method` gives the
-#' path, empty bins included, and the maximum is set once, before any bin is
-#' divided. A bin larger than the maximum is divided into the number of bins
-#' that `bin_method` and `drop_fac` give for its cells, rounded up, until no
-#' bin is larger; `sc.squeeze()` stops with an error when a division gives
-#' back bins it has already produced. A path with a single bin has no
-#' standard deviation and keeps its bin.
+#' `split_bins` and `prune_bins` equalise the sizes of the bins of each path
+#' as Section 2.2 of Srivastava et al. (2024) describes: "scMaSigPro
+#' calculates the mean (\eqn{\mu}) and standard deviation (\eqn{\sigma}) of
+#' the sizes of all bins per path to establish maximum (\eqn{\mu+\sigma}) and
+#' minimum (\eqn{\mu-\sigma}) allowable bin sizes. Bins larger than the
+#' maximum size are divided, and those smaller than the minimum size can be
+#' optionally removed, ensuring uniform bin sizes. The process is repeated
+#' until all bins conform to the established size criteria." The mean and
+#' the standard deviation are those of the sizes of the bins that
+#' `bin_method` gives the path, empty bins included, and both limits are set
+#' once, before any bin is divided.
+#'
+#' With `split_bins = TRUE`, a bin larger than the maximum is divided into
+#' the number of bins that `bin_method` and `drop_fac` give for its cells,
+#' rounded up, until no bin is larger; `sc.squeeze()` stops with an error
+#' when a division gives back bins it has already produced. A path with a
+#' single bin has no standard deviation and keeps its bin.
+#'
+#' With `prune_bins = TRUE`, the bins smaller than the minimum are removed,
+#' after any division. When the standard deviation is larger than the mean,
+#' the minimum is negative and no bin is removed. The cells of a removed bin
+#' stay in the `Sparse` slot, but no bin of the `Dense` slot holds them.
 #'
 #' @return An object of class \code{\link{ScMaSigPro}}, with updated `Dense`
 #' slot.
@@ -231,6 +241,7 @@ sc.squeeze <- function(scmpObj,
                                                   method.bin = bin_method,
                                                   bin.time.col = bin_ptime_col,
                                                   split = split_bins,
+                                                  prune = prune_bins,
                                                   bin.members.colname = bin_mem_col,
                                                   v = verbose,
                                                   use.unique.time.points = use_unique,
@@ -295,10 +306,12 @@ sc.squeeze <- function(scmpObj,
 
         # Section 2.2: the mean and the standard deviation of the sizes of
         # all bins of the path, empty intervals included, set the largest
-        # size allowed, mean + sd, once, before any split
+        # and the smallest sizes allowed, mean + sd and mean - sd, once,
+        # before any split
         mean_value <- mean(bin_table[[bin.size]])
         sd_value <- sd(bin_table[[bin.size]])
         max.allowed <- mean_value + sd_value
+        min.allowed <- mean_value - sd_value
 
         # Initate Runners
         new_max <- max.allowed + 1
@@ -412,6 +425,15 @@ sc.squeeze <- function(scmpObj,
         # Merge
         binned.path.frame <- merge(binned.path.frame, bin_table_sub, by = bin.time.col)
 
+        # Prune the bins smaller than mean - sd: a negative minimum removes
+        # none, and a path with a single bin, whose size has no sd, keeps it
+        if (prune && !is.na(min.allowed)) {
+            binned.path.frame <- binned.path.frame[
+                binned.path.frame[[bin.size]] >= min.allowed, ,
+                drop = FALSE
+            ]
+        }
+
         return(list(
             sparse = processed.path.frame,
             compressed = binned.path.frame
@@ -455,14 +477,6 @@ sc.squeeze <- function(scmpObj,
     ])
 
     rownames(processed_binned_cell_metadata) <- processed_binned_cell_metadata[[bin_col]]
-
-    # Prune and Trails
-    if (prune_bins) {
-        mean_bin_size <- mean(processed_binned_cell_metadata[[bin_size_col]])
-        sd_bin_size <- sd(processed_binned_cell_metadata[[bin_size_col]])
-        min_size_allowed <- abs(mean_bin_size - sd_bin_size)
-        processed_binned_cell_metadata <- processed_binned_cell_metadata[processed_binned_cell_metadata[[bin_size_col]] >= min_size_allowed, , drop = FALSE]
-    }
 
     if (fill_gaps) {
         processed_binned_cell_metadata_tmp <- data.frame()

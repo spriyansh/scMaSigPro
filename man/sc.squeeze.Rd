@@ -60,8 +60,9 @@ for binned Pseudotime values in 'Dense' data.
 than the mean plus the standard deviation of the bin sizes of the path
 (Srivastava et al. (2024), Section 2.2; see Details). (Default = FALSE).}
 
-\item{prune_bins}{If bin sizes are smaller than mean - sd, remove the bin.
-(Default = FALSE).}
+\item{prune_bins}{If \code{TRUE}, remove the bins of a path that hold fewer cells
+than the mean minus the standard deviation of the bin sizes of the path
+(Srivastava et al. (2024), Section 2.2; see Details). (Default = FALSE).}
 
 \item{assay_name}{Name of the Assay in sparse data from which the counts are
 used. (Default = "counts").}
@@ -104,19 +105,28 @@ takes the first path as the reference unless its \code{reference} argument names
 another one.
 }
 \details{
-With \code{split_bins = TRUE}, the bins of each path are divided as Section 2.2
-of Srivastava et al. (2024) describes: the mean (\eqn{\mu}) and the
-standard deviation (\eqn{\sigma}) "of the sizes of all bins per path"
-establish the maximum allowable bin size, \eqn{\mu+\sigma}; "Bins larger
-than the maximum size are divided", and "The process is repeated until all
-bins conform to the established size criteria." The mean and the standard
-deviation are those of the sizes of the bins that \code{bin_method} gives the
-path, empty bins included, and the maximum is set once, before any bin is
-divided. A bin larger than the maximum is divided into the number of bins
-that \code{bin_method} and \code{drop_fac} give for its cells, rounded up, until no
-bin is larger; \code{sc.squeeze()} stops with an error when a division gives
-back bins it has already produced. A path with a single bin has no
-standard deviation and keeps its bin.
+\code{split_bins} and \code{prune_bins} equalise the sizes of the bins of each path
+as Section 2.2 of Srivastava et al. (2024) describes: "scMaSigPro
+calculates the mean (\eqn{\mu}) and standard deviation (\eqn{\sigma}) of
+the sizes of all bins per path to establish maximum (\eqn{\mu+\sigma}) and
+minimum (\eqn{\mu-\sigma}) allowable bin sizes. Bins larger than the
+maximum size are divided, and those smaller than the minimum size can be
+optionally removed, ensuring uniform bin sizes. The process is repeated
+until all bins conform to the established size criteria." The mean and
+the standard deviation are those of the sizes of the bins that
+\code{bin_method} gives the path, empty bins included, and both limits are set
+once, before any bin is divided.
+
+With \code{split_bins = TRUE}, a bin larger than the maximum is divided into
+the number of bins that \code{bin_method} and \code{drop_fac} give for its cells,
+rounded up, until no bin is larger; \code{sc.squeeze()} stops with an error
+when a division gives back bins it has already produced. A path with a
+single bin has no standard deviation and keeps its bin.
+
+With \code{prune_bins = TRUE}, the bins smaller than the minimum are removed,
+after any division. When the standard deviation is larger than the mean,
+the minimum is negative and no bin is removed. The cells of a removed bin
+stay in the \code{Sparse} slot, but no bin of the \code{Dense} slot holds them.
 }
 \seealso{
 \code{\link{estBinSize}}
