@@ -56,8 +56,9 @@ which bin sizes per bin are stored. (Default is "scmp_bin_size").}
 for binned Pseudotime values in 'Dense' data.
 (Default is "scmp_binned_pseudotime").}
 
-\item{split_bins}{If bin sizes are greater than mean + sd, split the bin into
-smaller bins by re-running the sc.squeeze() function. (Default = FALSE).}
+\item{split_bins}{If \code{TRUE}, divide the bins of a path that hold more cells
+than the mean plus the standard deviation of the bin sizes of the path
+(Srivastava et al. (2024), Section 2.2; see Details). (Default = FALSE).}
 
 \item{prune_bins}{If bin sizes are smaller than mean - sd, remove the bin.
 (Default = FALSE).}
@@ -101,6 +102,21 @@ the path labels (byte order: digits before uppercase letters, uppercase
 before lowercase), whatever the collation of the R session. \code{\link[=sc.set.poly]{sc.set.poly()}}
 takes the first path as the reference unless its \code{reference} argument names
 another one.
+}
+\details{
+With \code{split_bins = TRUE}, the bins of each path are divided as Section 2.2
+of Srivastava et al. (2024) describes: the mean (\eqn{\mu}) and the
+standard deviation (\eqn{\sigma}) "of the sizes of all bins per path"
+establish the maximum allowable bin size, \eqn{\mu+\sigma}; "Bins larger
+than the maximum size are divided", and "The process is repeated until all
+bins conform to the established size criteria." The mean and the standard
+deviation are those of the sizes of the bins that \code{bin_method} gives the
+path, empty bins included, and the maximum is set once, before any bin is
+divided. A bin larger than the maximum is divided into the number of bins
+that \code{bin_method} and \code{drop_fac} give for its cells, rounded up, until no
+bin is larger; \code{sc.squeeze()} stops with an error when a division gives
+back bins it has already produced. A path with a single bin has no
+standard deviation and keeps its bin.
 }
 \seealso{
 \code{\link{estBinSize}}

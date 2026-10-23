@@ -398,8 +398,18 @@ extract_interval <- function(time.vector, nBins = 1, bin.size, lbound,
 #' bound of the bin and the last ends at its upper bound, so that the new
 #' bins cover the bin without gaps. The other bins are kept.
 #'
+#' @details
+#' [sc.squeeze()] passes as `max_allowed` the maximum of Srivastava et al.
+#' (2024), Section 2.2: the mean plus the standard deviation of the sizes of
+#' all bins of the path, set once from the bins of the rule. "Bins larger
+#' than the maximum size are divided", and "The process is repeated until all
+#' bins conform to the established size criteria": [sc.squeeze()] calls
+#' `optimize_bin_max()` again, with the same `max_allowed`, until no bin is
+#' larger.
+#'
 #' @param bin_table A dataframe containing the bin data.
-#' @param max_allowed The maximum allowed size for a bin.
+#' @param max_allowed The maximum allowed size for a bin: a bin with more
+#' points is split.
 #' @param verbose Logical; if TRUE, prints detailed output.
 #' @param time_vector A vector representing time or a sequence that bins refer to.
 #' @param lbound The name of the lower bound column in `bin_table`.

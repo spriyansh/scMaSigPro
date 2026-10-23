@@ -265,7 +265,9 @@ build_golden <- function() {
                     paste(n2_note, "(all but offset, influential, path)"),
                 "filters" = n2_note,
                 "clusters" = n2_note,
-                "plots" = n2_note
+                "plots" = n2_note,
+                "squeeze/options/split_bins" =
+                    "0.6.0, Section 2.2: split above mean + sd, not rounded"
             )
         ),
         sparse_cells = sorted_df(cSparse(binned)),

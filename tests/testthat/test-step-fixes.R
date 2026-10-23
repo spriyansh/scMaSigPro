@@ -201,7 +201,7 @@ test_that("split_bins stops when splitting makes no progress (ledger Q2)", {
     }
     # Control: a rule whose splits make progress
     split <- sc.squeeze(splat_scmp(), bin_method = "Sturges", split_bins = TRUE)
-    expect_identical(ncol(split@Dense), 25L)
+    expect_identical(ncol(split@Dense), 29L)
 })
 
 restruct_multi <- function(ob, link, sep) {
@@ -677,7 +677,7 @@ test_that("sc.squeeze() bins the cells by the numeric breaks (ledger S3)", {
 
 test_that("split_bins keeps every cell (ledger Q1)", {
     # 13 points, Sturges: 5 bins of width 2. The bin from 2 to 4 holds 10
-    # cells, more than the 7 allowed, and is split over the range of its
+    # cells, more than the 6.82 allowed, and is split over the range of its
     # cells; the first new bin read "[2.24,2.58]" from its cut() label, so
     # the cell at 2.2366 was in no bin and was removed from the object
     p <- c(0, 0.5, 2.2366, 2.5, 2.7, 2.9, 3.1, 3.3, 3.5, 3.7, 3.9, 3.95, 10)
@@ -754,4 +754,34 @@ test_that("split_bins keeps a path with a single bin (ledger D-1)", {
     nosplit <- suppressMessages(sc.squeeze(ob, bin_method = method))
     expect_identical(cDense(split), cDense(nosplit))
     expect_identical(ncol(split@Sparse), 80L)
+})
+
+test_that("split_bins divides the bins above the mean + sd of their path", {
+    # Srivastava et al. (2024), Section 2.2: the mean and the standard
+    # deviation "of the sizes of all bins per path" establish the maximum,
+    # mean + sd, and "Bins larger than the maximum size are divided".
+    # splat.sim, Sturges: the bins of Path2 hold 20, 9, 14, 12, 10, 11, 17
+    # and 10 cells, mean 12.875 and sd 3.87, so the maximum is 16.75 and the
+    # bins of 20 and 17 cells are divided. The mean and the sd were rounded
+    # to 13 and 4 before they were added, which allowed 17 cells
+    ob <- splat_binned()
+    p <- ob@Parameters
+    bins <- cDense(ob)
+    path2 <- bins[bins[[p@path_col]] == "Path2", ]
+    sizes <- path2[[p@bin_size_col]]
+    expect_identical(sizes, c(20, 9, 14, 12, 10, 11, 17, 10))
+    expect_equal(mean(sizes) + sd(sizes), 16.74568, tolerance = 1e-6)
+    expect_identical(path2$scmp_l_bound[7], 75.25)
+    expect_identical(path2$scmp_u_bound[7], 87.625)
+    split <- sc.squeeze(splat_scmp(), split_bins = TRUE)
+    bins <- cDense(split)
+    split2 <- bins[bins[[p@path_col]] == "Path2", ]
+    expect_identical(
+        split2[[p@bin_size_col]],
+        c(3, 7, 2, 2, 6, 9, 14, 12, 10, 11, 2, 6, 2, 3, 4, 10)
+    )
+    # The bin of 17 cells, from 75.25 to 87.625, is now five bins
+    in_bin7 <- split2$scmp_l_bound >= 75.25 & split2$scmp_u_bound <= 87.625
+    expect_identical(split2[in_bin7, p@bin_size_col], c(2, 6, 2, 3, 4))
+    expect_true(all(split2[[p@bin_size_col]] < 16.75))
 })
