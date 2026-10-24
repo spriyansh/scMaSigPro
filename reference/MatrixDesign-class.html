@@ -75,8 +75,9 @@
     <div id="details">
     <h2>Details</h2>
     <p><code>validObject()</code> checks that <code>assignment_matrix</code> has the rows of
-<code>predictor_matrix</code> (one per bin), that <code>offset</code> has one value per row and
-that <code>groups.vector</code> has one value per column of <code>predictor_matrix</code>.</p>
+<code>predictor_matrix</code> (one per bin), that <code>offset</code> is empty or has one value
+per row and that <code>groups.vector</code> has one value per column of
+<code>predictor_matrix</code>.</p>
     </div>
     <div id="slots">
     <h2>Slots</h2>
@@ -99,7 +100,9 @@ replicate.</p></dd>
 
 
 <dt><code>offset</code></dt>
-<dd><p>A numeric vector containing the offset values.</p></dd>
+<dd><p>The offset of each bin, the logarithm of its size factor (see
+<code><a href="sc.p.vector.html">sc.p.vector()</a></code>), or an empty vector when the fits used no offset or no
+fit was made yet.</p></dd>
 
 
 </dl></div>

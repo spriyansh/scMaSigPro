@@ -369,8 +369,7 @@ fitting.</p>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Detect non-flat profiles</span></span>
 <span><span class="va">scmp_ob</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sc.p.vector.html">sc.p.vector</a></span><span class="op">(</span><span class="va">scmp_ob</span>,</span>
-<span>    offset <span class="op">=</span> <span class="cn">TRUE</span>, p_value <span class="op">=</span> <span class="fl">0.05</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    log_offset <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>    offset <span class="op">=</span> <span class="cn">TRUE</span>, p_value <span class="op">=</span> <span class="fl">0.05</span>, verbose <span class="op">=</span> <span class="cn">FALSE</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">scmp_ob</span></span></code></pre></div>
 <pre><code><span><span class="co">## Class: ScMaSigProClass</span></span>
@@ -473,11 +472,11 @@ will make an upset plot:</p>
 <span><span class="co">## <span style="color: #555555;">Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span></span>
 <span><span class="co">## <span style="color: #555555;">generated.</span></span></span></code></pre>
 <p><img src="Basic-Workflow_files/figure-html/uspet-1.png" class="r-plt" alt="" width="768"></p>
-<p>Here, we observe that 24 genes belong to both Path2vsPath1 and Path1,
+<p>Here, we observe that 21 genes belong to both Path2vsPath1 and Path1,
 indicating that these genes not only change along pseudotime but also
 exhibit significantly different expression between the two paths.
-Additionally, there are 9 genes uniquely associated with Path2vsPath1.
-This implies that Path2 has 9 genes that are significantly
+Additionally, there are 13 genes uniquely associated with Path2vsPath1.
+This implies that Path2 has 13 genes that are significantly
 differentially expressed over time, using Path1 genes as a reference.
 Let’s explore a few of these genes:</p>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">

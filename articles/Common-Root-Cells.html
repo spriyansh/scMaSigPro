@@ -427,15 +427,15 @@ set.</p>
 <code class="sourceCode R"><span><span class="va">shared_genes</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/plotIntersect.html">plotIntersect</a></span><span class="op">(</span><span class="va">multi_scmp_ob_A</span>, return <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">shared_genes</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">##     Y_15vsRoot Y_18vsRoot Y_18_links_Y_15vsRoot Y_52vsRoot Root</span></span>
-<span><span class="co">## G2           1          1                     1          1    1</span></span>
-<span><span class="co">## G3           1          1                     1          1    1</span></span>
+<span><span class="co">## G1           1          1                     1          1    0</span></span>
+<span><span class="co">## G5           1          1                     1          1    0</span></span>
 <span><span class="co">## G7           1          1                     1          1    1</span></span>
-<span><span class="co">## G9           1          1                     1          1    1</span></span>
-<span><span class="co">## G10          1          1                     1          1    1</span></span>
-<span><span class="co">## G11          1          1                     1          1    1</span></span></code></pre>
+<span><span class="co">## G10          1          0                     1          1    1</span></span>
+<span><span class="co">## G11          1          1                     1          1    0</span></span>
+<span><span class="co">## G12          1          1                     1          1    1</span></span></code></pre>
 <div class="sourceCode" id="cb20"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n_shared</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sum.html" class="external-link">sum</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colSums.html" class="external-link">rowSums</a></span><span class="op">(</span><span class="va">shared_genes</span><span class="op">)</span> <span class="op">==</span> <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">ncol</a></span><span class="op">(</span><span class="va">shared_genes</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>In the upset plot above, we can see that there are 301 genes which
+<p>In the upset plot above, we can see that there are 109 genes which
 change among all branches and also change with pseudotime. We will
 explore them later. First, let’s look at the genes that have similar
 expression in the <code>Root</code>, the link segment and the
@@ -452,17 +452,17 @@ expression in the <code>Root</code>, the link segment and the
 <span>        <span class="va">shared_genes</span><span class="op">$</span><span class="va">Y_18_links_Y_15vsRoot</span> <span class="op">==</span> <span class="fl">0</span></span>
 <span><span class="op">]</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">gene_br_Y_15</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## [1] "G71"  "G169"</span></span></code></pre>
+<pre><code><span><span class="co">## [1] "G51"  "G73"  "G149" "G218" "G400" "G422"</span></span></code></pre>
 <div class="sourceCode" id="cb23"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/plotTrend.html">plotTrend</a></span><span class="op">(</span><span class="va">multi_scmp_ob_A</span>, feature_id <span class="op">=</span> <span class="va">gene_br_Y_15</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, points <span class="op">=</span> <span class="cn">FALSE</span>, lines <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 <p><img src="Common-Root-Cells_files/figure-html/sample-gene-1.png" class="r-plt" alt="Trend of one gene with similar expression in root, link and Y_15" width="768" style="display: block; margin: auto;"></p>
-<p>In the above plot, we can see that the gene G71 has a similar
+<p>In the above plot, we can see that the gene G51 has a similar
 expression in <code>Root</code>, the link segment and <code>Y_15</code>.
 This is a good example of how <code>scMaSigPro</code> can be used to
 identify genes that show similar patterns in the common root cells and
 how different they are in other branches. The main idea is to set the
 root as a reference and then compare the branches to the root.</p>
-<p>Next we can explore the 301 genes that we have in the intersection.
+<p>Next we can explore the 109 genes that we have in the intersection.
 As it is hard to see them all at once, we will first perform clustering
 and then look at them in groups.</p>
 <div class="sourceCode" id="cb24"><pre class="downlit sourceCode r">

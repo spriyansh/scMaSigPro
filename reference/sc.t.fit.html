@@ -85,7 +85,6 @@ from the full polynomial model. This function is succeeded by
 <span>  epsilon <span class="op">=</span> <span class="va">scmpObj</span><span class="op">@</span><span class="va">Parameters</span><span class="op">@</span><span class="va">epsilon</span>,</span>
 <span>  offset <span class="op">=</span> <span class="va">scmpObj</span><span class="op">@</span><span class="va">Parameters</span><span class="op">@</span><span class="va">offset</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  log_offset <span class="op">=</span> <span class="va">scmpObj</span><span class="op">@</span><span class="va">Parameters</span><span class="op">@</span><span class="va">log_offset</span>,</span>
 <span>  max_it <span class="op">=</span> <span class="va">scmpObj</span><span class="op">@</span><span class="va">Parameters</span><span class="op">@</span><span class="va">max_it</span>,</span>
 <span>  link <span class="op">=</span> <span class="va">scmpObj</span><span class="op">@</span><span class="va">Parameters</span><span class="op">@</span><span class="va">link</span>,</span>
 <span>  BPPARAM <span class="op">=</span> <span class="fu">SerialParam</span><span class="op">(</span><span class="op">)</span></span>
@@ -125,17 +124,15 @@ link. When <code><a href="sc.p.vector.html">sc.p.vector()</a></code> estimated o
 
 
 <dt id="arg-offset">offset<a class="anchor" aria-label="anchor" href="#arg-offset"></a></dt>
-<dd><p>A logical value specifying whether to use offset during fitting.
-As in <code><a href="sc.p.vector.html">sc.p.vector()</a></code>, <code>offset = TRUE</code> needs the log link.</p></dd>
+<dd><p>A logical value specifying whether to use offset during
+fitting: the logarithm of the size factor of each bin, which needs the log
+link. The fits use the offsets that <code><a href="sc.p.vector.html">sc.p.vector()</a></code> computed from
+every gene it fitted and stored in the <code>Design</code> slot; when it stored none
+(<code>offset = FALSE</code>), they are computed here in the same way.</p></dd>
 
 
 <dt id="arg-verbose">verbose<a class="anchor" aria-label="anchor" href="#arg-verbose"></a></dt>
 <dd><p>Print detailed output in the console. (Default is TRUE)</p></dd>
-
-
-<dt id="arg-log-offset">log_offset<a class="anchor" aria-label="anchor" href="#arg-log-offset"></a></dt>
-<dd><p>A logical value specifying whether to take the logarithm of
-the offsets.</p></dd>
 
 
 <dt id="arg-max-it">max_it<a class="anchor" aria-label="anchor" href="#arg-max-it"></a></dt>

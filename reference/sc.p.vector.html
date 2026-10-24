@@ -85,7 +85,6 @@ model.</p>
 <span>  epsilon <span class="op">=</span> <span class="fl">1e-08</span>,</span>
 <span>  verbose <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  offset <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  log_offset <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  max_it <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  link <span class="op">=</span> <span class="st">"log"</span>,</span>
 <span>  theta_estimate <span class="op">=</span> <span class="st">"none"</span>,</span>
@@ -151,15 +150,10 @@ own link.</p></dd>
 
 <dt id="arg-offset">offset<a class="anchor" aria-label="anchor" href="#arg-offset"></a></dt>
 <dd><p>logical value specifying whether to use offset during fitting.
-The offset, the size factor of each bin (or its logarithm, see
-<code>log_offset</code>), is added to the linear predictor, where it scales the
-fitted mean under the log link only: with any other link the fits stop
-with an error unless <code>offset = FALSE</code>.</p></dd>
-
-
-<dt id="arg-log-offset">log_offset<a class="anchor" aria-label="anchor" href="#arg-log-offset"></a></dt>
-<dd><p>A logical value specifying whether to take the logarithm of
-the offsets.</p></dd>
+The offset of each bin, the logarithm of its size factor (see Details), is
+added to the linear predictor, where it scales the fitted mean under the
+log link only: with any other link the fits stop with an error unless
+<code>offset = FALSE</code>.</p></dd>
 
 
 <dt id="arg-max-it">max_it<a class="anchor" aria-label="anchor" href="#arg-max-it"></a></dt>
@@ -202,7 +196,23 @@ slot.</p>
     </div>
     <div id="details">
     <h2>Details</h2>
-    <p>Genes are left out of the fit when they have fewer than <code>min_na</code> values,
+    <p>With <code>offset = TRUE</code>, the fits include an offset as Srivastava et al.
+(2024), Section 2.3 and Supplementary Section S1.3, describe it:
+"scMaSigPro incorporates an offset value to the Poly-GLM model to adjust
+for disparities in total read counts per bin. This offset is calculated
+as the logarithm of size factors for each bin". The size factors are those
+of the median-of-ratios method of Love, Huber and Anders (2014), on the
+raw counts: "The size factor for each bin is the median of the ratios of
+its counts to the geometric means for each gene". Only the genes with a
+count above 0 in every bin have a geometric mean above 0 and enter the
+medians. The genes are fitted on their raw counts, without a pseudo-count:
+"scMaSigPro can directly process raw counts". When every gene has a zero
+count in some bin, the size factors cannot be computed and the fit stops
+with an error: fewer and larger bins (see <code><a href="sc.squeeze.html">sc.squeeze()</a></code>) can leave genes
+without a zero count, and <code>offset = FALSE</code> fits without the offset. The
+offsets are stored in the <code>Design</code> slot, where <code><a href="sc.t.fit.html">sc.t.fit()</a></code> finds them;
+with <code>offset = FALSE</code> no offset is stored.</p>
+<p>Genes are left out of the fit when they have fewer than <code>min_na</code> values,
 when all their counts are zero, and when they are below <code>min_counts</code> or
 <code>min_bins_expressed</code>. Genes left out have no p-value and do not count in
 the multiple-testing correction; <code><a href="scmpResults.html">scmpResults()</a></code> gives them <code>NA</code>. The size
@@ -216,6 +226,9 @@ only through the multiple-testing correction.</p>
     <p>Conesa, A., Nueda M.J., Alberto Ferrer, A., Talon, T. 2006.
 maSigPro: a Method to Identify Significant Differential Expression Profiles
 in Time-Course Microarray Experiments. Bioinformatics 22, 1096-1102</p>
+<p>Love, M.I., Huber, W. and Anders, S. (2014). Moderated estimation of fold
+change and dispersion for RNA-seq data with DESeq2. Genome Biology 15, 550.
+<a href="https://doi.org/10.1186/s13059-014-0550-8" class="external-link">doi:10.1186/s13059-014-0550-8</a></p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
