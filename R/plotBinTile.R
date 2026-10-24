@@ -15,6 +15,10 @@
 #' @family plots
 #' @inheritParams scmp-params
 #'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' plotBinTile(scmp.ob)
+#'
 #' @export
 plotBinTile <- function(scmpObj,
                         path_col = scmpObj@Parameters@path_col,

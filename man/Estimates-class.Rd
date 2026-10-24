@@ -37,6 +37,11 @@ branching path.}
 \item{\code{influential}}{A matrix with genes containing influential data.}
 }}
 
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+head(showCoeff(scmp.ob))
+
+}
 \seealso{
 Other classes:
 \code{\link{MatrixDesign}},

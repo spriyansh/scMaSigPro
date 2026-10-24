@@ -31,6 +31,11 @@ This function generates plots to visualize the Dense slot cell metadata
 from a ScMaSigPro object. It produces tile plot to display the bin sizes
 across different binned time intervals and paths.
 }
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+plotBinTile(scmp.ob)
+
+}
 \seealso{
 Other plots:
 \code{\link[=plotDiagnostics]{plotDiagnostics()}},

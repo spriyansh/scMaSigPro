@@ -105,6 +105,11 @@ was asked for: "chisq" (the default), the chi-squared test, or "F", the F
 test.}
 }}
 
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+showParams(scmp.ob)
+
+}
 \seealso{
 Other classes:
 \code{\link{Estimates}},

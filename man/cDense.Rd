@@ -39,6 +39,16 @@ counts: the \code{Dense} slot then holds the metadata without counts, a
 message says so, and \code{\link[=pb_counts]{pb_counts()}} must be run before the next step.
 \code{cDense(object, value)} sets \code{value} as \code{cDense(object) <- value} does.
 }
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+bins <- cDense(scmp.ob)
+head(bins[, c("Path", "scmp_binned_pseudotime", "scmp_bin_size")])
+
+# Add a column to the bin metadata
+bins$early <- bins$scmp_binned_pseudotime <= 4
+cDense(scmp.ob) <- bins
+
+}
 \seealso{
 Other accessors:
 \code{\link[=cSparse]{cSparse()}},

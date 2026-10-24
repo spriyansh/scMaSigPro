@@ -62,6 +62,14 @@ bin. With \code{bin_counts} and \code{bin_cell_data} it holds bins made outside
 scMaSigPro, and the workflow continues with \code{\link[=sc.set.poly]{sc.set.poly()}}; such bins
 have no member cells, so \code{\link[=pb_counts]{pb_counts()}} and \code{\link[=sc.restruct]{sc.restruct()}} do not apply.
 }
+\examples{
+data("splat.sim", package = "scMaSigPro")
+counts <- SummarizedExperiment::assay(splat.sim, "counts")
+cells <- as.data.frame(SummarizedExperiment::colData(splat.sim))
+scmp <- create_scmp(counts, cells, ptime_col = "Step", path_col = "Group")
+scmp
+
+}
 \seealso{
 Other input helpers:
 \code{\link[=as_scmp]{as_scmp()}},

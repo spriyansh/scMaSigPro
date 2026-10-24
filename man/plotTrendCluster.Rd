@@ -71,6 +71,11 @@ A ggplot object with one panel per cluster.
 \description{
 Plot trends of multiple genes (clustered) across the binned pseudotime.
 }
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+plotTrendCluster(scmp.ob, verbose = FALSE)
+
+}
 \seealso{
 Other plots:
 \code{\link[=plotBinTile]{plotBinTile()}},

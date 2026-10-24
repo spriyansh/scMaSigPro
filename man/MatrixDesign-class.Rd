@@ -38,6 +38,11 @@ replicate.}
 fit was made yet.}
 }}
 
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+head(predictors(scmp.ob))
+
+}
 \seealso{
 Other classes:
 \code{\link{Estimates}},

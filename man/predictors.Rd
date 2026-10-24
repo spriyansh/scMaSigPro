@@ -36,6 +36,11 @@ column per term of the full model. \verb{predictors<-} replaces it.
 \code{predictors(object, value)} sets \code{value} as \code{predictors(object) <- value}
 does.
 }
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+head(predictors(scmp.ob))
+
+}
 \seealso{
 Other accessors:
 \code{\link[=cDense]{cDense()}},

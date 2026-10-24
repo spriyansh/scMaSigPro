@@ -49,6 +49,13 @@ Bins are identified by the rownames of the \code{Dense} cell metadata (see
 \code{\link[=cDense]{cDense()}}); these become the column names of \code{bulk.counts}. The \code{bin_col}
 column is used only when the metadata has no rownames.
 }
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+# The mean instead of the sum of the counts of the cells of each bin
+scmp <- pb_counts(scmp.ob, cluster_count_by = "mean")
+eDense(scmp)[1:3, 1:4]
+
+}
 \references{
 Srivastava P, Benegas Coll M, Götz S, Nueda MJ, Conesa A (2024).
 scMaSigPro: differential expression analysis along single-cell

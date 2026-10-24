@@ -75,6 +75,10 @@
 #' settings it used in the `Parameters` slot of a [ScMaSigPro-class] object,
 #' and [showParams()] lists them.
 #'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' showParams(scmp.ob)
+#'
 #' @rdname ParameterConfig-class
 #' @family classes
 #' @importFrom methods is new
@@ -199,6 +203,10 @@ setClass(
 #' [ScMaSigPro-class] object, with the offsets that [sc.p.vector()] adds.
 #' [predictors()] and [pathAssign()] return its matrices.
 #'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' head(predictors(scmp.ob))
+#'
 #' @rdname MatrixDesign-class
 #' @family classes
 #' @importFrom methods is new
@@ -268,6 +276,11 @@ setClass(
 #' @return An object of class `VariableProfiles`: the test of the full model
 #' of each gene, which [sc.p.vector()] stores in the `Profile` slot of a
 #' [ScMaSigPro-class] object. [scmpResults()] returns its p-values.
+#'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' res <- scmpResults(scmp.ob)
+#' head(res[, c("p_value", "adj_p_value", "non_flat")])
 #'
 #' @rdname VariableProfiles-class
 #' @family classes
@@ -340,6 +353,10 @@ setClass("VariableProfiles",
 #' which [sc.t.fit()] stores in the `Estimate` slot of a [ScMaSigPro-class]
 #' object. [showSol()] and the other result readers return its matrices.
 #'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' head(showCoeff(scmp.ob))
+#'
 #' @rdname Estimates-class
 #' @family classes
 #' @importFrom methods is new
@@ -410,6 +427,10 @@ setClass(
 #' [sc.filter()] and the clusters of [sc.cluster.trend()], stored in the
 #' `Significant` slot of a [ScMaSigPro-class] object. [scmpResults()]
 #' returns them per gene.
+#'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' table(scmpResults(scmp.ob)$cluster)
 #'
 #' @rdname Significant-class
 #' @family classes
@@ -511,6 +532,11 @@ setClass(
 #' the test of each gene (`Profile`), [sc.t.fit()] the selected models
 #' (`Estimate`), [sc.filter()] and [sc.cluster.trend()] the gene lists and
 #' clusters (`Significant`), and every step its settings (`Parameters`).
+#'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' scmp.ob
+#' validObject(scmp.ob)
 #'
 #' @rdname ScMaSigPro-class
 #' @family classes

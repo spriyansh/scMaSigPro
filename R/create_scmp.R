@@ -40,6 +40,13 @@
 #' @family input helpers
 #' @inheritParams scmp-params
 #'
+#' @examples
+#' data("splat.sim", package = "scMaSigPro")
+#' counts <- SummarizedExperiment::assay(splat.sim, "counts")
+#' cells <- as.data.frame(SummarizedExperiment::colData(splat.sim))
+#' scmp <- create_scmp(counts, cells, ptime_col = "Step", path_col = "Group")
+#' scmp
+#'
 #' @export
 
 # Create ScMaSigPro

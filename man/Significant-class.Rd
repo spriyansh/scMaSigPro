@@ -28,6 +28,11 @@ by gene.
 thresholds.}
 }}
 
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+table(scmpResults(scmp.ob)$cluster)
+
+}
 \seealso{
 Other classes:
 \code{\link{Estimates}},

@@ -21,6 +21,13 @@ A patchwork object with four ggplot panels.
 Plots model residuals for the requested gene. Can be used for model
 diagnostics of optimized model or full model.
 }
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+if (requireNamespace("patchwork", quietly = TRUE)) {
+    plotDiagnostics(scmp.ob, "Gene10")
+}
+
+}
 \seealso{
 Other plots:
 \code{\link[=plotBinTile]{plotBinTile()}},

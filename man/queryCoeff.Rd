@@ -42,6 +42,15 @@ thresholds and the query, one column per queried term.
 This function extracts features from an object of class \code{scMaSigPro}
 based on a specified query. The function query the coefficients matrix.
 }
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+# Genes whose coefficients of pseudotime are all positive
+queryCoeff(scmp.ob,
+    query = "pseudotime", change = "increasing", strictly = TRUE,
+    verbose = FALSE
+)
+
+}
 \seealso{
 \code{\link[=showCoeff]{showCoeff()}} for the coefficients of every gene.
 

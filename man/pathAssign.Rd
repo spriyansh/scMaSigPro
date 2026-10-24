@@ -36,6 +36,11 @@ path. \verb{pathAssign<-} replaces it.
 \code{pathAssign(object, value)} sets \code{value} as \code{pathAssign(object) <- value}
 does.
 }
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+head(pathAssign(scmp.ob))
+
+}
 \seealso{
 Other accessors:
 \code{\link[=cDense]{cDense()}},

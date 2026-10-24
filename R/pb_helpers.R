@@ -566,6 +566,12 @@ optimize_bin_max <- function(bin_table, max_allowed, verbose = TRUE,
 #' trajectories. Bioinformatics 40(7), btae443.
 #' \doi{10.1093/bioinformatics/btae443}
 #'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' # The mean instead of the sum of the counts of the cells of each bin
+#' scmp <- pb_counts(scmp.ob, cluster_count_by = "mean")
+#' eDense(scmp)[1:3, 1:4]
+#'
 #' @export
 
 pb_counts <- function(scmpObj,

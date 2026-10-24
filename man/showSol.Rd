@@ -52,6 +52,13 @@ flag the bin (DFFITS and Cook's distance, see
 \item \code{showSigProf()}: the pseudo-bulk counts of the genes of \code{showSol()}.
 }
 }
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+head(showSol(scmp.ob))
+head(showGroupCoeff(scmp.ob))
+colnames(showInflu(scmp.ob))
+
+}
 \seealso{
 Other results:
 \code{\link[=queryCoeff]{queryCoeff()}},

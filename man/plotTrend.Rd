@@ -63,6 +63,11 @@ A ggplot object.
 \description{
 Plot trend of the single gene across the binned pseudotime.
 }
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+plotTrend(scmp.ob, "Gene10")
+
+}
 \seealso{
 Other plots:
 \code{\link[=plotBinTile]{plotBinTile()}},

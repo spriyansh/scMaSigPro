@@ -36,6 +36,10 @@
 #' @family plots
 #' @inheritParams scmp-params
 #'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' plotTrendCluster(scmp.ob, verbose = FALSE)
+#'
 #' @export
 plotTrendCluster <- function(scmpObj,
                              xlab = "Pooled Pseudotime",

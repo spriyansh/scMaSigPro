@@ -107,6 +107,12 @@ showTS <- function(scmpObj, includeInflu = TRUE) {
 #'
 #' @inheritParams scmp-params
 #'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' head(showSol(scmp.ob))
+#' head(showGroupCoeff(scmp.ob))
+#' colnames(showInflu(scmp.ob))
+#'
 #' @export
 showSol <- function(scmpObj, includeInflu = TRUE) {
     # Check Object Validity
@@ -206,6 +212,11 @@ showPoly <- function(scmpObj) {
 #' @importFrom methods slot slotNames
 #'
 #' @inheritParams scmp-params
+#'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' head(showParams(scmp.ob))
+#' showPoly(scmp.ob)
 #'
 #' @export
 showParams <- function(scmpObj) {

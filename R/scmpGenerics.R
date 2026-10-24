@@ -21,6 +21,15 @@
 #'
 #' @importFrom SummarizedExperiment assay assay<- assayNames colData<-
 #'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' cells <- cSparse(scmp.ob)
+#' head(cells[, c("Pseudotime", "Path")])
+#'
+#' # Add a column to the cell metadata
+#' cells$early <- cells$Pseudotime < 50
+#' cSparse(scmp.ob) <- cells
+#'
 #' @export
 setGeneric("cSparse", function(object, value = "missing") standardGeneric("cSparse"))
 
@@ -72,6 +81,15 @@ setReplaceMethod("cSparse", "ScMaSigPro", function(object, value) {
 #'
 #' @family accessors
 #'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' bins <- cDense(scmp.ob)
+#' head(bins[, c("Path", "scmp_binned_pseudotime", "scmp_bin_size")])
+#'
+#' # Add a column to the bin metadata
+#' bins$early <- bins$scmp_binned_pseudotime <= 4
+#' cDense(scmp.ob) <- bins
+#'
 #' @export
 setGeneric("cDense", function(object, value = "missing") standardGeneric("cDense"))
 
@@ -120,6 +138,14 @@ setReplaceMethod("cDense", "ScMaSigPro", function(object, value) {
 #' @return `eSparse()`: a numeric matrix. `eSparse<-`: the updated object.
 #'
 #' @family accessors
+#'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' counts <- eSparse(scmp.ob)
+#' counts[1:3, 1:4]
+#'
+#' # Add a second assay
+#' eSparse(scmp.ob, "logcounts") <- log1p(counts)
 #'
 #' @export
 setGeneric("eSparse", function(object, i = "counts", ...) standardGeneric("eSparse"))
@@ -197,6 +223,14 @@ setMethod(
 #'
 #' @family accessors
 #'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' bulk <- eDense(scmp.ob)
+#' bulk[1:3, 1:4]
+#'
+#' # Add a second assay
+#' eDense(scmp.ob, "logcounts") <- log1p(bulk)
+#'
 #' @export
 setGeneric("eDense", function(object, i = "bulk.counts", ...) standardGeneric("eDense"))
 
@@ -272,6 +306,10 @@ setMethod(
 #'
 #' @family accessors
 #'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' head(pathAssign(scmp.ob))
+#'
 #' @export
 setGeneric("pathAssign", function(object, value = "missing") standardGeneric("pathAssign"))
 
@@ -319,6 +357,10 @@ setReplaceMethod("pathAssign", "ScMaSigPro", function(object, value) {
 #' latter.
 #'
 #' @family accessors
+#'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' head(predictors(scmp.ob))
 #'
 #' @export
 setGeneric("predictors", function(object, value = "missing") standardGeneric("predictors"))

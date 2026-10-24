@@ -30,6 +30,14 @@
 #' visualization of intersecting sets and their properties. Bioinformatics
 #' 33(18), 2938-2940. \doi{10.1093/bioinformatics/btx364}
 #'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' # The genes of each list as 0/1 columns
+#' head(plotIntersect(scmp.ob, return = TRUE))
+#' if (requireNamespace("UpSetR", quietly = TRUE)) {
+#'     plotIntersect(scmp.ob)
+#' }
+#'
 #' @export
 plotIntersect <- function(scmpObj,
                           min_intersection_size = 1,

@@ -19,6 +19,12 @@
 #' @family plots
 #' @inheritParams scmp-params
 #'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' if (requireNamespace("patchwork", quietly = TRUE)) {
+#'     plotDiagnostics(scmp.ob, "Gene10")
+#' }
+#'
 #' @export
 plotDiagnostics <- function(scmpObj,
                             feature_id,

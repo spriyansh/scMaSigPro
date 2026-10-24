@@ -39,6 +39,15 @@ Generate UpSet Plot on Intersection of Significant Genes from scMaSigPro
 object. It is a wrapper \code{UpSetR::upset}, so drawing the plot needs the
 suggested package 'UpSetR'; \code{return = TRUE} does not.
 }
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+# The genes of each list as 0/1 columns
+head(plotIntersect(scmp.ob, return = TRUE))
+if (requireNamespace("UpSetR", quietly = TRUE)) {
+    plotIntersect(scmp.ob)
+}
+
+}
 \references{
 Conway JR, Lex A, Gehlenborg N (2017). UpSetR: an R package for the
 visualization of intersecting sets and their properties. Bioinformatics

@@ -22,6 +22,12 @@ in a \link[=ScMaSigPro-class]{ScMaSigPro} object (see \link[=ParameterConfig-cla
 \code{showPoly()} writes the full model that \code{\link[=sc.set.poly]{sc.set.poly()}} set up, with one
 coefficient \code{beta1}, \code{beta2}, ... per column of the design matrix.
 }
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+head(showParams(scmp.ob))
+showPoly(scmp.ob)
+
+}
 \seealso{
 Other results:
 \code{\link[=queryCoeff]{queryCoeff()}},

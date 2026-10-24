@@ -42,6 +42,15 @@ object, genes by cells, as a dense matrix; \verb{eSparse<-} sets one.
 \verb{eSparse<-} stores \code{value} as a \code{dgCMatrix}. It gives a message when it
 creates a new assay and a warning when it replaces one.
 }
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+counts <- eSparse(scmp.ob)
+counts[1:3, 1:4]
+
+# Add a second assay
+eSparse(scmp.ob, "logcounts") <- log1p(counts)
+
+}
 \seealso{
 Other accessors:
 \code{\link[=cDense]{cDense()}},

@@ -24,6 +24,14 @@
 #' @family results
 #' @inheritParams scmp-params
 #'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' # Genes whose coefficients of pseudotime are all positive
+#' queryCoeff(scmp.ob,
+#'     query = "pseudotime", change = "increasing", strictly = TRUE,
+#'     verbose = FALSE
+#' )
+#'
 #' @export
 queryCoeff <- function(scmpObj,
                        rsq = 0.7,

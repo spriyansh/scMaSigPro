@@ -76,6 +76,12 @@ them as a \code{DataFrame} with one row per gene, and \code{\link[=scmpToRowData
 them into the \code{rowData()} of a \code{SingleCellExperiment}.
 }
 
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+scmp.ob
+validObject(scmp.ob)
+
+}
 \seealso{
 Other classes:
 \code{\link{Estimates}},

@@ -36,6 +36,16 @@ The cells are the columns of the counts, and \code{\link[=sc.squeeze]{sc.squeeze
 name, so a \code{value} with other cells or another order is an error.
 \code{cSparse(object, value)} sets \code{value} as \code{cSparse(object) <- value} does.
 }
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+cells <- cSparse(scmp.ob)
+head(cells[, c("Pseudotime", "Path")])
+
+# Add a column to the cell metadata
+cells$early <- cells$Pseudotime < 50
+cSparse(scmp.ob) <- cells
+
+}
 \seealso{
 Other accessors:
 \code{\link[=cDense]{cDense()}},

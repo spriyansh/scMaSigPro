@@ -36,6 +36,10 @@
 #' @family plots
 #' @inheritParams scmp-params
 #'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' plotTrend(scmp.ob, "Gene10")
+#'
 #' @export
 plotTrend <- function(scmpObj,
                       feature_id,

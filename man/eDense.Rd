@@ -42,6 +42,15 @@ object, genes by bins, as a dense matrix; \verb{eDense<-} sets one.
 \verb{eDense<-} stores \code{value} as a \code{dgCMatrix}. It gives a message when it
 creates a new assay and a warning when it replaces one.
 }
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+bulk <- eDense(scmp.ob)
+bulk[1:3, 1:4]
+
+# Add a second assay
+eDense(scmp.ob, "logcounts") <- log1p(bulk)
+
+}
 \seealso{
 Other accessors:
 \code{\link[=cDense]{cDense()}},

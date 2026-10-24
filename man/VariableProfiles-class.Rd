@@ -32,6 +32,12 @@ p-values for non-flat profiles.}
 \item{\code{fdr}}{False Discovery Rate (FDR) value for the given significance level.}
 }}
 
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+res <- scmpResults(scmp.ob)
+head(res[, c("p_value", "adj_p_value", "non_flat")])
+
+}
 \seealso{
 Other classes:
 \code{\link{Estimates}},
