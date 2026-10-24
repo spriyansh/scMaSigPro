@@ -61,9 +61,10 @@ test_that("theta_estimate = 'gene' fits every gene with its own theta", {
     p <- .pvector_gene(
         which(rownames(k) == g), k, dis,
         MASS::negative.binomial(fam$theta_gene[[g]]), 1e-8,
-        .size_factors(k), 100
+        log(.size_factors(k)), 100
     )
-    expect_equal(ob@Profile@p_values[[g]], p)
+    # On the log scale: the p-value is far below the tolerance
+    expect_equal(log(ob@Profile@p_values[[g]]), log(p))
     # sc.t.fit() and plotDiagnostics() use the same theta
     tf <- sc.t.fit(ob, verbose = FALSE)
     expect_identical(tf@Parameters@distribution$theta_gene, fam$theta_gene)

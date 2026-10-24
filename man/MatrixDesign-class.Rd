@@ -26,7 +26,8 @@ term of the polynomial GLM.}
 Additionally has two columns for assignment of binned Pseudotime and
 replicate.}
 
-\item{\code{offset}}{A numeric vector containing the offset values.}
+\item{\code{offset}}{The offset of each bin, the logarithm of its size factor (see
+\code{\link[=sc.p.vector]{sc.p.vector()}}).}
 }}
 
 \keyword{classes}

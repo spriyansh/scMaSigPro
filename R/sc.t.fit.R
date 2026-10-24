@@ -21,10 +21,9 @@
 #' \code{sc.p.vector()} used; when given, it must be the link of
 #' \code{family}. Choose the link in \code{sc.p.vector()}.
 #' @param epsilon Model convergence tolerance.
-#' @param offset A logical value specifying whether to use offset during fitting.
-#' As in \code{sc.p.vector()}, \code{offset = TRUE} needs the log link.
-#' @param log_offset A logical value specifying whether to take the logarithm of
-#' the offsets.
+#' @param offset A logical value specifying whether to use offset during
+#' fitting: the logarithm of the size factor of each bin, as in
+#' \code{sc.p.vector()}, which needs the log link.
 #' @param max_it Maximum number of iterations to fit the model.
 #' @param verbose Print detailed output in the console. (Default is TRUE)
 #' @param BPPARAM A \code{BiocParallelParam} object that runs the per-gene
@@ -58,7 +57,6 @@ sc.t.fit <- function(scmpObj,
                      epsilon = scmpObj@Parameters@epsilon,
                      offset = scmpObj@Parameters@offset,
                      verbose = TRUE,
-                     log_offset = scmpObj@Parameters@log_offset,
                      max_it = scmpObj@Parameters@max_it,
                      link = scmpObj@Parameters@link,
                      BPPARAM = SerialParam()) {
@@ -122,13 +120,11 @@ sc.t.fit <- function(scmpObj,
         p_value <- p_value / ncol(dis)
     }
 
-    # Calculate  offset
+    # The offset of each bin: the logarithm of its size factor, computed as
+    # sc.p.vector() computes it
     if (offset) {
         dat <- dat + 1
-        offsetData <- .size_factors(dat)
-        if (log_offset) {
-            offsetData <- log(offsetData)
-        }
+        offsetData <- log(.size_factors(dat))
         scmpObj@Design@offset <- offsetData
     } else {
         offsetData <- NULL
@@ -300,7 +296,6 @@ sc.t.fit <- function(scmpObj,
 
     # Update Parameter Slot
     scmpObj@Parameters@p_value <- p_value
-    scmpObj@Parameters@log_offset <- log_offset
     scmpObj@Parameters@max_it <- as.integer(max_it)
     scmpObj@Parameters@offset <- offset
     scmpObj@Parameters@epsilon <- epsilon

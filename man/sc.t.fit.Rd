@@ -13,7 +13,6 @@ sc.t.fit(
   epsilon = scmpObj@Parameters@epsilon,
   offset = scmpObj@Parameters@offset,
   verbose = TRUE,
-  log_offset = scmpObj@Parameters@log_offset,
   max_it = scmpObj@Parameters@max_it,
   link = scmpObj@Parameters@link,
   BPPARAM = SerialParam()
@@ -36,13 +35,11 @@ link. When \code{sc.p.vector()} estimated one theta per gene
 
 \item{epsilon}{Model convergence tolerance.}
 
-\item{offset}{A logical value specifying whether to use offset during fitting.
-As in \code{sc.p.vector()}, \code{offset = TRUE} needs the log link.}
+\item{offset}{A logical value specifying whether to use offset during
+fitting: the logarithm of the size factor of each bin, as in
+\code{sc.p.vector()}, which needs the log link.}
 
 \item{verbose}{Print detailed output in the console. (Default is TRUE)}
-
-\item{log_offset}{A logical value specifying whether to take the logarithm of
-the offsets.}
 
 \item{max_it}{Maximum number of iterations to fit the model.}
 

@@ -27,7 +27,7 @@ test_that("sc.filter(vars = 'each') gives one list per term (ledger F1)", {
     # Control: terms that select different numbers of genes
     some <- sc.filter(ob, vars = "each")@Significant@genes
     expect_identical(
-        lengths(some), setNames(c(32L, 10L, 16L, 24L, 8L, 14L), terms)
+        lengths(some), setNames(c(38L, 9L, 19L, 28L, 10L, 12L), terms)
     )
 })
 
@@ -241,9 +241,9 @@ test_that("sc.restruct() splits on a fixed link_sep (ledger B5)", {
 
 test_that("sc.t.fit() keeps the coefficients of the genes of sol (ledger T2)", {
     # At this level one gene keeps no significant coefficient
-    tf <- sc.t.fit(splat_fitted("default"), p_value = 1e-10, verbose = FALSE)
+    tf <- sc.t.fit(splat_fitted("default"), p_value = 1e-14, verbose = FALSE)
     genes <- rownames(showSol(tf))
-    expect_length(genes, 48L)
+    expect_length(genes, 51L)
     expect_identical(rownames(showCoeff(tf)), genes)
     expect_identical(rownames(showTS(tf)), genes)
     expect_identical(rownames(showGroupCoeff(tf)), genes)
@@ -839,4 +839,53 @@ test_that("split_bins and prune_bins set their limits from the first bins", {
         toy_bins(p, prune_bins = TRUE)$members,
         list(0.7, c(2.2, 2.3, 2.9, 3.1), c(3.4, 3.6), c(6.7, 7))
     )
+})
+
+test_that("the offset is the logarithm of the size factors of the bins", {
+    # Srivastava et al. (2024), Section 2.3: the offset "is calculated as the
+    # logarithm of size factors for each bin". The size factors are the
+    # medians over the genes of the ratios of the counts + 1 of a bin to
+    # their geometric means. On splat.sim they range from 0.59 to 1.68, so
+    # the size factor itself, the offset before, was no normalisation
+    design <- splat_design(2)
+    fitted <- sc.p.vector(design, verbose = FALSE)
+    counts <- eDense(design)[, rownames(predictors(design))]
+    log_k <- log(counts + 1)
+    log_sf <- apply(log_k - rowMeans(log_k), 2, stats::median)
+    expect_equal(fitted@Design@offset, log_sf, tolerance = 1e-12)
+    expect_identical(fitted@Design@offset, log(.size_factors(counts + 1)))
+    expect_equal(
+        unname(round(exp(fitted@Design@offset[c(3, 9)]), 4)),
+        c(0.5911, 1.6795)
+    )
+    # The fit of a gene is the glm() of its counts + 1 with that offset
+    # (the non-flat gene with the largest p-value: expect_equal() compares
+    # p-values below its tolerance as absolute differences)
+    p_non_flat <- fitted@Profile@p_values[fitted@Profile@non_flat]
+    gene <- names(which.max(p_non_flat))
+    y <- counts[gene, ] + 1
+    nb <- MASS::negative.binomial(10)
+    full <- glm(y ~ .,
+        data = .fit_frame(predictors(design)), family = nb,
+        offset = log_sf, epsilon = 1e-8, maxit = 100
+    )
+    null <- glm(y ~ 1,
+        family = nb, offset = log_sf, epsilon = 1e-8, maxit = 100
+    )
+    expect_equal(
+        fitted@Profile@p_values[[gene]],
+        anova(null, full, test = "Chisq")[2, 5],
+        tolerance = 1e-8
+    )
+    # log_offset, which chose between the size factor and its logarithm, is
+    # no longer an argument
+    expect_error(sc.p.vector(design, log_offset = TRUE, verbose = FALSE),
+        "unused argument (log_offset = TRUE)",
+        fixed = TRUE
+    )
+    expect_error(sc.t.fit(fitted, log_offset = TRUE, verbose = FALSE),
+        "unused argument (log_offset = TRUE)",
+        fixed = TRUE
+    )
+    expect_false(methods::.hasSlot(fitted@Parameters, "log_offset"))
 })

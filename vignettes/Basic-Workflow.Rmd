@@ -262,8 +262,7 @@ We can execute `sc.p.vector()` as follows:
 ```{r, "Detecting Genes with Non-Flat Profiles", eval=TRUE, echo=TRUE}
 # Detect non-flat profiles
 scmp_ob <- sc.p.vector(scmp_ob,
-    offset = TRUE, p_value = 0.05, verbose = FALSE,
-    log_offset = TRUE
+    offset = TRUE, p_value = 0.05, verbose = FALSE
 )
 scmp_ob
 ```

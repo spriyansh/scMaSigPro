@@ -15,7 +15,6 @@ sc.p.vector(
   epsilon = 1e-08,
   verbose = TRUE,
   offset = TRUE,
-  log_offset = FALSE,
   max_it = 100,
   link = "log",
   theta_estimate = "none",
@@ -58,13 +57,10 @@ own link.}
 \item{verbose}{Print detailed output in the console. (Default is TRUE)}
 
 \item{offset}{logical value specifying whether to use offset during fitting.
-The offset, the size factor of each bin (or its logarithm, see
-\code{log_offset}), is added to the linear predictor, where it scales the
-fitted mean under the log link only: with any other link the fits stop
-with an error unless \code{offset = FALSE}.}
-
-\item{log_offset}{A logical value specifying whether to take the logarithm of
-the offsets.}
+The offset of each bin, the logarithm of its size factor (see Details), is
+added to the linear predictor, where it scales the fitted mean under the
+log link only: with any other link the fits stop with an error unless
+\code{offset = FALSE}.}
 
 \item{max_it}{Maximum number of iterations to fit the model.}
 
@@ -100,6 +96,14 @@ Performs a regression fit for each gene taking all variables present in the
 model.
 }
 \details{
+With \code{offset = TRUE}, the fits include an offset as Srivastava et al.
+(2024), Section 2.3, describes it: "scMaSigPro incorporates an offset
+value to the Poly-GLM model to adjust for disparities in total read counts
+per bin. This offset is calculated as the logarithm of size factors for
+each bin". The size factors are estimated by the median-of-ratios method
+on the counts plus 1, and the genes are fitted on their counts plus 1.
+The offsets are stored in the \code{Design} slot.
+
 Genes are left out of the fit when they have fewer than \code{min_na} values,
 when all their counts are zero, and when they are below \code{min_counts} or
 \code{min_bins_expressed}. Genes left out have no p-value and do not count in

@@ -45,12 +45,10 @@
 #' `theta_gene` holds one per gene and `theta_estimate` the choice.
 #' @param epsilon Model convergence tolerance.
 #' @param offset logical value specifying whether to use offset during fitting.
-#' The offset, the size factor of each bin (or its logarithm, see
-#' \code{log_offset}), is added to the linear predictor, where it scales the
-#' fitted mean under the log link only: with any other link the fits stop
-#' with an error unless \code{offset = FALSE}.
-#' @param log_offset A logical value specifying whether to take the logarithm of
-#' the offsets.
+#' The offset of each bin, the logarithm of its size factor (see Details), is
+#' added to the linear predictor, where it scales the fitted mean under the
+#' log link only: with any other link the fits stop with an error unless
+#' \code{offset = FALSE}.
 #' @param max_it Maximum number of iterations to fit the model.
 #' @param verbose Print detailed output in the console. (Default is TRUE)
 #' @param BPPARAM A \code{BiocParallelParam} object that runs the per-gene
@@ -63,6 +61,14 @@
 #' bar. The results do not depend on the backend.
 #'
 #' @details
+#' With `offset = TRUE`, the fits include an offset as Srivastava et al.
+#' (2024), Section 2.3, describes it: "scMaSigPro incorporates an offset
+#' value to the Poly-GLM model to adjust for disparities in total read counts
+#' per bin. This offset is calculated as the logarithm of size factors for
+#' each bin". The size factors are estimated by the median-of-ratios method
+#' on the counts plus 1, and the genes are fitted on their counts plus 1.
+#' The offsets are stored in the `Design` slot.
+#'
 #' Genes are left out of the fit when they have fewer than `min_na` values,
 #' when all their counts are zero, and when they are below `min_counts` or
 #' `min_bins_expressed`. Genes left out have no p-value and do not count in
@@ -94,7 +100,6 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
                         epsilon = 1e-8,
                         verbose = TRUE,
                         offset = TRUE,
-                        log_offset = FALSE,
                         max_it = 100,
                         link = "log",
                         theta_estimate = "none",
@@ -184,13 +189,11 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
         keep <- keep & rowSums(dat > 0, na.rm = TRUE) >= min_bins_expressed
     }
 
-    # Calculate  offset
+    # The offset of each bin: the logarithm of its size factor (Srivastava
+    # et al. (2024), Section 2.3), here of the counts + 1 that are fitted
     if (offset) {
         dat <- dat + 1
-        offsetData <- .size_factors(dat)
-        if (log_offset) {
-            offsetData <- log(offsetData)
-        }
+        offsetData <- log(.size_factors(dat))
         scmpObj@Design@offset <- offsetData
     } else {
         offsetData <- NULL
@@ -297,7 +300,6 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
     scmpObj@Profile <- profile.obj
 
     # Update Parameter Slot
-    scmpObj@Parameters@log_offset <- log_offset
     scmpObj@Parameters@max_it <- as.integer(max_it)
     scmpObj@Parameters@offset <- offset
     scmpObj@Parameters@p_value <- p_value

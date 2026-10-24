@@ -232,13 +232,6 @@ test_that("arguments that would be stored as invalid parameters are errors", {
         "slot 'Parameters': 'p_value' must be a single non-missing value",
         fixed = TRUE
     )
-    expect_error(
-        sc.p.vector(splat_design(2),
-            offset = FALSE, log_offset = NA, verbose = FALSE
-        ),
-        "slot 'Parameters': 'log_offset' must be a single non-missing value",
-        fixed = TRUE
-    )
 })
 
 test_that("bins without counts pass the check of sc.set.poly()", {
