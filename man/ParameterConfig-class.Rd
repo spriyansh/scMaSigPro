@@ -5,6 +5,12 @@
 \alias{ParameterConfig}
 \alias{ParameterConfig-class}
 \title{ParameterConfig}
+\value{
+An object of class \code{ParameterConfig}: the settings of an
+analysis, one value per slot. Every step of the workflow records the
+settings it used in the \code{Parameters} slot of a \link[=ScMaSigPro-class]{ScMaSigPro} object,
+and \code{\link[=showParams]{showParams()}} lists them.
+}
 \description{
 S4 Class to hold parameters used in the analysis. It is constantly updated
 as the analysis progresses.

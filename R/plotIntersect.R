@@ -17,7 +17,8 @@
 #' @param return If set to true, it will return dataframe from the UpSetR::fromList().
 #' (Default is TRUE)
 #'
-#' @return upset object for 'UpSetR'.
+#' @return An `upset` object of UpSetR or, with `return = TRUE`, a data frame
+#' with one row per gene and a 0/1 column per gene list.
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
 #'

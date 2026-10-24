@@ -70,6 +70,11 @@
 #'
 #' @name ParameterConfig
 #' @aliases ParameterConfig-class
+#' @return An object of class `ParameterConfig`: the settings of an
+#' analysis, one value per slot. Every step of the workflow records the
+#' settings it used in the `Parameters` slot of a [ScMaSigPro-class] object,
+#' and [showParams()] lists them.
+#'
 #' @rdname ParameterConfig-class
 #' @family classes
 #' @importFrom methods is new
@@ -189,6 +194,11 @@ setClass(
 #'
 #' @name MatrixDesign
 #' @aliases MatrixDesign-class
+#' @return An object of class `MatrixDesign`: the design of the polynomial
+#' model, which [sc.set.poly()] stores in the `Design` slot of a
+#' [ScMaSigPro-class] object, with the offsets that [sc.p.vector()] adds.
+#' [predictors()] and [pathAssign()] return its matrices.
+#'
 #' @rdname MatrixDesign-class
 #' @family classes
 #' @importFrom methods is new
@@ -255,6 +265,10 @@ setClass(
 #'
 #' @name VariableProfiles
 #' @aliases VariableProfiles-class
+#' @return An object of class `VariableProfiles`: the test of the full model
+#' of each gene, which [sc.p.vector()] stores in the `Profile` slot of a
+#' [ScMaSigPro-class] object. [scmpResults()] returns its p-values.
+#'
 #' @rdname VariableProfiles-class
 #' @family classes
 #' @keywords classes
@@ -322,6 +336,10 @@ setClass("VariableProfiles",
 #'
 #' @name Estimates
 #' @aliases Estimates-class
+#' @return An object of class `Estimates`: the selected model of each gene,
+#' which [sc.t.fit()] stores in the `Estimate` slot of a [ScMaSigPro-class]
+#' object. [showSol()] and the other result readers return its matrices.
+#'
 #' @rdname Estimates-class
 #' @family classes
 #' @importFrom methods is new
@@ -388,6 +406,11 @@ setClass(
 #'
 #' @name Significant
 #' @aliases Significant-class
+#' @return An object of class `Significant`: the gene lists of
+#' [sc.filter()] and the clusters of [sc.cluster.trend()], stored in the
+#' `Significant` slot of a [ScMaSigPro-class] object. [scmpResults()]
+#' returns them per gene.
+#'
 #' @rdname Significant-class
 #' @family classes
 #' @importFrom methods is new as
@@ -482,6 +505,13 @@ setClass(
 #'
 #' @name ScMaSigPro
 #' @aliases ScMaSigPro-class
+#' @return An object of class `ScMaSigPro`. [as_scmp()] and [create_scmp()]
+#' make one with the cells in the `Sparse` slot; [sc.squeeze()] adds the
+#' bins (`Dense`), [sc.set.poly()] the design (`Design`), [sc.p.vector()]
+#' the test of each gene (`Profile`), [sc.t.fit()] the selected models
+#' (`Estimate`), [sc.filter()] and [sc.cluster.trend()] the gene lists and
+#' clusters (`Significant`), and every step its settings (`Parameters`).
+#'
 #' @rdname ScMaSigPro-class
 #' @family classes
 #' @exportClass ScMaSigPro

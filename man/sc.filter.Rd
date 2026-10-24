@@ -33,8 +33,8 @@ default), "each" or "groups". See details.}
 observations (see \code{\link[=showInflu]{showInflu()}}).}
 }
 \value{
-An object of class \code{\link{ScMaSigPro}}, with updated \code{Significant}
-slot.
+The object with the gene lists in the \code{Significant} slot
+(\link[=Significant-class]{Significant}); earlier clusters are removed.
 }
 \description{
 \code{sc.filter()} creates lists of significant genes based on user-specified

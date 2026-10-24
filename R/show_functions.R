@@ -289,6 +289,8 @@ showGroupCoeff <- function(scmpObj, includeInflu = TRUE) {
 #' @keywords internal
 #'
 #' @seealso [ScMaSigPro-class]
+#'
+#' @return `NULL`, invisibly; called for what it prints.
 .ScMaSigPro_show <- function(object) {
     # Show Basic information
     cat("Class: ScMaSigProClass\n")
@@ -394,6 +396,9 @@ showGroupCoeff <- function(scmpObj, includeInflu = TRUE) {
 #' @keywords internal
 #'
 #' @seealso [ScMaSigPro-class], whose `show()` method prints it.
+#'
+#' @return One value per path: the mean bin size (`"avg_bin_size"`) or the
+#' number of bins (`"num_bins"`, a table).
 extract_info <- function(data, return_type = "avg_bin_size",
                          bin_size_col, path_col) {
     if (return_type == "avg_bin_size") {

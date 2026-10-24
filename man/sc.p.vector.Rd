@@ -102,8 +102,9 @@ it with \code{progressbar = TRUE} for a progress bar. The results do not
 depend on the backend.}
 }
 \value{
-An object of class \code{\link{ScMaSigPro}}, with updated \code{Profile}
-slot.
+The object with the p-values and the genes with a non-flat
+profile in the \code{Profile} slot (\link[=VariableProfiles-class]{VariableProfiles}), the offsets in
+the \code{Design} slot and the settings of the fit in the \code{Parameters} slot.
 }
 \description{
 Performs a regression fit for each gene taking all variables present in the

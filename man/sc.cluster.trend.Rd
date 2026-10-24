@@ -55,8 +55,8 @@ Mclust algorithm. (Default is FALSE)}
 filling the NAs with \code{fill_na}.}
 }
 \value{
-An object of class \code{\link{ScMaSigPro}}, with updated
-\code{Significant} slot with clusters.
+The object with the cluster of each gene in the \code{Significant}
+slot (\link[=Significant-class]{Significant}).
 }
 \description{
 This function clusters the counts or coefficients to visualize the collective

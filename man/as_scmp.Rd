@@ -40,7 +40,7 @@ holds the path label of each cell or bin.}
 \code{exist_path_col} are renamed to \code{ptime_col} and \code{path_col}. See examples.}
 }
 \value{
-An object of class \code{\link{ScMaSigPro}}.
+A \link[=ScMaSigPro-class]{ScMaSigPro} object with the cells in the \code{Sparse} slot.
 }
 \description{
 \code{as_scmp()} converts a \code{SingleCellExperiment} object, whose cell metadata

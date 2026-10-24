@@ -27,8 +27,9 @@
 #' (\code{offset = FALSE}), they are computed here in the same way.
 #' @param max_it Maximum number of iterations to fit the model.
 #'
-#' @return An object of class \code{\link{ScMaSigPro}}, with updated `Estimate`
-#' slot.
+#' @return The object with the selected model of each gene with a non-flat
+#' profile in the `Estimate` slot ([Estimates-class]), read by [showSol()]
+#' and the other result readers.
 #'
 #' @seealso [showSol()] and the other readers of the results;
 #' [Estimates-class].

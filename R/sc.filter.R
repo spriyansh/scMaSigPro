@@ -32,8 +32,8 @@
 #'    selecting significant genes.
 #' }
 #'
-#' @return An object of class \code{\link{ScMaSigPro}}, with updated `Significant`
-#' slot.
+#' @return The object with the gene lists in the `Significant` slot
+#' ([Significant-class]); earlier clusters are removed.
 #'
 #' @seealso [plotIntersect()] for the overlaps of the lists;
 #' [Significant-class].

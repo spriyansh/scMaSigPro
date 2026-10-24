@@ -24,7 +24,7 @@ the number of cells of each bin.}
 the binned pseudotime of each bin.}
 }
 \value{
-ggplot2 plot object.
+A ggplot object.
 }
 \description{
 This function generates plots to visualize the Dense slot cell metadata

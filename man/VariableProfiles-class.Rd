@@ -5,6 +5,11 @@
 \alias{VariableProfiles}
 \alias{VariableProfiles-class}
 \title{VariableProfiles}
+\value{
+An object of class \code{VariableProfiles}: the test of the full model
+of each gene, which \code{\link[=sc.p.vector]{sc.p.vector()}} stores in the \code{Profile} slot of a
+\link[=ScMaSigPro-class]{ScMaSigPro} object. \code{\link[=scmpResults]{scmpResults()}} returns its p-values.
+}
 \description{
 S4 class to store results of the global model fitting for all the features.
 }

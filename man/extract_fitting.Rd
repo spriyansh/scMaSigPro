@@ -38,6 +38,14 @@ the order of the returned coefficients, p-values and t-scores.}
 \item{influ.info}{Matrix of influential observations collected so far;
 a column for this gene is appended when it has influential observations.}
 }
+\value{
+A list: the p-value (\code{p_value}) and R-squared (\code{bondad}) of the
+selected model; the p-values (\code{p_valor}), coefficients (\code{coeff}) and t
+statistics (\code{t}) of every term; the counts of the gene (\code{sig_profiles});
+its row of the results (\code{sol}, \code{NULL} when no coefficient is
+significant); the updated \code{influ.info}; and the gene name
+(\code{feature_name}).
+}
 \description{
 Extract Fitting
 }

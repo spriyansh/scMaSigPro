@@ -38,8 +38,8 @@ points is split.}
 \item{drop}{The factor that multiplies that number (\code{drop_fac}).}
 }
 \value{
-A dataframe with adjusted bins. The structure of the dataframe will be the same as \code{bin_table}
-with updated values for the bin size and bounds.
+A data frame with the columns of \code{bin_table}, one row per bin,
+where each split bin is replaced by its parts.
 }
 \description{
 \code{optimize_bin_max()} splits every bin that holds more than \code{max_allowed}

@@ -23,7 +23,9 @@
 #' the path in `path_col`. A `scmp_bin_size` column gives the number of cells
 #' of each bin; without it the sizes are `NA`.
 #'
-#' @return An object of class \code{\link{ScMaSigPro}}, with aligned pseudotime.
+#' @return A [ScMaSigPro-class] object with the cells in the `Sparse` slot
+#' and, with `use_as_bin = TRUE` or `bin_counts`, the bins in the `Dense`
+#' slot.
 #'
 #' @details
 #' The `Dense` slot holds the bins. By default it is empty and

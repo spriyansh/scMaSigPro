@@ -15,6 +15,10 @@ extract_info(data, return_type = "avg_bin_size", bin_size_col, path_col)
 
 \item{path_col}{Column name with the path information.}
 }
+\value{
+One value per path: the mean bin size (\code{"avg_bin_size"}) or the
+number of bins (\code{"num_bins"}, a table).
+}
 \description{
 Extract details for the console cat of \code{.ScMaSigPro_show}.
 }

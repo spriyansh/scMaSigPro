@@ -81,8 +81,9 @@ successive bins and fill the gaps.}
 See examples}
 }
 \value{
-An object of class \code{\link{ScMaSigPro}}, with updated \code{Dense}
-slot.
+The object with the bins and their pseudo-bulk counts
+(\code{bulk.counts}) in the \code{Dense} slot and the binned pseudotime of each cell
+in the cell metadata.
 }
 \description{
 \code{sc.squeeze()} discretizes a continuous time series column into bins

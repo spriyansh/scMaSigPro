@@ -105,8 +105,9 @@
 #' test, accounts for the estimation of the dispersion through the residual
 #' degrees of freedom of the F distribution.
 #'
-#' @return An object of class \code{\link{ScMaSigPro}}, with updated `Profile`
-#' slot.
+#' @return The object with the p-values and the genes with a non-flat
+#' profile in the `Profile` slot ([VariableProfiles-class]), the offsets in
+#' the `Design` slot and the settings of the fit in the `Parameters` slot.
 #'
 #' @seealso [scmpResults()] for the p-values; [VariableProfiles-class].
 #'

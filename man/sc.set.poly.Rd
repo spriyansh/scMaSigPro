@@ -28,8 +28,8 @@ slot, or \code{NULL} (default) for the first path of the \code{Dense} slot. See
 Description.}
 }
 \value{
-An object of class \code{\link{ScMaSigPro}}, with updated \code{Design}
-slot.
+The object with the design in the \code{Design} slot
+(\link[=MatrixDesign-class]{MatrixDesign}).
 }
 \description{
 Set up polynomial models and create Predictor Matrix that will contain the

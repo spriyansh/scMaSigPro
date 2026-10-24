@@ -5,6 +5,11 @@
 \alias{Estimates}
 \alias{Estimates-class}
 \title{Estimates}
+\value{
+An object of class \code{Estimates}: the selected model of each gene,
+which \code{\link[=sc.t.fit]{sc.t.fit()}} stores in the \code{Estimate} slot of a \link[=ScMaSigPro-class]{ScMaSigPro}
+object. \code{\link[=showSol]{showSol()}} and the other result readers return its matrices.
+}
 \description{
 S4 class to store results of the polynomial term selection from full model.
 }

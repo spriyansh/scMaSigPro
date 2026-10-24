@@ -9,6 +9,9 @@
 \arguments{
 \item{object}{An object of class \code{ScMaSigPro}.}
 }
+\value{
+\code{NULL}, invisibly; called for what it prints.
+}
 \description{
 This method displays basic information about the ScMaSigPro object when the
 object is printed in the console. The method is automatically called when the

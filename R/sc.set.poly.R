@@ -19,8 +19,8 @@
 #' slot, or `NULL` (default) for the first path of the `Dense` slot. See
 #' Description.
 #'
-#' @return An object of class \code{\link{ScMaSigPro}}, with updated `Design`
-#' slot.
+#' @return The object with the design in the `Design` slot
+#' ([MatrixDesign-class]).
 #'
 #' @seealso [showPoly()], [predictors()] and [pathAssign()], which read the
 #' design; [MatrixDesign-class].

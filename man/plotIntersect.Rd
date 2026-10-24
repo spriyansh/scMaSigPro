@@ -31,7 +31,8 @@ width.}
 (Default is TRUE)}
 }
 \value{
-upset object for 'UpSetR'.
+An \code{upset} object of UpSetR or, with \code{return = TRUE}, a data frame
+with one row per gene and a 0/1 column per gene list.
 }
 \description{
 Generate UpSet Plot on Intersection of Significant Genes from scMaSigPro

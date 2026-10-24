@@ -57,8 +57,9 @@ it with \code{progressbar = TRUE} for a progress bar. The results do not
 depend on the backend.}
 }
 \value{
-An object of class \code{\link{ScMaSigPro}}, with updated \code{Estimate}
-slot.
+The object with the selected model of each gene with a non-flat
+profile in the \code{Estimate} slot (\link[=Estimates-class]{Estimates}), read by \code{\link[=showSol]{showSol()}}
+and the other result readers.
 }
 \description{
 Performs stepwise regression and selects the significant polynomial terms

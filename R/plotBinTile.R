@@ -5,7 +5,7 @@
 #' from a ScMaSigPro object. It produces tile plot to display the bin sizes
 #' across different binned time intervals and paths.
 #'
-#' @return ggplot2 plot object.
+#' @return A ggplot object.
 #'
 #' @importFrom ggplot2 .data aes geom_text geom_tile ggplot labs
 #'   scale_fill_gradient theme_minimal xlab ylab

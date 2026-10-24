@@ -45,7 +45,9 @@ holds the path label of each cell or bin.}
 pseudotime binning. Defaults to FALSE.}
 }
 \value{
-An object of class \code{\link{ScMaSigPro}}, with aligned pseudotime.
+A \link[=ScMaSigPro-class]{ScMaSigPro} object with the cells in the \code{Sparse} slot
+and, with \code{use_as_bin = TRUE} or \code{bin_counts}, the bins in the \code{Dense}
+slot.
 }
 \description{
 \code{create_scmp()} initializes a ScMaSigPro object with the given counts,

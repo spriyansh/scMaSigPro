@@ -15,8 +15,8 @@
 #' it, and as a regular expression otherwise, so `"|"` and `"\\|"` both work.
 #' (Default = `"_links_"`)
 #'
-#' @return An object of class \code{\link{ScMaSigPro}}, with updated `Dense`
-#' slot.
+#' @return The object with the bins of every end path, from the root on,
+#' and their pseudo-bulk counts in the `Dense` slot.
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
 #'

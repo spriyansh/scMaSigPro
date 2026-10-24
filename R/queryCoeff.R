@@ -14,7 +14,8 @@
 #' have similar change.
 #' @param verbose Print detailed output in the console. (Default is TRUE)
 #'
-#' @return A subset of matrix of coefficients.
+#' @return A data frame of coefficients: one row per gene that passes the
+#' thresholds and the query, one column per queried term.
 #'
 #' @seealso [showCoeff()] for the coefficients of every gene.
 #'

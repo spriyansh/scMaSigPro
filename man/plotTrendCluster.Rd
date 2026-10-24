@@ -66,7 +66,7 @@ higher values will result in more linear trends. (Default is 0.01)}
 when plotting curves. (Default is 0.75)}
 }
 \value{
-ggplot2 plot object.
+A ggplot object with one panel per cluster.
 }
 \description{
 Plot trends of multiple genes (clustered) across the binned pseudotime.

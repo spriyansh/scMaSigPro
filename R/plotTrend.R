@@ -29,7 +29,7 @@
 #' @param lines Whether to plot the lines. (Default is FALSE)
 #' @param points Whether to plot the points. (Default is TRUE)
 #'
-#' @return ggplot2 plot object.
+#' @return A ggplot object.
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
 #'

@@ -35,7 +35,8 @@ have similar change.}
 \item{verbose}{Print detailed output in the console. (Default is TRUE)}
 }
 \value{
-A subset of matrix of coefficients.
+A data frame of coefficients: one row per gene that passes the
+thresholds and the query, one column per queried term.
 }
 \description{
 This function extracts features from an object of class \code{scMaSigPro}

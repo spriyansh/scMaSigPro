@@ -29,9 +29,8 @@ aggregate counts within each cluster. Available options are 'mean' or 'sum'.
 (Default = "sum").}
 }
 \value{
-An object of class \code{\link{ScMaSigPro}} whose \code{Dense} slot is rebuilt
-as a valid \code{SingleCellExperiment}: the \code{bulk.counts} assay (genes x bins)
-and the bin-level metadata.
+The object whose \code{Dense} slot holds the pseudo-bulk counts
+(\code{bulk.counts}, genes by bins) and the bin metadata.
 }
 \description{
 \code{pb_counts()} creates a dataframe of pseudo bulk counts from single

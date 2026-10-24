@@ -23,7 +23,7 @@
 #' `labels_exist = TRUE`, the existing `colData` columns `exist_ptime_col` and
 #' `exist_path_col` are renamed to `ptime_col` and `path_col`. See examples.
 #'
-#' @return An object of class \code{\link{ScMaSigPro}}.
+#' @return A [ScMaSigPro-class] object with the cells in the `Sparse` slot.
 #'
 #' @examples
 #' # Load Library

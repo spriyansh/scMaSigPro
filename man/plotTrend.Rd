@@ -58,7 +58,7 @@ per binned pseudotime point. Default is 'median'. Other option 'mean'}
 \item{points}{Whether to plot the points. (Default is TRUE)}
 }
 \value{
-ggplot2 plot object.
+A ggplot object.
 }
 \description{
 Plot trend of the single gene across the binned pseudotime.

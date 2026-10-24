@@ -12,8 +12,7 @@
 #' @param model Type of model to be used for plotting. Can be either 'optimized',
 #' 'intercept'and 'full'. Default is 'optimized'.
 #'
-#' @return A patchwork object with four ggplot2 panels. 'patchwork' must be
-#' installed.
+#' @return A patchwork object with four ggplot panels.
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
 #'

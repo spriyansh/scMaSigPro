@@ -5,6 +5,12 @@
 \alias{Significant}
 \alias{Significant-class}
 \title{Significant}
+\value{
+An object of class \code{Significant}: the gene lists of
+\code{\link[=sc.filter]{sc.filter()}} and the clusters of \code{\link[=sc.cluster.trend]{sc.cluster.trend()}}, stored in the
+\code{Significant} slot of a \link[=ScMaSigPro-class]{ScMaSigPro} object. \code{\link[=scmpResults]{scmpResults()}}
+returns them per gene.
+}
 \description{
 S4 class to store significantly selected features and their clusters.
 }

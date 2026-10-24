@@ -5,6 +5,14 @@
 \alias{ScMaSigPro}
 \alias{ScMaSigPro-class}
 \title{ScMaSigPro}
+\value{
+An object of class \code{ScMaSigPro}. \code{\link[=as_scmp]{as_scmp()}} and \code{\link[=create_scmp]{create_scmp()}}
+make one with the cells in the \code{Sparse} slot; \code{\link[=sc.squeeze]{sc.squeeze()}} adds the
+bins (\code{Dense}), \code{\link[=sc.set.poly]{sc.set.poly()}} the design (\code{Design}), \code{\link[=sc.p.vector]{sc.p.vector()}}
+the test of each gene (\code{Profile}), \code{\link[=sc.t.fit]{sc.t.fit()}} the selected models
+(\code{Estimate}), \code{\link[=sc.filter]{sc.filter()}} and \code{\link[=sc.cluster.trend]{sc.cluster.trend()}} the gene lists and
+clusters (\code{Significant}), and every step its settings (\code{Parameters}).
+}
 \description{
 S4 class to store an analysis of the scMaSigPro workflow: the data at the
 level of cells and of pseudotime bins, as two \code{SingleCellExperiment}

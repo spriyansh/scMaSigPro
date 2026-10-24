@@ -68,8 +68,9 @@
 #' the minimum is negative and no bin is removed. The cells of a removed bin
 #' stay in the `Sparse` slot, but no bin of the `Dense` slot holds them.
 #'
-#' @return An object of class \code{\link{ScMaSigPro}}, with updated `Dense`
-#' slot.
+#' @return The object with the bins and their pseudo-bulk counts
+#' (`bulk.counts`) in the `Dense` slot and the binned pseudotime of each cell
+#' in the cell metadata.
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
 #'

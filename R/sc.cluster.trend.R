@@ -25,8 +25,8 @@
 #' filling the NAs with `fill_na`.
 #' @param verbose Print detailed output in the console. (Default is TRUE)
 #'
-#' @return An object of class \code{\link{ScMaSigPro}}, with updated
-#' `Significant` slot with clusters.
+#' @return The object with the cluster of each gene in the `Significant`
+#' slot ([Significant-class]).
 #'
 #' @seealso [plotTrendCluster()], which plots the clusters.
 #'

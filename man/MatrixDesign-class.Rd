@@ -5,6 +5,12 @@
 \alias{MatrixDesign}
 \alias{MatrixDesign-class}
 \title{MatrixDesign}
+\value{
+An object of class \code{MatrixDesign}: the design of the polynomial
+model, which \code{\link[=sc.set.poly]{sc.set.poly()}} stores in the \code{Design} slot of a
+\link[=ScMaSigPro-class]{ScMaSigPro} object, with the offsets that \code{\link[=sc.p.vector]{sc.p.vector()}} adds.
+\code{\link[=predictors]{predictors()}} and \code{\link[=pathAssign]{pathAssign()}} return its matrices.
+}
 \description{
 S4 class to store Branching Path Assignments and Prediction Matrix
 }

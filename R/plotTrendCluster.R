@@ -31,7 +31,7 @@
 #' @param loess_span The fraction of the data used when estimating each y-value,
 #' when plotting curves. (Default is 0.75)
 #'
-#' @return ggplot2 plot object.
+#' @return A ggplot object with one panel per cluster.
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
 #' @family plots
 #' @inheritParams scmp-params

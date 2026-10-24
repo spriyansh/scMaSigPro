@@ -12,8 +12,7 @@ calc_bin_size(x, clus_mem_col = "scmp_cluster_members")
 \item{clus_mem_col}{The name of the column containing the cluster members.}
 }
 \value{
-A numeric value representing the size of the bin (number of elements
-in the "cluster.members" column).
+The number of cells of the bin.
 }
 \description{
 \code{calc_bin_size()} calculates the bin size based on the number of elements in

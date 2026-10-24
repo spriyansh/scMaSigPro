@@ -15,14 +15,12 @@
 #' @param x A data frame containing the "cluster.members" column.
 #' @param clus_mem_col The name of the column containing the cluster members.
 #'
-#' @return A numeric value representing the size of the bin (number of elements
-#' in the "cluster.members" column).
+#' @return The number of cells of the bin.
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
 #'
 #' @keywords internal
 #' @family binning helpers
-#'
 calc_bin_size <- function(x, clus_mem_col = "scmp_cluster_members") {
     # Split the bin's cell members at each "|" (a fixed string, not a regular
     # expression); the number of pieces is the number of cells in the bin
@@ -234,6 +232,13 @@ estBinSize <- function(time_vector, nPoints, drop_fac, bin_method) {
 #' @keywords internal
 #'
 #' @seealso [sc.t.fit()], which calls it.
+#'
+#' @return A list: the p-value (`p_value`) and R-squared (`bondad`) of the
+#' selected model; the p-values (`p_valor`), coefficients (`coeff`) and t
+#' statistics (`t`) of every term; the counts of the gene (`sig_profiles`);
+#' its row of the results (`sol`, `NULL` when no coefficient is
+#' significant); the updated `influ.info`; and the gene name
+#' (`feature_name`).
 extract_fitting <- function(reg, lmf, model.glm.0, dis, family, name, vars.in, alfa, influ.info) {
     sol <- coefficients <- group.coeffs <- t.score <- sig.profiles <- NULL
     y <- reg$y
@@ -431,11 +436,10 @@ extract_interval <- function(time.vector, nBins = 1, bin.size, lbound,
 #' [estBinSize()]).
 #' @param drop The factor that multiplies that number (`drop_fac`).
 #'
-#' @return A dataframe with adjusted bins. The structure of the dataframe will be the same as `bin_table`
-#' with updated values for the bin size and bounds.
+#' @return A data frame with the columns of `bin_table`, one row per bin,
+#' where each split bin is replaced by its parts.
 #' @keywords internal
 #' @family binning helpers
-#'
 optimize_bin_max <- function(bin_table, max_allowed, verbose = TRUE,
                              time_vector, lbound, ubound, bin.size, method,
                              drop) {
@@ -520,10 +524,8 @@ optimize_bin_max <- function(bin_table, max_allowed, verbose = TRUE,
 #' aggregate counts within each cluster. Available options are 'mean' or 'sum'.
 #' (Default = "sum").
 #'
-#' @return
-#' An object of class \code{\link{ScMaSigPro}} whose `Dense` slot is rebuilt
-#' as a valid `SingleCellExperiment`: the `bulk.counts` assay (genes x bins)
-#' and the bin-level metadata.
+#' @return The object whose `Dense` slot holds the pseudo-bulk counts
+#' (`bulk.counts`, genes by bins) and the bin metadata.
 #'
 #' @details
 #' The function operates by iterating over each row of the pseudo_bulk_profile.

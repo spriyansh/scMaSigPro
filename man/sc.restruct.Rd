@@ -38,8 +38,8 @@ it, and as a regular expression otherwise, so \code{"|"} and \code{"\\\\|"} both
 \item{verbose}{Whether to print progress messages.}
 }
 \value{
-An object of class \code{\link{ScMaSigPro}}, with updated \code{Dense}
-slot.
+The object with the bins of every end path, from the root on,
+and their pseudo-bulk counts in the \code{Dense} slot.
 }
 \description{
 \code{sc.restruct()} rebuilds the binned data so that every end path starts at
