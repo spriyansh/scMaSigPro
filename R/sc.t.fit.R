@@ -22,8 +22,10 @@
 #' \code{family}. Choose the link in \code{sc.p.vector()}.
 #' @param epsilon Model convergence tolerance.
 #' @param offset A logical value specifying whether to use offset during
-#' fitting: the logarithm of the size factor of each bin, as in
-#' \code{sc.p.vector()}, which needs the log link.
+#' fitting: the logarithm of the size factor of each bin, which needs the log
+#' link. The fits use the offsets that \code{sc.p.vector()} computed from
+#' every gene it fitted and stored in the `Design` slot; when it stored none
+#' (\code{offset = FALSE}), they are computed here in the same way.
 #' @param max_it Maximum number of iterations to fit the model.
 #' @param verbose Print detailed output in the console. (Default is TRUE)
 #' @param BPPARAM A \code{BiocParallelParam} object that runs the per-gene
@@ -120,12 +122,19 @@ sc.t.fit <- function(scmpObj,
         p_value <- p_value / ncol(dis)
     }
 
-    # The offset of each bin: the logarithm of its size factor, computed as
-    # sc.p.vector() computes it
+    # The offset of each bin: the one that sc.p.vector() computed from every
+    # gene it fitted, or the same computed here when it stored none
     if (offset) {
         dat <- dat + 1
-        offsetData <- log(.size_factors(dat))
-        scmpObj@Design@offset <- offsetData
+        offsetData <- scmpObj@Design@offset
+        if (length(offsetData) == 0L) {
+            bins <- as.character(rownames(dis))
+            counts <- as.matrix(dat.all[, bins, drop = FALSE])
+            offsetData <- .bin_offset(
+                .fit_genes(counts, scmpObj@Parameters@min_na)
+            )
+            scmpObj@Design@offset <- offsetData
+        }
     } else {
         offsetData <- NULL
         scmpObj@Design@offset <- numeric(0)

@@ -22,7 +22,7 @@
 #'
 #' The input is converted with [as.matrix()] first, so a base matrix, a data
 #' frame or a `Matrix` object (such as the `dgeMatrix` that `dgCMatrix + 1`
-#' returns in `sc.t.fit()`) gives the same result.
+#' returns) gives the same result.
 #'
 #' @param counts A matrix-like object of non-negative counts, genes in rows
 #'   and samples in columns.
@@ -44,8 +44,7 @@
 #' @noRd
 .size_factors <- function(counts, type = c("ratio", "poscounts")) {
     type <- match.arg(type)
-    # A plain vector (what sc.t.fit() passes when no gene is non-flat) stops
-    # with the error base rowMeans() gave; sc.t.fit() should check first.
+    # A plain vector stops with the error base rowMeans() gave
     .check(length(dim(counts)) == 2L,
         msg = "'x' must be an array of at least two dimensions"
     )
@@ -81,4 +80,11 @@
     }, numeric(1))
     names(sf) <- colnames(counts)
     sf
+}
+
+# The offset of sc.p.vector() and sc.t.fit() (Srivastava et al. (2024),
+# Section 2.3): the logarithm of the size factor of each bin, from the
+# counts + 1 of the genes that sc.p.vector() fits
+.bin_offset <- function(counts) {
+    log(.size_factors(counts + 1))
 }

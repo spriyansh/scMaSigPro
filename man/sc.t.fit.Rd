@@ -36,8 +36,10 @@ link. When \code{sc.p.vector()} estimated one theta per gene
 \item{epsilon}{Model convergence tolerance.}
 
 \item{offset}{A logical value specifying whether to use offset during
-fitting: the logarithm of the size factor of each bin, as in
-\code{sc.p.vector()}, which needs the log link.}
+fitting: the logarithm of the size factor of each bin, which needs the log
+link. The fits use the offsets that \code{sc.p.vector()} computed from
+every gene it fitted and stored in the \code{Design} slot; when it stored none
+(\code{offset = FALSE}), they are computed here in the same way.}
 
 \item{verbose}{Print detailed output in the console. (Default is TRUE)}
 

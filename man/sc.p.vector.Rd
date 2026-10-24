@@ -102,8 +102,8 @@ value to the Poly-GLM model to adjust for disparities in total read counts
 per bin. This offset is calculated as the logarithm of size factors for
 each bin". The size factors are estimated by the median-of-ratios method
 on the counts plus 1, and the genes are fitted on their counts plus 1.
-The offsets are stored in the \code{Design} slot; with \code{offset = FALSE} no
-offset is stored.
+The offsets are stored in the \code{Design} slot, where \code{\link[=sc.t.fit]{sc.t.fit()}} finds
+them; with \code{offset = FALSE} no offset is stored.
 
 Genes are left out of the fit when they have fewer than \code{min_na} values,
 when all their counts are zero, and when they are below \code{min_counts} or

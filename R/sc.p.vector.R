@@ -67,8 +67,8 @@
 #' per bin. This offset is calculated as the logarithm of size factors for
 #' each bin". The size factors are estimated by the median-of-ratios method
 #' on the counts plus 1, and the genes are fitted on their counts plus 1.
-#' The offsets are stored in the `Design` slot; with `offset = FALSE` no
-#' offset is stored.
+#' The offsets are stored in the `Design` slot, where [sc.t.fit()] finds
+#' them; with `offset = FALSE` no offset is stored.
 #'
 #' Genes are left out of the fit when they have fewer than `min_na` values,
 #' when all their counts are zero, and when they are below `min_counts` or
@@ -168,16 +168,8 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
         )
     )
 
-    # Removing rows with many missings (only counts with NA values have any):
-    count.na <- function(x) (length(x) - length(x[is.na(x)]))
-    dat <- dat[apply(dat, 1, count.na) >= min_na, , drop = FALSE]
-
-    # Removing rows with all zeros:
-    sumatot <- apply(dat, 1, sum)
-    counts0 <- which(sumatot == 0)
-    if (length(counts0) > 0) {
-        dat <- dat[-counts0, , drop = FALSE]
-    }
+    # Removing rows with many missings and rows with all zeros
+    dat <- .fit_genes(dat, min_na)
 
     # The count filter (decision D17). It is applied after the size factors
     # below, so it changes the results of the genes it keeps only through
@@ -191,10 +183,11 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
     }
 
     # The offset of each bin: the logarithm of its size factor (Srivastava
-    # et al. (2024), Section 2.3), here of the counts + 1 that are fitted
+    # et al. (2024), Section 2.3), computed once here for sc.t.fit() too;
+    # the genes are fitted on their counts + 1
     if (offset) {
+        offsetData <- .bin_offset(dat)
         dat <- dat + 1
-        offsetData <- log(.size_factors(dat))
         scmpObj@Design@offset <- offsetData
     } else {
         offsetData <- NULL
@@ -404,6 +397,21 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
         family$link, "\" holds fits made with the '", .true_link(family),
         "' link: run sc.p.vector() on it again."
     )
+}
+
+# The genes that sc.p.vector() fits, before its count filter: the rows of
+# dat with at least min_na values (only counts with NA values have fewer)
+# and a count above 0. sc.t.fit() computes the offset from the same genes
+# when sc.p.vector() stored none.
+.fit_genes <- function(dat, min_na) {
+    count.na <- function(x) (length(x) - length(x[is.na(x)]))
+    dat <- dat[apply(dat, 1, count.na) >= min_na, , drop = FALSE]
+    sumatot <- apply(dat, 1, sum)
+    counts0 <- which(sumatot == 0)
+    if (length(counts0) > 0) {
+        dat <- dat[-counts0, , drop = FALSE]
+    }
+    dat
 }
 
 # The design as a data frame whose columns are named by position: x1, x2, ...

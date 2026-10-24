@@ -319,10 +319,10 @@ make an upset plot:
 plotIntersect(scmp_ob)
 ```
 
-Here, we observe that 24 genes belong to both Path2vsPath1 and Path1, indicating
+Here, we observe that 21 genes belong to both Path2vsPath1 and Path1, indicating
 that these genes not only change along pseudotime but also exhibit significantly
-different expression between the two paths. Additionally, there are 9 genes
-uniquely associated with Path2vsPath1. This implies that Path2 has 9 genes that
+different expression between the two paths. Additionally, there are 13 genes
+uniquely associated with Path2vsPath1. This implies that Path2 has 13 genes that
 are significantly differentially expressed over time, using Path1 genes as a
 reference. Let's explore a few of these genes:
 ```{r, "trend",eval=TRUE, echo=TRUE, fig.width=7, fig.height=7}

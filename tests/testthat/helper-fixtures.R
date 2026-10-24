@@ -168,6 +168,7 @@ build_golden <- function() {
     prune_note <- "0.6.0, Section 2.2: prune below mean - sd of each path"
     log_note <- "0.6.0, Section 2.3: the offset is the log of the size factors"
     gone_note <- "0.6.0, Section 2.3: removed, the same fit as fits/default"
+    once_note <- "0.6.0, Section 2.3: sc.t.fit() reuses the offset"
 
     methods <- c("Sturges", "Sqrt", "Rice", "Doane", "Freedman.Diaconis", "Scott.Normal")
     by_method <- lapply(methods, function(m) {
@@ -224,10 +225,6 @@ build_golden <- function() {
             frozen_version = "0.0.4",
             generated = format(Sys.time(), "%Y-%m-%d"),
             r_version = R.version.string,
-            # Frozen as they are today, known to be wrong; these move in Phase 5.
-            known_wrong = c(
-                "fits/default" = "sc.t.fit() computes the offset again"
-            ),
             # Changed on purpose after 0.0.4; every other leaf is still 0.0.4.
             regenerated = c(
                 "squeeze/by_method/Freedman.Diaconis" =
@@ -274,7 +271,11 @@ build_golden <- function() {
                 "filters" = log_note,
                 "clusters" = log_note,
                 "plots" = log_note,
-                "fits/no_offset/offset" = "0.6.0: offset = FALSE stores none"
+                "fits/no_offset/offset" = "0.6.0: offset = FALSE stores none",
+                "fits/default" = once_note,
+                "filters" = once_note,
+                "clusters" = once_note,
+                "plots" = once_note
             )
         ),
         sparse_cells = sorted_df(cSparse(binned)),

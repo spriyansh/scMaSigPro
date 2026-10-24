@@ -53,7 +53,7 @@
       Average bin Size-> Path1: 12 Path2: 13
       Polynomial Order: 2
       No. of Significant Profiles: 52
-      No. of Influential Features: 11
+      No. of Influential Features: 10
 
 ---
 
@@ -70,7 +70,7 @@
       Average bin Size-> Path1: 12 Path2: 13
       Polynomial Order: 2
       No. of Significant Profiles: 52
-      No. of Influential Features: 11
+      No. of Influential Features: 10
 
 ---
 

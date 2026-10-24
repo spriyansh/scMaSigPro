@@ -27,7 +27,7 @@ test_that("sc.filter(vars = 'each') gives one list per term (ledger F1)", {
     # Control: terms that select different numbers of genes
     some <- sc.filter(ob, vars = "each")@Significant@genes
     expect_identical(
-        lengths(some), setNames(c(38L, 9L, 19L, 28L, 10L, 12L), terms)
+        lengths(some), setNames(c(40L, 10L, 19L, 34L, 11L, 11L), terms)
     )
 })
 
@@ -920,4 +920,33 @@ test_that("a fit without offset stores none, and the plots use none", {
         unname(log(counts / exp(fitted@Design@offset) + 1)),
         tolerance = 1e-12
     )
+})
+
+test_that("sc.t.fit() reuses the offset of sc.p.vector()", {
+    # The offset is computed once, by sc.p.vector() from every gene it
+    # fitted; sc.t.fit() computed it again from the non-flat genes
+    pv <- sc.p.vector(splat_design(2), verbose = FALSE)
+    tf <- sc.t.fit(pv, verbose = FALSE)
+    expect_identical(tf@Design@offset, pv@Design@offset)
+    # The selected model of a gene is the glm() of its counts + 1 on the
+    # selected terms with that offset
+    sol <- showSol(tf)
+    gene <- rownames(sol)[sol[["p.valor_beta0"]] <= 0.05][1]
+    terms <- !is.na(unlist(sol[gene, -(1:3)]))
+    x <- predictors(tf)[, terms, drop = FALSE]
+    fit <- stats::glm.fit(cbind(1, x), eDense(tf)[gene, rownames(x)] + 1,
+        family = MASS::negative.binomial(10), offset = pv@Design@offset,
+        control = stats::glm.control(epsilon = 1e-8, maxit = 100)
+    )
+    expect_equal(
+        unname(unlist(showCoeff(tf)[gene, c(TRUE, terms)])),
+        unname(fit$coefficients),
+        tolerance = 1e-8
+    )
+    # Without a stored offset, sc.t.fit() computes the same one
+    none <- sc.p.vector(splat_design(2), offset = FALSE, verbose = FALSE)
+    none@Profile <- pv@Profile
+    computed <- sc.t.fit(none, offset = TRUE, verbose = FALSE)
+    expect_identical(computed@Design@offset, pv@Design@offset)
+    expect_identical(computed@Estimate, tf@Estimate)
 })
