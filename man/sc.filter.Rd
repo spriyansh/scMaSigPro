@@ -60,6 +60,14 @@ reference path and significant intercept differences are considered for
 selecting significant genes.
 }
 }
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+scmp <- sc.filter(scmp.ob, rsq = 0.6, vars = "groups")
+res <- scmpResults(scmp)
+# The number of genes in each list
+c(Path1 = sum(res$sig_Path1), Path2vsPath1 = sum(res$sig_Path2vsPath1))
+
+}
 \references{
 Conesa A, Nueda MJ, Ferrer A, Talón M (2006). maSigPro: a method to
 identify significantly differential expression profiles in time-course

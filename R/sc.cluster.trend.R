@@ -46,6 +46,14 @@
 #' @family workflow steps
 #' @inheritParams scmp-params
 #'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' # Cluster the pseudo-bulk counts of the genes of every list
+#' scmp <- sc.cluster.trend(scmp.ob,
+#'     geneSet = "union", cluster_by = "counts", k = 3
+#' )
+#' table(scmpResults(scmp)$cluster)
+#'
 #' @export
 sc.cluster.trend <- function(scmpObj,
                              geneSet = "intersect",

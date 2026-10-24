@@ -62,6 +62,15 @@ slot (\link[=Significant-class]{Significant}).
 This function clusters the counts or coefficients to visualize the collective
 trends later.
 }
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+# Cluster the pseudo-bulk counts of the genes of every list
+scmp <- sc.cluster.trend(scmp.ob,
+    geneSet = "union", cluster_by = "counts", k = 3
+)
+table(scmpResults(scmp)$cluster)
+
+}
 \references{
 Conesa A, Nueda MJ, Ferrer A, Talón M (2006). maSigPro: a method to
 identify significantly differential expression profiles in time-course

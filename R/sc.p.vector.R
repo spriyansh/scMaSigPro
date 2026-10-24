@@ -149,6 +149,12 @@
 #' @family workflow steps
 #' @inheritParams scmp-params
 #'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' # Test the full model of every gene with the F test
+#' scmp <- sc.p.vector(scmp.ob, test = "F", verbose = FALSE)
+#' sum(scmpResults(scmp)$non_flat)
+#'
 #' @export
 sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
                         min_na = 6,

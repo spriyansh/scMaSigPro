@@ -41,6 +41,11 @@
 #' @family workflow steps
 #' @inheritParams scmp-params
 #'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' scmp <- sc.set.poly(scmp.ob, poly_degree = 2)
+#' showPoly(scmp)
+#'
 #' @export
 sc.set.poly <- function(scmpObj,
                         poly_degree = 2,

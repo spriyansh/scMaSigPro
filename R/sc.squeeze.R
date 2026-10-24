@@ -86,6 +86,19 @@
 #' trajectories. Bioinformatics 40(7), btae443.
 #' \doi{10.1093/bioinformatics/btae443}
 #'
+#' @examples
+#' data("splat.sim", package = "scMaSigPro")
+#' scmp <- as_scmp(splat.sim,
+#'     additional_params = list(
+#'         labels_exist = TRUE, exist_ptime_col = "Step",
+#'         exist_path_col = "Group"
+#'     ),
+#'     verbose = FALSE
+#' )
+#' scmp <- sc.squeeze(scmp)
+#' bins <- cDense(scmp)
+#' head(bins[, c("Path", "scmp_binned_pseudotime", "scmp_bin_size")])
+#'
 #' @export
 sc.squeeze <- function(scmpObj,
                        ptime_col = scmpObj@Parameters@ptime_col,

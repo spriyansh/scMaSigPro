@@ -56,6 +56,12 @@
 #' @family workflow steps
 #' @inheritParams scmp-params
 #'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' # Keep the terms with a p-value below 0.01
+#' scmp <- sc.t.fit(scmp.ob, p_value = 0.01, verbose = FALSE)
+#' head(showSol(scmp)[, c("p-value", "R-squared")])
+#'
 #' @export
 sc.t.fit <- function(scmpObj,
                      selection_method = "backward",

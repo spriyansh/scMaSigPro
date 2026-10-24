@@ -130,6 +130,20 @@ after any division. When the standard deviation is larger than the mean,
 the minimum is negative and no bin is removed. The cells of a removed bin
 stay in the \code{Sparse} slot, but no bin of the \code{Dense} slot holds them.
 }
+\examples{
+data("splat.sim", package = "scMaSigPro")
+scmp <- as_scmp(splat.sim,
+    additional_params = list(
+        labels_exist = TRUE, exist_ptime_col = "Step",
+        exist_path_col = "Group"
+    ),
+    verbose = FALSE
+)
+scmp <- sc.squeeze(scmp)
+bins <- cDense(scmp)
+head(bins[, c("Path", "scmp_binned_pseudotime", "scmp_bin_size")])
+
+}
 \references{
 Srivastava P, Benegas Coll M, Götz S, Nueda MJ, Conesa A (2024).
 scMaSigPro: differential expression analysis along single-cell

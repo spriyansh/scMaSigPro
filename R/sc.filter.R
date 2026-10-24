@@ -54,6 +54,13 @@
 #' @family workflow steps
 #' @inheritParams scmp-params
 #'
+#' @examples
+#' data("scmp.ob", package = "scMaSigPro")
+#' scmp <- sc.filter(scmp.ob, rsq = 0.6, vars = "groups")
+#' res <- scmpResults(scmp)
+#' # The number of genes in each list
+#' c(Path1 = sum(res$sig_Path1), Path2vsPath1 = sum(res$sig_Path2vsPath1))
+#'
 #' @export
 sc.filter <- function(scmpObj,
                       rsq = 0.7,

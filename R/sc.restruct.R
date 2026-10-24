@@ -25,6 +25,24 @@
 #' @family workflow steps
 #' @inheritParams scmp-params
 #'
+#' @examples
+#' data("multi.lin.sce", package = "scMaSigPro")
+#' scmp <- as_scmp(multi.lin.sce,
+#'     additional_params = list(
+#'         labels_exist = TRUE, exist_ptime_col = "Monocle3_Pseudotime",
+#'         exist_path_col = "group"
+#'     ),
+#'     verbose = FALSE
+#' )
+#' scmp <- sc.squeeze(scmp)
+#' # Three end paths, one link path shared by two of them, and the root
+#' scmp <- sc.restruct(scmp,
+#'     end_node_list = list("path_Y_15", "path_Y_18", "path_Y_52"),
+#'     root_node = "root", link_node_list = list("path_Y_18|path_Y_15"),
+#'     link_sep = "|", verbose = FALSE
+#' )
+#' table(cDense(scmp)$Path)
+#'
 #' @export
 sc.restruct <- function(scmpObj,
                         end_node_list,

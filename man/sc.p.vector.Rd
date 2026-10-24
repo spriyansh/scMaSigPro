@@ -151,6 +151,13 @@ genes significant than its level. \code{test = "F"}, the quasi-likelihood F
 test, accounts for the estimation of the dispersion through the residual
 degrees of freedom of the F distribution.
 }
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+# Test the full model of every gene with the F test
+scmp <- sc.p.vector(scmp.ob, test = "F", verbose = FALSE)
+sum(scmpResults(scmp)$non_flat)
+
+}
 \references{
 Srivastava P, Benegas Coll M, Götz S, Nueda MJ, Conesa A (2024).
 scMaSigPro: differential expression analysis along single-cell

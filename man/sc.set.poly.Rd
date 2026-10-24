@@ -45,6 +45,12 @@ the first path of \code{end_node_list}; with bins given to \code{\link[=create_s
 \code{\link{cDense<-}}, the path of the first bin. The other paths keep the
 order of the \code{Dense} slot.
 }
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+scmp <- sc.set.poly(scmp.ob, poly_degree = 2)
+showPoly(scmp)
+
+}
 \references{
 Conesa A, Nueda MJ, Ferrer A, Talón M (2006). maSigPro: a method to
 identify significantly differential expression profiles in time-course

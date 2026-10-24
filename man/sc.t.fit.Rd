@@ -66,6 +66,13 @@ Performs stepwise regression and selects the significant polynomial terms
 from the full polynomial model. This function is succeeded by
 \code{scMaSigPro::sc.p.vector()}.
 }
+\examples{
+data("scmp.ob", package = "scMaSigPro")
+# Keep the terms with a p-value below 0.01
+scmp <- sc.t.fit(scmp.ob, p_value = 0.01, verbose = FALSE)
+head(showSol(scmp)[, c("p-value", "R-squared")])
+
+}
 \references{
 Conesa A, Nueda MJ, Ferrer A, Talón M (2006). maSigPro: a method to
 identify significantly differential expression profiles in time-course
