@@ -38,9 +38,15 @@
 #' @seealso [plotIntersect()] for the overlaps of the lists;
 #' [Significant-class].
 #'
-#' @references{Conesa, A., Nueda M.J., Alberto Ferrer, A., Talon, T. 2006.
-#' maSigPro: a Method to Identify Significant Differential Expression Profiles
-#' in Time-Course Microarray Experiments. Bioinformatics 22, 1096-1102}
+#' @references
+#' Conesa A, Nueda MJ, Ferrer A, Talón M (2006). maSigPro: a method to
+#' identify significantly differential expression profiles in time-course
+#' microarray experiments. Bioinformatics 22(9), 1096-1102.
+#' \doi{10.1093/bioinformatics/btl056}
+#'
+#' Nueda MJ, Tarazona S, Conesa A (2014). Next maSigPro: updating maSigPro
+#' bioconductor package for RNA-seq time series. Bioinformatics 30(18),
+#' 2598-2602. \doi{10.1093/bioinformatics/btu333}
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}, Ana Conesa and
 #' Maria Jose Nueda, \email{mj.nueda@@ua.es}

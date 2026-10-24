@@ -25,6 +25,11 @@
 #' @family plots
 #' @inheritParams scmp-params
 #'
+#' @references
+#' Conway JR, Lex A, Gehlenborg N (2017). UpSetR: an R package for the
+#' visualization of intersecting sets and their properties. Bioinformatics
+#' 33(18), 2938-2940. \doi{10.1093/bioinformatics/btx364}
+#'
 #' @export
 plotIntersect <- function(scmpObj,
                           min_intersection_size = 1,

@@ -130,6 +130,12 @@ after any division. When the standard deviation is larger than the mean,
 the minimum is negative and no bin is removed. The cells of a removed bin
 stay in the \code{Sparse} slot, but no bin of the \code{Dense} slot holds them.
 }
+\references{
+Srivastava P, Benegas Coll M, Götz S, Nueda MJ, Conesa A (2024).
+scMaSigPro: differential expression analysis along single-cell
+trajectories. Bioinformatics 40(7), btae443.
+\doi{10.1093/bioinformatics/btae443}
+}
 \seealso{
 \code{\link[=estBinSize]{estBinSize()}} for the rules that set the number of bins;
 \code{\link[=plotBinTile]{plotBinTile()}} to see the bins.

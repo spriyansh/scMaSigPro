@@ -67,9 +67,19 @@ from the full polynomial model. This function is succeeded by
 \code{scMaSigPro::sc.p.vector()}.
 }
 \references{
-{Conesa, A., Nueda M.J., Alberto Ferrer, A., Talon, T. 2006.
-maSigPro: a Method to Identify Significant Differential Expression Profiles
-in Time-Course Microarray Experiments. Bioinformatics 22, 1096-1102}
+Conesa A, Nueda MJ, Ferrer A, Talón M (2006). maSigPro: a method to
+identify significantly differential expression profiles in time-course
+microarray experiments. Bioinformatics 22(9), 1096-1102.
+\doi{10.1093/bioinformatics/btl056}
+
+Nueda MJ, Tarazona S, Conesa A (2014). Next maSigPro: updating maSigPro
+bioconductor package for RNA-seq time series. Bioinformatics 30(18),
+2598-2602. \doi{10.1093/bioinformatics/btu333}
+
+Srivastava P, Benegas Coll M, Götz S, Nueda MJ, Conesa A (2024).
+scMaSigPro: differential expression analysis along single-cell
+trajectories. Bioinformatics 40(7), btae443.
+\doi{10.1093/bioinformatics/btae443}
 }
 \seealso{
 \code{\link[=showSol]{showSol()}} and the other readers of the results;

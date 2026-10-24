@@ -39,6 +39,11 @@ Generate UpSet Plot on Intersection of Significant Genes from scMaSigPro
 object. It is a wrapper \code{UpSetR::upset}, so drawing the plot needs the
 suggested package 'UpSetR'; \code{return = TRUE} does not.
 }
+\references{
+Conway JR, Lex A, Gehlenborg N (2017). UpSetR: an R package for the
+visualization of intersecting sets and their properties. Bioinformatics
+33(18), 2938-2940. \doi{10.1093/bioinformatics/btx364}
+}
 \seealso{
 Other plots:
 \code{\link[=plotBinTile]{plotBinTile()}},

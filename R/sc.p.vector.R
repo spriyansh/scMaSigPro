@@ -111,13 +111,36 @@
 #'
 #' @seealso [scmpResults()] for the p-values; [VariableProfiles-class].
 #'
-#' @references Conesa, A., Nueda M.J., Alberto Ferrer, A., Talon, T. 2006.
-#' maSigPro: a Method to Identify Significant Differential Expression Profiles
-#' in Time-Course Microarray Experiments. Bioinformatics 22, 1096-1102
+#' @references
+#' Srivastava P, Benegas Coll M, Götz S, Nueda MJ, Conesa A (2024).
+#' scMaSigPro: differential expression analysis along single-cell
+#' trajectories. Bioinformatics 40(7), btae443.
+#' \doi{10.1093/bioinformatics/btae443}
 #'
-#' Love, M.I., Huber, W. and Anders, S. (2014). Moderated estimation of fold
-#' change and dispersion for RNA-seq data with DESeq2. Genome Biology 15, 550.
+#' Conesa A, Nueda MJ, Ferrer A, Talón M (2006). maSigPro: a method to
+#' identify significantly differential expression profiles in time-course
+#' microarray experiments. Bioinformatics 22(9), 1096-1102.
+#' \doi{10.1093/bioinformatics/btl056}
+#'
+#' Nueda MJ, Tarazona S, Conesa A (2014). Next maSigPro: updating maSigPro
+#' bioconductor package for RNA-seq time series. Bioinformatics 30(18),
+#' 2598-2602. \doi{10.1093/bioinformatics/btu333}
+#'
+#' Anders S, Huber W (2010). Differential expression analysis for sequence
+#' count data. Genome Biology 11(10), R106.
+#' \doi{10.1186/gb-2010-11-10-r106}
+#'
+#' Love MI, Huber W, Anders S (2014). Moderated estimation of fold change
+#' and dispersion for RNA-seq data with DESeq2. Genome Biology 15(12), 550.
 #' \doi{10.1186/s13059-014-0550-8}
+#'
+#' Benjamini Y, Hochberg Y (1995). Controlling the false discovery rate: a
+#' practical and powerful approach to multiple testing. Journal of the Royal
+#' Statistical Society: Series B 57(1), 289-300.
+#' \doi{10.1111/j.2517-6161.1995.tb02031.x}
+#'
+#' Venables WN, Ripley BD (2002). Modern Applied Statistics with S, fourth
+#' edition. Springer, New York. ISBN 0-387-95457-0.
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}, Ana Conesa and
 #' Maria Jose Nueda, \email{mj.nueda@@ua.es}

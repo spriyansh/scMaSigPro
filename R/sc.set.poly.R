@@ -25,9 +25,16 @@
 #' @seealso [showPoly()], [predictors()] and [pathAssign()], which read the
 #' design; [MatrixDesign-class].
 #'
-#' @references{Conesa, A., Nueda M.J., Alberto Ferrer, A., Talon, T. 2006.
-#' maSigPro: a Method to Identify Significant Differential Expression Profiles
-#' in Time-Course Microarray Experiments. Bioinformatics 22, 1096-1102}
+#' @references
+#' Conesa A, Nueda MJ, Ferrer A, Talón M (2006). maSigPro: a method to
+#' identify significantly differential expression profiles in time-course
+#' microarray experiments. Bioinformatics 22(9), 1096-1102.
+#' \doi{10.1093/bioinformatics/btl056}
+#'
+#' Srivastava P, Benegas Coll M, Götz S, Nueda MJ, Conesa A (2024).
+#' scMaSigPro: differential expression analysis along single-cell
+#' trajectories. Bioinformatics 40(7), btae443.
+#' \doi{10.1093/bioinformatics/btae443}
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}, Ana Conesa and
 #' Maria Jose Nueda, \email{mj.nueda@@ua.es}

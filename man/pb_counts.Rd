@@ -49,6 +49,12 @@ Bins are identified by the rownames of the \code{Dense} cell metadata (see
 \code{\link[=cDense]{cDense()}}); these become the column names of \code{bulk.counts}. The \code{bin_col}
 column is used only when the metadata has no rownames.
 }
+\references{
+Srivastava P, Benegas Coll M, Götz S, Nueda MJ, Conesa A (2024).
+scMaSigPro: differential expression analysis along single-cell
+trajectories. Bioinformatics 40(7), btae443.
+\doi{10.1093/bioinformatics/btae443}
+}
 \seealso{
 Other binning helpers:
 \code{\link[=calc_bin_size]{calc_bin_size()}},

@@ -80,6 +80,12 @@
 #' @family workflow steps
 #' @inheritParams scmp-params
 #'
+#' @references
+#' Srivastava P, Benegas Coll M, Götz S, Nueda MJ, Conesa A (2024).
+#' scMaSigPro: differential expression analysis along single-cell
+#' trajectories. Bioinformatics 40(7), btae443.
+#' \doi{10.1093/bioinformatics/btae443}
+#'
 #' @export
 sc.squeeze <- function(scmpObj,
                        ptime_col = scmpObj@Parameters@ptime_col,

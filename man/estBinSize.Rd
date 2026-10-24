@@ -58,18 +58,32 @@ then gives one bin, with a message. The number of bins of every rule is
 multiplied by \code{drop_fac}.
 }
 \references{
-Doane, D. P. (1976). Aesthetic frequency classifications. The American
-Statistician, 30, 181-183.
+Sturges HA (1926). The choice of a class interval. Journal of the
+American Statistical Association 21(153), 65-66.
+\doi{10.1080/01621459.1926.10502161}
 
-Freedman, D. and Diaconis, P. (1981). On the histogram as a density
-estimator: L2 theory. Zeitschrift für Wahrscheinlichkeitstheorie und
-verwandte Gebiete, 57, 453-476.
+Doane DP (1976). Aesthetic frequency classifications. The American
+Statistician 30(4), 181-183. \doi{10.1080/00031305.1976.10479172}
 
-Scott, D. W. (1979). On optimal and data-based histograms. Biometrika, 66,
-605-610.
+Scott DW (1979). On optimal and data-based histograms. Biometrika 66(3),
+605-610. \doi{10.1093/biomet/66.3.605}
 
-Sturges, H. A. (1926). The choice of a class interval. Journal of the
-American Statistical Association, 21, 65-66.
+Freedman D, Diaconis P (1981). On the histogram as a density estimator:
+L2 theory. Zeitschrift für Wahrscheinlichkeitstheorie und verwandte
+Gebiete 57(4), 453-476. \doi{10.1007/BF01025868}
+
+Terrell GR, Scott DW (1985). Oversmoothed nonparametric density
+estimates. Journal of the American Statistical Association 80(389),
+209-214. \doi{10.1080/01621459.1985.10477163}
+
+Lane DM, Scott D. Histograms. In Online Statistics Education: A
+Multimedia Course of Study, Rice University.
+\url{https://onlinestatbook.com/2/graphing_distributions/histograms.html}
+
+Srivastava P, Benegas Coll M, Götz S, Nueda MJ, Conesa A (2024).
+scMaSigPro: differential expression analysis along single-cell
+trajectories. Bioinformatics 40(7), btae443.
+\doi{10.1093/bioinformatics/btae443}
 }
 \seealso{
 Other binning helpers:

@@ -30,9 +30,15 @@
 #'
 #' @seealso [plotTrendCluster()], which plots the clusters.
 #'
-#' @references{Conesa, A., Nueda M.J., Alberto Ferrer, A., Talon, T. 2006.
-#' maSigPro: a Method to Identify Significant Differential Expression Profiles
-#' in Time-Course Microarray Experiments. Bioinformatics 22, 1096-1102}
+#' @references
+#' Conesa A, Nueda MJ, Ferrer A, Talón M (2006). maSigPro: a method to
+#' identify significantly differential expression profiles in time-course
+#' microarray experiments. Bioinformatics 22(9), 1096-1102.
+#' \doi{10.1093/bioinformatics/btl056}
+#'
+#' Scrucca L, Fop M, Murphy TB, Raftery AE (2016). mclust 5: clustering,
+#' classification and density estimation using Gaussian finite mixture
+#' models. The R Journal 8(1), 289-317. \doi{10.32614/RJ-2016-021}
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}, Ana Conesa and
 #' Maria Jose Nueda, \email{mj.nueda@@ua.es}
