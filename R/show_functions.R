@@ -288,14 +288,13 @@ showGroupCoeff <- function(scmpObj, includeInflu = TRUE) {
 }
 
 ###############################################################################
-#' @title Show ScMaSigPro Object Information
+#' @title Print a ScMaSigPro object
 #'
 #' @description
-#' This method displays basic information about the ScMaSigPro object when the
-#' object is printed in the console. The method is automatically called when the
-#' user writes the name of the object in the console.
+#' `.ScMaSigPro_show()` prints a summary of a [ScMaSigPro-class] object; the
+#' `show()` method calls it.
 #'
-#' @param object An object of class \code{ScMaSigPro}.
+#' @param object A [ScMaSigPro-class] object.
 #'
 #' @keywords internal
 #'
@@ -394,15 +393,16 @@ showGroupCoeff <- function(scmpObj, includeInflu = TRUE) {
 }
 
 ###############################################################################
-#' @title Extract Information `.ScMaSigPro_show`
+#' @title Bins per path for the printed summary
 #'
 #' @description
-#' Extract details for the console cat of `.ScMaSigPro_show`.
+#' `extract_info()` gives the mean bin size or the number of bins of each path
+#' for `.ScMaSigPro_show()`.
 #'
-#' @param data A dataframe.
-#' @param return_type Average Bin Size or Number of Bins.
-#' @param bin_size_col Column name with the bins.
-#' @param path_col Column name with the path information.
+#' @param data The bin metadata.
+#' @param return_type `"avg_bin_size"` or `"num_bins"`.
+#' @param bin_size_col The column with the number of cells of each bin.
+#' @param path_col The column with the path labels.
 #'
 #' @keywords internal
 #'

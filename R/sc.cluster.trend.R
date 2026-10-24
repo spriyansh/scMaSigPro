@@ -1,32 +1,38 @@
-#' @title Cluster the counts or coefficients.
+#' @title Cluster the significant genes
 #'
 #' @description
-#' This function clusters the counts or coefficients to visualize the collective
-#' trends later.
+#' `sc.cluster.trend()` clusters the genes of the gene lists of [sc.filter()]
+#' by the coefficients of their selected models or by their pseudo-bulk
+#' counts, as `see.genes()` of maSigPro does, with hierarchical clustering,
+#' k-means or Gaussian mixture models (mclust).
+#'
+#' @param geneSet The genes to cluster: the name of a list of [sc.filter()],
+#'   `"intersect"`, the genes in every list, or `"union"`, the genes in any
+#'   list.
+#' @param cluster_by What to cluster: the coefficients of the selected models
+#'   (`"coeff"`) or the pseudo-bulk counts (`"counts"`).
+#' @param cluster_method `"hclust"`, `"kmeans"` or `"Mclust"`, which needs the
+#'   suggested package mclust.
+#' @param hclust.agglo.method The agglomeration method of [stats::hclust()].
+#' @param hclust.distance The distance of `"hclust"`: `"cor"`, one minus the
+#'   correlation of two genes, or a method of [stats::dist()].
+#' @param k The number of clusters.
+#' @param kmeans.iter.max The maximum number of iterations of
+#'   [stats::kmeans()].
+#' @param mclust.k Whether `"Mclust"` chooses the number of clusters instead
+#'   of taking `k`.
+#' @param fill_na How missing values are filled before clustering: with
+#'   `"zero"`, or the `"mean"` or `"median"` of their column or row
+#'   (`use_dim`).
+#' @param use_dim Whether `fill_na` takes the mean or median by column
+#'   (`"col"`) or by row (`"row"`).
+#' @param verbose Not used.
 #'
 #' @importFrom stats cutree hclust
 #' @importFrom stats as.dist cor kmeans
 #'
-#' @param cluster_by Whether to use counts or coefficients for clustering.
-#' @param geneSet Specify the gene set to be used for clustering.
-#' (Default is "intersect")
-#' @param cluster_method Clustering method for data partioning. Currently "hclust",
-#' "kmeans" and "Mclust" are supported. "Mclust" needs the suggested package
-#' 'mclust'.
-#' @param hclust.agglo.method Aggregation Method. (Default is "ward.D")
-#' @param hclust.distance Distance measurement.(Default is "cor")
-#' @param k Number of clusters for data partioning.
-#' @param kmeans.iter.max Maximum number of iterations when cluster.method is
-#' kmeans
-#' @param mclust.k TRUE for computing the optimal number of clusters with
-#' Mclust algorithm. (Default is FALSE)
-#' @param fill_na Fill the NAs (if Present), by zero, mean or median.
-#' @param use_dim Whether to use rows or columns for taking mean or median while
-#' filling the NAs with `fill_na`.
-#' @param verbose Print detailed output in the console. (Default is TRUE)
-#'
 #' @return The object with the cluster of each gene in the `Significant`
-#' slot ([Significant-class]).
+#' slot (class [Significant-class]).
 #'
 #' @seealso [plotTrendCluster()], which plots the clusters.
 #'

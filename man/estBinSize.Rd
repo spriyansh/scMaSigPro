@@ -2,60 +2,53 @@
 % Please edit documentation in R/pb_helpers.R
 \name{estBinSize}
 \alias{estBinSize}
-\title{estBinSize}
+\title{Number of bins of a histogram rule}
 \usage{
 estBinSize(time_vector, nPoints, drop_fac, bin_method)
 }
 \arguments{
-\item{time_vector}{A numeric vector. The time series data points that
-need to be binned.}
+\item{time_vector}{The pseudotime values to bin.}
 
-\item{nPoints}{An integer. The total number of data points in time_vector.}
+\item{nPoints}{The number of values of \code{time_vector}.}
 
-\item{drop_fac}{A numeric. A factor to adjust the estimated number of bins:
-the number of bins given by the rule is multiplied by this value. Values
-below 1 give fewer, wider bins, which helps when the rule gives too many
-empty bins.}
+\item{drop_fac}{The factor that multiplies the number of bins of the rule;
+values below 1 give fewer, wider bins.}
 
-\item{bin_method}{A character string. The rule that estimates the number of
-bins. Possible values include "Freedman.Diaconis", "Sqrt", "Sturges",
-"Rice", "Doane", and "Scott.Normal". See details.}
+\item{bin_method}{The rule (see Details).}
 }
 \value{
-A number: the number of bins given by the rule, multiplied by \code{drop_fac}.
-It is not rounded; \code{\link[=sc.squeeze]{sc.squeeze()}} rounds it up with \code{ceiling()}.
+The number of bins of the rule times \code{drop_fac}, not rounded;
+\code{\link[=sc.squeeze]{sc.squeeze()}} rounds it up.
 }
 \description{
-\code{estBinSize()} estimates the number of bins for discretizing a continuous
-variable with one of the rules "Freedman.Diaconis", "Sqrt", "Sturges",
-"Rice", "Doane" and "Scott.Normal".
+\code{estBinSize()} gives the number of bins of one of the histogram rules
+"Sturges", "Sqrt", "Rice", "Doane", "Freedman.Diaconis" and "Scott.Normal"
+for a pseudotime vector, multiplied by \code{drop_fac}.
 }
 \details{
 With n the number of points (\code{nPoints}), the rules give:
 \describe{
-\item{"Freedman.Diaconis"}{bins of width 2 IQR / n^(1/3), with IQR the
-interquartile range of the points (Freedman and Diaconis, 1981).}
-\item{"Sqrt"}{sqrt(n) bins.}
-\item{"Sturges"}{log2(n) + 1 bins (Sturges, 1926). Srivastava et al.
+\item{"Sturges"}{log2(n) + 1 bins (Sturges 1926). Srivastava et al.
 (2024), Supplementary Section S1.1, writes the number of bins as
 \eqn{B = [(\log_2(N)+1) \times k]}{B = [(log2(N)+1) * k]}, with k the
 drop factor of their Section 2.1, and every other rule the same way,
 with the brackets around the whole product: the rule times \code{drop_fac}
 is rounded up.}
-\item{"Rice"}{2 n^(1/3) bins.}
+\item{"Sqrt"}{sqrt(n) bins, a common rule of thumb.}
+\item{"Rice"}{2 n^(1/3) bins (Lane and Scott), close to the
+oversmoothed number of bins (2n)^(1/3) of Terrell and Scott (1985).}
 \item{"Doane"}{1 + log2(n) + log2(1 + |g| / s) bins, with g the sample
 skewness of the points and s = sqrt(6 (n - 2) / ((n + 1) (n + 3)))
-(Doane, 1976).}
+(Doane 1976).}
+\item{"Freedman.Diaconis"}{bins of width 2 IQR / n^(1/3), with IQR the
+interquartile range of the points (Freedman and Diaconis 1981).}
 \item{"Scott.Normal"}{bins of width 3.49 sd / n^(1/3), with sd the
-standard deviation of the points, for nearly normal data (Scott, 1979).}
+standard deviation of the points (Scott 1979).}
 }
-Freedman-Diaconis and Scott give a bin width, which is turned into a
-number of bins by dividing the range of the points by it. Their width is 0
-when the interquartile range or the standard deviation is 0 (when the
-points are all equal, or for Freedman-Diaconis when their first and third
-quartiles are equal) and undefined for Scott with a single point; the rule
-then gives one bin, with a message. The number of bins of every rule is
-multiplied by \code{drop_fac}.
+The widths of Freedman-Diaconis and Scott are turned into a number of bins
+by dividing the range of the points by them. A width of 0 (all points
+equal, or for Freedman-Diaconis equal first and third quartiles) or an
+undefined width (Scott with a single point) gives one bin, with a message.
 }
 \references{
 Sturges HA (1926). The choice of a class interval. Journal of the

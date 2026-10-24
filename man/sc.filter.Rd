@@ -2,7 +2,7 @@
 % Please edit documentation in R/sc.filter.R
 \name{sc.filter}
 \alias{sc.filter}
-\title{Extract significant genes based on R-Square and P-values}
+\title{List the significant genes}
 \usage{
 sc.filter(
   scmpObj,
@@ -17,48 +17,37 @@ sc.filter(
 \arguments{
 \item{scmpObj}{A \link[=ScMaSigPro-class]{ScMaSigPro} object.}
 
-\item{rsq}{Coefficient of determination or R-squared value threshold.}
+\item{rsq}{The smallest R-squared of the selected model of a gene.}
 
-\item{p_value}{Overall model significance.}
+\item{p_value}{The largest p-value of the selected model of a gene; by
+default that of \code{\link[=sc.p.vector]{sc.p.vector()}}.}
 
-\item{vars}{Variables for which to extract significant genes: "all" (the
-default), "each" or "groups". See details.}
+\item{vars}{\code{"all"}: one list with every gene that passes; \code{"each"}: one
+list per term, with the genes whose term passes \code{term_p_value};
+\code{"groups"}: one list per path, with the genes with a term of that path
+that passes it.}
 
-\item{intercept}{Specify the branching path treated as reference. See details.
-(When \code{vars} equals "groups").}
+\item{intercept}{With \code{vars = "groups"}, the intercept terms that count:
+\code{"dummy"}, the dummies of the paths (the differences of their intercepts
+from the reference); \code{"all"}, these and the intercept of the reference
+path; \code{"none"}, neither (with more than two paths, only the dummy of the
+first path after the reference is left out).}
 
-\item{term_p_value}{Term wise significance.}
+\item{term_p_value}{The largest p-value of a term, for \code{vars = "each"} and
+\code{vars = "groups"}.}
 
 \item{includeInflu}{Whether to keep the genes with influential
 observations (see \code{\link[=showInflu]{showInflu()}}).}
 }
 \value{
 The object with the gene lists in the \code{Significant} slot
-(\link[=Significant-class]{Significant}); earlier clusters are removed.
+(class \link[=Significant-class]{Significant}); earlier clusters are removed.
 }
 \description{
-\code{sc.filter()} creates lists of significant genes based on user-specified
-constraints.
-}
-\details{
-\code{vars} Parameter can take one of the following values:
-\itemize{
-\item \code{"all"}: Generates one gene list with all significant genes.
-\item \code{"each"}: Generates gene list for each term in the polynomial GLM.
-\item \code{"groups"}: Generates gene list for each branching path.
-}
-
-\code{intercept} Parameter modulates the treatment for intercept coefficients to
-apply for selecting significant genes when \code{vars} equals "groups". There are
-three possible values:
-\itemize{
-\item \code{"none"}: No significant intercept (differences) are considered.
-\item \code{"dummy"}: Includes genes with significant intercept differences
-between branching paths.
-\item \code{"all"}: When both significant intercept coefficient for the
-reference path and significant intercept differences are considered for
-selecting significant genes.
-}
+\code{sc.filter()} lists the genes whose selected model (\code{\link[=sc.t.fit]{sc.t.fit()}}) has an
+R-squared of at least \code{rsq} and a p-value of at most \code{p_value}: in one list,
+one list per term or one list per path (\code{vars}), as \code{get.siggenes()} of
+maSigPro does.
 }
 \examples{
 data("scmp.ob", package = "scMaSigPro")

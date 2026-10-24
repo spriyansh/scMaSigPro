@@ -12,7 +12,7 @@ An object of class \code{Significant}: the gene lists of
 returns them per gene.
 }
 \description{
-S4 class to store significantly selected features and their clusters.
+The gene lists of \code{\link[=sc.filter]{sc.filter()}} and the clusters of \code{\link[=sc.cluster.trend]{sc.cluster.trend()}}.
 }
 \details{
 \code{validObject()} checks that every element of \code{genes} is a character
@@ -22,10 +22,10 @@ by gene.
 \section{Slots}{
 
 \describe{
-\item{\code{genes}}{Named list of genes selected based on user-specified thresholds.}
+\item{\code{genes}}{A named list of gene lists.}
 
-\item{\code{clusters}}{Named list of clusters selected based on user-specified
-thresholds.}
+\item{\code{clusters}}{A list with the cluster of each clustered gene, named by
+gene.}
 }}
 
 \examples{

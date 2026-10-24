@@ -1,9 +1,8 @@
-#' @title Plot Bin Sizes Across Binned Time and Paths
+#' @title Plot the sizes of the bins
 #'
 #' @description
-#' This function generates plots to visualize the Dense slot cell metadata
-#' from a ScMaSigPro object. It produces tile plot to display the bin sizes
-#' across different binned time intervals and paths.
+#' `plotBinTile()` draws a tile for each bin, by path and binned pseudotime,
+#' coloured and labelled by its number of cells.
 #'
 #' @return A ggplot object.
 #'

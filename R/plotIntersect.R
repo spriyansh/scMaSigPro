@@ -1,21 +1,17 @@
-#' @title Generate UpSet Plot
+#' @title Plot the overlaps of the gene lists
 #'
 #' @description
-#' Generate UpSet Plot on Intersection of Significant Genes from scMaSigPro
-#' object. It is a wrapper `UpSetR::upset`, so drawing the plot needs the
-#' suggested package 'UpSetR'; `return = TRUE` does not.
+#' `plotIntersect()` draws an UpSet plot of the gene lists of [sc.filter()]
+#' with `UpSetR::upset()`, which needs the suggested package UpSetR, or
+#' returns its data.
+#'
+#' @param min_intersection_size The smallest intersection drawn.
+#' @param keep_empty_groups Whether to draw the empty intersections.
+#' @param width_ratio Not used.
+#' @param show_sets_size Not used.
+#' @param return Whether to return the data instead of the plot.
 #'
 #' @importFrom S4Vectors isEmpty
-#'
-#' @param min_intersection_size Minimal number of observations in an intersection
-#' for it to be included.
-#' @param width_ratio Ratio of the overall set size width to intersection matrix
-#' width.
-#' @param keep_empty_groups Whether empty sets should be kept (including sets
-#' which are only empty after filtering by size)
-#' @param show_sets_size The overall set sizes plot, e.g. from upset_set_size()
-#' @param return If set to true, it will return dataframe from the UpSetR::fromList().
-#' (Default is TRUE)
 #'
 #' @return An `upset` object of UpSetR or, with `return = TRUE`, a data frame
 #' with one row per gene and a 0/1 column per gene list.

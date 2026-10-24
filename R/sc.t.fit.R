@@ -1,35 +1,35 @@
-#' @title Perform stepwise regression fit to select for significant terms.
+#' @title Select the significant terms of each gene
 #'
 #' @description
-#' Performs stepwise regression and selects the significant polynomial terms
-#' from the full polynomial model. This function is succeeded by
-#' \code{scMaSigPro::sc.p.vector()}.
+#' `sc.t.fit()` selects by stepwise regression, as maSigPro does, the
+#' significant terms of the full model of each gene with a non-flat profile
+#' ([sc.p.vector()]), and keeps the coefficients, p-values and t statistics
+#' of the selected models.
+#'
+#' @param selection_method The stepwise method: `"backward"`, `"forward"`,
+#'   `"two.ways.backward"` or `"two.ways.forward"`.
+#' @param p_value The level at which a term enters or stays in a model; by
+#'   default that of [sc.p.vector()].
+#' @param nvar_correction Whether to divide `p_value` by the number of terms
+#'   of the design.
+#' @param family The distribution of the error term, a [stats::family()]
+#'   object; by default the family of [sc.p.vector()], with its link. When
+#'   [sc.p.vector()] estimated one theta per gene (`theta_estimate = "gene"`),
+#'   each gene is fitted with its own theta.
+#' @param link The link of `family`, by default that of [sc.p.vector()]; when
+#'   given, it must be the link of `family`. Choose the link in
+#'   [sc.p.vector()].
+#' @param offset Whether to add the offset of each bin, the logarithm of its
+#'   size factor, which needs the log link. The fits use the offsets that
+#'   [sc.p.vector()] stored in the `Design` slot; when it stored none
+#'   (`offset = FALSE`), they are computed here in the same way.
 #'
 #' @importFrom BiocParallel bplapply bpnworkers SerialParam
 #' @importFrom stats influence.measures
 #'
-#' @param selection_method Method for step-wise regression.
-#' @param p_value Significance level used for variable selection in the stepwise
-#' regression.
-#' @param nvar_correction Argument for correcting significance level. See details.
-#' @param family Distribution of the error term, a \code{\link[stats]{family}}
-#' object. The default is the family that \code{sc.p.vector()} used, with its
-#' link. When \code{sc.p.vector()} estimated one theta per gene
-#' (\code{theta_estimate = "gene"}), each gene is fitted with its own theta.
-#' @param link The link of \code{family}. The default is the link that
-#' \code{sc.p.vector()} used; when given, it must be the link of
-#' \code{family}. Choose the link in \code{sc.p.vector()}.
-#' @param epsilon Model convergence tolerance.
-#' @param offset A logical value specifying whether to use offset during
-#' fitting: the logarithm of the size factor of each bin, which needs the log
-#' link. The fits use the offsets that \code{sc.p.vector()} computed from
-#' every gene it fitted and stored in the `Design` slot; when it stored none
-#' (\code{offset = FALSE}), they are computed here in the same way.
-#' @param max_it Maximum number of iterations to fit the model.
-#'
 #' @return The object with the selected model of each gene with a non-flat
-#' profile in the `Estimate` slot ([Estimates-class]), read by [showSol()]
-#' and the other result readers.
+#' profile in the `Estimate` slot (class [Estimates-class]), read by
+#' [showSol()] and the other result readers.
 #'
 #' @seealso [showSol()] and the other readers of the results;
 #' [Estimates-class].
@@ -55,6 +55,7 @@
 #' @keywords regression models
 #' @family workflow steps
 #' @inheritParams scmp-params
+#' @inheritParams sc.p.vector
 #'
 #' @examples
 #' data("scmp.ob", package = "scMaSigPro")

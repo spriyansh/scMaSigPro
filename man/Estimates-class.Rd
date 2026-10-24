@@ -11,7 +11,7 @@ which \code{\link[=sc.t.fit]{sc.t.fit()}} stores in the \code{Estimate} slot of 
 object. \code{\link[=showSol]{showSol()}} and the other result readers return its matrices.
 }
 \description{
-S4 class to store results of the polynomial term selection from full model.
+The models that \code{\link[=sc.t.fit]{sc.t.fit()}} selected.
 }
 \details{
 \code{validObject()} checks that \code{t_score_matrix} has the shape and rows of
@@ -21,20 +21,21 @@ that every row of \code{significance_matrix} is a row of \code{coefficient_matri
 \section{Slots}{
 
 \describe{
-\item{\code{significance_matrix}}{A matrix storing p-values for each gene per
-polynomial term, R2 and global p-values.}
+\item{\code{significance_matrix}}{For each gene with a significant selected
+model, its p-value and R-squared and the p-value of each term
+(\code{\link[=showSol]{showSol()}}).}
 
-\item{\code{coefficient_matrix}}{A matrix storing beta estimates for each polynomial
-term.}
+\item{\code{coefficient_matrix}}{The coefficients (\code{\link[=showCoeff]{showCoeff()}}).}
 
-\item{\code{path_coefficient_matrix}}{A matrix with the coefficients of each
-branching path.}
+\item{\code{path_coefficient_matrix}}{The coefficients of the polynomial of each
+path (\code{\link[=showGroupCoeff]{showGroupCoeff()}}).}
 
-\item{\code{t_score_matrix}}{A matrix storing the t-scores for each polynomial term.}
+\item{\code{t_score_matrix}}{The t statistics (\code{\link[=showTS]{showTS()}}).}
 
-\item{\code{path}}{A character vector containing the branching path.}
+\item{\code{path}}{The path of the intercept and of each term.}
 
-\item{\code{influential}}{A matrix with genes containing influential data.}
+\item{\code{influential}}{The genes with influential observations
+(\code{\link[=showInflu]{showInflu()}}).}
 }}
 
 \examples{

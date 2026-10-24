@@ -11,7 +11,7 @@ of each gene, which \code{\link[=sc.p.vector]{sc.p.vector()}} stores in the \cod
 \link[=ScMaSigPro-class]{ScMaSigPro} object. \code{\link[=scmpResults]{scmpResults()}} returns its p-values.
 }
 \description{
-S4 class to store results of the global model fitting for all the features.
+The test of the full model of each gene by \code{\link[=sc.p.vector]{sc.p.vector()}}.
 }
 \details{
 \code{validObject()} checks that \code{p_values} and \code{adj_p_values} have the same
@@ -21,15 +21,14 @@ in \code{non_flat} is named in \code{p_values}.
 \section{Slots}{
 
 \describe{
-\item{\code{non_flat}}{A character vector of gene names marked as non-flat profiles.}
+\item{\code{non_flat}}{The genes with a non-flat profile.}
 
-\item{\code{p_values}}{A numeric vector containing the computed p-values for
-non-flat profiles.}
+\item{\code{p_values}}{The p-value of every fitted gene, named by gene.}
 
-\item{\code{adj_p_values}}{A numeric vector containing the computed adjusted
-p-values for non-flat profiles.}
+\item{\code{adj_p_values}}{The adjusted p-values, in the same order.}
 
-\item{\code{fdr}}{False Discovery Rate (FDR) value for the given significance level.}
+\item{\code{fdr}}{The largest p-value of the genes with a non-flat profile, empty
+when there is none.}
 }}
 
 \examples{

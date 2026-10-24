@@ -1,33 +1,35 @@
-#' @title Plot trend of the single gene.
+#' @title Plot the trend of a gene
 #'
 #' @description
-#' Plot trend of the single gene across the binned pseudotime.
+#' `plotTrend()` plots the pseudo-bulk counts of a gene along the binned
+#' pseudotime of each path, with the curves of its selected model
+#' ([sc.t.fit()]).
+#'
+#' @param xlab The label of the x axis.
+#' @param ylab The label of the y axis; with logged points it becomes, for
+#'   example, `log(ylab)`.
+#' @param smoothness The step of the pseudotime grid of the curves: the
+#'   smaller, the smoother.
+#' @param logs Whether to log the points: the counts of the bins, divided,
+#'   for log-link fits, by the size factors stored in the design. The fitted
+#'   curve is the polynomial of the selected model on the scale of the link:
+#'   the log of the mean under the log link, the mean itself under the
+#'   identity link. The default, `NULL`, logs the points when the fits used
+#'   the log link and draws them as they are otherwise, so that points and
+#'   curve are on the same scale.
+#' @param logType The log of the points: `"log"`, `"log2"` or `"log10"`.
+#' @param pseudoCount The number added to the points before the log.
+#' @param significant Whether the gene must be in a gene list of
+#'   [sc.filter()].
+#' @param summary_mode How the points of each binned pseudotime and path are
+#'   summarised for the lines: `"median"` or `"mean"`.
+#' @param curves Whether to draw the fitted curves.
+#' @param lines Whether to draw lines through the points.
+#' @param points Whether to draw the points.
 #'
 #' @importFrom ggplot2 aes element_blank element_line geom_line geom_point
 #'   ggplot ggtitle labs scale_color_manual scale_x_continuous theme
 #'   theme_classic xlab ylab
-#'
-#' @param xlab X-axis label. (Default is "Pooled Pseudotime")
-#' @param ylab Y-axis label. (Default is "Pseudobulk Expression")
-#' @param smoothness How smooth the trend should be. Setting to
-#' higher values will result in more linear trends. (Default is 0.01)
-#' @param logs Whether to log the points: the counts of the bins, divided,
-#' for log-link fits, by the size factors stored in the design. The fitted
-#' curve is the polynomial of the selected model on the scale of the link:
-#' the log of the mean under the log link, the mean itself under the
-#' identity link. The default, \code{NULL}, logs the points when the fits
-#' used the log link and draws them as they are otherwise, so that points
-#' and curve are on the same scale.
-#' @param logType How to log transform the values. Available options 'log',
-#' 'log2', 'log10'. (Default is 'log')
-#' @param pseudoCount Add a pseudo-count before taking the log. (Default is 1)
-#' @param significant Plot gene only if the models are significant based on
-#' \code{scMaSigPro::sc.filter()}. (Default is TRUE)
-#' @param summary_mode Compress the expression values per replicate (if present)
-#'  per binned pseudotime point. Default is 'median'. Other option 'mean'
-#' @param curves Whether to plot the fitted curves. (Default is TRUE)
-#' @param lines Whether to plot the lines. (Default is FALSE)
-#' @param points Whether to plot the points. (Default is TRUE)
 #'
 #' @return A ggplot object.
 #'

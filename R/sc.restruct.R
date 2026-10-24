@@ -1,19 +1,20 @@
-#' @title Restructure the binned data.
+#' @title Restructure the bins of paths that share a root
 #'
 #' @description
-#' `sc.restruct()` rebuilds the binned data so that every end path starts at
-#' the root: the bins of each link node are added to the paths it links, the
-#' root bins are added to every end node, the binned pseudotime of the later
-#' bins is shifted to follow them, and the pseudo-bulk counts are recomputed
-#' with [pb_counts()].
+#' `sc.restruct()` rebuilds the bins so that every end path starts at the
+#' root: the bins of each link path are added to the end paths it links, the
+#' bins of the root to every end path, the binned pseudotime of the later
+#' bins is shifted to follow them, and [pb_counts()] recomputes the
+#' pseudo-bulk counts.
 #'
-#' @param end_node_list A list of end nodes in of the branch.
-#' @param root_node A character string specifying the root node.
-#' @param link_node_list A list of links between two nodes.
-#' @param link_sep A character string that separates the two nodes in the
-#' label of a link node. It is matched as fixed text when the label contains
-#' it, and as a regular expression otherwise, so `"|"` and `"\\|"` both work.
-#' (Default = `"_links_"`)
+#' @param end_node_list A list of the labels of the end paths.
+#' @param root_node The label of the root path.
+#' @param link_node_list A list of the labels of the link paths, the segments
+#'   that some end paths share; a label holds the labels of the paths it
+#'   links, separated by `link_sep`.
+#' @param link_sep The separator in the labels of the link paths, matched as
+#'   fixed text when the label contains it and as a regular expression
+#'   otherwise, so `"|"` and `"\\|"` both work.
 #'
 #' @return The object with the bins of every end path, from the root on,
 #' and their pseudo-bulk counts in the `Dense` slot.

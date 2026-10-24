@@ -1,39 +1,28 @@
-#' @title Extract significant genes based on R-Square and P-values
+#' @title List the significant genes
 #'
 #' @description
-#' `sc.filter()` creates lists of significant genes based on user-specified
-#' constraints.
+#' `sc.filter()` lists the genes whose selected model ([sc.t.fit()]) has an
+#' R-squared of at least `rsq` and a p-value of at most `p_value`: in one list,
+#' one list per term or one list per path (`vars`), as `get.siggenes()` of
+#' maSigPro does.
 #'
-#' @param rsq Coefficient of determination or R-squared value threshold.
-#' @param p_value Overall model significance.
-#' @param term_p_value Term wise significance.
-#' @param vars Variables for which to extract significant genes: "all" (the
-#' default), "each" or "groups". See details.
-#' @param intercept Specify the branching path treated as reference. See details.
-#' (When `vars` equals "groups").
-#'
-#' @details
-#' `vars` Parameter can take one of the following values:
-#' \itemize{
-#'   \item \code{"all"}: Generates one gene list with all significant genes.
-#'   \item \code{"each"}: Generates gene list for each term in the polynomial GLM.
-#'   \item \code{"groups"}: Generates gene list for each branching path.
-#' }
-#'
-#' `intercept` Parameter modulates the treatment for intercept coefficients to
-#' apply for selecting significant genes when `vars` equals "groups". There are
-#' three possible values:
-#'  \itemize{
-#'   \item \code{"none"}: No significant intercept (differences) are considered.
-#'   \item \code{"dummy"}: Includes genes with significant intercept differences
-#'   between branching paths.
-#'   \item \code{"all"}: When both significant intercept coefficient for the
-#'   reference path and significant intercept differences are considered for
-#'    selecting significant genes.
-#' }
+#' @param rsq The smallest R-squared of the selected model of a gene.
+#' @param p_value The largest p-value of the selected model of a gene; by
+#'   default that of [sc.p.vector()].
+#' @param term_p_value The largest p-value of a term, for `vars = "each"` and
+#'   `vars = "groups"`.
+#' @param vars `"all"`: one list with every gene that passes; `"each"`: one
+#'   list per term, with the genes whose term passes `term_p_value`;
+#'   `"groups"`: one list per path, with the genes with a term of that path
+#'   that passes it.
+#' @param intercept With `vars = "groups"`, the intercept terms that count:
+#'   `"dummy"`, the dummies of the paths (the differences of their intercepts
+#'   from the reference); `"all"`, these and the intercept of the reference
+#'   path; `"none"`, neither (with more than two paths, only the dummy of the
+#'   first path after the reference is left out).
 #'
 #' @return The object with the gene lists in the `Significant` slot
-#' ([Significant-class]); earlier clusters are removed.
+#' (class [Significant-class]); earlier clusters are removed.
 #'
 #' @seealso [plotIntersect()] for the overlaps of the lists;
 #' [Significant-class].

@@ -1,26 +1,24 @@
-#' @title Set up polynomial models and create Predictor Matrix
+#' @title Set up the polynomial design
 #'
 #' @description
-#' Set up polynomial models and create Predictor Matrix that will contain the
-#' independent variables: the design of the maSigPro model (Conesa et al.
-#' 2006), with a dummy for every path but the first, the reference, and its
-#' products with each power of the binned pseudotime up to `poly_degree`.
+#' `sc.set.poly()` builds the design of the maSigPro model (Conesa et al.
+#' 2006): a 0/1 dummy for every path but the first, the reference, and the
+#' products of each dummy with each power of the binned pseudotime up to
+#' `poly_degree`.
 #'
 #' The reference is `reference` when it is given. Otherwise it is the first
-#' path of the `Dense` slot: after [sc.squeeze()], the first level of the path
-#' column when it is a factor and else the first path label in C-locale
-#' (byte) order, whatever the locale of the session; after [sc.restruct()],
-#' the first path of `end_node_list`; with bins given to [create_scmp()] or
-#' \code{\link{cDense<-}}, the path of the first bin. The other paths keep the
-#' order of the `Dense` slot.
+#' path of the `Dense` slot: after [sc.squeeze()], the first level of a factor
+#' path column, or else the first label in C-locale (byte) order; after
+#' [sc.restruct()], the first path of `end_node_list`; with bins given to
+#' [create_scmp()] or [cDense()], the path of the first bin. The other paths
+#' keep the order of the `Dense` slot.
 #'
-#' @param poly_degree Degree of the polynomial.
+#' @param poly_degree The degree of the polynomial in pseudotime.
 #' @param reference The reference path, one of the path labels of the `Dense`
-#' slot, or `NULL` (default) for the first path of the `Dense` slot. See
-#' Description.
+#'   slot, or `NULL` for the first path.
 #'
 #' @return The object with the design in the `Design` slot
-#' ([MatrixDesign-class]).
+#' (class [MatrixDesign-class]).
 #'
 #' @seealso [showPoly()], [predictors()] and [pathAssign()], which read the
 #' design; [MatrixDesign-class].

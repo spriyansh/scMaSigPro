@@ -1,32 +1,31 @@
 #' @title Update an ScMaSigPro object to the current class definition
 #'
 #' @description
-#' `updateObject()` brings an \code{\link{ScMaSigPro}} object saved by an
-#' earlier version of \pkg{scMaSigPro}, for example with `saveRDS()` or
-#' `save()`, up to date. Call it on such an object after `readRDS()` or
-#' `load()`, before the next step of the workflow.
+#' `updateObject()` brings a [ScMaSigPro-class] object saved by an earlier
+#' version of scMaSigPro, for example with `saveRDS()` or `save()`, up to
+#' date. Call it on such an object after `readRDS()` or `load()`, before the
+#' next step of the workflow.
 #'
-#' @param object An object of class \code{\link{ScMaSigPro}}.
-#' @param ... Additional arguments, passed to the `updateObject()` methods of
-#' the `Sparse` and `Dense` slots.
-#' @param verbose Print a message when the object is updated. (Default is
-#' FALSE)
+#' @param object A [ScMaSigPro-class] object.
+#' @param ... Passed to the `updateObject()` methods of the `Sparse` and
+#'   `Dense` slots.
+#' @param verbose Whether to print a message when the object is updated.
 #'
 #' @details
 #' Objects saved before the `version` slot was added (scMaSigPro 0.0.5 and
 #' earlier) fail `validObject()`; `updateObject()` adds the slot with the
-#' version of the package that is running. For every object, the `Sparse`
-#' and `Dense` slots are passed to the `updateObject()` method of
-#' \pkg{SingleCellExperiment}, and the result is checked with
-#' `validObject()`. A current object, such as one created by this version
-#' of the package, is returned unchanged.
+#' version of the package that is running. For every object, the `Sparse` and
+#' `Dense` slots are passed to the `updateObject()` method of
+#' SingleCellExperiment, and the result is checked with `validObject()`. A
+#' current object, such as one created by this version of the package, is
+#' returned unchanged.
 #'
-#' Objects saved before the `min_counts` and `min_bins_expressed`
-#' parameters existed get both set to 0, the values that keep every gene
-#' ([sc.p.vector()] had no such filter then), and the version of the
-#' package that is running.
+#' Objects saved before the `min_counts` and `min_bins_expressed` parameters
+#' existed get both set to 0, the values that keep every gene
+#' ([sc.p.vector()] had no such filter then), and the version of the package
+#' that is running.
 #'
-#' Objects saved before the `test` parameter existed get it set to "chisq",
+#' Objects saved before the `test` parameter existed get it set to `"chisq"`,
 #' the test of [sc.p.vector()] then, and the version of the package that is
 #' running.
 #'
@@ -62,7 +61,7 @@
 #' ob <- updateObject(readRDS(path))
 #' unlink(path)
 #'
-#' @seealso \code{\link{ScMaSigPro}}
+#' @seealso [ScMaSigPro-class]
 #'
 #' @importFrom S4Vectors updateObject
 #' @importFrom methods .hasSlot

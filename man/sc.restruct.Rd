@@ -2,7 +2,7 @@
 % Please edit documentation in R/sc.restruct.R
 \name{sc.restruct}
 \alias{sc.restruct}
-\title{Restructure the binned data.}
+\title{Restructure the bins of paths that share a root}
 \usage{
 sc.restruct(
   scmpObj,
@@ -18,11 +18,13 @@ sc.restruct(
 \arguments{
 \item{scmpObj}{A \link[=ScMaSigPro-class]{ScMaSigPro} object.}
 
-\item{end_node_list}{A list of end nodes in of the branch.}
+\item{end_node_list}{A list of the labels of the end paths.}
 
-\item{root_node}{A character string specifying the root node.}
+\item{root_node}{The label of the root path.}
 
-\item{link_node_list}{A list of links between two nodes.}
+\item{link_node_list}{A list of the labels of the link paths, the segments
+that some end paths share; a label holds the labels of the paths it
+links, separated by \code{link_sep}.}
 
 \item{assay_name}{The name of the assay of the \code{Sparse} slot that holds
 the counts of the cells.}
@@ -30,10 +32,9 @@ the counts of the cells.}
 \item{aggregate}{How the counts of the cells of a bin are combined: \code{"sum"}
 or \code{"mean"} (rounded to whole numbers).}
 
-\item{link_sep}{A character string that separates the two nodes in the
-label of a link node. It is matched as fixed text when the label contains
-it, and as a regular expression otherwise, so \code{"|"} and \code{"\\\\|"} both work.
-(Default = \code{"_links_"})}
+\item{link_sep}{The separator in the labels of the link paths, matched as
+fixed text when the label contains it and as a regular expression
+otherwise, so \code{"|"} and \code{"\\\\|"} both work.}
 
 \item{verbose}{Whether to print progress messages.}
 }
@@ -42,11 +43,11 @@ The object with the bins of every end path, from the root on,
 and their pseudo-bulk counts in the \code{Dense} slot.
 }
 \description{
-\code{sc.restruct()} rebuilds the binned data so that every end path starts at
-the root: the bins of each link node are added to the paths it links, the
-root bins are added to every end node, the binned pseudotime of the later
-bins is shifted to follow them, and the pseudo-bulk counts are recomputed
-with \code{\link[=pb_counts]{pb_counts()}}.
+\code{sc.restruct()} rebuilds the bins so that every end path starts at the
+root: the bins of each link path are added to the end paths it links, the
+bins of the root to every end path, the binned pseudotime of the later
+bins is shifted to follow them, and \code{\link[=pb_counts]{pb_counts()}} recomputes the
+pseudo-bulk counts.
 }
 \examples{
 data("multi.lin.sce", package = "scMaSigPro")

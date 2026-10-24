@@ -2,7 +2,7 @@
 % Please edit documentation in R/sc.set.poly.R
 \name{sc.set.poly}
 \alias{sc.set.poly}
-\title{Set up polynomial models and create Predictor Matrix}
+\title{Set up the polynomial design}
 \usage{
 sc.set.poly(
   scmpObj,
@@ -15,7 +15,7 @@ sc.set.poly(
 \arguments{
 \item{scmpObj}{A \link[=ScMaSigPro-class]{ScMaSigPro} object.}
 
-\item{poly_degree}{Degree of the polynomial.}
+\item{poly_degree}{The degree of the polynomial in pseudotime.}
 
 \item{bin_ptime_col}{The name of the column of the bin metadata that holds
 the binned pseudotime of each bin.}
@@ -24,26 +24,24 @@ the binned pseudotime of each bin.}
 holds the path label of each cell or bin.}
 
 \item{reference}{The reference path, one of the path labels of the \code{Dense}
-slot, or \code{NULL} (default) for the first path of the \code{Dense} slot. See
-Description.}
+slot, or \code{NULL} for the first path.}
 }
 \value{
 The object with the design in the \code{Design} slot
-(\link[=MatrixDesign-class]{MatrixDesign}).
+(class \link[=MatrixDesign-class]{MatrixDesign}).
 }
 \description{
-Set up polynomial models and create Predictor Matrix that will contain the
-independent variables: the design of the maSigPro model (Conesa et al.
-2006), with a dummy for every path but the first, the reference, and its
-products with each power of the binned pseudotime up to \code{poly_degree}.
+\code{sc.set.poly()} builds the design of the maSigPro model (Conesa et al.
+2006): a 0/1 dummy for every path but the first, the reference, and the
+products of each dummy with each power of the binned pseudotime up to
+\code{poly_degree}.
 
 The reference is \code{reference} when it is given. Otherwise it is the first
-path of the \code{Dense} slot: after \code{\link[=sc.squeeze]{sc.squeeze()}}, the first level of the path
-column when it is a factor and else the first path label in C-locale
-(byte) order, whatever the locale of the session; after \code{\link[=sc.restruct]{sc.restruct()}},
-the first path of \code{end_node_list}; with bins given to \code{\link[=create_scmp]{create_scmp()}} or
-\code{\link{cDense<-}}, the path of the first bin. The other paths keep the
-order of the \code{Dense} slot.
+path of the \code{Dense} slot: after \code{\link[=sc.squeeze]{sc.squeeze()}}, the first level of a factor
+path column, or else the first label in C-locale (byte) order; after
+\code{\link[=sc.restruct]{sc.restruct()}}, the first path of \code{end_node_list}; with bins given to
+\code{\link[=create_scmp]{create_scmp()}} or \code{\link[=cDense]{cDense()}}, the path of the first bin. The other paths
+keep the order of the \code{Dense} slot.
 }
 \examples{
 data("scmp.ob", package = "scMaSigPro")
