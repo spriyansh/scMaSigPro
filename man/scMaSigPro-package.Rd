@@ -80,6 +80,7 @@ bioconductor package for RNA-seq time series. Bioinformatics 30(18),
 Useful links:
 \itemize{
   \item \url{https://github.com/BioBam/scMaSigPro/}
+  \item \url{https://spriyansh.github.io/scMaSigPro/}
   \item Report bugs at \url{https://github.com/BioBam/scMaSigPro/issues}
 }
 
