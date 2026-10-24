@@ -128,3 +128,16 @@ test_that("the Gaussian family has the F test with either value", {
     }
     expect_identical(gauss("F"), gauss("chisq"))
 })
+
+test_that("the test is kept in the test parameter", {
+    design <- splat_design(2)
+    expect_identical(design@Parameters@test, "chisq")
+    expect_identical(splat_fitted("default")@Parameters@test, "chisq")
+    f <- sc.p.vector(design, test = "F", verbose = FALSE)
+    expect_identical(f@Parameters@test, "F")
+    # sc.t.fit() keeps it, and showParams() lists it
+    f <- sc.t.fit(f, verbose = FALSE)
+    expect_identical(f@Parameters@test, "F")
+    params <- showParams(f)
+    expect_identical(params$value[params$parameters == "test"], "F")
+})

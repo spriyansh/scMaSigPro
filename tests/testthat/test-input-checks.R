@@ -481,6 +481,19 @@ test_that("test is 'chisq' or 'F', and 'F' needs an estimated dispersion", {
     )
 })
 
+test_that("an object saved before the test parameter stops before any work", {
+    old <- splat_clustered()
+    params <- old@Parameters
+    attr(params, "test") <- NULL
+    old@Parameters <- params
+    for (f in calls_on(old, splat_sig_gene())) {
+        expect_error(f(), "update it with updateObject() first.",
+            fixed = TRUE
+        )
+    }
+    expect_output(print(old), "update it with updateObject()", fixed = TRUE)
+})
+
 test_that("theta_estimate is one of three values (decision D16)", {
     design <- splat_design(2)
     for (bad in list("each", c("gene", "global"), NA_character_, 1)) {

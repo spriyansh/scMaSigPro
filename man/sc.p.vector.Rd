@@ -91,7 +91,8 @@ on the residual degrees of freedom of the full model: the F test of
 \code{\link[stats:anova.glm]{stats::anova.glm()}}. With the Gaussian family both values give the F
 test, the test of maSigPro for that family. \code{"F"} needs a family
 whose dispersion is estimated, so not \code{\link[stats:binomial]{stats::binomial()}} or
-\code{\link[stats:poisson]{stats::poisson()}}. See Details.}
+\code{\link[stats:poisson]{stats::poisson()}}. The value is kept in the \code{test} parameter. See
+Details.}
 
 \item{BPPARAM}{A \code{BiocParallelParam} object that runs the per-gene
 fits, such as

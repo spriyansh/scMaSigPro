@@ -55,7 +55,8 @@
 #' [stats::anova.glm()]. With the Gaussian family both values give the F
 #' test, the test of maSigPro for that family. \code{"F"} needs a family
 #' whose dispersion is estimated, so not [stats::binomial()] or
-#' [stats::poisson()]. See Details.
+#' [stats::poisson()]. The value is kept in the `test` parameter. See
+#' Details.
 #' @param epsilon Model convergence tolerance.
 #' @param offset logical value specifying whether to use offset during fitting.
 #' The offset of each bin, the logarithm of its size factor (see Details), is
@@ -350,6 +351,7 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
     scmpObj@Parameters@min_bins_expressed <- as.numeric(min_bins_expressed)
     scmpObj@Parameters@g <- g
     scmpObj@Parameters@mt_correction <- mt_correction
+    scmpObj@Parameters@test <- test
     scmpObj@Parameters@epsilon <- epsilon
     scmpObj@Parameters@distribution <- family
     scmpObj@Parameters@link <- link
