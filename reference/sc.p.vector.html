@@ -88,6 +88,7 @@ model.</p>
 <span>  max_it <span class="op">=</span> <span class="fl">100</span>,</span>
 <span>  link <span class="op">=</span> <span class="st">"log"</span>,</span>
 <span>  theta_estimate <span class="op">=</span> <span class="st">"none"</span>,</span>
+<span>  test <span class="op">=</span> <span class="st">"chisq"</span>,</span>
 <span>  BPPARAM <span class="op">=</span> <span class="fu">SerialParam</span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -178,6 +179,23 @@ gene with the median of these estimates. The estimates are kept in the
 <code>theta_gene</code> holds one per gene and <code>theta_estimate</code> the choice.</p></dd>
 
 
+<dt id="arg-test">test<a class="anchor" aria-label="anchor" href="#arg-test"></a></dt>
+<dd><p>The test of each gene's full model against its intercept-only
+model: <code>"chisq"</code> (the default) or <code>"F"</code>. Both divide the
+difference in deviance between the two models by the dispersion of the
+full model, which, for the negative binomial and Gaussian families, is
+estimated as its Pearson statistic divided by its residual degrees of
+freedom. <code>"chisq"</code> compares the result with the chi-squared
+distribution, as maSigPro does. <code>"F"</code> also divides it by the
+difference in degrees of freedom and compares it with the F distribution
+on the residual degrees of freedom of the full model: the F test of
+<code><a href="https://rdrr.io/r/stats/anova.glm.html" class="external-link">stats::anova.glm()</a></code>. With the Gaussian family both values give the F
+test, the test of maSigPro for that family. <code>"F"</code> needs a family
+whose dispersion is estimated, so not <code><a href="https://rdrr.io/r/stats/family.html" class="external-link">stats::binomial()</a></code> or
+<code><a href="https://rdrr.io/r/stats/family.html" class="external-link">stats::poisson()</a></code>. The value is kept in the <code>test</code> parameter. See
+Details.</p></dd>
+
+
 <dt id="arg-bpparam">BPPARAM<a class="anchor" aria-label="anchor" href="#arg-bpparam"></a></dt>
 <dd><p>A <code>BiocParallelParam</code> object that runs the per-gene
 fits, such as
@@ -220,6 +238,19 @@ factors of the offset are computed before <code>min_counts</code> and
 <code>min_bins_expressed</code> are applied, on every gene left by the first two
 rules, so these two filters change the results of the genes they keep
 only through the multiple-testing correction.</p>
+<p>The test of the full model is the first step of the method of Srivastava
+et al. (2024), Section 2.4: "scMaSigPro implements a two-step strategy
+similar to the maSigPro method", in which the full model of each gene is
+"evaluated against a simpler intercept-only model via hypothesis testing
+based on the log-likelihood ratio statistic". The default,
+<code>test = "chisq"</code>, is that test, as maSigPro computes it for families
+other than the Gaussian: the statistic is divided by the estimated
+dispersion and compared with the chi-squared distribution, as if the
+dispersion were known. With few bins, and so few residual degrees of
+freedom, the estimate varies from gene to gene and the test calls more
+genes significant than its level. <code>test = "F"</code>, the quasi-likelihood F
+test, accounts for the estimation of the dispersion through the residual
+degrees of freedom of the F distribution.</p>
     </div>
     <div id="references">
     <h2>References</h2>

@@ -78,7 +78,8 @@ as the analysis progresses.</p>
     <h2>Details</h2>
     <p><code>validObject()</code> checks that every slot except <code>distribution</code> holds a
 single non-missing value, that <code>min_counts</code> and <code>min_bins_expressed</code> are
-at least 0 and that <code>distribution</code> is a <code><a href="https://rdrr.io/r/stats/family.html" class="external-link">stats::family()</a></code> object.</p>
+at least 0, that <code>test</code> is "chisq" or "F" and that <code>distribution</code> is a
+<code><a href="https://rdrr.io/r/stats/family.html" class="external-link">stats::family()</a></code> object.</p>
     </div>
     <div id="slots">
     <h2>Slots</h2>
@@ -210,6 +211,12 @@ clustering.</p></dd>
 <dt><code>min_bins_expressed</code></dt>
 <dd><p>The minimum number of bins with a count above 0
 that <code><a href="sc.p.vector.html">sc.p.vector()</a></code> required of a feature (0: no minimum).</p></dd>
+
+
+<dt><code>test</code></dt>
+<dd><p>The test of the full model of each feature that <code><a href="sc.p.vector.html">sc.p.vector()</a></code>
+was asked for: "chisq" (the default), the chi-squared test, or "F", the F
+test.</p></dd>
 
 
 </dl></div>
