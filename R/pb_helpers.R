@@ -280,6 +280,9 @@ extract_fitting <- function(reg, lmf, model.glm.0, dis, family, name, vars.in, a
             p.value <- test[5][2, 1]
         }
         # Computing goodness of fitting:
+        # Why: the R-squared of a GLM is the share of the null deviance
+        # that the model explains; a model worse than the intercept counts
+        # as 0.
         bondad <- (reg$null.deviance - reg$deviance) / reg$null.deviance
         if (bondad < 0) {
             bondad <- 0

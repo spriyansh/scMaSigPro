@@ -80,6 +80,8 @@ sc.filter <- function(scmpObj,
     # Extract sol
     sol <- showSol(scmpObj, includeInflu = includeInflu)
 
+    # Why: a gene without a p-value or R-squared must fail the
+    # thresholds below.
     # Replace the NAs with corresponding values
     sol[is.na(sol$`p-value`), "p-value"] <- 1
     sol[is.na(sol$`R-squared`), "R-squared"] <- 0

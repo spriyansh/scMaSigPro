@@ -151,6 +151,7 @@ sc.squeeze <- function(scmpObj,
             "Please review the 'path_col' parameter."
         )
     )
+    # Why: Section 2.1 of the paper bounds the drop factor below by 0.3.
     .check(drop_fac >= 0.3,
         msg = "Invalid value for 'drop_fac'. It should be at least 0.3."
     )
@@ -213,7 +214,7 @@ sc.squeeze <- function(scmpObj,
     # Order the paths: by the levels of a factor, as model formulas do, and
     # otherwise by the bytes of the labels (the C locale) in every locale:
     # order() alone follows the session's collation, which put "root" first
-    # in en_US and after "Y_15" in C (ledger L1)
+    # in en_US and after "Y_15" in C
     path_values <- raw_cell_metadata[[path_col]]
     if (is.factor(path_values)) {
         avail.paths <- intersect(levels(path_values), avail.paths)
@@ -265,6 +266,8 @@ sc.squeeze <- function(scmpObj,
         # Calculate Optimal Number of Bins
         tryCatch(
             expr = {
+                # Why: Supplementary Section S1.1 of the paper rounds the
+                # rule times the drop factor up.
                 estBins <- ceiling(estBinSize(
                     time_vector = time_vector, nPoints = length_n,
                     drop_fac = drop_factor, bin_method = method.bin

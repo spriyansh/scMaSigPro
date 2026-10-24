@@ -131,6 +131,8 @@ sc.t.fit <- function(scmpObj,
     influ.info <- matrix(NA, nrow = nrow(dis), ncol = 1)
     rownames(influ.info) <- rownames(dis)
 
+    # Why: a Bonferroni correction for the number of terms tested in
+    # each gene.
     if (nvar_correction) {
         p_value <- p_value / ncol(dis)
     }

@@ -152,7 +152,7 @@ plotTrend <- function(scmpObj,
     return(p)
 }
 
-# The default of `logs` in plotTrend() and plotTrendCluster() (ledger LK-1):
+# The default of `logs` in plotTrend() and plotTrendCluster():
 # the curve is the polynomial on the scale of the link, so the points are
 # logged when the fits used the log link and left as they are otherwise.
 # The link is that of the functions of the family, so an object fitted by an
@@ -264,6 +264,8 @@ plotTrend <- function(scmpObj,
     use_offset <- isTRUE(scmpObj@Parameters@offset) &&
         length(offset_vector) > 0L && .log_link_fits(scmpObj)
     if (use_offset) {
+        # Why: the curve is the model without the offset, the mean at a
+        # size factor of 1, so the points are scaled to that depth too.
         points.df["pb.counts"] <- points.df["pb.counts"] / exp(offset_vector)
     }
 

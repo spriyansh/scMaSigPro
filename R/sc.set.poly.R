@@ -87,6 +87,9 @@ sc.set.poly <- function(scmpObj,
     }
 
     # Add Dummy Variables
+    # Why: one 0/1 column per path; .poly_design() drops that of the
+    # reference, so the terms of another path measure its difference
+    # from the reference.
     for (i in avail.paths) {
         com.cell.meta[[i]] <- ifelse(com.cell.meta[[path_col]] %in% i, 1, 0)
     }

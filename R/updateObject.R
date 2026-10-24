@@ -84,7 +84,7 @@ setMethod("updateObject", "ScMaSigPro", function(object, ...,
         }
         object@version <- .scmp_version()
     }
-    # Saved before the count filter of sc.p.vector() (decision D17)
+    # Saved before the count filter of sc.p.vector()
     params <- object@Parameters
     missing_params <- c("min_counts", "min_bins_expressed")
     missing_params <- missing_params[
@@ -134,7 +134,7 @@ setMethod("updateObject", "ScMaSigPro", function(object, ...,
         }
         object@version <- .scmp_version()
     }
-    # Fitted with a relabelled family (ledger LK-4)
+    # Fitted with a relabelled family
     if (.relabelled(object@Parameters@distribution)) {
         warning(.relabelled_message(object@Parameters@distribution),
             call. = FALSE

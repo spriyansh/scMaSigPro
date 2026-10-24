@@ -190,7 +190,7 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
         msg = "link function should be either 'log' or 'identity'"
     )
 
-    # The fits use the link functions of the family (ledger S6)
+    # The fits use the link functions of the family
     family <- .fit_family(family, link, link_given, offset)
     link <- family$link
     theta_estimate <- .check_choice(theta_estimate,
@@ -238,7 +238,7 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
     # Removing rows with many missings and rows with all zeros
     dat <- .fit_genes(dat, min_na)
 
-    # The count filter (decision D17). It is applied after the size factors
+    # The count filter. It is applied after the size factors
     # below, so it changes the results of the genes it keeps only through
     # the multiple-testing correction; a threshold of 0 keeps every gene
     keep <- rep(TRUE, nrow(dat))
@@ -251,6 +251,9 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
 
     # The offset of each bin: the logarithm of its size factor (Srivastava
     # et al. (2024), Section 2.3), computed once here for sc.t.fit() too
+    # Why: under the log link, log(s) in the linear predictor multiplies
+    # the mean of a bin by its size factor s, so the genes are compared at
+    # equal depth; sc.t.fit() reuses the same offsets.
     if (offset) {
         offsetData <- .bin_offset(dat)
         scmpObj@Design@offset <- offsetData
@@ -281,7 +284,7 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
         )
     }
 
-    # Estimated theta (decision D16): one per gene on its full model, then
+    # Estimated theta: one per gene on its full model, then
     # each gene's own (gene) or their median (global)
     theta_gene <- NULL
     if (theta_estimate != "none") {
@@ -330,6 +333,8 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
     }
     #----------------------------------------------------------------------
     # Correct p-values using FDR correction and select significant genes
+    # Why: every fitted gene is tested; the correction (Benjamini and
+    # Hochberg by default) runs over the fitted genes only.
     p.adjusted <- unlist(
         p.adjust(sc.p.vector,
             method = mt_correction,
@@ -339,6 +344,8 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
     )
     names(p.adjusted) <- names(sc.p.vector)
     genes.selected <- rownames(dat)[which(p.adjusted <= p_value)]
+    # Why: the correction keeps the order of the p-values, so the selected
+    # genes have the smallest ones and this is the largest of them.
     FDR <- sort(sc.p.vector)[length(genes.selected)]
 
     # Subset the expression values of significant genes
@@ -383,10 +390,10 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
 
 # The family of the fits of sc.p.vector() and sc.t.fit(). glm() uses the
 # link functions of a family (linkfun, linkinv, mu.eta), so a family is used
-# with its own link, and renaming its `link` entry would only relabel it
-# (ledger S6). A relabelled family, such as the one an object fitted with
-# link = "identity" by scMaSigPro 0.0.5 or earlier holds, is refused (ledger
-# LK-4). `link`, when given, must be the link of the family. The size-factor
+# with its own link, and renaming its `link` entry would only relabel it.
+# A relabelled family, such as the one an object fitted with
+# link = "identity" by scMaSigPro 0.0.5 or earlier holds, is refused.
+# `link`, when given, must be the link of the family. The size-factor
 # offset is added to the linear predictor, where it scales the mean under
 # the log link only, so offset = TRUE needs the log link.
 .fit_family <- function(family, link, link_given, offset) {
@@ -452,7 +459,7 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
 
 # TRUE for a family whose link functions are those of another link than its
 # label: earlier versions renamed the link of a family without changing its
-# functions (ledger S6), so an object fitted by them with a link other than
+# functions, so an object fitted by them with a link other than
 # the family's holds such a family
 .relabelled <- function(family) {
     if (!inherits(family, "family")) {
@@ -519,6 +526,8 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
         maxit = max_it
     )
     sc_p_val <- NA
+    # Why: when the intercept-only model fits exactly, the full model
+    # explains nothing more.
     if (model.glm$null.deviance == 0) {
         sc_p_val <- 1
     } else {
@@ -530,6 +539,8 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
 
         # Perform ANOVA or Chi-square test based on the distribution
         if (family$family == "gaussian") {
+            # Why: the Gaussian family estimates its variance, and the F test
+            # takes that estimate into account.
             test <- anova(model.glm.0, model.glm, test = "F")
             sc_p_val <- ifelse(is.na(test[6][2, 1]), 1, test[6][2, 1])
         } else if (f_test) {
@@ -539,6 +550,9 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
             p <- if ("Pr(>F)" %in% names(test)) test[2L, "Pr(>F)"] else NA
             sc_p_val <- ifelse(is.na(p), 1, p)
         } else {
+            # Why: the log-likelihood ratio test of Section 2.4 of the paper,
+            # with the deviance difference scaled by the dispersion of the full
+            # model.
             test <- anova(model.glm.0, model.glm, test = "Chisq")
             sc_p_val <- ifelse(is.na(test[5][2, 1]), 1, test[5][2, 1])
         }
