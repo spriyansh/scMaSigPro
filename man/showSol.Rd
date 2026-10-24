@@ -54,6 +54,8 @@ flag the bin (DFFITS and Cook's distance, see
 }
 \seealso{
 Other results:
+\code{\link[=queryCoeff]{queryCoeff()}},
+\code{\link[=scmpResults]{scmpResults()}},
 \code{\link[=showPoly]{showPoly()}}
 }
 \concept{results}

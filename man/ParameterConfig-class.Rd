@@ -99,4 +99,14 @@ was asked for: "chisq" (the default), the chi-squared test, or "F", the F
 test.}
 }}
 
+\seealso{
+Other classes:
+\code{\link{Estimates}},
+\code{\link{MatrixDesign}},
+\code{\link{ScMaSigPro}},
+\code{\link{Significant}},
+\code{\link{VariableProfiles}},
+\code{\link{updateObject,ScMaSigPro-method}}
+}
+\concept{classes}
 \keyword{classes}

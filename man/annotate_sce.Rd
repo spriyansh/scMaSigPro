@@ -50,7 +50,7 @@ and path information in its \code{cell.metadata} generated using \code{colData} 
 \pkg{SingleCellExperiment} package.
 }
 \seealso{
-\pkg{SingleCellExperiment} package.
+\code{\link[=as_scmp]{as_scmp()}}, which calls it.
 }
 \author{
 Priyansh Srivastava \email{spriyansh29@gmail.com}

@@ -8,7 +8,6 @@
 #' @importFrom BiocParallel bplapply bpnworkers SerialParam
 #' @importFrom MASS negative.binomial
 #'
-#' @param scmpObj An object of class \code{\link{ScMaSigPro}}.
 #' @param p_value Significance level used for variable selection in the stepwise
 #' regression.
 #' @param mt_correction A character string specifying the p-value correction
@@ -64,15 +63,6 @@
 #' log link only: with any other link the fits stop with an error unless
 #' \code{offset = FALSE}.
 #' @param max_it Maximum number of iterations to fit the model.
-#' @param verbose Print detailed output in the console. (Default is TRUE)
-#' @param BPPARAM A \code{BiocParallelParam} object that runs the per-gene
-#' fits, such as
-#' \code{\link[BiocParallel:MulticoreParam-class]{MulticoreParam}(2)} (Linux
-#' and macOS) or \code{\link[BiocParallel:SnowParam-class]{SnowParam}(2)}
-#' (any system, including Windows). The default,
-#' \code{\link[BiocParallel:SerialParam-class]{SerialParam}()}, fits the genes
-#' one after another. Create it with \code{progressbar = TRUE} for a progress
-#' bar. The results do not depend on the backend.
 #'
 #' @details
 #' With `offset = TRUE`, the fits include an offset as Srivastava et al.
@@ -118,7 +108,7 @@
 #' @return An object of class \code{\link{ScMaSigPro}}, with updated `Profile`
 #' slot.
 #'
-#' @seealso \code{\link{VariableProfiles}}
+#' @seealso [scmpResults()] for the p-values; [VariableProfiles-class].
 #'
 #' @references Conesa, A., Nueda M.J., Alberto Ferrer, A., Talon, T. 2006.
 #' maSigPro: a Method to Identify Significant Differential Expression Profiles
@@ -132,6 +122,9 @@
 #' Maria Jose Nueda, \email{mj.nueda@@ua.es}
 #'
 #' @keywords regression models
+#' @family workflow steps
+#' @inheritParams scmp-params
+#'
 #' @export
 sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
                         min_na = 6,

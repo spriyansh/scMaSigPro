@@ -8,7 +8,6 @@
 #' @importFrom BiocParallel bplapply bpnworkers SerialParam
 #' @importFrom stats influence.measures
 #'
-#' @param scmpObj An object of class \code{\link{ScMaSigPro}}.
 #' @param selection_method Method for step-wise regression.
 #' @param p_value Significance level used for variable selection in the stepwise
 #' regression.
@@ -27,20 +26,12 @@
 #' every gene it fitted and stored in the `Design` slot; when it stored none
 #' (\code{offset = FALSE}), they are computed here in the same way.
 #' @param max_it Maximum number of iterations to fit the model.
-#' @param verbose Print detailed output in the console. (Default is TRUE)
-#' @param BPPARAM A \code{BiocParallelParam} object that runs the per-gene
-#' fits, such as
-#' \code{\link[BiocParallel:MulticoreParam-class]{MulticoreParam}(2)} (Linux
-#' and macOS) or \code{\link[BiocParallel:SnowParam-class]{SnowParam}(2)}
-#' (any system, including Windows). The default,
-#' \code{\link[BiocParallel:SerialParam-class]{SerialParam}()}, fits the genes
-#' one after another. Create it with \code{progressbar = TRUE} for a progress
-#' bar. The results do not depend on the backend.
 #'
 #' @return An object of class \code{\link{ScMaSigPro}}, with updated `Estimate`
 #' slot.
 #'
-#' @seealso \code{\link{Estimates}} Class.
+#' @seealso [showSol()] and the other readers of the results;
+#' [Estimates-class].
 #'
 #' @references{Conesa, A., Nueda M.J., Alberto Ferrer, A., Talon, T. 2006.
 #' maSigPro: a Method to Identify Significant Differential Expression Profiles
@@ -50,6 +41,9 @@
 #' Maria Jose Nueda, \email{mj.nueda@@ua.es}
 #'
 #' @keywords regression models
+#' @family workflow steps
+#' @inheritParams scmp-params
+#'
 #' @export
 sc.t.fit <- function(scmpObj,
                      selection_method = "backward",

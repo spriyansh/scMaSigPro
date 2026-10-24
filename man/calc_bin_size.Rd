@@ -19,7 +19,15 @@ in the "cluster.members" column).
 \code{calc_bin_size()} calculates the bin size based on the number of elements in
 the "cluster.members" column of the input data frame.
 }
+\seealso{
+Other binning helpers:
+\code{\link[=estBinSize]{estBinSize()}},
+\code{\link[=extract_interval]{extract_interval()}},
+\code{\link[=optimize_bin_max]{optimize_bin_max()}},
+\code{\link[=pb_counts]{pb_counts()}}
+}
 \author{
 Priyansh Srivastava \email{spriyansh29@gmail.com}
 }
+\concept{binning helpers}
 \keyword{internal}

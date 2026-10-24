@@ -32,4 +32,14 @@ replicate.}
 fit was made yet.}
 }}
 
+\seealso{
+Other classes:
+\code{\link{Estimates}},
+\code{\link{ParameterConfig}},
+\code{\link{ScMaSigPro}},
+\code{\link{Significant}},
+\code{\link{VariableProfiles}},
+\code{\link{updateObject,ScMaSigPro-method}}
+}
+\concept{classes}
 \keyword{classes}

@@ -60,7 +60,13 @@ if (requireNamespace("igraph", quietly = TRUE)) {
 }
 \seealso{
 \code{\link[=assign_paths]{assign_paths()}}, which turns these weights into path labels.
+
+Other input helpers:
+\code{\link[=as_scmp]{as_scmp()}},
+\code{\link[=assign_paths]{assign_paths()}},
+\code{\link[=create_scmp]{create_scmp()}}
 }
 \author{
 Priyansh Srivastava \email{spriyansh29@gmail.com}
 }
+\concept{input helpers}

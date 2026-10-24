@@ -13,15 +13,15 @@ sc.set.poly(
 )
 }
 \arguments{
-\item{scmpObj}{An object of class \code{\link{ScMaSigPro}}.}
+\item{scmpObj}{A \link[=ScMaSigPro-class]{ScMaSigPro} object.}
 
 \item{poly_degree}{Degree of the polynomial.}
 
-\item{bin_ptime_col}{A character string representing the column name
-for binned Pseudotime values in 'Dense' data.}
+\item{bin_ptime_col}{The name of the column of the bin metadata that holds
+the binned pseudotime of each bin.}
 
-\item{path_col}{A character string representing the column name for branching
-path assignment in 'Sparse' or 'Dense' slot.}
+\item{path_col}{The name of the column of the cell or bin metadata that
+holds the path label of each cell or bin.}
 
 \item{reference}{The reference path, one of the path labels of the \code{Dense}
 slot, or \code{NULL} (default) for the first path of the \code{Dense} slot. See
@@ -51,9 +51,19 @@ maSigPro: a Method to Identify Significant Differential Expression Profiles
 in Time-Course Microarray Experiments. Bioinformatics 22, 1096-1102}
 }
 \seealso{
-\code{\link{MatrixDesign}} Class.
+\code{\link[=showPoly]{showPoly()}}, \code{\link[=predictors]{predictors()}} and \code{\link[=pathAssign]{pathAssign()}}, which read the
+design; \link[=MatrixDesign-class]{MatrixDesign}.
+
+Other workflow steps:
+\code{\link[=sc.cluster.trend]{sc.cluster.trend()}},
+\code{\link[=sc.filter]{sc.filter()}},
+\code{\link[=sc.p.vector]{sc.p.vector()}},
+\code{\link[=sc.restruct]{sc.restruct()}},
+\code{\link[=sc.squeeze]{sc.squeeze()}},
+\code{\link[=sc.t.fit]{sc.t.fit()}}
 }
 \author{
 Priyansh Srivastava \email{spriyansh29@gmail.com}, Ana Conesa and
 Maria Jose Nueda, \email{mj.nueda@ua.es}
 }
+\concept{workflow steps}

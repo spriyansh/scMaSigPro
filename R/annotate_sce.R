@@ -25,10 +25,9 @@
 #'
 #' @return A \code{\link[SingleCellExperiment]{SingleCellExperiment}} object with updated cell metadata.
 #'
-#' @seealso \pkg{SingleCellExperiment} package.
+#' @seealso [as_scmp()], which calls it.
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
 #' @keywords internal
-#'
 annotate_sce <- function(sce,
                          ptime_col = "Pseudotime",
                          path_prefix = "Path",

@@ -22,10 +22,6 @@
 #' columns of `bin_counts`, holding the binned pseudotime in `ptime_col` and
 #' the path in `path_col`. A `scmp_bin_size` column gives the number of cells
 #' of each bin; without it the sizes are `NA`.
-#' @param ptime_col A character string representing the column name
-#' for inferred Pseudotime values. (Default is "Pseudotime")
-#' @param path_col A character string representing the column name for branching
-#' path assignment. (Default is `path_prefix`)
 #'
 #' @return An object of class \code{\link{ScMaSigPro}}, with aligned pseudotime.
 #'
@@ -39,6 +35,9 @@
 #' @importFrom S4Vectors DataFrame
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
+#' @family input helpers
+#' @inheritParams scmp-params
+#'
 #' @export
 
 # Create ScMaSigPro

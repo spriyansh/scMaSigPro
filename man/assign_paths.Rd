@@ -112,7 +112,13 @@ assign_paths(pseudotime, weights, shared_sep = "|")
 \seealso{
 \code{\link[=paths_from_graph]{paths_from_graph()}} for weights from a trajectory graph;
 \code{\link[=sc.restruct]{sc.restruct()}} for the root and link paths.
+
+Other input helpers:
+\code{\link[=as_scmp]{as_scmp()}},
+\code{\link[=create_scmp]{create_scmp()}},
+\code{\link[=paths_from_graph]{paths_from_graph()}}
 }
 \author{
 Priyansh Srivastava \email{spriyansh29@gmail.com}
 }
+\concept{input helpers}

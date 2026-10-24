@@ -67,6 +67,8 @@
 #' @importFrom S4Vectors updateObject
 #' @importFrom methods .hasSlot
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
+#' @family classes
+#'
 #' @export
 setMethod("updateObject", "ScMaSigPro", function(object, ...,
                                                  verbose = FALSE) {

@@ -24,7 +24,7 @@ plotTrendCluster(
 )
 }
 \arguments{
-\item{scmpObj}{An object of class \code{\link{ScMaSigPro}}.}
+\item{scmpObj}{A \link[=ScMaSigPro-class]{ScMaSigPro} object.}
 
 \item{xlab}{X-axis label. (Default is "Pooled Pseudotime")}
 
@@ -49,7 +49,7 @@ higher values will result in more linear trends. (Default is 0.01)}
 \item{includeInflu}{Include gene only if it has influential data.
 (Default is TRUE)}
 
-\item{verbose}{Print detailed output in the console. (Default is TRUE)}
+\item{verbose}{Whether to print progress messages.}
 
 \item{pseudoCount}{Add a pseudo-count before taking the log. (Default is 1)}
 
@@ -71,6 +71,14 @@ ggplot2 plot object.
 \description{
 Plot trends of multiple genes (clustered) across the binned pseudotime.
 }
+\seealso{
+Other plots:
+\code{\link[=plotBinTile]{plotBinTile()}},
+\code{\link[=plotDiagnostics]{plotDiagnostics()}},
+\code{\link[=plotIntersect]{plotIntersect()}},
+\code{\link[=plotTrend]{plotTrend()}}
+}
 \author{
 Priyansh Srivastava \email{spriyansh29@gmail.com}
 }
+\concept{plots}

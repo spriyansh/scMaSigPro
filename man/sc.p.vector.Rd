@@ -23,7 +23,7 @@ sc.p.vector(
 )
 }
 \arguments{
-\item{scmpObj}{An object of class \code{\link{ScMaSigPro}}.}
+\item{scmpObj}{A \link[=ScMaSigPro-class]{ScMaSigPro} object.}
 
 \item{p_value}{Significance level used for variable selection in the stepwise
 regression.}
@@ -55,7 +55,7 @@ own link.}
 
 \item{epsilon}{Model convergence tolerance.}
 
-\item{verbose}{Print detailed output in the console. (Default is TRUE)}
+\item{verbose}{Whether to print progress messages.}
 
 \item{offset}{logical value specifying whether to use offset during fitting.
 The offset of each bin, the logarithm of its size factor (see Details), is
@@ -94,14 +94,12 @@ whose dispersion is estimated, so not \code{\link[stats:binomial]{stats::binomia
 \code{\link[stats:poisson]{stats::poisson()}}. The value is kept in the \code{test} parameter. See
 Details.}
 
-\item{BPPARAM}{A \code{BiocParallelParam} object that runs the per-gene
-fits, such as
-\code{\link[BiocParallel:MulticoreParam-class]{MulticoreParam}(2)} (Linux
-and macOS) or \code{\link[BiocParallel:SnowParam-class]{SnowParam}(2)}
-(any system, including Windows). The default,
-\code{\link[BiocParallel:SerialParam-class]{SerialParam}()}, fits the genes
-one after another. Create it with \code{progressbar = TRUE} for a progress
-bar. The results do not depend on the backend.}
+\item{BPPARAM}{A \code{BiocParallelParam} object that runs the per-gene fits,
+such as \code{BiocParallel::MulticoreParam(2)} (Linux and macOS) or
+\code{BiocParallel::SnowParam(2)} (any system). The default,
+\code{BiocParallel::SerialParam()}, fits the genes one after another; create
+it with \code{progressbar = TRUE} for a progress bar. The results do not
+depend on the backend.}
 }
 \value{
 An object of class \code{\link{ScMaSigPro}}, with updated \code{Profile}
@@ -162,11 +160,20 @@ change and dispersion for RNA-seq data with DESeq2. Genome Biology 15, 550.
 \doi{10.1186/s13059-014-0550-8}
 }
 \seealso{
-\code{\link{VariableProfiles}}
+\code{\link[=scmpResults]{scmpResults()}} for the p-values; \link[=VariableProfiles-class]{VariableProfiles}.
+
+Other workflow steps:
+\code{\link[=sc.cluster.trend]{sc.cluster.trend()}},
+\code{\link[=sc.filter]{sc.filter()}},
+\code{\link[=sc.restruct]{sc.restruct()}},
+\code{\link[=sc.set.poly]{sc.set.poly()}},
+\code{\link[=sc.squeeze]{sc.squeeze()}},
+\code{\link[=sc.t.fit]{sc.t.fit()}}
 }
 \author{
 Priyansh Srivastava \email{spriyansh29@gmail.com}, Ana Conesa and
 Maria Jose Nueda, \email{mj.nueda@ua.es}
 }
+\concept{workflow steps}
 \keyword{models}
 \keyword{regression}

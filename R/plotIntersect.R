@@ -7,7 +7,6 @@
 #'
 #' @importFrom S4Vectors isEmpty
 #'
-#' @param scmpObj An object of class \code{\link{ScMaSigPro}}.
 #' @param min_intersection_size Minimal number of observations in an intersection
 #' for it to be included.
 #' @param width_ratio Ratio of the overall set size width to intersection matrix
@@ -21,6 +20,9 @@
 #' @return upset object for 'UpSetR'.
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
+#'
+#' @family plots
+#' @inheritParams scmp-params
 #'
 #' @export
 plotIntersect <- function(scmpObj,

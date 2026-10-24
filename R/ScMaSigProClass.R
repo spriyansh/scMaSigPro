@@ -71,6 +71,7 @@
 #' @name ParameterConfig
 #' @aliases ParameterConfig-class
 #' @rdname ParameterConfig-class
+#' @family classes
 #' @importFrom methods is new
 #' @keywords classes
 setClass(
@@ -189,6 +190,7 @@ setClass(
 #' @name MatrixDesign
 #' @aliases MatrixDesign-class
 #' @rdname MatrixDesign-class
+#' @family classes
 #' @importFrom methods is new
 #' @keywords classes
 setClass(
@@ -254,6 +256,7 @@ setClass(
 #' @name VariableProfiles
 #' @aliases VariableProfiles-class
 #' @rdname VariableProfiles-class
+#' @family classes
 #' @keywords classes
 
 #' @author Priyansh Srivastava <spriyansh29@@gmail.com>
@@ -320,6 +323,7 @@ setClass("VariableProfiles",
 #' @name Estimates
 #' @aliases Estimates-class
 #' @rdname Estimates-class
+#' @family classes
 #' @importFrom methods is new
 #' @keywords classes
 setClass(
@@ -385,6 +389,7 @@ setClass(
 #' @name Significant
 #' @aliases Significant-class
 #' @rdname Significant-class
+#' @family classes
 #' @importFrom methods is new as
 #' @keywords classes
 setClass(
@@ -478,6 +483,7 @@ setClass(
 #' @name ScMaSigPro
 #' @aliases ScMaSigPro-class
 #' @rdname ScMaSigPro-class
+#' @family classes
 #' @exportClass ScMaSigPro
 #' @importFrom methods is new as validObject
 #' @keywords classes

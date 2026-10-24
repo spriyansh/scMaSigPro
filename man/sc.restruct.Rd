@@ -16,7 +16,7 @@ sc.restruct(
 )
 }
 \arguments{
-\item{scmpObj}{An object of class \code{\link{ScMaSigPro}}.}
+\item{scmpObj}{A \link[=ScMaSigPro-class]{ScMaSigPro} object.}
 
 \item{end_node_list}{A list of end nodes in of the branch.}
 
@@ -24,18 +24,18 @@ sc.restruct(
 
 \item{link_node_list}{A list of links between two nodes.}
 
-\item{assay_name}{Name of the Assay in sparse data from which the counts are
-used. (Default = "counts").}
+\item{assay_name}{The name of the assay of the \code{Sparse} slot that holds
+the counts of the cells.}
 
-\item{aggregate}{A character string specifying the method to aggregate counts
-within each cluster. Available options are 'mean' or 'sum'. (Default = "sum").}
+\item{aggregate}{How the counts of the cells of a bin are combined: \code{"sum"}
+or \code{"mean"} (rounded to whole numbers).}
 
 \item{link_sep}{A character string that separates the two nodes in the
 label of a link node. It is matched as fixed text when the label contains
 it, and as a regular expression otherwise, so \code{"|"} and \code{"\\\\|"} both work.
 (Default = \code{"_links_"})}
 
-\item{verbose}{Print detailed output in the console. (Default is TRUE)}
+\item{verbose}{Whether to print progress messages.}
 }
 \value{
 An object of class \code{\link{ScMaSigPro}}, with updated \code{Dense}
@@ -49,8 +49,17 @@ bins is shifted to follow them, and the pseudo-bulk counts are recomputed
 with \code{\link[=pb_counts]{pb_counts()}}.
 }
 \seealso{
-\code{\link{estBinSize}}
+\code{\link[=assign_paths]{assign_paths()}}, which labels the root and link paths.
+
+Other workflow steps:
+\code{\link[=sc.cluster.trend]{sc.cluster.trend()}},
+\code{\link[=sc.filter]{sc.filter()}},
+\code{\link[=sc.p.vector]{sc.p.vector()}},
+\code{\link[=sc.set.poly]{sc.set.poly()}},
+\code{\link[=sc.squeeze]{sc.squeeze()}},
+\code{\link[=sc.t.fit]{sc.t.fit()}}
 }
 \author{
 Priyansh Srivastava \email{spriyansh29@gmail.com}
 }
+\concept{workflow steps}

@@ -15,7 +15,7 @@ sc.filter(
 )
 }
 \arguments{
-\item{scmpObj}{An object of class \code{\link{ScMaSigPro}}.}
+\item{scmpObj}{A \link[=ScMaSigPro-class]{ScMaSigPro} object.}
 
 \item{rsq}{Coefficient of determination or R-squared value threshold.}
 
@@ -29,7 +29,8 @@ default), "each" or "groups". See details.}
 
 \item{term_p_value}{Term wise significance.}
 
-\item{includeInflu}{Whether to include genes with influential observations.}
+\item{includeInflu}{Whether to keep the genes with influential
+observations (see \code{\link[=showInflu]{showInflu()}}).}
 }
 \value{
 An object of class \code{\link{ScMaSigPro}}, with updated \code{Significant}
@@ -65,9 +66,19 @@ maSigPro: a Method to Identify Significant Differential Expression Profiles
 in Time-Course Microarray Experiments. Bioinformatics 22, 1096-1102}
 }
 \seealso{
-\code{maSigPro::get.siggenes()}
+\code{\link[=plotIntersect]{plotIntersect()}} for the overlaps of the lists;
+\link[=Significant-class]{Significant}.
+
+Other workflow steps:
+\code{\link[=sc.cluster.trend]{sc.cluster.trend()}},
+\code{\link[=sc.p.vector]{sc.p.vector()}},
+\code{\link[=sc.restruct]{sc.restruct()}},
+\code{\link[=sc.set.poly]{sc.set.poly()}},
+\code{\link[=sc.squeeze]{sc.squeeze()}},
+\code{\link[=sc.t.fit]{sc.t.fit()}}
 }
 \author{
 Priyansh Srivastava \email{spriyansh29@gmail.com}, Ana Conesa and
 Maria Jose Nueda, \email{mj.nueda@ua.es}
 }
+\concept{workflow steps}

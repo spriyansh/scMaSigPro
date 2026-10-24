@@ -17,4 +17,7 @@ This function returns a specified number of contrasting colors from a predefined
 If the requested number of colors exceeds the length of the predefined palette,
 additional unique colors from the default R color set are included.
 }
+\seealso{
+\code{\link[=plotTrend]{plotTrend()}} and \code{\link[=plotTrendCluster]{plotTrendCluster()}}, which call it.
+}
 \keyword{internal}

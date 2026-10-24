@@ -71,7 +71,15 @@ Scott, D. W. (1979). On optimal and data-based histograms. Biometrika, 66,
 Sturges, H. A. (1926). The choice of a class interval. Journal of the
 American Statistical Association, 21, 65-66.
 }
+\seealso{
+Other binning helpers:
+\code{\link[=calc_bin_size]{calc_bin_size()}},
+\code{\link[=extract_interval]{extract_interval()}},
+\code{\link[=optimize_bin_max]{optimize_bin_max()}},
+\code{\link[=pb_counts]{pb_counts()}}
+}
 \author{
 Priyansh Srivastava \email{spriyansh29@gmail.com}
 }
+\concept{binning helpers}
 \keyword{internal}

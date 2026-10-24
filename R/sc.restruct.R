@@ -7,26 +7,23 @@
 #' bins is shifted to follow them, and the pseudo-bulk counts are recomputed
 #' with [pb_counts()].
 #'
-#' @param scmpObj An object of class \code{\link{ScMaSigPro}}.
 #' @param end_node_list A list of end nodes in of the branch.
 #' @param root_node A character string specifying the root node.
 #' @param link_node_list A list of links between two nodes.
-#' @param assay_name Name of the Assay in sparse data from which the counts are
-#' used. (Default = "counts").
 #' @param link_sep A character string that separates the two nodes in the
 #' label of a link node. It is matched as fixed text when the label contains
 #' it, and as a regular expression otherwise, so `"|"` and `"\\|"` both work.
 #' (Default = `"_links_"`)
-#' @param aggregate A character string specifying the method to aggregate counts
-#' within each cluster. Available options are 'mean' or 'sum'. (Default = "sum").
-#' @param verbose  Print detailed output in the console. (Default is TRUE)
 #'
 #' @return An object of class \code{\link{ScMaSigPro}}, with updated `Dense`
 #' slot.
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
 #'
-#' @seealso \code{\link{estBinSize}}
+#' @seealso [assign_paths()], which labels the root and link paths.
+#'
+#' @family workflow steps
+#' @inheritParams scmp-params
 #'
 #' @export
 sc.restruct <- function(scmpObj,

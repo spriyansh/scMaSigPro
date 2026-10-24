@@ -14,12 +14,7 @@
 #' \code{\link{cDense<-}}, the path of the first bin. The other paths keep the
 #' order of the `Dense` slot.
 #'
-#' @param scmpObj An object of class \code{\link{ScMaSigPro}}.
 #' @param poly_degree Degree of the polynomial.
-#' @param bin_ptime_col A character string representing the column name
-#' for binned Pseudotime values in 'Dense' data.
-#' @param path_col A character string representing the column name for branching
-#' path assignment in 'Sparse' or 'Dense' slot.
 #' @param reference The reference path, one of the path labels of the `Dense`
 #' slot, or `NULL` (default) for the first path of the `Dense` slot. See
 #' Description.
@@ -27,7 +22,8 @@
 #' @return An object of class \code{\link{ScMaSigPro}}, with updated `Design`
 #' slot.
 #'
-#' @seealso \code{\link{MatrixDesign}} Class.
+#' @seealso [showPoly()], [predictors()] and [pathAssign()], which read the
+#' design; [MatrixDesign-class].
 #'
 #' @references{Conesa, A., Nueda M.J., Alberto Ferrer, A., Talon, T. 2006.
 #' maSigPro: a Method to Identify Significant Differential Expression Profiles
@@ -35,8 +31,10 @@
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}, Ana Conesa and
 #' Maria Jose Nueda, \email{mj.nueda@@ua.es}
-#' @export
+#' @family workflow steps
+#' @inheritParams scmp-params
 #'
+#' @export
 sc.set.poly <- function(scmpObj,
                         poly_degree = 2,
                         bin_ptime_col = scmpObj@Parameters@bin_ptime_col,

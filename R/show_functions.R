@@ -94,7 +94,6 @@ showTS <- function(scmpObj, includeInflu = TRUE) {
 #'   [stats::influence.measures()]).
 #' * `showSigProf()`: the pseudo-bulk counts of the genes of `showSol()`.
 #'
-#' @param scmpObj A [ScMaSigPro-class] object.
 #' @param includeInflu Whether to keep the genes with influential
 #'   observations, the columns of `showInflu()`.
 #'
@@ -105,6 +104,8 @@ showTS <- function(scmpObj, includeInflu = TRUE) {
 #' `dgCMatrix` with one row per gene and one column per bin.
 #'
 #' @family results
+#'
+#' @inheritParams scmp-params
 #'
 #' @export
 showSol <- function(scmpObj, includeInflu = TRUE) {
@@ -197,14 +198,14 @@ showPoly <- function(scmpObj) {
 #' `showPoly()` writes the full model that [sc.set.poly()] set up, with one
 #' coefficient `beta1`, `beta2`, ... per column of the design matrix.
 #'
-#' @param scmpObj A [ScMaSigPro-class] object.
-#'
 #' @return `showParams()`: a data frame with the columns `parameters` and
 #' `value`, one row per parameter. `showPoly()`: a character string.
 #'
 #' @family results
 #'
 #' @importFrom methods slot slotNames
+#'
+#' @inheritParams scmp-params
 #'
 #' @export
 showParams <- function(scmpObj) {
@@ -286,6 +287,8 @@ showGroupCoeff <- function(scmpObj, includeInflu = TRUE) {
 #' @param object An object of class \code{ScMaSigPro}.
 #'
 #' @keywords internal
+#'
+#' @seealso [ScMaSigPro-class]
 .ScMaSigPro_show <- function(object) {
     # Show Basic information
     cat("Class: ScMaSigProClass\n")
@@ -389,6 +392,8 @@ showGroupCoeff <- function(scmpObj, includeInflu = TRUE) {
 #' @param path_col Column name with the path information.
 #'
 #' @keywords internal
+#'
+#' @seealso [ScMaSigPro-class], whose `show()` method prints it.
 extract_info <- function(data, return_type = "avg_bin_size",
                          bin_size_col, path_col) {
     if (return_type == "avg_bin_size") {

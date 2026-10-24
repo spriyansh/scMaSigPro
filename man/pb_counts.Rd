@@ -13,17 +13,16 @@ pb_counts(
 )
 }
 \arguments{
-\item{scmpObj}{object of Class scMaSigPro. See \code{\link{ScMaSigPro}}
-for more details.}
+\item{scmpObj}{A \link[=ScMaSigPro-class]{ScMaSigPro} object.}
 
-\item{bin_mem_col}{Column name in the Dense metadata storing information
-about the members of the bins. (Default is 'scmp_bin_members').}
+\item{bin_mem_col}{The name of the column of the bin metadata that holds
+the cells of each bin, separated by \code{|}.}
 
-\item{bin_col}{Column name in the Dense metadata storing information
-about the bin labels. (Default is 'scmp_bin').}
+\item{bin_col}{The name of the column of the bin metadata that holds the
+name of each bin.}
 
-\item{assay_name}{Name of the Assay in the assay_name object from which
-retrieve the counts. (Default = "counts").}
+\item{assay_name}{The name of the assay of the \code{Sparse} slot that holds
+the counts of the cells.}
 
 \item{cluster_count_by}{A character string specifying the method to use to
 aggregate counts within each cluster. Available options are 'mean' or 'sum'.
@@ -51,6 +50,14 @@ Bins are identified by the rownames of the \code{Dense} cell metadata (see
 \code{\link[=cDense]{cDense()}}); these become the column names of \code{bulk.counts}. The \code{bin_col}
 column is used only when the metadata has no rownames.
 }
+\seealso{
+Other binning helpers:
+\code{\link[=calc_bin_size]{calc_bin_size()}},
+\code{\link[=estBinSize]{estBinSize()}},
+\code{\link[=extract_interval]{extract_interval()}},
+\code{\link[=optimize_bin_max]{optimize_bin_max()}}
+}
 \author{
 Priyansh Srivastava \email{spriyansh29@gmail.com}
 }
+\concept{binning helpers}

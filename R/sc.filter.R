@@ -4,9 +4,7 @@
 #' `sc.filter()` creates lists of significant genes based on user-specified
 #' constraints.
 #'
-#' @param scmpObj An object of class \code{\link{ScMaSigPro}}.
 #' @param rsq Coefficient of determination or R-squared value threshold.
-#' @param includeInflu Whether to include genes with influential observations.
 #' @param p_value Overall model significance.
 #' @param term_p_value Term wise significance.
 #' @param vars Variables for which to extract significant genes: "all" (the
@@ -37,7 +35,8 @@
 #' @return An object of class \code{\link{ScMaSigPro}}, with updated `Significant`
 #' slot.
 #'
-#' @seealso `maSigPro::get.siggenes()`
+#' @seealso [plotIntersect()] for the overlaps of the lists;
+#' [Significant-class].
 #'
 #' @references{Conesa, A., Nueda M.J., Alberto Ferrer, A., Talon, T. 2006.
 #' maSigPro: a Method to Identify Significant Differential Expression Profiles
@@ -45,6 +44,9 @@
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}, Ana Conesa and
 #' Maria Jose Nueda, \email{mj.nueda@@ua.es}
+#'
+#' @family workflow steps
+#' @inheritParams scmp-params
 #'
 #' @export
 sc.filter <- function(scmpObj,

@@ -7,7 +7,6 @@
 #' `SingleCellExperiment`, such as the one the analysis started from, so that
 #' the results travel with the data.
 #'
-#' @param scmpObj An object of class \code{\link{ScMaSigPro}}.
 #' @param sce A `SingleCellExperiment`, or another `SummarizedExperiment`,
 #' whose row names are gene names.
 #'
@@ -59,6 +58,9 @@
 #' @importFrom SummarizedExperiment rowData rowData<-
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
+#'
+#' @family results
+#' @inheritParams scmp-params
 #'
 #' @export
 scmpResults <- function(scmpObj) {

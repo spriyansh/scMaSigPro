@@ -7,9 +7,9 @@
 plotDiagnostics(scmpObj, feature_id, model = "optimized")
 }
 \arguments{
-\item{scmpObj}{An object of class \code{\link{ScMaSigPro}}.}
+\item{scmpObj}{A \link[=ScMaSigPro-class]{ScMaSigPro} object.}
 
-\item{feature_id}{Name of the gene to be plotted.}
+\item{feature_id}{The name of a gene.}
 
 \item{model}{Type of model to be used for plotting. Can be either 'optimized',
 'intercept'and 'full'. Default is 'optimized'.}
@@ -22,6 +22,14 @@ installed.
 Plots model residuals for the requested gene. Can be used for model
 diagnostics of optimized model or full model.
 }
+\seealso{
+Other plots:
+\code{\link[=plotBinTile]{plotBinTile()}},
+\code{\link[=plotIntersect]{plotIntersect()}},
+\code{\link[=plotTrend]{plotTrend()}},
+\code{\link[=plotTrendCluster]{plotTrendCluster()}}
+}
 \author{
 Priyansh Srivastava \email{spriyansh29@gmail.com}
 }
+\concept{plots}

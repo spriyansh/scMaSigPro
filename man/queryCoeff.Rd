@@ -16,7 +16,7 @@ queryCoeff(
 )
 }
 \arguments{
-\item{scmpObj}{An object of class \code{\link{ScMaSigPro}}.}
+\item{scmpObj}{A \link[=ScMaSigPro-class]{ScMaSigPro} object.}
 
 \item{rsq}{Coefficient of determination or R-squared value threshold.}
 
@@ -42,8 +42,14 @@ This function extracts features from an object of class \code{scMaSigPro}
 based on a specified query. The function query the coefficients matrix.
 }
 \seealso{
-\code{scMaSigPro::sc.filter()}
+\code{\link[=showCoeff]{showCoeff()}} for the coefficients of every gene.
+
+Other results:
+\code{\link[=scmpResults]{scmpResults()}},
+\code{\link[=showCoeff]{showCoeff()}},
+\code{\link[=showPoly]{showPoly()}}
 }
 \author{
 Priyansh Srivastava \email{spriyansh29@gmail.com}.
 }
+\concept{results}

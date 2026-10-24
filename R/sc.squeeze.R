@@ -23,20 +23,6 @@
 #'
 #' @importFrom SummarizedExperiment assay colData<-
 #'
-#' @param scmpObj An object of class \code{\link{ScMaSigPro}}.
-#' @param ptime_col A character string representing the column name
-#' for inferred Pseudotime values in 'Sparse' data. (Default is "Pseudotime").
-#' @param path_col A character string representing the column name for branching
-#' path assignment in 'Sparse' or 'Dense' data. (Default is `path_prefix`).
-#' @param bin_ptime_col A character string representing the column name
-#' for binned Pseudotime values in 'Dense' data.
-#' (Default is "scmp_binned_pseudotime").
-#' @param bin_mem_col A character string representing the name of the column in
-#' which cells per bin are stored. (Default is "scmp_bin_members").
-#' @param bin_col A character string representing the name of the column in which
-#' bin labels are stored. (Default is "scmp_bin").
-#' @param bin_size_col A character string representing the name of the column in
-#' which bin sizes per bin are stored. (Default is "scmp_bin_size").
 #' @param bin_method  A character string representing the algorithm used for
 #' binning. Available options: "Freedman.Diaconis",
 #' "Sqrt", "Sturges", "Rice", "Doane", and "Scott.Normal". (Default = "Sturges")
@@ -45,8 +31,6 @@
 #' drop factor of Srivastava et al. (2024), Section 2.1, at least 0.3. The
 #' number of bins that `bin_method` gives a path is multiplied by `drop_fac`
 #' and the product is rounded up (see [estBinSize()]). (Default = 1).
-#' @param assay_name Name of the Assay in sparse data from which the counts are
-#' used. (Default = "counts").
 #' @param split_bins If `TRUE`, divide the bins of a path that hold more cells
 #' than the mean plus the standard deviation of the bin sizes of the path
 #' (Srivastava et al. (2024), Section 2.2; see Details). (Default = FALSE).
@@ -57,9 +41,6 @@
 #' drop the bins from the path with more bins. (Default = FALSE).
 #' @param fill_gaps If corresponding bin is missing for a time-point, pull the
 #' successive bins and fill the gaps.
-#' @param aggregate A character string specifying the method to aggregate counts
-#' within each cluster. Available options are 'mean' or 'sum'. (Default = "sum").
-#' @param verbose  Print detailed output in the console. (Default is TRUE)
 #' @param additional_params Pass additional parameters as a named list.
 #' See examples
 #'
@@ -92,7 +73,11 @@
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
 #'
-#' @seealso \code{\link{estBinSize}}
+#' @seealso [estBinSize()] for the rules that set the number of bins;
+#' [plotBinTile()] to see the bins.
+#'
+#' @family workflow steps
+#' @inheritParams scmp-params
 #'
 #' @export
 sc.squeeze <- function(scmpObj,

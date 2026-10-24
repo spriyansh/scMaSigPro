@@ -58,4 +58,12 @@ bins conform to the established size criteria": \code{\link[=sc.squeeze]{sc.sque
 \code{optimize_bin_max()} again, with the same \code{max_allowed}, until no bin is
 larger.
 }
+\seealso{
+Other binning helpers:
+\code{\link[=calc_bin_size]{calc_bin_size()}},
+\code{\link[=estBinSize]{estBinSize()}},
+\code{\link[=extract_interval]{extract_interval()}},
+\code{\link[=pb_counts]{pb_counts()}}
+}
+\concept{binning helpers}
 \keyword{internal}

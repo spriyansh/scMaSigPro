@@ -17,4 +17,7 @@ in the sets, and row names corresponding to the unique elements.
 This function converts a list of named vectors to a data frame compatible with UpSetR,
 retaining the row names corresponding to the unique elements (genes) present in the input list.
 }
+\seealso{
+\code{\link[=plotIntersect]{plotIntersect()}}, which calls it.
+}
 \keyword{internal}

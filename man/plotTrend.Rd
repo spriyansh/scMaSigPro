@@ -21,9 +21,9 @@ plotTrend(
 )
 }
 \arguments{
-\item{scmpObj}{An object of class \code{\link{ScMaSigPro}}.}
+\item{scmpObj}{A \link[=ScMaSigPro-class]{ScMaSigPro} object.}
 
-\item{feature_id}{Name of the gene to be plotted.}
+\item{feature_id}{The name of a gene.}
 
 \item{xlab}{X-axis label. (Default is "Pooled Pseudotime")}
 
@@ -63,6 +63,14 @@ ggplot2 plot object.
 \description{
 Plot trend of the single gene across the binned pseudotime.
 }
+\seealso{
+Other plots:
+\code{\link[=plotBinTile]{plotBinTile()}},
+\code{\link[=plotDiagnostics]{plotDiagnostics()}},
+\code{\link[=plotIntersect]{plotIntersect()}},
+\code{\link[=plotTrendCluster]{plotTrendCluster()}}
+}
 \author{
 Priyansh Srivastava \email{spriyansh29@gmail.com}
 }
+\concept{plots}

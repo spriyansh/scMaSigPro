@@ -7,7 +7,6 @@
 #' @importFrom stats cutree hclust
 #' @importFrom stats as.dist cor kmeans
 #'
-#' @param scmpObj An object of class \code{\link{ScMaSigPro}}.
 #' @param cluster_by Whether to use counts or coefficients for clustering.
 #' @param geneSet Specify the gene set to be used for clustering.
 #' (Default is "intersect")
@@ -24,13 +23,12 @@
 #' @param fill_na Fill the NAs (if Present), by zero, mean or median.
 #' @param use_dim Whether to use rows or columns for taking mean or median while
 #' filling the NAs with `fill_na`.
-#' @param includeInflu Whether to include genes with influential observations.
 #' @param verbose Print detailed output in the console. (Default is TRUE)
 #'
 #' @return An object of class \code{\link{ScMaSigPro}}, with updated
 #' `Significant` slot with clusters.
 #'
-#' @seealso `maSigPro::see.genes()`
+#' @seealso [plotTrendCluster()], which plots the clusters.
 #'
 #' @references{Conesa, A., Nueda M.J., Alberto Ferrer, A., Talon, T. 2006.
 #' maSigPro: a Method to Identify Significant Differential Expression Profiles
@@ -38,6 +36,9 @@
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}, Ana Conesa and
 #' Maria Jose Nueda, \email{mj.nueda@@ua.es}
+#'
+#' @family workflow steps
+#' @inheritParams scmp-params
 #'
 #' @export
 sc.cluster.trend <- function(scmpObj,

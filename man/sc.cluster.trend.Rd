@@ -21,7 +21,7 @@ sc.cluster.trend(
 )
 }
 \arguments{
-\item{scmpObj}{An object of class \code{\link{ScMaSigPro}}.}
+\item{scmpObj}{A \link[=ScMaSigPro-class]{ScMaSigPro} object.}
 
 \item{geneSet}{Specify the gene set to be used for clustering.
 (Default is "intersect")}
@@ -39,7 +39,8 @@ kmeans}
 
 \item{hclust.distance}{Distance measurement.(Default is "cor")}
 
-\item{includeInflu}{Whether to include genes with influential observations.}
+\item{includeInflu}{Whether to keep the genes with influential
+observations (see \code{\link[=showInflu]{showInflu()}}).}
 
 \item{mclust.k}{TRUE for computing the optimal number of clusters with
 Mclust algorithm. (Default is FALSE)}
@@ -67,9 +68,18 @@ maSigPro: a Method to Identify Significant Differential Expression Profiles
 in Time-Course Microarray Experiments. Bioinformatics 22, 1096-1102}
 }
 \seealso{
-\code{maSigPro::see.genes()}
+\code{\link[=plotTrendCluster]{plotTrendCluster()}}, which plots the clusters.
+
+Other workflow steps:
+\code{\link[=sc.filter]{sc.filter()}},
+\code{\link[=sc.p.vector]{sc.p.vector()}},
+\code{\link[=sc.restruct]{sc.restruct()}},
+\code{\link[=sc.set.poly]{sc.set.poly()}},
+\code{\link[=sc.squeeze]{sc.squeeze()}},
+\code{\link[=sc.t.fit]{sc.t.fit()}}
 }
 \author{
 Priyansh Srivastava \email{spriyansh29@gmail.com}, Ana Conesa and
 Maria Jose Nueda, \email{mj.nueda@ua.es}
 }
+\concept{workflow steps}

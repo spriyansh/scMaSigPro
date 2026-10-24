@@ -32,4 +32,14 @@ branching path.}
 \item{\code{influential}}{A matrix with genes containing influential data.}
 }}
 
+\seealso{
+Other classes:
+\code{\link{MatrixDesign}},
+\code{\link{ParameterConfig}},
+\code{\link{ScMaSigPro}},
+\code{\link{Significant}},
+\code{\link{VariableProfiles}},
+\code{\link{updateObject,ScMaSigPro-method}}
+}
+\concept{classes}
 \keyword{classes}

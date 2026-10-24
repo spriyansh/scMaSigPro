@@ -18,4 +18,7 @@ extract_info(data, return_type = "avg_bin_size", bin_size_col, path_col)
 \description{
 Extract details for the console cat of \code{.ScMaSigPro_show}.
 }
+\seealso{
+\link[=ScMaSigPro-class]{ScMaSigPro}, whose \code{show()} method prints it.
+}
 \keyword{internal}

@@ -19,7 +19,7 @@ sc.t.fit(
 )
 }
 \arguments{
-\item{scmpObj}{An object of class \code{\link{ScMaSigPro}}.}
+\item{scmpObj}{A \link[=ScMaSigPro-class]{ScMaSigPro} object.}
 
 \item{selection_method}{Method for step-wise regression.}
 
@@ -41,7 +41,7 @@ link. The fits use the offsets that \code{sc.p.vector()} computed from
 every gene it fitted and stored in the \code{Design} slot; when it stored none
 (\code{offset = FALSE}), they are computed here in the same way.}
 
-\item{verbose}{Print detailed output in the console. (Default is TRUE)}
+\item{verbose}{Whether to print progress messages.}
 
 \item{max_it}{Maximum number of iterations to fit the model.}
 
@@ -49,14 +49,12 @@ every gene it fitted and stored in the \code{Design} slot; when it stored none
 \code{sc.p.vector()} used; when given, it must be the link of
 \code{family}. Choose the link in \code{sc.p.vector()}.}
 
-\item{BPPARAM}{A \code{BiocParallelParam} object that runs the per-gene
-fits, such as
-\code{\link[BiocParallel:MulticoreParam-class]{MulticoreParam}(2)} (Linux
-and macOS) or \code{\link[BiocParallel:SnowParam-class]{SnowParam}(2)}
-(any system, including Windows). The default,
-\code{\link[BiocParallel:SerialParam-class]{SerialParam}()}, fits the genes
-one after another. Create it with \code{progressbar = TRUE} for a progress
-bar. The results do not depend on the backend.}
+\item{BPPARAM}{A \code{BiocParallelParam} object that runs the per-gene fits,
+such as \code{BiocParallel::MulticoreParam(2)} (Linux and macOS) or
+\code{BiocParallel::SnowParam(2)} (any system). The default,
+\code{BiocParallel::SerialParam()}, fits the genes one after another; create
+it with \code{progressbar = TRUE} for a progress bar. The results do not
+depend on the backend.}
 }
 \value{
 An object of class \code{\link{ScMaSigPro}}, with updated \code{Estimate}
@@ -73,11 +71,21 @@ maSigPro: a Method to Identify Significant Differential Expression Profiles
 in Time-Course Microarray Experiments. Bioinformatics 22, 1096-1102}
 }
 \seealso{
-\code{\link{Estimates}} Class.
+\code{\link[=showSol]{showSol()}} and the other readers of the results;
+\link[=Estimates-class]{Estimates}.
+
+Other workflow steps:
+\code{\link[=sc.cluster.trend]{sc.cluster.trend()}},
+\code{\link[=sc.filter]{sc.filter()}},
+\code{\link[=sc.p.vector]{sc.p.vector()}},
+\code{\link[=sc.restruct]{sc.restruct()}},
+\code{\link[=sc.set.poly]{sc.set.poly()}},
+\code{\link[=sc.squeeze]{sc.squeeze()}}
 }
 \author{
 Priyansh Srivastava \email{spriyansh29@gmail.com}, Ana Conesa and
 Maria Jose Nueda, \email{mj.nueda@ua.es}
 }
+\concept{workflow steps}
 \keyword{models}
 \keyword{regression}

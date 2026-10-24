@@ -10,7 +10,7 @@ scmpResults(scmpObj)
 scmpToRowData(sce, scmpObj)
 }
 \arguments{
-\item{scmpObj}{An object of class \code{\link{ScMaSigPro}}.}
+\item{scmpObj}{A \link[=ScMaSigPro-class]{ScMaSigPro} object.}
 
 \item{sce}{A \code{SingleCellExperiment}, or another \code{SummarizedExperiment},
 whose row names are gene names.}
@@ -70,6 +70,13 @@ sce <- scmpToRowData(splat.sim, scmp.ob)
 head(SummarizedExperiment::rowData(sce)[, c("Gene", "scmp_p_value")])
 
 }
+\seealso{
+Other results:
+\code{\link[=queryCoeff]{queryCoeff()}},
+\code{\link[=showCoeff]{showCoeff()}},
+\code{\link[=showPoly]{showPoly()}}
+}
 \author{
 Priyansh Srivastava \email{spriyansh29@gmail.com}
 }
+\concept{results}

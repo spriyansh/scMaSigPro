@@ -25,13 +25,13 @@ sc.squeeze(
 )
 }
 \arguments{
-\item{scmpObj}{An object of class \code{\link{ScMaSigPro}}.}
+\item{scmpObj}{A \link[=ScMaSigPro-class]{ScMaSigPro} object.}
 
-\item{ptime_col}{A character string representing the column name
-for inferred Pseudotime values in 'Sparse' data. (Default is "Pseudotime").}
+\item{ptime_col}{The name of the column of the cell metadata that holds
+the pseudotime of each cell.}
 
-\item{path_col}{A character string representing the column name for branching
-path assignment in 'Sparse' or 'Dense' data. (Default is \code{path_prefix}).}
+\item{path_col}{The name of the column of the cell or bin metadata that
+holds the path label of each cell or bin.}
 
 \item{bin_method}{A character string representing the algorithm used for
 binning. Available options: "Freedman.Diaconis",
@@ -43,20 +43,19 @@ drop factor of Srivastava et al. (2024), Section 2.1, at least 0.3. The
 number of bins that \code{bin_method} gives a path is multiplied by \code{drop_fac}
 and the product is rounded up (see \code{\link[=estBinSize]{estBinSize()}}). (Default = 1).}
 
-\item{verbose}{Print detailed output in the console. (Default is TRUE)}
+\item{verbose}{Whether to print progress messages.}
 
-\item{bin_mem_col}{A character string representing the name of the column in
-which cells per bin are stored. (Default is "scmp_bin_members").}
+\item{bin_mem_col}{The name of the column of the bin metadata that holds
+the cells of each bin, separated by \code{|}.}
 
-\item{bin_col}{A character string representing the name of the column in which
-bin labels are stored. (Default is "scmp_bin").}
+\item{bin_col}{The name of the column of the bin metadata that holds the
+name of each bin.}
 
-\item{bin_size_col}{A character string representing the name of the column in
-which bin sizes per bin are stored. (Default is "scmp_bin_size").}
+\item{bin_size_col}{The name of the column of the bin metadata that holds
+the number of cells of each bin.}
 
-\item{bin_ptime_col}{A character string representing the column name
-for binned Pseudotime values in 'Dense' data.
-(Default is "scmp_binned_pseudotime").}
+\item{bin_ptime_col}{The name of the column of the bin metadata that holds
+the binned pseudotime of each bin.}
 
 \item{split_bins}{If \code{TRUE}, divide the bins of a path that hold more cells
 than the mean plus the standard deviation of the bin sizes of the path
@@ -66,14 +65,14 @@ than the mean plus the standard deviation of the bin sizes of the path
 than the mean minus the standard deviation of the bin sizes of the path
 (Srivastava et al. (2024), Section 2.2; see Details). (Default = FALSE).}
 
-\item{assay_name}{Name of the Assay in sparse data from which the counts are
-used. (Default = "counts").}
+\item{assay_name}{The name of the assay of the \code{Sparse} slot that holds
+the counts of the cells.}
 
 \item{drop_trails}{If the paths have different lengths of the binned pseudotime,
 drop the bins from the path with more bins. (Default = FALSE).}
 
-\item{aggregate}{A character string specifying the method to aggregate counts
-within each cluster. Available options are 'mean' or 'sum'. (Default = "sum").}
+\item{aggregate}{How the counts of the cells of a bin are combined: \code{"sum"}
+or \code{"mean"} (rounded to whole numbers).}
 
 \item{fill_gaps}{If corresponding bin is missing for a time-point, pull the
 successive bins and fill the gaps.}
@@ -131,8 +130,18 @@ the minimum is negative and no bin is removed. The cells of a removed bin
 stay in the \code{Sparse} slot, but no bin of the \code{Dense} slot holds them.
 }
 \seealso{
-\code{\link{estBinSize}}
+\code{\link[=estBinSize]{estBinSize()}} for the rules that set the number of bins;
+\code{\link[=plotBinTile]{plotBinTile()}} to see the bins.
+
+Other workflow steps:
+\code{\link[=sc.cluster.trend]{sc.cluster.trend()}},
+\code{\link[=sc.filter]{sc.filter()}},
+\code{\link[=sc.p.vector]{sc.p.vector()}},
+\code{\link[=sc.restruct]{sc.restruct()}},
+\code{\link[=sc.set.poly]{sc.set.poly()}},
+\code{\link[=sc.t.fit]{sc.t.fit()}}
 }
 \author{
 Priyansh Srivastava \email{spriyansh29@gmail.com}
 }
+\concept{workflow steps}

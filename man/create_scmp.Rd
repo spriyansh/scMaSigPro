@@ -35,11 +35,11 @@ columns of \code{bin_counts}, holding the binned pseudotime in \code{ptime_col} 
 the path in \code{path_col}. A \code{scmp_bin_size} column gives the number of cells
 of each bin; without it the sizes are \code{NA}.}
 
-\item{ptime_col}{A character string representing the column name
-for inferred Pseudotime values. (Default is "Pseudotime")}
+\item{ptime_col}{The name of the column of the cell metadata that holds
+the pseudotime of each cell.}
 
-\item{path_col}{A character string representing the column name for branching
-path assignment. (Default is \code{path_prefix})}
+\item{path_col}{The name of the column of the cell or bin metadata that
+holds the path label of each cell or bin.}
 
 \item{use_as_bin}{A logical indicating to run MaSigPro analysis without
 pseudotime binning. Defaults to FALSE.}
@@ -60,6 +60,13 @@ bin. With \code{bin_counts} and \code{bin_cell_data} it holds bins made outside
 scMaSigPro, and the workflow continues with \code{\link[=sc.set.poly]{sc.set.poly()}}; such bins
 have no member cells, so \code{\link[=pb_counts]{pb_counts()}} and \code{\link[=sc.restruct]{sc.restruct()}} do not apply.
 }
+\seealso{
+Other input helpers:
+\code{\link[=as_scmp]{as_scmp()}},
+\code{\link[=assign_paths]{assign_paths()}},
+\code{\link[=paths_from_graph]{paths_from_graph()}}
+}
 \author{
 Priyansh Srivastava \email{spriyansh29@gmail.com}
 }
+\concept{input helpers}

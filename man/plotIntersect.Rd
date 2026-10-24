@@ -14,7 +14,7 @@ plotIntersect(
 )
 }
 \arguments{
-\item{scmpObj}{An object of class \code{\link{ScMaSigPro}}.}
+\item{scmpObj}{A \link[=ScMaSigPro-class]{ScMaSigPro} object.}
 
 \item{min_intersection_size}{Minimal number of observations in an intersection
 for it to be included.}
@@ -38,6 +38,14 @@ Generate UpSet Plot on Intersection of Significant Genes from scMaSigPro
 object. It is a wrapper \code{UpSetR::upset}, so drawing the plot needs the
 suggested package 'UpSetR'; \code{return = TRUE} does not.
 }
+\seealso{
+Other plots:
+\code{\link[=plotBinTile]{plotBinTile()}},
+\code{\link[=plotDiagnostics]{plotDiagnostics()}},
+\code{\link[=plotTrend]{plotTrend()}},
+\code{\link[=plotTrendCluster]{plotTrendCluster()}}
+}
 \author{
 Priyansh Srivastava \email{spriyansh29@gmail.com}
 }
+\concept{plots}

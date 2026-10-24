@@ -26,4 +26,12 @@ columns \code{lbound}, \code{ubound} and \code{bin.size}.
 of equal width and counts the points of each bin. The bounds of the bins
 are the breaks \code{seq(min, max, length.out = nBins + 1)} themselves.
 }
+\seealso{
+Other binning helpers:
+\code{\link[=calc_bin_size]{calc_bin_size()}},
+\code{\link[=estBinSize]{estBinSize()}},
+\code{\link[=optimize_bin_max]{optimize_bin_max()}},
+\code{\link[=pb_counts]{pb_counts()}}
+}
+\concept{binning helpers}
 \keyword{internal}

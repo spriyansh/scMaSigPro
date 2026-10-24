@@ -26,13 +26,13 @@ as_scmp(
 
 \item{root_label}{Label used to annotate root cells. (Default is "root").}
 
-\item{ptime_col}{A character string representing the column name
-for inferred Pseudotime values. (Default is "Pseudotime")}
+\item{ptime_col}{The name of the column of the cell metadata that holds
+the pseudotime of each cell.}
 
-\item{path_col}{A character string representing the column name for branching
-path assignment. (Default is \code{path_prefix})}
+\item{path_col}{The name of the column of the cell or bin metadata that
+holds the path label of each cell or bin.}
 
-\item{verbose}{Print detailed output in the console. (Default is TRUE)}
+\item{verbose}{Whether to print progress messages.}
 
 \item{additional_params}{A named list of additional parameters:
 \code{labels_exist}, \code{exist_ptime_col} and \code{exist_path_col}. With
@@ -73,6 +73,13 @@ scmp.sce <- as_scmp(
 )
 
 }
+\seealso{
+Other input helpers:
+\code{\link[=assign_paths]{assign_paths()}},
+\code{\link[=create_scmp]{create_scmp()}},
+\code{\link[=paths_from_graph]{paths_from_graph()}}
+}
 \author{
 Priyansh Srivastava \email{spriyansh29@gmail.com}
 }
+\concept{input helpers}

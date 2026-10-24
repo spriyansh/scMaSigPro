@@ -7,8 +7,6 @@
 #'   ggplot ggtitle labs scale_color_manual scale_x_continuous theme
 #'   theme_classic xlab ylab
 #'
-#' @param scmpObj An object of class \code{\link{ScMaSigPro}}.
-#' @param feature_id Name of the gene to be plotted.
 #' @param xlab X-axis label. (Default is "Pooled Pseudotime")
 #' @param ylab Y-axis label. (Default is "Pseudobulk Expression")
 #' @param smoothness How smooth the trend should be. Setting to
@@ -34,6 +32,9 @@
 #' @return ggplot2 plot object.
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
+#'
+#' @family plots
+#' @inheritParams scmp-params
 #'
 #' @export
 plotTrend <- function(scmpObj,

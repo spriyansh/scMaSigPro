@@ -14,4 +14,7 @@ This method displays basic information about the ScMaSigPro object when the
 object is printed in the console. The method is automatically called when the
 user writes the name of the object in the console.
 }
+\seealso{
+\link[=ScMaSigPro-class]{ScMaSigPro}
+}
 \keyword{internal}

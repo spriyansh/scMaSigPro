@@ -9,6 +9,8 @@
 #' in the sets, and row names corresponding to the unique elements.
 #'
 #' @keywords internal
+#'
+#' @seealso [plotIntersect()], which calls it.
 fromListWithNames <- function(input) {
     # Get unique elements (genes)
     elements <- unique(unlist(input))
@@ -44,6 +46,8 @@ fromListWithNames <- function(input) {
 #' @return A character vector of hex color codes.
 #'
 #' @keywords internal
+#'
+#' @seealso [plotTrend()] and [plotTrendCluster()], which call it.
 scmp_colors <- function(n) {
     # Define Palette
     ten_pal <- c("#d95f02", "#4daf4a", "#377eb8", "#E69F00", "#f781bf", "#56B4E9", "#a65628", "#009E73", "#7570b3")

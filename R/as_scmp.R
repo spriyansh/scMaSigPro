@@ -18,11 +18,6 @@
 #' ("cds") are no longer converted. (Default is "sce").
 #' @param path_prefix Prefix used to annotate the paths. (Default is "Path").
 #' @param root_label Label used to annotate root cells. (Default is "root").
-#' @param ptime_col A character string representing the column name
-#' for inferred Pseudotime values. (Default is "Pseudotime")
-#' @param path_col A character string representing the column name for branching
-#' path assignment. (Default is `path_prefix`)
-#' @param verbose Print detailed output in the console. (Default is TRUE)
 #' @param additional_params A named list of additional parameters:
 #' `labels_exist`, `exist_ptime_col` and `exist_path_col`. With
 #' `labels_exist = TRUE`, the existing `colData` columns `exist_ptime_col` and
@@ -51,6 +46,9 @@
 #' )
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
+#'
+#' @family input helpers
+#' @inheritParams scmp-params
 #'
 #' @export
 as_scmp <- function(object, from = "sce",

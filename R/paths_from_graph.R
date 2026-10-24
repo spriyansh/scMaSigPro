@@ -50,6 +50,8 @@
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
 #'
+#' @family input helpers
+#'
 #' @export
 paths_from_graph <- function(cell_node, edges, root, endpoints = NULL) {
     .check(requireNamespace("igraph", quietly = TRUE),

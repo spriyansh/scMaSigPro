@@ -4,7 +4,6 @@
 #' This function extracts features from an object of class `scMaSigPro`
 #' based on a specified query. The function query the coefficients matrix.
 #'
-#' @param scmpObj An object of class \code{\link{ScMaSigPro}}.
 #' @param rsq Coefficient of determination or R-squared value threshold.
 #' @param includeInflu Whether to include genes with influential observations.
 #' @param p_value Overall model significance.
@@ -17,9 +16,12 @@
 #'
 #' @return A subset of matrix of coefficients.
 #'
-#' @seealso `scMaSigPro::sc.filter()`
+#' @seealso [showCoeff()] for the coefficients of every gene.
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}.
+#'
+#' @family results
+#' @inheritParams scmp-params
 #'
 #' @export
 queryCoeff <- function(scmpObj,

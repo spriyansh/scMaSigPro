@@ -27,7 +27,17 @@ p-values for non-flat profiles.}
 \item{\code{fdr}}{False Discovery Rate (FDR) value for the given significance level.}
 }}
 
+\seealso{
+Other classes:
+\code{\link{Estimates}},
+\code{\link{MatrixDesign}},
+\code{\link{ParameterConfig}},
+\code{\link{ScMaSigPro}},
+\code{\link{Significant}},
+\code{\link{updateObject,ScMaSigPro-method}}
+}
 \author{
 Priyansh Srivastava \href{mailto:spriyansh29@gmail.com}{spriyansh29@gmail.com}
 }
+\concept{classes}
 \keyword{classes}

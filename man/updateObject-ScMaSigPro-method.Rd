@@ -75,7 +75,16 @@ unlink(path)
 }
 \seealso{
 \code{\link{ScMaSigPro}}
+
+Other classes:
+\code{\link{Estimates}},
+\code{\link{MatrixDesign}},
+\code{\link{ParameterConfig}},
+\code{\link{ScMaSigPro}},
+\code{\link{Significant}},
+\code{\link{VariableProfiles}}
 }
 \author{
 Priyansh Srivastava \email{spriyansh29@gmail.com}
 }
+\concept{classes}

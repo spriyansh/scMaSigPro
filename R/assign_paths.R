@@ -91,6 +91,8 @@
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
 #'
+#' @family input helpers
+#'
 #' @export
 assign_paths <- function(pseudotime, weights, min_weight = 0.5,
                          root_label = "root", shared_sep = "_links_",

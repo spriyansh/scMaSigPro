@@ -7,7 +7,6 @@
 #'   facet_wrap geom_path geom_point geom_smooth ggplot labs scale_color_manual
 #'   theme theme_classic xlab ylab
 #'
-#' @param scmpObj An object of class \code{\link{ScMaSigPro}}.
 #' @param xlab X-axis label. (Default is "Pooled Pseudotime")
 #' @param ylab Y-axis label. The default, \code{NULL}, is
 #' "log(Pseudobulk Expression)" for log-link fits and when the points are
@@ -23,7 +22,6 @@
 #' (Default is TRUE)
 #' @param significant Include gene only if the models are significant based on
 #' \code{scMaSigPro::sc.filter()}. (Default is TRUE)
-#' @param verbose Print detailed output in the console. (Default is TRUE)
 #' @param summary_mode Compress the expression values per replicate (if present)
 #'  per binned pseudotime point. Default is 'median'. Other option 'mean'
 #' @param pseudoCount Add a pseudo-count before taking the log. (Default is 1)
@@ -35,6 +33,9 @@
 #'
 #' @return ggplot2 plot object.
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
+#' @family plots
+#' @inheritParams scmp-params
+#'
 #' @export
 plotTrendCluster <- function(scmpObj,
                              xlab = "Pooled Pseudotime",

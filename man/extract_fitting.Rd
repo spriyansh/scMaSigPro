@@ -41,4 +41,7 @@ a column for this gene is appended when it has influential observations.}
 \description{
 Extract Fitting
 }
+\seealso{
+\code{\link[=sc.t.fit]{sc.t.fit()}}, which calls it.
+}
 \keyword{internal}

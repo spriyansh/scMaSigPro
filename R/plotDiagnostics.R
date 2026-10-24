@@ -9,8 +9,6 @@
 #'   geom_hline geom_point geom_smooth ggplot labs stat_qq stat_qq_line theme
 #'   theme_minimal
 #'
-#' @param scmpObj An object of class \code{\link{ScMaSigPro}}.
-#' @param feature_id Name of the gene to be plotted.
 #' @param model Type of model to be used for plotting. Can be either 'optimized',
 #' 'intercept'and 'full'. Default is 'optimized'.
 #'
@@ -19,8 +17,10 @@
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
 #'
-#' @export
+#' @family plots
+#' @inheritParams scmp-params
 #'
+#' @export
 plotDiagnostics <- function(scmpObj,
                             feature_id,
                             model = "optimized") {

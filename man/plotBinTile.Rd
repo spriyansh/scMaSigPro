@@ -12,17 +12,16 @@ plotBinTile(
 )
 }
 \arguments{
-\item{scmpObj}{An object of class \code{\link{ScMaSigPro}}.}
+\item{scmpObj}{A \link[=ScMaSigPro-class]{ScMaSigPro} object.}
 
-\item{path_col}{A character string representing the column name for branching
-path assignment in 'Sparse' or 'Dense' slot.}
+\item{path_col}{The name of the column of the cell or bin metadata that
+holds the path label of each cell or bin.}
 
-\item{bin_size_col}{A character string representing the name of the column in
-which bin sizes per bin are stored. (Default is "scmp_bin_size").}
+\item{bin_size_col}{The name of the column of the bin metadata that holds
+the number of cells of each bin.}
 
-\item{bin_ptime_col}{A character string representing the column name
-for binned Pseudotime values in 'Dense' data.
-(Default is "scmp_binned_pseudotime").}
+\item{bin_ptime_col}{The name of the column of the bin metadata that holds
+the binned pseudotime of each bin.}
 }
 \value{
 ggplot2 plot object.
@@ -32,6 +31,14 @@ This function generates plots to visualize the Dense slot cell metadata
 from a ScMaSigPro object. It produces tile plot to display the bin sizes
 across different binned time intervals and paths.
 }
+\seealso{
+Other plots:
+\code{\link[=plotDiagnostics]{plotDiagnostics()}},
+\code{\link[=plotIntersect]{plotIntersect()}},
+\code{\link[=plotTrend]{plotTrend()}},
+\code{\link[=plotTrendCluster]{plotTrendCluster()}}
+}
 \author{
 Priyansh Srivastava \email{spriyansh29@gmail.com}
 }
+\concept{plots}

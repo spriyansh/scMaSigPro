@@ -20,8 +20,9 @@
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
 #'
-#'
 #' @keywords internal
+#' @family binning helpers
+#'
 calc_bin_size <- function(x, clus_mem_col = "scmp_cluster_members") {
     # Split the bin's cell members at each "|" (a fixed string, not a regular
     # expression); the number of pieces is the number of cells in the bin
@@ -99,6 +100,8 @@ calc_bin_size <- function(x, clus_mem_col = "scmp_cluster_members") {
 #' @importFrom stats IQR sd
 #'
 #' @keywords internal
+#' @family binning helpers
+#'
 estBinSize <- function(time_vector, nPoints, drop_fac, bin_method) {
     estBins <- switch(bin_method,
         "Freedman.Diaconis" = {
@@ -229,6 +232,8 @@ estBinSize <- function(time_vector, nPoints, drop_fac, bin_method) {
 #' a column for this gene is appended when it has influential observations.
 #'
 #' @keywords internal
+#'
+#' @seealso [sc.t.fit()], which calls it.
 extract_fitting <- function(reg, lmf, model.glm.0, dis, family, name, vars.in, alfa, influ.info) {
     sol <- coefficients <- group.coeffs <- t.score <- sig.profiles <- NULL
     y <- reg$y
@@ -344,6 +349,8 @@ extract_fitting <- function(reg, lmf, model.glm.0, dis, family, name, vars.in, a
 #' columns `lbound`, `ubound` and `bin.size`.
 #'
 #' @keywords internal
+#' @family binning helpers
+#'
 extract_interval <- function(time.vector, nBins = 1, bin.size, lbound,
                              ubound) {
     # Count the points in nBins bins of equal width spanning the range, with
@@ -427,6 +434,8 @@ extract_interval <- function(time.vector, nBins = 1, bin.size, lbound,
 #' @return A dataframe with adjusted bins. The structure of the dataframe will be the same as `bin_table`
 #' with updated values for the bin size and bounds.
 #' @keywords internal
+#' @family binning helpers
+#'
 optimize_bin_max <- function(bin_table, max_allowed, verbose = TRUE,
                              time_vector, lbound, ubound, bin.size, method,
                              drop) {
@@ -507,17 +516,9 @@ optimize_bin_max <- function(bin_table, max_allowed, verbose = TRUE,
 #' cell counts. It does this by either taking the mean or sum of counts across
 #' cells in each bin, depending on the specified method.
 #'
-#' @param scmpObj object of Class scMaSigPro. See \code{\link{ScMaSigPro}}
-#' for more details.
-#' @param bin_mem_col Column name in the Dense metadata storing information
-#' about the members of the bins. (Default is 'scmp_bin_members').
-#' @param bin_col  Column name in the Dense metadata storing information
-#' about the bin labels. (Default is 'scmp_bin').
 #' @param cluster_count_by A character string specifying the method to use to
 #' aggregate counts within each cluster. Available options are 'mean' or 'sum'.
 #' (Default = "sum").
-#' @param assay_name Name of the Assay in the assay_name object from which
-#' retrieve the counts. (Default = "counts").
 #'
 #' @return
 #' An object of class \code{\link{ScMaSigPro}} whose `Dense` slot is rebuilt
@@ -539,6 +540,9 @@ optimize_bin_max <- function(bin_table, max_allowed, verbose = TRUE,
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
 #'
 #' @importClassesFrom Matrix dgCMatrix
+#'
+#' @family binning helpers
+#' @inheritParams scmp-params
 #'
 #' @export
 

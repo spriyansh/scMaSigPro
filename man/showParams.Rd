@@ -24,6 +24,8 @@ coefficient \code{beta1}, \code{beta2}, ... per column of the design matrix.
 }
 \seealso{
 Other results:
+\code{\link[=queryCoeff]{queryCoeff()}},
+\code{\link[=scmpResults]{scmpResults()}},
 \code{\link[=showCoeff]{showCoeff()}}
 }
 \concept{results}
