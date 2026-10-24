@@ -67,7 +67,7 @@
     </div>
 
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.6.0" id="scmasigpro-060">scMaSigPro 0.6.0<a class="anchor" aria-label="anchor" href="#scmasigpro-060"></a></h2>
+<h2 class="page-header" data-toc-text="0.6.0" id="scmasigpro-060-2026-10-24">scMaSigPro 0.6.0 (2026-10-24)<a class="anchor" aria-label="anchor" href="#scmasigpro-060-2026-10-24"></a></h2>
 <ul><li>Breaking changes
 <ul><li>
 <code><a href="../reference/as_scmp.html">as_scmp()</a></code> no longer converts Monocle3 <code>cell_data_set</code> objects. The <code>from = "cds"</code> route and the interactive Shiny app it opened to pick the root and the branching paths are removed, together with the exported <code>m3_select_path()</code> and the internal <code>shinySelect()</code> and <code>align_pseudotime()</code>. <code><a href="../reference/as_scmp.html">as_scmp()</a></code> now takes any <code>SingleCellExperiment</code> (subclasses other than <code>cell_data_set</code> used to return <code>NULL</code>), and <code>from</code> defaults to <code>"sce"</code>, its only accepted value.</li>
@@ -255,7 +255,7 @@
 </ul></li>
 </ul></div>
     <div class="section level2">
-<h2 class="page-header" data-toc-text="0.0.5" id="scmasigpro-005">scMaSigPro 0.0.5<a class="anchor" aria-label="anchor" href="#scmasigpro-005"></a></h2>
+<h2 class="page-header" data-toc-text="0.0.5" id="scmasigpro-005-2026-10-13">scMaSigPro 0.0.5 (2026-10-13)<a class="anchor" aria-label="anchor" href="#scmasigpro-005-2026-10-13"></a></h2>
 <ul><li>Bug Fixes
 <ul><li>
 <code><a href="../reference/sc.squeeze.html">sc.squeeze()</a></code> no longer scrambles the cell metadata in the <code>Sparse</code> slot. Binning stacked the cells path by path, but the count matrix kept its original column order, so <code><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData()</a></code>, <code><a href="https://rdrr.io/pkg/BiocGenerics/man/dge.html" class="external-link">counts()</a></code>, <code><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay()</a></code> and <code><a href="../reference/cSparse.html">cSparse()</a></code> paired every cell with another cell’s counts (on <code>splat.sim</code>, <code>counts(ob@Sparse)[, "Cell2"]</code> returned the counts of <code>Cell1</code>). Pseudo-bulk counts, fits and gene lists were not affected because they match cells by name. Running <code><a href="../reference/sc.squeeze.html">sc.squeeze()</a></code> again repairs objects binned with 0.0.4.</li>
