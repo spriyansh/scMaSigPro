@@ -169,6 +169,7 @@ build_golden <- function() {
     log_note <- "0.6.0, Section 2.3: the offset is the log of the size factors"
     gone_note <- "0.6.0, Section 2.3: removed, the same fit as fits/default"
     once_note <- "0.6.0, Section 2.3: sc.t.fit() reuses the offset"
+    raw_note <- "0.6.0, Section S1.3: raw counts and their size factors"
 
     methods <- c("Sturges", "Sqrt", "Rice", "Doane", "Freedman.Diaconis", "Scott.Normal")
     by_method <- lapply(methods, function(m) {
@@ -275,7 +276,11 @@ build_golden <- function() {
                 "fits/default" = once_note,
                 "filters" = once_note,
                 "clusters" = once_note,
-                "plots" = once_note
+                "plots" = once_note,
+                "fits/default" = raw_note,
+                "filters" = raw_note,
+                "clusters" = raw_note,
+                "plots" = raw_note
             )
         ),
         sparse_cells = sorted_df(cSparse(binned)),

@@ -57,7 +57,7 @@ test_that("theta_estimate = 'gene' fits every gene with its own theta", {
     g <- "Gene51"
     dis <- .fit_frame(ob@Design@predictor_matrix)
     k <- as.matrix(SummarizedExperiment::assay(ob@Dense, "bulk.counts"))
-    k <- k[, rownames(dis)] + 1
+    k <- k[, rownames(dis)]
     p <- .pvector_gene(
         which(rownames(k) == g), k, dis,
         MASS::negative.binomial(fam$theta_gene[[g]]), 1e-8,

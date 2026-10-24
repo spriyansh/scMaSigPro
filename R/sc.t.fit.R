@@ -125,7 +125,6 @@ sc.t.fit <- function(scmpObj,
     # The offset of each bin: the one that sc.p.vector() computed from every
     # gene it fitted, or the same computed here when it stored none
     if (offset) {
-        dat <- dat + 1
         offsetData <- scmpObj@Design@offset
         if (length(offsetData) == 0L) {
             bins <- as.character(rownames(dis))

@@ -62,13 +62,21 @@
 #'
 #' @details
 #' With `offset = TRUE`, the fits include an offset as Srivastava et al.
-#' (2024), Section 2.3, describes it: "scMaSigPro incorporates an offset
-#' value to the Poly-GLM model to adjust for disparities in total read counts
-#' per bin. This offset is calculated as the logarithm of size factors for
-#' each bin". The size factors are estimated by the median-of-ratios method
-#' on the counts plus 1, and the genes are fitted on their counts plus 1.
-#' The offsets are stored in the `Design` slot, where [sc.t.fit()] finds
-#' them; with `offset = FALSE` no offset is stored.
+#' (2024), Section 2.3 and Supplementary Section S1.3, describe it:
+#' "scMaSigPro incorporates an offset value to the Poly-GLM model to adjust
+#' for disparities in total read counts per bin. This offset is calculated
+#' as the logarithm of size factors for each bin". The size factors are those
+#' of the median-of-ratios method of Love, Huber and Anders (2014), on the
+#' raw counts: "The size factor for each bin is the median of the ratios of
+#' its counts to the geometric means for each gene". Only the genes with a
+#' count above 0 in every bin have a geometric mean above 0 and enter the
+#' medians. The genes are fitted on their raw counts, without a pseudo-count:
+#' "scMaSigPro can directly process raw counts". When every gene has a zero
+#' count in some bin, the size factors cannot be computed and the fit stops
+#' with an error: fewer and larger bins (see [sc.squeeze()]) can leave genes
+#' without a zero count, and `offset = FALSE` fits without the offset. The
+#' offsets are stored in the `Design` slot, where [sc.t.fit()] finds them;
+#' with `offset = FALSE` no offset is stored.
 #'
 #' Genes are left out of the fit when they have fewer than `min_na` values,
 #' when all their counts are zero, and when they are below `min_counts` or
@@ -87,6 +95,10 @@
 #' @references Conesa, A., Nueda M.J., Alberto Ferrer, A., Talon, T. 2006.
 #' maSigPro: a Method to Identify Significant Differential Expression Profiles
 #' in Time-Course Microarray Experiments. Bioinformatics 22, 1096-1102
+#'
+#' Love, M.I., Huber, W. and Anders, S. (2014). Moderated estimation of fold
+#' change and dispersion for RNA-seq data with DESeq2. Genome Biology 15, 550.
+#' \doi{10.1186/s13059-014-0550-8}
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}, Ana Conesa and
 #' Maria Jose Nueda, \email{mj.nueda@@ua.es}
@@ -183,11 +195,9 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
     }
 
     # The offset of each bin: the logarithm of its size factor (Srivastava
-    # et al. (2024), Section 2.3), computed once here for sc.t.fit() too;
-    # the genes are fitted on their counts + 1
+    # et al. (2024), Section 2.3), computed once here for sc.t.fit() too
     if (offset) {
         offsetData <- .bin_offset(dat)
-        dat <- dat + 1
         scmpObj@Design@offset <- offsetData
     } else {
         offsetData <- NULL

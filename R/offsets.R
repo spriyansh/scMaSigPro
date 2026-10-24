@@ -83,8 +83,22 @@
 }
 
 # The offset of sc.p.vector() and sc.t.fit() (Srivastava et al. (2024),
-# Section 2.3): the logarithm of the size factor of each bin, from the
-# counts + 1 of the genes that sc.p.vector() fits
+# Section 2.3 and Supplementary Section S1.3): the logarithm of the size
+# factor of each bin, from the raw counts of the genes that sc.p.vector()
+# fits. Only the genes with a count above 0 in every bin have a geometric
+# mean above 0, so at least one is needed.
 .bin_offset <- function(counts) {
-    log(.size_factors(counts + 1))
+    counts <- as.matrix(counts)
+    .check(isTRUE(any(rowSums(!(counts > 0)) == 0)),
+        msg = paste(
+            "Cannot compute the size factors of the offset: every gene has a",
+            "zero or missing count in at least one bin of the design. Fewer",
+            "and larger bins (for example sc.squeeze() with a smaller",
+            "'drop_fac') can leave genes without a zero count; otherwise fit",
+            "without the offset, with offset = FALSE. 'min_counts' and",
+            "'min_bins_expressed' do not help: the size factors are computed",
+            "before them."
+        )
+    )
+    log(.size_factors(counts))
 }

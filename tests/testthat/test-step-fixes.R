@@ -27,7 +27,7 @@ test_that("sc.filter(vars = 'each') gives one list per term (ledger F1)", {
     # Control: terms that select different numbers of genes
     some <- sc.filter(ob, vars = "each")@Significant@genes
     expect_identical(
-        lengths(some), setNames(c(40L, 10L, 19L, 34L, 11L, 11L), terms)
+        lengths(some), setNames(c(39L, 9L, 17L, 32L, 12L, 10L), terms)
     )
 })
 
@@ -844,26 +844,27 @@ test_that("split_bins and prune_bins set their limits from the first bins", {
 test_that("the offset is the logarithm of the size factors of the bins", {
     # Srivastava et al. (2024), Section 2.3: the offset "is calculated as the
     # logarithm of size factors for each bin". The size factors are the
-    # medians over the genes of the ratios of the counts + 1 of a bin to
-    # their geometric means. On splat.sim they range from 0.59 to 1.68, so
+    # medians over the genes of the ratios of the raw counts of a bin to
+    # their geometric means (Supplementary Section S1.3), over the genes
+    # without a zero count. On splat.sim they range from 0.59 to 1.68, so
     # the size factor itself, the offset before, was no normalisation
     design <- splat_design(2)
     fitted <- sc.p.vector(design, verbose = FALSE)
     counts <- eDense(design)[, rownames(predictors(design))]
-    log_k <- log(counts + 1)
+    log_k <- log(counts[rowSums(counts == 0) == 0, ])
     log_sf <- apply(log_k - rowMeans(log_k), 2, stats::median)
     expect_equal(fitted@Design@offset, log_sf, tolerance = 1e-12)
-    expect_identical(fitted@Design@offset, log(.size_factors(counts + 1)))
+    expect_identical(fitted@Design@offset, log(.size_factors(counts)))
     expect_equal(
         unname(round(exp(fitted@Design@offset[c(3, 9)]), 4)),
-        c(0.5911, 1.6795)
+        c(0.5905, 1.6798)
     )
-    # The fit of a gene is the glm() of its counts + 1 with that offset
+    # The fit of a gene is the glm() of its raw counts with that offset
     # (the non-flat gene with the largest p-value: expect_equal() compares
     # p-values below its tolerance as absolute differences)
     p_non_flat <- fitted@Profile@p_values[fitted@Profile@non_flat]
     gene <- names(which.max(p_non_flat))
-    y <- counts[gene, ] + 1
+    y <- counts[gene, ]
     nb <- MASS::negative.binomial(10)
     full <- glm(y ~ .,
         data = .fit_frame(predictors(design)), family = nb,
@@ -928,13 +929,13 @@ test_that("sc.t.fit() reuses the offset of sc.p.vector()", {
     pv <- sc.p.vector(splat_design(2), verbose = FALSE)
     tf <- sc.t.fit(pv, verbose = FALSE)
     expect_identical(tf@Design@offset, pv@Design@offset)
-    # The selected model of a gene is the glm() of its counts + 1 on the
+    # The selected model of a gene is the glm() of its raw counts on the
     # selected terms with that offset
     sol <- showSol(tf)
     gene <- rownames(sol)[sol[["p.valor_beta0"]] <= 0.05][1]
     terms <- !is.na(unlist(sol[gene, -(1:3)]))
     x <- predictors(tf)[, terms, drop = FALSE]
-    fit <- stats::glm.fit(cbind(1, x), eDense(tf)[gene, rownames(x)] + 1,
+    fit <- stats::glm.fit(cbind(1, x), eDense(tf)[gene, rownames(x)],
         family = MASS::negative.binomial(10), offset = pv@Design@offset,
         control = stats::glm.control(epsilon = 1e-8, maxit = 100)
     )
@@ -949,4 +950,35 @@ test_that("sc.t.fit() reuses the offset of sc.p.vector()", {
     computed <- sc.t.fit(none, offset = TRUE, verbose = FALSE)
     expect_identical(computed@Design@offset, pv@Design@offset)
     expect_identical(computed@Estimate, tf@Estimate)
+})
+
+test_that("the size factors need a gene without a zero count", {
+    # Srivastava et al. (2024), Supplementary Section S1.3: the size factor
+    # of a bin is the median of the ratios of its counts to the geometric
+    # means of the genes; a gene with a zero count has a geometric mean of 0
+    # and is left out. With one gene left, the size factors are its counts
+    # over their geometric mean
+    design <- splat_design(2)
+    bins <- rownames(predictors(design))
+    k <- eDense(design)
+    keep <- rownames(k)[rowSums(k[, bins] == 0) == 0][1]
+    k[rownames(k) != keep, bins[1]] <- 0
+    expect_warning(eDense(design) <- k, "Overwriting assay", fixed = TRUE)
+    fitted <- sc.p.vector(design, verbose = FALSE)
+    y <- log(k[keep, bins])
+    expect_equal(fitted@Design@offset, y - mean(y), tolerance = 1e-12)
+    # With no such gene, the fit stops; the count filter does not help, as
+    # the size factors are computed before it
+    k[keep, bins[1]] <- 0
+    expect_warning(eDense(design) <- k, "Overwriting assay", fixed = TRUE)
+    msg <- "Cannot compute the size factors of the offset: every gene has"
+    expect_error(sc.p.vector(design, verbose = FALSE), msg, fixed = TRUE)
+    expect_error(
+        sc.p.vector(design, min_bins_expressed = length(bins), verbose = FALSE),
+        msg,
+        fixed = TRUE
+    )
+    expect_s4_class(
+        sc.p.vector(design, offset = FALSE, verbose = FALSE), "ScMaSigPro"
+    )
 })
