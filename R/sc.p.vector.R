@@ -67,7 +67,8 @@
 #' per bin. This offset is calculated as the logarithm of size factors for
 #' each bin". The size factors are estimated by the median-of-ratios method
 #' on the counts plus 1, and the genes are fitted on their counts plus 1.
-#' The offsets are stored in the `Design` slot.
+#' The offsets are stored in the `Design` slot; with `offset = FALSE` no
+#' offset is stored.
 #'
 #' Genes are left out of the fit when they have fewer than `min_na` values,
 #' when all their counts are zero, and when they are below `min_counts` or
@@ -197,6 +198,7 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
         scmpObj@Design@offset <- offsetData
     } else {
         offsetData <- NULL
+        scmpObj@Design@offset <- numeric(0)
     }
 
     # The genes below min_counts or min_bins_expressed are not fitted

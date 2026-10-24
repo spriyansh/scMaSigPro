@@ -889,3 +889,35 @@ test_that("the offset is the logarithm of the size factors of the bins", {
     )
     expect_false(methods::.hasSlot(fitted@Parameters, "log_offset"))
 })
+
+test_that("a fit without offset stores none, and the plots use none", {
+    # sc.set.poly() stores no offset, and neither does a fit without offset,
+    # also after a fit with one, whose offsets stayed in the object
+    expect_identical(splat_design(2)@Design@offset, numeric(0))
+    pv <- sc.p.vector(splat_fitted("default"), offset = FALSE, verbose = FALSE)
+    expect_identical(pv@Design@offset, numeric(0))
+    expect_false(pv@Parameters@offset)
+    tf <- sc.t.fit(splat_fitted("default"), offset = FALSE, verbose = FALSE)
+    expect_identical(tf@Design@offset, numeric(0))
+    expect_valid_scmp(tf)
+    # So refitting without offset gives the object of a fit without offset,
+    # and its plots, whose points are the logs of the counts + 1, not of the
+    # counts divided by the size factors of the earlier fit
+    refit <- sc.t.fit(pv, verbose = FALSE)
+    fresh <- splat_fitted("no_offset")
+    expect_identical(refit, fresh)
+    gene <- rownames(showSol(fresh))[1]
+    built <- ggplot2::ggplot_build(plotTrend(refit, gene, significant = FALSE))
+    counts <- eDense(fresh)[gene, rownames(cDense(fresh))]
+    expect_identical(built$data[[1]]$y, unname(log(counts + 1)))
+    # With the offset, the points are divided by the size factors
+    fitted <- splat_fitted("default")
+    gene <- rownames(showSol(fitted))[1]
+    built <- ggplot2::ggplot_build(plotTrend(fitted, gene, significant = FALSE))
+    counts <- eDense(fitted)[gene, rownames(cDense(fitted))]
+    expect_equal(
+        built$data[[1]]$y,
+        unname(log(counts / exp(fitted@Design@offset) + 1)),
+        tolerance = 1e-12
+    )
+})

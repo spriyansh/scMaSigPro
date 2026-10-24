@@ -119,13 +119,16 @@ test_that("validity methods return every problem instead of stopping", {
         "'distribution' must be a 'family' object"
     ))
 
-    design <- splat_design(2)@Design
+    design <- splat_fitted("default")@Design
     design@assignment_matrix <- design@assignment_matrix[-1, , drop = FALSE]
     design@offset <- design@offset[-1]
     design@groups.vector <- design@groups.vector[-1]
     expect_identical(validObject(design, test = TRUE), c(
         "'assignment_matrix' must have the rows of 'predictor_matrix'",
-        "'offset' must have one value per row of 'predictor_matrix'",
+        paste(
+            "'offset' must be empty or have one value per row of",
+            "'predictor_matrix'"
+        ),
         "'groups.vector' must have one value per column of 'predictor_matrix'"
     ))
 

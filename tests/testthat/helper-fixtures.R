@@ -273,7 +273,8 @@ build_golden <- function() {
                 "fits/vignette" = gone_note,
                 "filters" = log_note,
                 "clusters" = log_note,
-                "plots" = log_note
+                "plots" = log_note,
+                "fits/no_offset/offset" = "0.6.0: offset = FALSE stores none"
             )
         ),
         sparse_cells = sorted_df(cSparse(binned)),

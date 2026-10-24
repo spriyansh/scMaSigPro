@@ -10,8 +10,9 @@ S4 class to store Branching Path Assignments and Prediction Matrix
 }
 \details{
 \code{validObject()} checks that \code{assignment_matrix} has the rows of
-\code{predictor_matrix} (one per bin), that \code{offset} has one value per row and
-that \code{groups.vector} has one value per column of \code{predictor_matrix}.
+\code{predictor_matrix} (one per bin), that \code{offset} is empty or has one value
+per row and that \code{groups.vector} has one value per column of
+\code{predictor_matrix}.
 }
 \section{Slots}{
 
@@ -27,7 +28,8 @@ Additionally has two columns for assignment of binned Pseudotime and
 replicate.}
 
 \item{\code{offset}}{The offset of each bin, the logarithm of its size factor (see
-\code{\link[=sc.p.vector]{sc.p.vector()}}).}
+\code{\link[=sc.p.vector]{sc.p.vector()}}), or an empty vector when the fits used no offset or no
+fit was made yet.}
 }}
 
 \keyword{classes}

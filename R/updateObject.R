@@ -32,8 +32,9 @@
 #' size factors instead, the offset of [sc.p.vector()] and [sc.t.fit()], and
 #' warns that the fits in the `Profile` and `Estimate` slots were made with
 #' the size factors, until [sc.p.vector()] is run again. The offsets of an
-#' object saved with `log_offset = TRUE`, or of a fit without offset, are
-#' kept.
+#' object saved with `log_offset = TRUE` are kept. An object whose fits used
+#' no offset, or that was not fitted, keeps no offset: the offsets that an
+#' earlier fit left in it, or the zeros of [sc.set.poly()], are removed.
 #'
 #' Objects fitted with `link = "identity"` by scMaSigPro 0.0.5 or earlier
 #' hold a family labelled with the identity link but with the link functions
@@ -104,11 +105,14 @@ setMethod("updateObject", "ScMaSigPro", function(object, ...,
         if (verbose) {
             message("[updateObject] Removing the parameter log_offset.")
         }
-        raw <- !isTRUE(attr(params, "log_offset")) &&
-            isTRUE(params@offset) && isTRUE(any(object@Design@offset != 0))
+        fitted <- isTRUE(params@offset) &&
+            isTRUE(any(object@Design@offset != 0))
+        raw <- fitted && !isTRUE(attr(params, "log_offset"))
         attr(params, "log_offset") <- NULL
         object@Parameters <- params
-        if (raw) {
+        if (!fitted) {
+            object@Design@offset <- numeric(0)
+        } else if (raw) {
             object@Design@offset <- log(object@Design@offset)
             warning(.raw_offset_message(), call. = FALSE)
         }

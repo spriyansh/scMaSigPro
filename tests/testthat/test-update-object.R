@@ -188,3 +188,20 @@ test_that("updateObject() stores the log of size factors saved as offsets", {
     )
     expect_identical(older, up)
 })
+
+test_that("updateObject() removes the offsets of fits without offset", {
+    # Earlier versions stored zeros in sc.set.poly() and kept the offsets of
+    # an earlier fit after a fit without offset
+    design <- splat_design(2)
+    old <- with_log_offset(design, FALSE)
+    old@Design@offset <- stats::setNames(
+        numeric(nrow(predictors(design))), rownames(predictors(design))
+    )
+    expect_no_warning(up <- updateObject(old))
+    expect_identical(up, design)
+    fitted <- splat_fitted("no_offset")
+    stale <- with_log_offset(fitted, FALSE)
+    stale@Design@offset <- exp(splat_fitted("default")@Design@offset)
+    expect_no_warning(up <- updateObject(stale))
+    expect_identical(up, fitted)
+})

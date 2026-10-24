@@ -128,6 +128,7 @@ sc.t.fit <- function(scmpObj,
         scmpObj@Design@offset <- offsetData
     } else {
         offsetData <- NULL
+        scmpObj@Design@offset <- numeric(0)
     }
 
     # Collect all the y

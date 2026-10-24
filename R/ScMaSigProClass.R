@@ -166,12 +166,14 @@ setClass(
 #' Additionally has two columns for assignment of binned Pseudotime and
 #' replicate.
 #' @slot offset The offset of each bin, the logarithm of its size factor (see
-#' [sc.p.vector()]).
+#' [sc.p.vector()]), or an empty vector when the fits used no offset or no
+#' fit was made yet.
 #'
 #' @details
 #' `validObject()` checks that `assignment_matrix` has the rows of
-#' `predictor_matrix` (one per bin), that `offset` has one value per row and
-#' that `groups.vector` has one value per column of `predictor_matrix`.
+#' `predictor_matrix` (one per bin), that `offset` is empty or has one value
+#' per row and that `groups.vector` has one value per column of
+#' `predictor_matrix`.
 #'
 #' @name MatrixDesign
 #' @aliases MatrixDesign-class
@@ -204,9 +206,10 @@ setClass(
                 "'predictor_matrix'"
             ))
         }
-        if (length(object@offset) != nrow(pred)) {
+        n_offset <- length(object@offset)
+        if (n_offset != 0L && n_offset != nrow(pred)) {
             msg <- c(msg, paste(
-                "'offset' must have one value per row of",
+                "'offset' must be empty or have one value per row of",
                 "'predictor_matrix'"
             ))
         }
