@@ -92,6 +92,8 @@
 <li>
 <code><a href="../reference/sc.t.fit.html">sc.t.fit()</a></code> uses the offset that <code><a href="../reference/sc.p.vector.html">sc.p.vector()</a></code> computed from every gene it fitted and stored in the <code>Design</code> slot, instead of computing the size factors again from the non-flat genes. It computes the offset in the same way when the object has none.</li>
 <li>With <code>offset = TRUE</code>, <code><a href="../reference/sc.p.vector.html">sc.p.vector()</a></code> and <code><a href="../reference/sc.t.fit.html">sc.t.fit()</a></code> fit the raw counts, and the size factors are computed from the raw counts by the median-of-ratios method, over the genes without a zero count. Both used the counts plus 1. When every gene has a zero count in some bin, <code><a href="../reference/sc.p.vector.html">sc.p.vector()</a></code> stops with an error that suggests fewer bins or <code>offset = FALSE</code>.</li>
+<li>
+<code>sc.filter(vars = "groups", intercept = "none")</code> leaves out the intercept of the reference path and the dummy of every other path, and lists the reference path first. It left out the first two terms of the model, which is the same with two paths; with more paths the dummies of the other paths still counted, and with a single path the first term in pseudotime was left out, or the call failed with degree 1.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="new-features-0-6-0">New features<a class="anchor" aria-label="anchor" href="#new-features-0-6-0"></a></h3>

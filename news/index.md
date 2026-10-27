@@ -283,6 +283,12 @@
   in some bin,
   [`sc.p.vector()`](https://spriyansh.github.io/scMaSigPro/reference/sc.p.vector.md)
   stops with an error that suggests fewer bins or `offset = FALSE`.
+- `sc.filter(vars = "groups", intercept = "none")` leaves out the
+  intercept of the reference path and the dummy of every other path, and
+  lists the reference path first. It left out the first two terms of the
+  model, which is the same with two paths; with more paths the dummies
+  of the other paths still counted, and with a single path the first
+  term in pseudotime was left out, or the call failed with degree 1.
 
 ### New features
 

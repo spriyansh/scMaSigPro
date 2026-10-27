@@ -49,8 +49,7 @@ sc.filter(
   With `vars = "groups"`, the intercept terms that count: `"dummy"`, the
   dummies of the paths (the differences of their intercepts from the
   reference); `"all"`, these and the intercept of the reference path;
-  `"none"`, neither (with more than two paths, only the dummy of the
-  first path after the reference is left out).
+  `"none"`, neither, so that only the terms in pseudotime count.
 
 - term_p_value:
 
