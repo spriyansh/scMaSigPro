@@ -389,6 +389,8 @@ setMethod("show", "ScMaSigPro", function(object) {
             "updateObject()."
         ))
     }
+    # End the last line, so the console prompt starts on a new line
+    cat("\n")
 })
 
 ###############################################################################
