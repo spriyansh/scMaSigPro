@@ -1,13 +1,14 @@
 # Print a ScMaSigPro object
 
-`.ScMaSigPro_show()` prints a summary of a
+The `show()` method prints a summary of a
 [ScMaSigPro](https://spriyansh.github.io/scMaSigPro/reference/ScMaSigPro-class.md)
-object; the `show()` method calls it.
+object.
 
 ## Usage
 
 ``` r
-.ScMaSigPro_show(object)
+# S4 method for class 'ScMaSigPro'
+show(object)
 ```
 
 ## Arguments

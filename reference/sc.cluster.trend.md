@@ -20,7 +20,6 @@ sc.cluster.trend(
   includeInflu = TRUE,
   mclust.k = FALSE,
   k = 9,
-  verbose = FALSE,
   fill_na = "zero",
   use_dim = "col"
 )
@@ -80,10 +79,6 @@ sc.cluster.trend(
 - k:
 
   The number of clusters.
-
-- verbose:
-
-  Not used.
 
 - fill_na:
 

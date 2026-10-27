@@ -12,8 +12,6 @@ plotIntersect(
   scmpObj,
   min_intersection_size = 1,
   keep_empty_groups = FALSE,
-  width_ratio = 0.1,
-  show_sets_size = FALSE,
   return = FALSE
 )
 ```
@@ -33,14 +31,6 @@ plotIntersect(
 - keep_empty_groups:
 
   Whether to draw the empty intersections.
-
-- width_ratio:
-
-  Not used.
-
-- show_sets_size:
-
-  Not used.
 
 - return:
 

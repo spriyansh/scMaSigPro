@@ -13,7 +13,6 @@ queryCoeff(
   scmpObj,
   rsq = 0.7,
   p_value = scmpObj@Parameters@p_value,
-  includeInflu = TRUE,
   query = "pseudotime_path",
   change = NULL,
   strictly = FALSE,
@@ -38,10 +37,6 @@ queryCoeff(
   The largest p-value of the selected model of a gene; by default that
   of
   [`sc.p.vector()`](https://spriyansh.github.io/scMaSigPro/reference/sc.p.vector.md).
-
-- includeInflu:
-
-  Not used.
 
 - query:
 

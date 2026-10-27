@@ -1,8 +1,8 @@
 # Bins per path for the printed summary
 
 `extract_info()` gives the mean bin size or the number of bins of each
-path for
-[`.ScMaSigPro_show()`](https://spriyansh.github.io/scMaSigPro/reference/dot-ScMaSigPro_show.md).
+path for the `show()` method of
+[ScMaSigPro](https://spriyansh.github.io/scMaSigPro/reference/ScMaSigPro-class.md).
 
 ## Usage
 

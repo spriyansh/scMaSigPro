@@ -39,9 +39,8 @@
   no longer have `view` and `return` arguments: they always return their
   result and never open the data viewer. Delete `view =` and `return =`
   from calls; to browse a result, use `View(showCoeff(obj))`.
-- [`.ScMaSigPro_show()`](https://spriyansh.github.io/scMaSigPro/reference/dot-ScMaSigPro_show.md),
-  the helper behind the `show()` method, is no longer exported. Printing
-  an object is unchanged.
+- `.ScMaSigPro_show()`, the helper behind the `show()` method, is no
+  longer exported. Printing an object is unchanged.
 - [`sc.p.vector()`](https://spriyansh.github.io/scMaSigPro/reference/sc.p.vector.md)
   and
   [`sc.t.fit()`](https://spriyansh.github.io/scMaSigPro/reference/sc.t.fit.md)
@@ -98,6 +97,15 @@
   [`updateObject()`](https://rdrr.io/pkg/BiocGenerics/man/updateObject.html)
   removes it and, when it was `FALSE`, replaces the stored size factors
   by their logarithm and warns that the fits must be run again.
+- [`plotTrendCluster()`](https://spriyansh.github.io/scMaSigPro/reference/plotTrendCluster.md)
+  no longer has the arguments `plot` and `includeInflu`,
+  [`plotIntersect()`](https://spriyansh.github.io/scMaSigPro/reference/plotIntersect.md)
+  no longer has `width_ratio` and `show_sets_size`,
+  [`queryCoeff()`](https://spriyansh.github.io/scMaSigPro/reference/queryCoeff.md)
+  no longer has `includeInflu`, and
+  [`sc.cluster.trend()`](https://spriyansh.github.io/scMaSigPro/reference/sc.cluster.trend.md)
+  no longer has `verbose`. None of them had an effect; delete them from
+  calls.
 
 ### Changes affecting results
 
@@ -876,6 +884,8 @@
   stops with “It should be at least 0.3.” when `drop_fac` is below 0.3;
   the message said “between 0.3 and 1”, although larger values are
   accepted.
+- Printing an `ScMaSigPro` object ends with a newline, so the console
+  prompt no longer follows its last line.
 
 ### Documentation
 
@@ -926,6 +936,8 @@
   functions of their family, cite the methods they implement or use,
   document the bundled data sets column by column, and are written in
   British English.
+- The error of `as_scmp(from = "cds")` points to the “Trajectory input”
+  vignette instead of the removed “Common Root Cells” vignette.
 
 ### Dependencies
 
@@ -988,6 +1000,7 @@
 - `DelayedMatrixStats` is suggested: the slingshot section of the
   “Trajectory input” vignette needs it through slingshot’s lineage
   inference.
+- scMaSigPro depends on R (\>= 4.6.0) instead of R (\>= 4.0).
 
 ### Internal
 
@@ -1062,6 +1075,24 @@
   and their replacement forms instead of reaching into the internal
   slots of those objects, so it no longer depends on how
   SummarizedExperiment stores its data. Results are unchanged.
+- The `show()` method of `ScMaSigPro` objects holds the printing code
+  instead of calling the internal `.ScMaSigPro_show()`,
+  [`paths_from_graph()`](https://spriyansh.github.io/scMaSigPro/reference/paths_from_graph.md)
+  finds the end nodes it cannot reach with
+  [`igraph::distances()`](https://r.igraph.org/reference/distances.html)
+  instead of silencing the warning of
+  [`igraph::shortest_paths()`](https://r.igraph.org/reference/distances.html),
+  and
+  [`plotTrend()`](https://spriyansh.github.io/scMaSigPro/reference/plotTrend.md)
+  and
+  [`plotTrendCluster()`](https://spriyansh.github.io/scMaSigPro/reference/plotTrendCluster.md)
+  log their points without silencing warnings, so a negative
+  `pseudoCount` that makes a point negative now warns. The output is
+  otherwise unchanged.
+- Before it stops with “Unable to estimate bin size”,
+  [`sc.squeeze()`](https://spriyansh.github.io/scMaSigPro/reference/sc.squeeze.md)
+  prints “Could not estimate the number of bins:” and the reason,
+  instead of “Error message:” and the reason.
 
 ## scMaSigPro 0.0.5 (2026-10-13)
 
