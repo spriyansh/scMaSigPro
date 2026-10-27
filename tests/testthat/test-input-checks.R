@@ -572,3 +572,15 @@ test_that("sc.squeeze() takes any drop_fac of at least 0.3", {
         )
     }
 })
+
+test_that("arguments without effect are gone", {
+    gone <- list(
+        plotTrendCluster = c("plot", "includeInflu"),
+        plotIntersect = c("width_ratio", "show_sets_size"),
+        queryCoeff = "includeInflu",
+        sc.cluster.trend = "verbose"
+    )
+    for (fn in names(gone)) {
+        expect_false(any(gone[[fn]] %in% names(formals(fn))), label = fn)
+    }
+})
