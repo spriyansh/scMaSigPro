@@ -1,5 +1,9 @@
 # scMaSigPro 0.99.0 (2026-10-28)
 
+## Documentation
+
+* The README and the Installation section of the Quick start vignette install scMaSigPro from Bioconductor, with `BiocManager::install("scMaSigPro")`, and give the command that installs the development version from GitHub.
+
 ## Internal
 
 * The version number is 0.99.0, the number Bioconductor requires for a package under submission.

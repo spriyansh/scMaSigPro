@@ -60,15 +60,18 @@ the package. The other vignettes go further:
 
 # Installation
 
-scMaSigPro is installed from GitHub with BiocManager, which also installs
-its Bioconductor dependencies:
+scMaSigPro is installed from Bioconductor with BiocManager, which also
+installs its Bioconductor dependencies:
 
 ```{r install, eval = FALSE}
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
     install.packages("BiocManager")
 }
-BiocManager::install("BioBam/scMaSigPro")
+BiocManager::install("scMaSigPro")
 ```
+
+The development version is installed from its GitHub repository with
+`BiocManager::install("BioBam/scMaSigPro")`.
 
 # The data
 
