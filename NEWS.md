@@ -3,6 +3,7 @@
 ## Documentation
 
 * The README and the Installation section of the Quick start vignette install scMaSigPro from Bioconductor, with `BiocManager::install("scMaSigPro")`, and give the command that installs the development version from GitHub.
+* The introduction of the Quick start vignette names tradeSeq, PseudotimeDE and Monocle3 and summarises the comparison of scMaSigPro with tradeSeq in the article that describes it.
 
 ## Internal
 
