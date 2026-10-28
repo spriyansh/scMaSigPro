@@ -181,6 +181,39 @@ test_that("the fits do not depend on the design names", {
     }
 })
 
+test_that("plotDiagnostics() does not depend on the design names", {
+    # It fitted glm(y ~ .) on the design names: a column named "y" was
+    # taken for the counts, repeated names failed, and the "optimized"
+    # model failed on names that are not syntactic, such as those that a
+    # path label with a space gives
+    skip_if(!nzchar(system.file(package = "patchwork")), "needs patchwork")
+    gene <- splat_sig_gene()
+    layers <- function(ob, model) {
+        p <- plotDiagnostics(ob, gene, model = model)
+        panels <- list(p[[1]][[1]], p[[1]][[2]], p[[2]][[1]], p[[2]][[2]])
+        lapply(panels, function(q) ggplot2::ggplot_build(q)$data)
+    }
+    design <- splat_design(2)
+    p <- ncol(predictors(design))
+    for (nm in list(
+        replace(colnames(predictors(design)), 2, "y"),
+        rep("t", p),
+        paste0("term ", seq_len(p), "|x")
+    )) {
+        ob <- sc.p.vector(rename_design(design, nm), verbose = FALSE)
+        ob <- sc.t.fit(ob, verbose = FALSE)
+        ob <- sc.filter(ob,
+            rsq = 0.7, vars = "groups", intercept = "dummy",
+            includeInflu = TRUE
+        )
+        for (model in c("optimized", "full", "intercept")) {
+            expect_identical(layers(ob, model), layers(splat_filtered(), model),
+                info = paste(nm[2], model)
+            )
+        }
+    }
+})
+
 test_that("Mclust names one-component clusters by gene", {
     skip_if_not_installed("mclust")
     ob <- splat_filtered()
