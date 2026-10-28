@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">scMaSigPro</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.6.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.99.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -112,6 +112,26 @@ the sequencing depth of each bin. The genes whose model is better than a
 flat line, and the terms that make it so, tell how a gene changes along
 each path.</li>
 </ol>
+<p>The article that describes scMaSigPro <span class="citation">(Srivastava et al. 2024, sec. 1)</span> reviews other
+methods that detect differentially expressed genes along pseudotime,
+among them tradeSeq <span class="citation">(Van den Berge et al.
+2020)</span>, PseudotimeDE <span class="citation">(Song and Li
+2021)</span> and Monocle3 <span class="citation">(Cao et al.
+2019)</span>, and compares scMaSigPro with tradeSeq. tradeSeq fits a
+negative binomial generalised additive model with cubic splines for each
+branching path and prioritises genes by their p-values alone, whereas
+scMaSigPro fits polynomial negative binomial generalised linear models
+to the pseudo-bulk counts of bins and also selects genes by the share of
+deviance that their model explains, R<sup>2</sup><span class="citation">(Srivastava et al. 2024, sec. 2.6)</span>. On simulated
+data, <span class="citation">Srivastava et al. (2024, sec. 3.2)</span>
+report that scMaSigPro controlled the false positive rate better than
+tradeSeq, with a true positive rate only marginally higher, but
+struggled to find genes with low fold changes, in particular genes that
+change in one path and stay stable in the other, which the
+<code>diffEndTest()</code> and <code>patternTest()</code> functions of
+tradeSeq usually detected. They also report that scMaSigPro ran four to
+five times faster than tradeSeq <span class="citation">(Srivastava et
+al. 2024, sec. 3.3)</span>.</p>
 <p>This vignette runs these steps on <code>splat.sim</code>, a small
 data set bundled with the package. The other vignettes go further:</p>
 <ul>
@@ -138,13 +158,15 @@ asked questions</a>.</li>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>scMaSigPro is installed from GitHub with BiocManager, which also
-installs its Bioconductor dependencies:</p>
+<p>scMaSigPro is installed from Bioconductor with BiocManager, which
+also installs its Bioconductor dependencies:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/ns-load.html" class="external-link">requireNamespace</a></span><span class="op">(</span><span class="st">"BiocManager"</span>, quietly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
 <span>    <span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"BiocManager"</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
-<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"BioBam/scMaSigPro"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"scMaSigPro"</span><span class="op">)</span></span></code></pre></div>
+<p>The development version is installed from its GitHub repository with
+<code>BiocManager::install("BioBam/scMaSigPro")</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="the-data">The data<a class="anchor" aria-label="anchor" href="#the-data"></a>
@@ -487,7 +509,7 @@ start from it:</p>
 <span><span class="co">#&gt;  [7] IRanges_2.46.0              S4Vectors_0.50.3           </span></span>
 <span><span class="co">#&gt;  [9] BiocGenerics_0.58.1         generics_0.1.4             </span></span>
 <span><span class="co">#&gt; [11] MatrixGenerics_1.24.0       matrixStats_1.5.0          </span></span>
-<span><span class="co">#&gt; [13] scMaSigPro_0.6.0            BiocStyle_2.40.0           </span></span>
+<span><span class="co">#&gt; [13] scMaSigPro_0.99.0           BiocStyle_2.40.0           </span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt; loaded via a namespace (and not attached):</span></span>
 <span><span class="co">#&gt;  [1] gtable_0.3.6        xfun_0.62           bslib_0.12.0       </span></span>
@@ -515,6 +537,11 @@ start from it:</p>
 <h2 class="unnumbered" id="references">References<a class="anchor" aria-label="anchor" href="#references"></a>
 </h2>
 <div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-cao2019" class="csl-entry">
+Cao, Junyue, Malte Spielmann, Xiaojie Qiu, et al. 2019. <span>“The
+Single-Cell Transcriptional Landscape of Mammalian
+Organogenesis.”</span> <em>Nature</em> 566 (7745): 496–502. <a href="https://doi.org/10.1038/s41586-019-0969-x" class="external-link">https://doi.org/10.1038/s41586-019-0969-x</a>.
+</div>
 <div id="ref-conesa2006" class="csl-entry">
 Conesa, Ana, María José Nueda, Alberto Ferrer, and Manuel Talón. 2006.
 <span>“<span class="nocase">maSigPro</span>: A Method to Identify
@@ -539,11 +566,23 @@ Scrucca, Luca, Michael Fop, T. Brendan Murphy, and Adrian E. Raftery.
 Classification and Density Estimation Using <span>Gaussian</span> Finite
 Mixture Models.”</span> <em>The R Journal</em> 8 (1): 289–317. <a href="https://doi.org/10.32614/RJ-2016-021" class="external-link">https://doi.org/10.32614/RJ-2016-021</a>.
 </div>
+<div id="ref-song2021" class="csl-entry">
+Song, Dongyuan, and Jingyi Jessica Li. 2021.
+<span>“<span>PseudotimeDE</span>: Inference of Differential Gene
+Expression Along Cell Pseudotime with Well-Calibrated p-Values from
+Single-Cell RNA Sequencing Data.”</span> <em>Genome Biology</em> 22:
+124. <a href="https://doi.org/10.1186/s13059-021-02341-y" class="external-link">https://doi.org/10.1186/s13059-021-02341-y</a>.
+</div>
 <div id="ref-srivastava2024" class="csl-entry">
 Srivastava, Priyansh, Marta Benegas Coll, Stefan Götz, María José Nueda,
 and Ana Conesa. 2024. <span>“<span class="nocase">scMaSigPro</span>:
 Differential Expression Analysis Along Single-Cell Trajectories.”</span>
 <em>Bioinformatics</em> 40 (7): btae443. <a href="https://doi.org/10.1093/bioinformatics/btae443" class="external-link">https://doi.org/10.1093/bioinformatics/btae443</a>.
+</div>
+<div id="ref-vandenberge2020" class="csl-entry">
+Van den Berge, Koen, Hector Roux de Bézieux, Kelly Street, et al. 2020.
+<span>“Trajectory-Based Differential Expression Analysis for Single-Cell
+Sequencing Data.”</span> <em>Nature Communications</em> 11: 1201. <a href="https://doi.org/10.1038/s41467-020-14766-3" class="external-link">https://doi.org/10.1038/s41467-020-14766-3</a>.
 </div>
 <div id="ref-zappia2017" class="csl-entry">
 Zappia, Luke, Belinda Phipson, and Alicia Oshlack. 2017.

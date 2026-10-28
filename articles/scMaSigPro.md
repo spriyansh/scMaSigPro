@@ -28,6 +28,25 @@ It brings the method of the maSigPro package for time-course experiments
     is better than a flat line, and the terms that make it so, tell how
     a gene changes along each path.
 
+The article that describes scMaSigPro (Srivastava et al. 2024, sec. 1)
+reviews other methods that detect differentially expressed genes along
+pseudotime, among them tradeSeq (Van den Berge et al. 2020),
+PseudotimeDE (Song and Li 2021) and Monocle3 (Cao et al. 2019), and
+compares scMaSigPro with tradeSeq. tradeSeq fits a negative binomial
+generalised additive model with cubic splines for each branching path
+and prioritises genes by their p-values alone, whereas scMaSigPro fits
+polynomial negative binomial generalised linear models to the
+pseudo-bulk counts of bins and also selects genes by the share of
+deviance that their model explains, R²(Srivastava et al. 2024, sec.
+2.6). On simulated data, Srivastava et al. (2024, sec. 3.2) report that
+scMaSigPro controlled the false positive rate better than tradeSeq, with
+a true positive rate only marginally higher, but struggled to find genes
+with low fold changes, in particular genes that change in one path and
+stay stable in the other, which the `diffEndTest()` and `patternTest()`
+functions of tradeSeq usually detected. They also report that scMaSigPro
+ran four to five times faster than tradeSeq (Srivastava et al. 2024,
+sec. 3.3).
+
 This vignette runs these steps on `splat.sim`, a small data set bundled
 with the package. The other vignettes go further:
 
@@ -48,7 +67,7 @@ with the package. The other vignettes go further:
 
 ## Installation
 
-scMaSigPro is installed from GitHub with BiocManager, which also
+scMaSigPro is installed from Bioconductor with BiocManager, which also
 installs its Bioconductor dependencies:
 
 ``` r
@@ -56,8 +75,11 @@ installs its Bioconductor dependencies:
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
     install.packages("BiocManager")
 }
-BiocManager::install("BioBam/scMaSigPro")
+BiocManager::install("scMaSigPro")
 ```
+
+The development version is installed from its GitHub repository with
+`BiocManager::install("BioBam/scMaSigPro")`.
 
 ## The data
 
@@ -459,7 +481,7 @@ sessionInfo()
 #>  [7] IRanges_2.46.0              S4Vectors_0.50.3           
 #>  [9] BiocGenerics_0.58.1         generics_0.1.4             
 #> [11] MatrixGenerics_1.24.0       matrixStats_1.5.0          
-#> [13] scMaSigPro_0.6.0            BiocStyle_2.40.0           
+#> [13] scMaSigPro_0.99.0           BiocStyle_2.40.0           
 #> 
 #> loaded via a namespace (and not attached):
 #>  [1] gtable_0.3.6        xfun_0.62           bslib_0.12.0       
@@ -486,6 +508,10 @@ sessionInfo()
 
 ## References
 
+Cao, Junyue, Malte Spielmann, Xiaojie Qiu, et al. 2019. “The Single-Cell
+Transcriptional Landscape of Mammalian Organogenesis.” *Nature* 566
+(7745): 496–502. <https://doi.org/10.1038/s41586-019-0969-x>.
+
 Conesa, Ana, María José Nueda, Alberto Ferrer, and Manuel Talón. 2006.
 “maSigPro: A Method to Identify Significantly Differential Expression
 Profiles in Time-Course Microarray Experiments.” *Bioinformatics* 22
@@ -506,10 +532,20 @@ Scrucca, Luca, Michael Fop, T. Brendan Murphy, and Adrian E. Raftery.
 Gaussian Finite Mixture Models.” *The R Journal* 8 (1): 289–317.
 <https://doi.org/10.32614/RJ-2016-021>.
 
+Song, Dongyuan, and Jingyi Jessica Li. 2021. “PseudotimeDE: Inference of
+Differential Gene Expression Along Cell Pseudotime with Well-Calibrated
+p-Values from Single-Cell RNA Sequencing Data.” *Genome Biology* 22:
+124. <https://doi.org/10.1186/s13059-021-02341-y>.
+
 Srivastava, Priyansh, Marta Benegas Coll, Stefan Götz, María José Nueda,
 and Ana Conesa. 2024. “scMaSigPro: Differential Expression Analysis
 Along Single-Cell Trajectories.” *Bioinformatics* 40 (7): btae443.
 <https://doi.org/10.1093/bioinformatics/btae443>.
+
+Van den Berge, Koen, Hector Roux de Bézieux, Kelly Street, et al. 2020.
+“Trajectory-Based Differential Expression Analysis for Single-Cell
+Sequencing Data.” *Nature Communications* 11: 1201.
+<https://doi.org/10.1038/s41467-020-14766-3>.
 
 Zappia, Luke, Belinda Phipson, and Alicia Oshlack. 2017. “Splatter:
 Simulation of Single-Cell RNA Sequencing Data.” *Genome Biology* 18:

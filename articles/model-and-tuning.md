@@ -596,7 +596,7 @@ sessionInfo()
 #>  [7] IRanges_2.46.0              S4Vectors_0.50.3           
 #>  [9] BiocGenerics_0.58.1         generics_0.1.4             
 #> [11] MatrixGenerics_1.24.0       matrixStats_1.5.0          
-#> [13] scMaSigPro_0.6.0            BiocStyle_2.40.0           
+#> [13] scMaSigPro_0.99.0           BiocStyle_2.40.0           
 #> 
 #> loaded via a namespace (and not attached):
 #>  [1] sass_0.4.10         SparseArray_1.12.3  lattice_0.22-9     

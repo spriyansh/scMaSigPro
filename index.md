@@ -11,11 +11,20 @@ clusters.
 
 ## Installation
 
+scMaSigPro is installed from Bioconductor with BiocManager:
+
 ``` r
 
 if (!requireNamespace("BiocManager", quietly = TRUE)) {
     install.packages("BiocManager")
 }
+BiocManager::install("scMaSigPro")
+```
+
+The development version is installed from GitHub:
+
+``` r
+
 BiocManager::install("BioBam/scMaSigPro")
 ```
 
