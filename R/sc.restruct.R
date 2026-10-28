@@ -55,7 +55,10 @@ sc.restruct <- function(scmpObj,
                         verbose = TRUE) {
     # Check Object Validity
     .check_scmp(scmpObj)
-    .check_strings(assay_name = assay_name)
+    .check_strings(
+        assay_name = assay_name, root_node = root_node, link_sep = link_sep
+    )
+    .check(nzchar(link_sep), msg = "'link_sep' must not be an empty string.")
     aggregate <- .check_choice(aggregate, c("sum", "mean"),
         msg = "Invalid 'aggregate' value. Please choose either 'mean' or 'sum'."
     )
@@ -76,6 +79,39 @@ sc.restruct <- function(scmpObj,
     # Extract bin information
     bin_info <- cDense(scmpObj)
 
+    # The labels of a link path, split on link_sep as fixed text when the
+    # label contains it, so that "|" works, else as a regular expression,
+    # as "\\|" needs
+    split_link <- function(link) {
+        fixed_sep <- grepl(link_sep, link, fixed = TRUE)
+        unlist(strsplit(link, link_sep, fixed = fixed_sep))
+    }
+
+    # Every node is a path of the bins, and a link path names two or more
+    # of them
+    paths <- unique(bin_info[[scmpObj@Parameters@path_col]])
+    ends <- unlist(end_node_list)
+    links <- unlist(link_node_list)
+    .check(length(ends) >= 1L,
+        msg = "'end_node_list' must name at least one end path."
+    )
+    unknown <- setdiff(c(root_node, ends, links), paths)
+    .check(length(unknown) == 0L,
+        msg = paste0(
+            "Not paths of the bins: ", paste(unknown, collapse = ", "),
+            ". The paths are: ", paste(paths, collapse = ", "), "."
+        )
+    )
+    for (link in links) {
+        parts <- split_link(link)
+        .check(length(parts) >= 2L && all(parts %in% paths),
+            msg = paste0(
+                "The link path '", link, "' must hold the labels of the ",
+                "paths it links, separated by link_sep = '", link_sep, "'."
+            )
+        )
+    }
+
     # Set list names with values
     names(link_node_list) <- unlist(link_node_list)
     names(end_node_list) <- unlist(end_node_list)
@@ -90,10 +126,7 @@ sc.restruct <- function(scmpObj,
         link_value <- link_node_list[[i]]
         names(link_value) <- link_value
 
-        # Split on link_sep as fixed text when the label contains it, so
-        # that "|" works, else as a regular expression, as "\\|" needs
-        fixed_sep <- isTRUE(grepl(link_sep[1L], link_value, fixed = TRUE))
-        link_vec <- unlist(strsplit(link_value, link_sep, fixed = fixed_sep))
+        link_vec <- split_link(link_value)
 
         # Traverse for each of the link
         for (j in link_vec) {

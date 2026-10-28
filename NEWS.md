@@ -3,6 +3,8 @@
 ## Bug fixes
 
 * `sc.squeeze()` reports a path with seven or fewer time points only when `verbose = TRUE`; the message was printed by every call and said "less than 7". Its verbose messages call the number of bins of a path a number of bins, not a bin size.
+* `sc.cluster.trend()` stops with a clear message when `k` is not a single whole number of at least 1, unless `"Mclust"` chooses the number of clusters (`mclust.k = TRUE`). A fractional `k` was truncated, and other values gave the clusters of another number or failed inside `cutree()`, `kmeans()` or `Mclust()` with their own messages; `k = "3"` and `k = TRUE` are refused as well.
+* `sc.restruct()` checks its labels before it restructures the bins: `link_sep` must be a non-empty string and `root_node` a string, `end_node_list` must name at least one path, every root, end and link label must be a path of the bins, and the label of each link path must split on `link_sep` into the labels of two or more paths. A link label without `link_sep` dropped the bins of the link without a message, and the other cases failed with messages such as "invalid 'pattern' argument" or "replacement has 1 row, data has 0".
 
 ## Documentation
 
