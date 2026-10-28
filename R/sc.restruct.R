@@ -17,7 +17,9 @@
 #'   otherwise, so `"|"` and `"\\|"` both work.
 #'
 #' @return The object with the bins of every end path, from the root on,
-#' and their pseudo-bulk counts in the `Dense` slot.
+#' and their pseudo-bulk counts in the `Dense` slot. The `Design`,
+#' `Profile`, `Estimate` and `Significant` slots, computed from
+#' earlier bins, are emptied.
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
 #'
@@ -232,6 +234,7 @@ sc.restruct <- function(scmpObj,
     scmpObj@Dense <- SingleCellExperiment::SingleCellExperiment(
         colData = S4Vectors::DataFrame(new_bin_info)
     )
+    scmpObj <- .clear_after(scmpObj, "bins")
 
     # Get Counts
     scmpObj <- pb_counts(

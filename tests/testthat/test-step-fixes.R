@@ -1103,3 +1103,68 @@ test_that("the size factors need a gene without a zero count", {
         sc.p.vector(design, offset = FALSE, verbose = FALSE), "ScMaSigPro"
     )
 })
+
+test_that("a step empties the slots computed from what it changes", {
+    # A step run again kept the results of the bins, counts, design, tests
+    # or models it replaced, such as the estimates of an earlier design
+    clustered <- splat_clustered()
+    empty <- new("ScMaSigPro")
+    expect_emptied <- function(ob, slots) {
+        for (s in slots) {
+            expect_identical(slot(ob, s), slot(empty, s), info = s)
+        }
+    }
+    binned <- sc.squeeze(clustered)
+    expect_identical(binned@Dense, splat_binned()@Dense)
+    expect_emptied(binned, c("Design", "Profile", "Estimate", "Significant"))
+    counted <- pb_counts(clustered)
+    expect_identical(counted@Design@offset, numeric(0))
+    expect_identical(predictors(counted), predictors(clustered))
+    expect_emptied(counted, c("Profile", "Estimate", "Significant"))
+    designed <- sc.set.poly(clustered, poly_degree = 2)
+    expect_identical(designed@Design, splat_design(2)@Design)
+    expect_emptied(designed, c("Profile", "Estimate", "Significant"))
+    tested <- sc.p.vector(clustered, verbose = FALSE)
+    expect_identical(tested@Profile, splat_fitted("default")@Profile)
+    expect_emptied(tested, c("Estimate", "Significant"))
+    selected <- sc.t.fit(clustered, verbose = FALSE)
+    expect_identical(selected@Estimate, splat_fitted("default")@Estimate)
+    expect_emptied(selected, "Significant")
+    # The settings of every step stay
+    for (ob in list(binned, counted, designed)) {
+        expect_identical(ob@Parameters, clustered@Parameters)
+    }
+    # sc.restruct(), on bins given the results of another object
+    multi <- multi_binned()
+    for (s in c("Design", "Profile", "Estimate", "Significant")) {
+        slot(multi, s) <- slot(clustered, s)
+    }
+    restructured <- sc.restruct(multi,
+        end_node_list = list("Y_15", "Y_18", "Y_52"), root_node = "Root",
+        link_node_list = list("Y_18_links_Y_15"), verbose = FALSE
+    )
+    expect_identical(restructured@Dense, multi_restruct()@Dense)
+    expect_emptied(
+        restructured, c("Design", "Profile", "Estimate", "Significant")
+    )
+})
+
+test_that("plotDiagnostics() asks for sc.p.vector() on a design without fits", {
+    msg <- "The current design has not been fitted: run sc.p.vector() first."
+    gene <- splat_sig_gene()
+    expect_error(
+        plotDiagnostics(sc.set.poly(splat_clustered(), poly_degree = 2), gene),
+        msg,
+        fixed = TRUE
+    )
+    # An object saved by an earlier version after sc.set.poly() kept its
+    # fits but not their offset, and glm() failed on the empty offset
+    old <- splat_clustered()
+    old@Design@offset <- numeric(0)
+    expect_error(plotDiagnostics(old, gene), msg, fixed = TRUE)
+    # Control: fits without offset have none
+    skip_if(!nzchar(system.file(package = "patchwork")), "needs patchwork")
+    none <- sc.filter(splat_fitted("no_offset"), rsq = 0.7, vars = "groups")
+    gene <- sort(unique(unlist(none@Significant@genes)))[1]
+    expect_s3_class(plotDiagnostics(none, gene), "patchwork")
+})

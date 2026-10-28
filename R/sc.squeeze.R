@@ -57,7 +57,8 @@
 #'
 #' @return The object with the bins and their pseudo-bulk counts
 #' (`bulk.counts`) in the `Dense` slot and the binned pseudotime of each cell
-#' in the cell metadata.
+#' in the cell metadata. The `Design`, `Profile`, `Estimate` and
+#' `Significant` slots, computed from earlier bins, are emptied.
 #'
 #' @author Priyansh Srivastava \email{spriyansh29@@gmail.com}
 #'
@@ -544,6 +545,7 @@ sc.squeeze <- function(scmpObj,
     scmpObj@Dense <- SingleCellExperiment(
         colData = DataFrame(processed_binned_cell_metadata)
     )
+    scmpObj <- .clear_after(scmpObj, "bins")
 
     # Get Counts
     scmpObj <- pb_counts(

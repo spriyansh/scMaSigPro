@@ -35,6 +35,15 @@ plotDiagnostics <- function(scmpObj,
     # Check Object Validity
     .check_scmp(scmpObj)
 
+    # The fits of the current design: a step that changes the bins, the
+    # counts or the design empties them, and an object saved by an earlier
+    # version after sc.set.poly() keeps fits without their offset
+    fitted <- length(scmpObj@Profile@p_values) > 0L &&
+        (!scmpObj@Parameters@offset || length(scmpObj@Design@offset) > 0L)
+    .check(fitted,
+        msg = "The current design has not been fitted: run sc.p.vector() first."
+    )
+
     # Check if the results exist
     .check(!isEmpty(scmpObj@Significant@genes),
         msg = paste("No Significant genes found, please run the workflow first")
