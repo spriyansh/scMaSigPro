@@ -1,3 +1,9 @@
+# scMaSigPro 0.99.0 (2026-10-28)
+
+## Internal
+
+* The version number is 0.99.0, the number Bioconductor requires for a package under submission.
+
 # scMaSigPro 0.6.0 (2026-10-24)
 
 ## Breaking changes
