@@ -1,5 +1,9 @@
 # scMaSigPro 0.99.0 (2026-10-28)
 
+## Bug fixes
+
+* `sc.squeeze()` reports a path with seven or fewer time points only when `verbose = TRUE`; the message was printed by every call and said "less than 7". Its verbose messages call the number of bins of a path a number of bins, not a bin size.
+
 ## Documentation
 
 * The README and the Installation section of the Quick start vignette install scMaSigPro from Bioconductor, with `BiocManager::install("scMaSigPro")`, and give the command that installs the development version from GitHub.

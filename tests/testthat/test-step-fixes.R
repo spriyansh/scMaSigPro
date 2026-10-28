@@ -702,6 +702,36 @@ toy_bins <- function(p, ...) {
     )
 }
 
+test_that("sc.squeeze() reports few time points only when verbose", {
+    # Two paths of four cells: "Time points are already less than 7" was
+    # printed with verbose = FALSE too, and the number of bins was called
+    # "Bin Sizes"
+    cd <- data.frame(
+        Pseudotime = rep(1:4, 2), Path = rep(c("Path1", "Path2"), each = 4),
+        row.names = paste0("cell", 1:8)
+    )
+    counts <- matrix(1, 2, 8, dimnames = list(c("g1", "g2"), rownames(cd)))
+    ob <- create_scmp(
+        counts = counts, cell_data = cd, ptime_col = "Pseudotime",
+        path_col = "Path"
+    )
+    expect_silent(sc.squeeze(ob))
+    msgs <- capture_messages(sc.squeeze(ob, verbose = TRUE))
+    for (path in c("Path1", "Path2")) {
+        expect_true(
+            paste0(path, " has only 4 time points to bin.\n") %in% msgs,
+            info = path
+        )
+        expect_true(
+            paste0(
+                "Estimated number of bins = 3 with Sturges binning for 4 ",
+                "time points for ", path, "\n"
+            ) %in% msgs,
+            info = path
+        )
+    }
+})
+
 test_that("sc.squeeze() bins the cells by the numeric breaks", {
     # 4 points, Sturges: 3 bins, breaks 0, 1/3, 2/3 and 1. The bounds were
     # read back from the cut() labels "[0,0.333]", "(0.333,0.667]" and
