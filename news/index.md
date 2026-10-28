@@ -944,6 +944,14 @@
   British English.
 - The error of `as_scmp(from = "cds")` points to the “Trajectory input”
   vignette instead of the removed “Common Root Cells” vignette.
+- `CONTRIBUTING.md` explains how to report a problem and how to propose
+  a change, `CODE_OF_CONDUCT.md` adopts the Bioconductor Code of
+  Conduct, and the repository has a pull request template, issue
+  templates and a release checklist. The README shows badges for the
+  checks, the test coverage, the lifecycle stage, the article and the
+  latest tag.
+- `Authors@R` gives the names of María José Nueda and Marta Benegas Coll
+  as the article does, and lists the European Union as funder.
 
 ### Dependencies
 
@@ -1099,6 +1107,13 @@
   [`sc.squeeze()`](https://spriyansh.github.io/scMaSigPro/reference/sc.squeeze.md)
   prints “Could not estimate the number of bins:” and the reason,
   instead of “Error message:” and the reason.
+- R CMD check on macOS, Windows and Ubuntu, test coverage, lintr and the
+  R-universe build with BiocCheck run again in GitHub Actions, on pull
+  requests to `main` as well as on pushes to it (R CMD check also
+  weekly). Every job, the pkgdown site included, runs only in
+  spriyansh/scMaSigPro, not in other copies of the repository such as
+  BioBam/scMaSigPro. `.github/dependabot.yml` asks Dependabot for weekly
+  updates of the actions, in one pull request.
 
 ## scMaSigPro 0.0.5 (2026-10-13)
 

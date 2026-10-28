@@ -119,8 +119,13 @@ Authors:
 - Ana Conesa <ana.conesa@csic.es>
   ([ORCID](https://orcid.org/0000-0001-9597-311X))
 
-- Maria Jose Nueda <mj.nueda@ua.es>
+- María José Nueda <mj.nueda@ua.es>
   ([ORCID](https://orcid.org/0000-0002-1666-4771))
 
-- Marta Benegas <martabc22@gmail.com>
+- Marta Benegas Coll <martabc22@gmail.com>
   ([ORCID](https://orcid.org/0009-0004-9886-2828))
+
+Other contributors:
+
+- European Union (Horizon 2020 Marie Skłodowska-Curie Grant Agreement
+  No 953407) \[funder\]

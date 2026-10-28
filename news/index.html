@@ -207,6 +207,10 @@
 <code><a href="../reference/scMaSigPro-package.html">?scMaSigPro</a></code> opens a help page for the package, and <code>citation("scMaSigPro")</code> gives the reference of the article that describes the method.</li>
 <li>Every exported function and class has a Value section and a runnable example. Each accessor shares one help page with its replacement function, the readers of the results of <code><a href="../reference/sc.t.fit.html">sc.t.fit()</a></code> share <code><a href="../reference/showSol.html">?showSol</a></code>, and <code><a href="../reference/showParams.html">showParams()</a></code> and <code><a href="../reference/showParams.html">showPoly()</a></code> share <code><a href="../reference/showParams.html">?showParams</a></code>; the old topic names open these pages. The pages link the other functions of their family, cite the methods they implement or use, document the bundled data sets column by column, and are written in British English.</li>
 <li>The error of <code>as_scmp(from = "cds")</code> points to the “Trajectory input” vignette instead of the removed “Common Root Cells” vignette.</li>
+<li>
+<code>CONTRIBUTING.md</code> explains how to report a problem and how to propose a change, <code>CODE_OF_CONDUCT.md</code> adopts the Bioconductor Code of Conduct, and the repository has a pull request template, issue templates and a release checklist. The README shows badges for the checks, the test coverage, the lifecycle stage, the article and the latest tag.</li>
+<li>
+<code>Authors@R</code> gives the names of María José Nueda and Marta Benegas Coll as the article does, and lists the European Union as funder.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="dependencies-0-6-0">Dependencies<a class="anchor" aria-label="anchor" href="#dependencies-0-6-0"></a></h3>
@@ -251,6 +255,7 @@
 <li>The package reads and writes the <code>Sparse</code> and <code>Dense</code> slots with the <code>SingleCellExperiment</code> accessors <code><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">colData()</a></code>, <code><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assay()</a></code>, <code><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html" class="external-link">assayNames()</a></code> and their replacement forms instead of reaching into the internal slots of those objects, so it no longer depends on how SummarizedExperiment stores its data. Results are unchanged.</li>
 <li>The <code>show()</code> method of <code>ScMaSigPro</code> objects holds the printing code instead of calling the internal <code>.ScMaSigPro_show()</code>, <code><a href="../reference/paths_from_graph.html">paths_from_graph()</a></code> finds the end nodes it cannot reach with <code><a href="https://r.igraph.org/reference/distances.html" class="external-link">igraph::distances()</a></code> instead of silencing the warning of <code><a href="https://r.igraph.org/reference/distances.html" class="external-link">igraph::shortest_paths()</a></code>, and <code><a href="../reference/plotTrend.html">plotTrend()</a></code> and <code><a href="../reference/plotTrendCluster.html">plotTrendCluster()</a></code> log their points without silencing warnings, so a negative <code>pseudoCount</code> that makes a point negative now warns. The output is otherwise unchanged.</li>
 <li>Before it stops with “Unable to estimate bin size”, <code><a href="../reference/sc.squeeze.html">sc.squeeze()</a></code> prints “Could not estimate the number of bins:” and the reason, instead of “Error message:” and the reason.</li>
+<li>R CMD check on macOS, Windows and Ubuntu, test coverage, lintr and the R-universe build with BiocCheck run again in GitHub Actions, on pull requests to <code>main</code> as well as on pushes to it (R CMD check also weekly). Every job, the pkgdown site included, runs only in spriyansh/scMaSigPro, not in other copies of the repository such as BioBam/scMaSigPro. <code>.github/dependabot.yml</code> asks Dependabot for weekly updates of the actions, in one pull request.</li>
 </ul></div>
 </div>
     <div class="section level2">
@@ -345,7 +350,7 @@
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Ana Conesa, Maria Jose Nueda, Priyansh Srivastava, Marta Benegas.</p>
+  <p>Developed by Ana Conesa, María José Nueda, Priyansh Srivastava, Marta Benegas Coll, European Union.</p>
 </div>
 
 <div class="pkgdown-footer-right">

@@ -4,13 +4,17 @@
 
 - **Ana Conesa**. Author. [](https://orcid.org/0000-0001-9597-311X)
 
-- **Maria Jose Nueda**. Author.
+- **María José Nueda**. Author.
   [](https://orcid.org/0000-0002-1666-4771)
 
 - **Priyansh Srivastava**. Author, maintainer.
   [](https://orcid.org/0000-0003-2618-5296)
 
-- **Marta Benegas**. Author. [](https://orcid.org/0009-0004-9886-2828)
+- **Marta Benegas Coll**. Author.
+  [](https://orcid.org/0009-0004-9886-2828)
+
+- **European Union**. Funder.  
+  Horizon 2020 Marie Skłodowska-Curie Grant Agreement No 953407
 
 ## Citation
 

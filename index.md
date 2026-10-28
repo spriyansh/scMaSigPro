@@ -84,7 +84,10 @@ If you use scMaSigPro, please cite the article that describes it, as
 ## Contributing
 
 Bug reports, questions and suggestions are welcome on the [issue
-tracker](https://github.com/BioBam/scMaSigPro/issues).
+tracker](https://github.com/BioBam/scMaSigPro/issues). The [contributing
+guide](https://spriyansh.github.io/scMaSigPro/CONTRIBUTING.md) explains
+how to propose a change, and everyone taking part follows the [code of
+conduct](https://spriyansh.github.io/scMaSigPro/CODE_OF_CONDUCT.md).
 
 ## Licence
 
