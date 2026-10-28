@@ -214,6 +214,28 @@ test_that("plotDiagnostics() does not depend on the design names", {
     }
 })
 
+test_that("the optimized model of plotDiagnostics() is that of sc.t.fit()", {
+    # It fitted the design columns after the first, whatever terms
+    # sc.t.fit() had selected for the gene
+    skip_if(!nzchar(system.file(package = "patchwork")), "needs patchwork")
+    ob <- splat_filtered()
+    sol <- showSol(ob)
+    # Genes with a significant intercept, whose coefficient showCoeff() keeps
+    genes <- rownames(sol)[sol[["p.valor_beta0"]] <= 0.05]
+    genes <- intersect(genes, unlist(ob@Significant@genes))
+    for (gene in genes[1:3]) {
+        p <- plotDiagnostics(ob, gene)
+        predicted <- ggplot2::ggplot_build(p[[2]][[2]])$data[[1]]$y
+        terms <- !is.na(unlist(sol[gene, -(1:3)]))
+        x <- cbind(1, predictors(ob)[, terms, drop = FALSE])
+        beta <- unlist(showCoeff(ob)[gene, c(TRUE, terms)])
+        expect_equal(predicted,
+            unname(exp(drop(x %*% beta) + ob@Design@offset)),
+            tolerance = 1e-6, info = gene
+        )
+    }
+})
+
 test_that("Mclust names one-component clusters by gene", {
     skip_if_not_installed("mclust")
     ob <- splat_filtered()

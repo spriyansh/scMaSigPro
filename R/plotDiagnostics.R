@@ -95,9 +95,16 @@ plotDiagnostics <- function(scmpObj,
         )
 
     # The terms of the model: "full" and "intercept" use the design,
-    # "optimized" its columns after the first
+    # "optimized" the terms that sc.t.fit() selected for the gene, those
+    # with a p-value in showSol() (its columns after the first three); a
+    # model without terms is the intercept-only model
     if (model == "optimized") {
-        dis <- dis[, -1, drop = FALSE]
+        selected <- !is.na(unlist(showSol(scmpObj)[feature_id, -seq_len(3)]))
+        if (any(selected)) {
+            dis <- dis[, selected, drop = FALSE]
+        } else {
+            model <- "intercept"
+        }
     }
 
     # The counts and the terms, named y and x1, x2, ... by position as in
