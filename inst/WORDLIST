@@ -5,6 +5,7 @@ BMC
 Benegas
 Benjamini
 Berge
+BioBam
 BiocCheck
 BiocManager
 BiocParallel
@@ -23,6 +24,7 @@ DP
 DW
 Das
 DelayedMatrixStats
+Dependabot
 Doane
 Dudoit
 FJ
@@ -86,6 +88,7 @@ für
 ggplot
 igraph
 lifecycle
+lintr
 loess
 maSigPro
 maSigPro's
