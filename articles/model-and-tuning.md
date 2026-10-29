@@ -568,7 +568,7 @@ is a way to compare settings for a study.
 ``` r
 
 sessionInfo()
-#> R version 4.6.1 (2026-06-24)
+#> R version 4.6.2 (2026-10-29)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Ubuntu 24.04.5 LTS
 #> 
@@ -599,24 +599,24 @@ sessionInfo()
 #> [13] scMaSigPro_0.99.0           BiocStyle_2.40.0           
 #> 
 #> loaded via a namespace (and not attached):
-#>  [1] sass_0.4.10         SparseArray_1.12.3  lattice_0.22-9     
+#>  [1] sass_0.4.10         SparseArray_1.12.3  lattice_0.23-1     
 #>  [4] digest_0.6.39       RColorBrewer_1.1-3  evaluate_1.0.5     
-#>  [7] grid_4.6.1          bookdown_0.48       fastmap_1.2.0      
-#> [10] jsonlite_2.0.0      Matrix_1.7-5        BiocManager_1.30.27
+#>  [7] grid_4.6.2          bookdown_0.48       fastmap_1.2.0      
+#> [10] jsonlite_2.0.0      Matrix_1.7-6        BiocManager_1.30.27
 #> [13] mgcv_1.9-4          scales_1.4.0        codetools_0.2-20   
 #> [16] textshaping_1.0.5   jquerylib_0.1.4     abind_1.4-8        
 #> [19] cli_3.6.6           rlang_1.3.0         XVector_0.52.0     
-#> [22] splines_4.6.1       withr_3.0.3         cachem_1.1.0       
+#> [22] splines_4.6.2       withr_3.0.3         cachem_1.1.0       
 #> [25] DelayedArray_0.38.2 yaml_2.3.12         otel_0.2.0         
-#> [28] S4Arrays_1.12.1     tools_4.6.1         parallel_4.6.1     
+#> [28] S4Arrays_1.12.1     tools_4.6.2         parallel_4.6.2     
 #> [31] BiocParallel_1.46.0 vctrs_0.7.3         R6_2.6.1           
-#> [34] lifecycle_1.0.5     fs_2.1.0            MASS_7.3-65        
+#> [34] lifecycle_1.0.5     fs_2.1.0            MASS_7.3-66        
 #> [37] ragg_1.5.2          desc_1.4.3          pkgdown_2.2.1      
 #> [40] bslib_0.12.0        gtable_0.3.6        glue_1.8.1         
 #> [43] systemfonts_1.3.2   xfun_0.62           knitr_1.52         
-#> [46] farver_2.1.2        nlme_3.1-169        patchwork_1.3.2    
+#> [46] farver_2.1.2        nlme_3.1-171        patchwork_1.3.2    
 #> [49] htmltools_0.5.9     labeling_0.4.3      rmarkdown_2.32     
-#> [52] compiler_4.6.1      S7_0.2.2
+#> [52] compiler_4.6.2      S7_0.2.2
 ```
 
 ## References

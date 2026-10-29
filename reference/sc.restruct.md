@@ -67,7 +67,9 @@ sc.restruct(
 ## Value
 
 The object with the bins of every end path, from the root on, and their
-pseudo-bulk counts in the `Dense` slot.
+pseudo-bulk counts in the `Dense` slot. The `Design`, `Profile`,
+`Estimate` and `Significant` slots, computed from earlier bins, are
+emptied.
 
 ## See also
 

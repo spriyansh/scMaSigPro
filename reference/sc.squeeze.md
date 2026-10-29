@@ -138,7 +138,8 @@ sc.squeeze(
 
 The object with the bins and their pseudo-bulk counts (`bulk.counts`) in
 the `Dense` slot and the binned pseudotime of each cell in the cell
-metadata.
+metadata. The `Design`, `Profile`, `Estimate` and `Significant` slots,
+computed from earlier bins, are emptied.
 
 ## Details
 

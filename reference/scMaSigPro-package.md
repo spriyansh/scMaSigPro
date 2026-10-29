@@ -44,6 +44,10 @@ offsets (Srivastava et al. 2024).
     [`scmpResults()`](https://spriyansh.github.io/scMaSigPro/reference/scmpResults.md):
     the results as a table with one row per gene.
 
+A step run again empties the slots of the later steps, which were
+computed from what it replaces; the `Parameters` slot keeps the settings
+of every step.
+
 ## Input
 
 The workflow needs one pseudotime value and one path label per cell.

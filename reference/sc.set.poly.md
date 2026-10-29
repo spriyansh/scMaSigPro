@@ -61,6 +61,8 @@ sc.set.poly(
 
 The object with the design in the `Design` slot (class
 [MatrixDesign](https://spriyansh.github.io/scMaSigPro/reference/MatrixDesign-class.md)).
+The `Profile`, `Estimate` and `Significant` slots, computed with an
+earlier design, are emptied.
 
 ## References
 

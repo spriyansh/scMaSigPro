@@ -78,7 +78,7 @@ sc.cluster.trend(
 
 - k:
 
-  The number of clusters.
+  The number of clusters, a whole number of at least 1.
 
 - fill_na:
 

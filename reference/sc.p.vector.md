@@ -151,7 +151,8 @@ The object with the p-values and the genes with a non-flat profile in
 the `Profile` slot (class
 [VariableProfiles](https://spriyansh.github.io/scMaSigPro/reference/VariableProfiles-class.md)),
 the offsets in the `Design` slot and the settings of the fit in the
-`Parameters` slot.
+`Parameters` slot. The `Estimate` and `Significant` slots, computed from
+earlier tests, are emptied.
 
 ## Details
 

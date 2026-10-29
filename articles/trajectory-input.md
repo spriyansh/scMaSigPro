@@ -362,7 +362,7 @@ or pass the table to
 ``` r
 
 sessionInfo()
-#> R version 4.6.1 (2026-06-24)
+#> R version 4.6.2 (2026-10-29)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Ubuntu 24.04.5 LTS
 #> 
@@ -394,23 +394,23 @@ sessionInfo()
 #> 
 #> loaded via a namespace (and not attached):
 #>  [1] gtable_0.3.6              xfun_0.62                
-#>  [3] bslib_0.12.0              lattice_0.22-9           
-#>  [5] vctrs_0.7.3               tools_4.6.1              
-#>  [7] slingshot_2.20.0          parallel_4.6.1           
-#>  [9] pkgconfig_2.0.3           Matrix_1.7-5             
+#>  [3] bslib_0.12.0              lattice_0.23-1           
+#>  [5] vctrs_0.7.3               tools_4.6.2              
+#>  [7] slingshot_2.20.0          parallel_4.6.2           
+#>  [9] pkgconfig_2.0.3           Matrix_1.7-6             
 #> [11] RColorBrewer_1.1-3        S7_0.2.2                 
 #> [13] desc_1.4.3                sparseMatrixStats_1.24.0 
 #> [15] TrajectoryUtils_1.20.0    lifecycle_1.0.5          
-#> [17] compiler_4.6.1            farver_2.1.2             
+#> [17] compiler_4.6.2            farver_2.1.2             
 #> [19] textshaping_1.0.5         codetools_0.2-20         
 #> [21] htmltools_0.5.9           sass_0.4.10              
 #> [23] yaml_2.3.12               pkgdown_2.2.1            
-#> [25] jquerylib_0.1.4           MASS_7.3-65              
+#> [25] jquerylib_0.1.4           MASS_7.3-66              
 #> [27] BiocParallel_1.46.0       DelayedArray_0.38.2      
 #> [29] cachem_1.1.0              abind_1.4-8              
 #> [31] princurve_2.1.6           digest_0.6.39            
 #> [33] bookdown_0.48             labeling_0.4.3           
-#> [35] fastmap_1.2.0             grid_4.6.1               
+#> [35] fastmap_1.2.0             grid_4.6.2               
 #> [37] cli_3.6.6                 SparseArray_1.12.3       
 #> [39] magrittr_2.0.5            S4Arrays_1.12.1          
 #> [41] withr_3.0.3               DelayedMatrixStats_1.34.0

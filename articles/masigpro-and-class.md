@@ -476,7 +476,7 @@ vignette describes these settings.
 ``` r
 
 sessionInfo()
-#> R version 4.6.1 (2026-06-24)
+#> R version 4.6.2 (2026-10-29)
 #> Platform: x86_64-pc-linux-gnu
 #> Running under: Ubuntu 24.04.5 LTS
 #> 
@@ -501,11 +501,11 @@ sessionInfo()
 #> 
 #> loaded via a namespace (and not attached):
 #>  [1] sass_0.4.10                 generics_0.1.4             
-#>  [3] SparseArray_1.12.3          lattice_0.22-9             
+#>  [3] SparseArray_1.12.3          lattice_0.23-1             
 #>  [5] digest_0.6.39               RColorBrewer_1.1-3         
-#>  [7] evaluate_1.0.5              grid_4.6.1                 
+#>  [7] evaluate_1.0.5              grid_4.6.2                 
 #>  [9] bookdown_0.48               fastmap_1.2.0              
-#> [11] jsonlite_2.0.0              Matrix_1.7-5               
+#> [11] jsonlite_2.0.0              Matrix_1.7-6               
 #> [13] mclust_6.1.3                BiocManager_1.30.27        
 #> [15] SingleCellExperiment_1.34.0 scales_1.4.0               
 #> [17] codetools_0.2-20            textshaping_1.0.5          
@@ -515,15 +515,15 @@ sessionInfo()
 #> [25] withr_3.0.3                 DelayedArray_0.38.2        
 #> [27] cachem_1.1.0                yaml_2.3.12                
 #> [29] otel_0.2.0                  S4Arrays_1.12.1            
-#> [31] tools_4.6.1                 parallel_4.6.1             
+#> [31] tools_4.6.2                 parallel_4.6.2             
 #> [33] BiocParallel_1.46.0         ggplot2_4.0.3              
 #> [35] SummarizedExperiment_1.42.0 BiocGenerics_0.58.1        
 #> [37] vctrs_0.7.3                 R6_2.6.1                   
-#> [39] matrixStats_1.5.0           stats4_4.6.1               
+#> [39] matrixStats_1.5.0           stats4_4.6.2               
 #> [41] lifecycle_1.0.5             Seqinfo_1.2.0              
 #> [43] S4Vectors_0.50.3            fs_2.1.0                   
 #> [45] admisc_0.41                 IRanges_2.46.0             
-#> [47] MASS_7.3-65                 ragg_1.5.2                 
+#> [47] MASS_7.3-66                 ragg_1.5.2                 
 #> [49] desc_1.4.3                  gtable_0.3.6               
 #> [51] pkgdown_2.2.1               bslib_0.12.0               
 #> [53] glue_1.8.1                  systemfonts_1.3.2          
@@ -531,7 +531,7 @@ sessionInfo()
 #> [57] MatrixGenerics_1.24.0       knitr_1.52                 
 #> [59] farver_2.1.2                htmltools_0.5.9            
 #> [61] labeling_0.4.3              rmarkdown_2.32             
-#> [63] compiler_4.6.1              S7_0.2.2                   
+#> [63] compiler_4.6.2              S7_0.2.2                   
 #> [65] venn_1.13
 ```
 

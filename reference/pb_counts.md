@@ -51,7 +51,9 @@ pb_counts(
 ## Value
 
 The object whose `Dense` slot holds the pseudo-bulk counts
-(`bulk.counts`, genes by bins) and the bin metadata.
+(`bulk.counts`, genes by bins) and the bin metadata. The offsets of the
+`Design` slot and the `Profile`, `Estimate` and `Significant` slots,
+computed from earlier counts, are emptied; the design is kept.
 
 ## Details
 

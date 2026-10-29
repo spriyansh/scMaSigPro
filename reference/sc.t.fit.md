@@ -103,7 +103,8 @@ in the `Estimate` slot (class
 [Estimates](https://spriyansh.github.io/scMaSigPro/reference/Estimates-class.md)),
 read by
 [`showSol()`](https://spriyansh.github.io/scMaSigPro/reference/showSol.md)
-and the other result readers.
+and the other result readers. The `Significant` slot, computed from
+earlier models, is emptied.
 
 ## References
 
