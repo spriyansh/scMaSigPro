@@ -107,8 +107,45 @@ test_that("the steps say which earlier step is missing", {
     )
     expect_error(sc.t.fit(none, verbose = FALSE), msg, fixed = TRUE)
     expect_error(sc.cluster.trend(splat_fitted("default")),
-        "'Significant' slot is empty, please run 'sc.filter()' first.",
+        "The object has no significant genes: run sc.filter() first.",
         fixed = TRUE
+    )
+})
+
+test_that("the readers of the gene lists say which step is missing", {
+    # Fitted, not filtered; a step run again empties the lists; a filter
+    # that keeps no gene
+    gene <- splat_sig_gene()
+    no_lists <- list(
+        fitted = splat_fitted("default"),
+        refitted = sc.t.fit(splat_clustered(), verbose = FALSE),
+        none_kept = suppressMessages(
+            sc.filter(splat_fitted("default"), rsq = 0.9999)
+        )
+    )
+    lists_msg <- "The object has no significant genes: run sc.filter() first."
+    for (n in names(no_lists)) {
+        ob <- no_lists[[n]]
+        expect_error(plotTrend(ob, gene),
+            paste(
+                "The object has no significant genes: run sc.filter() first,",
+                "or set 'significant' to FALSE."
+            ),
+            fixed = TRUE, info = n
+        )
+        expect_error(plotDiagnostics(ob, gene), lists_msg,
+            fixed = TRUE, info = n
+        )
+        expect_error(plotIntersect(ob), lists_msg, fixed = TRUE, info = n)
+        expect_error(sc.cluster.trend(ob), lists_msg, fixed = TRUE, info = n)
+        expect_error(plotTrendCluster(ob),
+            "The object has no gene clusters: run sc.cluster.trend() first.",
+            fixed = TRUE, info = n
+        )
+    }
+    # Control: without the lists, plotTrend() draws the fitted gene
+    expect_s3_class(
+        plotTrend(no_lists$fitted, gene, significant = FALSE), "ggplot"
     )
 })
 
@@ -334,6 +371,31 @@ test_that("column names and labels are single strings", {
         "'bin_mem_col' must be a single character string.",
         fixed = TRUE
     )
+})
+
+test_that("plotTrend() and plotDiagnostics() take one gene name", {
+    # Two genes of the lists failed inside the plots, a gene of the lists
+    # with one not in them drew both in one plot of plotTrend()
+    ob <- splat_clustered()
+    genes <- unique(unlist(ob@Significant@genes))
+    bad <- list(
+        genes[1:2], c(genes[1], splat_nonsig_gene()), rep(genes[1], 2),
+        NA_character_, NA, character(0), NULL, 10, factor(genes[1]),
+        list(genes[1])
+    )
+    msg <- "'feature_id' must be a single character string."
+    for (i in seq_along(bad)) {
+        expect_error(plotTrend(ob, bad[[i]]), msg, fixed = TRUE, info = i)
+        expect_error(plotTrend(ob, bad[[i]], significant = FALSE), msg,
+            fixed = TRUE, info = i
+        )
+        expect_error(plotDiagnostics(ob, bad[[i]]), msg,
+            fixed = TRUE, info = i
+        )
+    }
+    # Control: one gene of the lists
+    expect_s3_class(plotTrend(ob, genes[1]), "ggplot")
+    expect_s3_class(plotDiagnostics(ob, genes[1]), "patchwork")
 })
 
 test_that("additional_params can be NULL", {
@@ -673,4 +735,64 @@ test_that("sc.restruct() checks link_sep and the labels of the paths", {
     )
     # Control: the default separator
     expect_identical(restruct(), multi_restruct())
+})
+
+test_that("sc.restruct() takes each path once and names those left out", {
+    ob <- multi_binned()
+    link <- "Y_18_links_Y_15"
+    restruct <- function(end_node_list = list("Y_15", "Y_18", "Y_52"),
+                         root_node = "Root", link_node_list = list(link),
+                         verbose = FALSE) {
+        sc.restruct(ob,
+            end_node_list = end_node_list, root_node = root_node,
+            link_node_list = link_node_list, verbose = verbose
+        )
+    }
+    # The root among the end paths, an end path named twice, the root
+    # named as an end path, a link path named twice or also as an end path
+    # got their bins twice
+    twice <- list(
+        Root = list(end_node_list = list("Root", "Y_15", "Y_18", "Y_52")),
+        Y_15 = list(end_node_list = list("Y_15", "Y_15", "Y_18", "Y_52")),
+        Y_52 = list(root_node = "Y_52"),
+        list(link_node_list = list(link, link)),
+        list(end_node_list = list("Y_15", "Y_18", "Y_52", link))
+    )
+    names(twice)[4:5] <- link
+    for (i in seq_along(twice)) {
+        expect_error(do.call(restruct, twice[[i]]),
+            paste0(
+                "Each path must be named once in root_node, end_node_list ",
+                "and link_node_list; named more than once: ", names(twice)[i],
+                "."
+            ),
+            fixed = TRUE, info = i
+        )
+    }
+    # A linked path left out of end_node_list, or a link path left out of
+    # link_node_list: the bins of the paths named nowhere are left out,
+    # with a message when verbose
+    left <- "The bins of paths not named in root_node, end_node_list or"
+    full <- cDense(multi_restruct())
+    path_col <- ob@Parameters@path_col
+    out <- restruct(end_node_list = list("Y_15", "Y_52"))
+    expect_identical(
+        cDense(out), full[full[[path_col]] %in% c("Y_15", "Y_52"), ]
+    )
+    msgs <- capture_messages(
+        restruct(end_node_list = list("Y_15", "Y_52"), verbose = TRUE)
+    )
+    expect_true(
+        paste(left, "link_node_list are left out: Y_18\n") %in% msgs
+    )
+    msgs <- capture_messages(
+        restruct(link_node_list = list(), verbose = TRUE)
+    )
+    expect_true(
+        paste(left, "link_node_list are left out:", paste0(link, "\n")) %in%
+            msgs
+    )
+    # Control: every path named, no such message
+    msgs <- capture_messages(restruct(verbose = TRUE))
+    expect_false(any(startsWith(msgs, left)))
 })

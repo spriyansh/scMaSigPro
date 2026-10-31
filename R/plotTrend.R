@@ -65,6 +65,7 @@ plotTrend <- function(scmpObj,
 
     # Check Object Validity
     .check_scmp(scmpObj)
+    .check_strings(feature_id = feature_id)
     logs <- .trend_logs(scmpObj, logs)
 
     # Check summary_mode
@@ -195,6 +196,12 @@ plotTrend <- function(scmpObj,
     )
 
     if (significant) {
+        .check(!isEmpty(scmpObj@Significant@genes),
+            msg = paste(
+                "The object has no significant genes: run sc.filter() first,",
+                "or set 'significant' to FALSE."
+            )
+        )
         .check(
             any(feature_id %in% unique(unlist(scmpObj@Significant@genes))),
             msg = paste(
