@@ -29,6 +29,12 @@
   `verbose = TRUE`; the message was printed by every call and said “less
   than 7”. Its verbose messages call the number of bins of a path a
   number of bins, not a bin size.
+- `sc.squeeze(verbose = TRUE)` lists the paths in the order it bins
+  them, by the levels of a factor path column or else in C-locale order,
+  and no longer prints “Setting as reference.”:
+  [`sc.set.poly()`](https://spriyansh.github.io/scMaSigPro/reference/sc.set.poly.md)
+  chooses the reference. The paths were listed in the order of the
+  cells.
 - [`sc.cluster.trend()`](https://spriyansh.github.io/scMaSigPro/reference/sc.cluster.trend.md)
   stops with a clear message when `k` is not a single whole number of at
   least 1, unless `"Mclust"` chooses the number of clusters
@@ -46,6 +52,14 @@
   dropped the bins of the link without a message, and the other cases
   failed with messages such as “invalid ‘pattern’ argument” or
   “replacement has 1 row, data has 0”.
+- [`sc.restruct()`](https://spriyansh.github.io/scMaSigPro/reference/sc.restruct.md)
+  stops when a path is named more than once in `root_node`,
+  `end_node_list` and `link_node_list`, such as the root among the end
+  paths, an end path named twice or a link path also named as an end
+  path, whose bins the result held twice. With `verbose = TRUE` it names
+  the paths whose bins it leaves out because they are named in none of
+  the three, such as a linked path left out of `end_node_list`; they
+  were left out without a message.
 - [`plotDiagnostics()`](https://spriyansh.github.io/scMaSigPro/reference/plotDiagnostics.md)
   fits its models on the design columns named by position, as
   [`sc.p.vector()`](https://spriyansh.github.io/scMaSigPro/reference/sc.p.vector.md)
@@ -69,6 +83,37 @@
   empty offset; the message asks to run
   [`sc.p.vector()`](https://spriyansh.github.io/scMaSigPro/reference/sc.p.vector.md)
   first.
+- [`updateObject()`](https://rdrr.io/pkg/BiocGenerics/man/updateObject.html)
+  warns, without changing the object, when it finds results that were
+  not computed from the slots before them, as an object saved by an
+  earlier version after a step was run again can hold, and names the
+  step to run again. It cannot find every such result; its help page
+  says which it finds.
+- [`plotTrend()`](https://spriyansh.github.io/scMaSigPro/reference/plotTrend.md),
+  [`plotDiagnostics()`](https://spriyansh.github.io/scMaSigPro/reference/plotDiagnostics.md),
+  [`plotIntersect()`](https://spriyansh.github.io/scMaSigPro/reference/plotIntersect.md)
+  and
+  [`sc.cluster.trend()`](https://spriyansh.github.io/scMaSigPro/reference/sc.cluster.trend.md)
+  on an object without significant genes, and
+  [`plotTrendCluster()`](https://spriyansh.github.io/scMaSigPro/reference/plotTrendCluster.md)
+  on an object without gene clusters, stop with a message that names the
+  step to run,
+  [`sc.filter()`](https://spriyansh.github.io/scMaSigPro/reference/sc.filter.md)
+  or
+  [`sc.cluster.trend()`](https://spriyansh.github.io/scMaSigPro/reference/sc.cluster.trend.md).
+  [`plotTrend()`](https://spriyansh.github.io/scMaSigPro/reference/plotTrend.md)
+  said that the gene had not passed the threshold of
+  [`sc.filter()`](https://spriyansh.github.io/scMaSigPro/reference/sc.filter.md),
+  also after a step run again had emptied the gene lists, and
+  [`plotDiagnostics()`](https://spriyansh.github.io/scMaSigPro/reference/plotDiagnostics.md)
+  asked to run the workflow.
+- [`plotTrend()`](https://spriyansh.github.io/scMaSigPro/reference/plotTrend.md)
+  and
+  [`plotDiagnostics()`](https://spriyansh.github.io/scMaSigPro/reference/plotDiagnostics.md)
+  stop with a clear message unless `feature_id` is a single character
+  string, the name of one gene. Several genes failed inside the plots
+  with messages such as “logical subscript too long”, or gave one plot
+  that mixed the genes; a factor, which worked, is refused as well.
 
 ### Documentation
 

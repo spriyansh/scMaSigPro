@@ -86,11 +86,14 @@ pseudo-bulk counts.</p>
 
 
 <dt id="arg-end-node-list">end_node_list<a class="anchor" aria-label="anchor" href="#arg-end-node-list"></a></dt>
-<dd><p>A list of the labels of the end paths.</p></dd>
+<dd><p>A list of the labels of the end paths. The bins of
+a path that is not the root, an end path or a link path are left out,
+with a message when <code>verbose</code> is <code>TRUE</code>.</p></dd>
 
 
 <dt id="arg-root-node">root_node<a class="anchor" aria-label="anchor" href="#arg-root-node"></a></dt>
-<dd><p>The label of the root path.</p></dd>
+<dd><p>The label of the root path. Each path is named once, in
+<code>root_node</code>, <code>end_node_list</code> or <code>link_node_list</code>.</p></dd>
 
 
 <dt id="arg-link-node-list">link_node_list<a class="anchor" aria-label="anchor" href="#arg-link-node-list"></a></dt>

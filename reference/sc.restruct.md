@@ -32,11 +32,14 @@ sc.restruct(
 
 - end_node_list:
 
-  A list of the labels of the end paths.
+  A list of the labels of the end paths. The bins of a path that is not
+  the root, an end path or a link path are left out, with a message when
+  `verbose` is `TRUE`.
 
 - root_node:
 
-  The label of the root path.
+  The label of the root path. Each path is named once, in `root_node`,
+  `end_node_list` or `link_node_list`.
 
 - link_node_list:
 
