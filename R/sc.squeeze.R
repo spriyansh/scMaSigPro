@@ -192,8 +192,8 @@ sc.squeeze <- function(scmpObj,
     # Add a column
     raw_cell_metadata$cell <- rownames(raw_cell_metadata)
 
-    # Get the avaible paths
-    avail.paths <- as.vector(unique(raw_cell_metadata[[path_col]]))
+    # Get the avaible paths, in the order they are binned
+    avail.paths <- .path_order(raw_cell_metadata[[path_col]])
 
     # Check for path
     .check(length(avail.paths) >= 2,
@@ -211,16 +211,6 @@ sc.squeeze <- function(scmpObj,
         message("Drop factor: ", drop_fac)
     }
 
-    # Order the paths: by the levels of a factor, as model formulas do, and
-    # otherwise by the bytes of the labels (the C locale) in every locale:
-    # order() alone follows the session's collation, which put "root" first
-    # in en_US and after "Y_15" in C
-    path_values <- raw_cell_metadata[[path_col]]
-    if (is.factor(path_values)) {
-        avail.paths <- intersect(levels(path_values), avail.paths)
-    } else {
-        avail.paths <- avail.paths[order(avail.paths, method = "radix")]
-    }
     # The paths in the order they are binned; sc.set.poly() chooses the
     # reference
     if (verbose) {
@@ -567,4 +557,17 @@ sc.squeeze <- function(scmpObj,
     scmpObj@Parameters@bin_size_col <- bin_size_col
     validObject(scmpObj)
     return(scmpObj)
+}
+
+# The order in which sc.squeeze() bins the paths, and show() lists them
+# before binning: by the levels of a factor, as model formulas do, and
+# otherwise by the bytes of the labels (the C locale) in every locale:
+# order() alone follows the session's collation, which put "root" first in
+# en_US and after "Y_15" in C
+.path_order <- function(x) {
+    paths <- as.vector(unique(x))
+    if (is.factor(x)) {
+        return(intersect(levels(x), paths))
+    }
+    paths[order(paths, method = "radix")]
 }

@@ -85,10 +85,11 @@ test_that("plotDiagnostics() loads patchwork itself", {
 
 test_that("printing a restructured object lists its bin paths", {
     out <- capture.output(print(multi_restruct()))
-    expect_true("Branching Paths: Y_15, Y_52, Y_18" %in% out)
-    # Control: before binning, the paths of the cells
+    expect_true("Branching Paths: Y_15, Y_18, Y_52" %in% out)
+    # Control: before binning, the paths of the cells, in the order
+    # sc.squeeze() bins them
     out <- capture.output(print(splat_scmp()))
-    expect_true("Branching Paths: Path2, Path1" %in% out)
+    expect_true("Branching Paths: Path1, Path2" %in% out)
 })
 
 test_that("plotTrend() uses every power of the degree", {
