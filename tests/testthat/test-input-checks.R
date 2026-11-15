@@ -886,3 +886,28 @@ test_that("sc.restruct() takes each path once and names those left out", {
     msgs <- capture_messages(restruct(verbose = TRUE))
     expect_false(any(startsWith(msgs, left)))
 })
+
+test_that("sc.restruct() names a link path that links no end path", {
+    ob <- multi_binned()
+    link <- "Y_18_links_Y_15"
+    msg <- paste0(
+        "The bins of link paths that link none of the end paths are left ",
+        "out: ", link, "\n"
+    )
+    full <- cDense(multi_restruct())
+    path_col <- ob@Parameters@path_col
+    restruct <- function(ends, verbose = TRUE) {
+        sc.restruct(ob,
+            end_node_list = ends, root_node = "Root",
+            link_node_list = list(link), verbose = verbose
+        )
+    }
+    # Both linked paths left out: the bins of the link go nowhere
+    msgs <- capture_messages(out <- restruct(list("Y_52")))
+    expect_true(msg %in% msgs)
+    expect_identical(cDense(out), full[full[[path_col]] == "Y_52", ])
+    expect_silent(restruct(list("Y_52"), verbose = FALSE))
+    # Control: one linked path left out, the link goes to the other one
+    msgs <- capture_messages(restruct(list("Y_15", "Y_52")))
+    expect_false(msg %in% msgs)
+})

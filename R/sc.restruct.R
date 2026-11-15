@@ -8,8 +8,9 @@
 #' pseudo-bulk counts.
 #'
 #' @param end_node_list A list of the labels of the end paths. The bins of
-#'   a path that is not the root, an end path or a link path are left out,
-#'   with a message when `verbose` is `TRUE`.
+#'   a path that is not the root, an end path or a link path, and those of
+#'   a link path that links none of the end paths, are left out, with a
+#'   message when `verbose` is `TRUE`.
 #' @param root_node The label of the root path. Each path is named once, in
 #'   `root_node`, `end_node_list` or `link_node_list`.
 #' @param link_node_list A list of the labels of the link paths, the segments
@@ -133,6 +134,17 @@ sc.restruct <- function(scmpObj,
         message(
             "The bins of paths not named in root_node, end_node_list or ",
             "link_node_list are left out: ", paste(left_out, collapse = ", ")
+        )
+    }
+    # So are the bins of a link path that links none of the end paths:
+    # they are added only to the end paths it links
+    unlinked <- links[!vapply(links, function(link) {
+        any(split_link(link) %in% ends)
+    }, logical(1))]
+    if (verbose && length(unlinked) > 0L) {
+        message(
+            "The bins of link paths that link none of the end paths are ",
+            "left out: ", paste(unlinked, collapse = ", ")
         )
     }
 
