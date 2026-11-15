@@ -205,12 +205,12 @@ plotTrend <- function(scmpObj,
                 "or set 'significant' to FALSE."
             )
         )
+        # The lists depend on every setting of sc.filter(), not only rsq
         .check(
             any(feature_id %in% unique(unlist(scmpObj@Significant@genes))),
-            msg = paste(
-                "Feature Id didn't pass the R2 threshold, please re-run",
-                "sc.filter() with a lower 'rsq' value or set 'significant' to",
-                "'FALSE'"
+            msg = paste0(
+                "'", feature_id, "' is not in the gene lists of sc.filter(): ",
+                "set 'significant' to FALSE to plot it anyway."
             )
         )
     }

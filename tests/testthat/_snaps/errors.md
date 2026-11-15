@@ -196,7 +196,7 @@
       eval(cases[[nm]])
     Condition
       Error:
-      ! Feature Id didn't pass the R2 threshold, please re-run sc.filter() with a lower 'rsq' value or set 'significant' to 'FALSE'
+      ! 'Gene1' is not in the gene lists of sc.filter(): set 'significant' to FALSE to plot it anyway.
 
 # plotTrend needs at least one layer
 

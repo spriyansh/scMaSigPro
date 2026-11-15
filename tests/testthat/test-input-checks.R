@@ -225,6 +225,20 @@ test_that("plotTrend() checks the bins and the models before the gene", {
     )
 })
 
+test_that("plotTrend() says that a gene is not in the gene lists", {
+    ob <- splat_filtered()
+    gene <- splat_nonsig_gene()
+    expect_error(plotTrend(ob, gene),
+        paste0(
+            "'", gene, "' is not in the gene lists of sc.filter(): set ",
+            "'significant' to FALSE to plot it anyway."
+        ),
+        fixed = TRUE
+    )
+    # As the message says, significant = FALSE plots it
+    expect_s3_class(plotTrend(ob, gene, significant = FALSE), "ggplot")
+})
+
 test_that("a choice argument takes one of its values, once", {
     two <- function(x) c(x, x)
     ob <- splat_clustered()
