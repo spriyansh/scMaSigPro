@@ -30,9 +30,7 @@ plotBinTile <- function(scmpObj,
     compression.info <- as.data.frame(colData(scmpObj@Dense))
 
     # Check if values are binned
-    .check(nrow(as.data.frame(colData(scmpObj@Dense))) >= 1,
-        msg = "No binning information found. Please run 'sc.squeeze()', first."
-    )
+    .check_bins(scmpObj)
 
     # Create plot data
     plt.data <- data.frame(

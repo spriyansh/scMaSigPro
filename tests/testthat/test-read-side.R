@@ -59,7 +59,7 @@ test_that("the assay setters take any matrix and a default name", {
 
 test_that("showInflu() is empty when no gene is influential", {
     expect_error(showInflu(splat_design(2)),
-        "'influential' is not computed yet",
+        "The object has no selected models: run sc.t.fit() first.",
         fixed = TRUE
     )
     # Without the one influential gene of this fit, no gene is influential

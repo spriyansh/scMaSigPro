@@ -93,19 +93,62 @@ test_that("the fits need counts for the bins of the design", {
 })
 
 test_that("the steps say which earlier step is missing", {
-    expect_error(sc.p.vector(splat_binned(), verbose = FALSE),
-        "No polynomial design found. Please run 'sc.set.poly()', first.",
+    # Not binned
+    created <- splat_scmp()
+    bins_msg <- "The object has no bins: run sc.squeeze() first."
+    not_binned <- list(
+        pb_counts = function() pb_counts(created),
+        sc.restruct = function() {
+            sc.restruct(created,
+                end_node_list = list("Path1"), root_node = "Path2",
+                link_node_list = list(), verbose = FALSE
+            )
+        },
+        sc.set.poly = function() sc.set.poly(created),
+        plotBinTile = function() plotBinTile(created)
+    )
+    for (n in names(not_binned)) {
+        expect_error(not_binned[[n]](), bins_msg, fixed = TRUE, info = n)
+    }
+    # Binned, without a design
+    binned <- splat_binned()
+    design_msg <- "The object has no design: run sc.set.poly() first."
+    expect_error(sc.p.vector(binned, verbose = FALSE), design_msg,
         fixed = TRUE
     )
-    msg <- "No gene with a non-flat profile found. Please run 'sc.p.vector()'"
-    expect_error(sc.t.fit(splat_design(2), verbose = FALSE), msg,
+    expect_error(showPoly(binned), design_msg, fixed = TRUE)
+    expect_error(queryCoeff(binned, verbose = FALSE), design_msg,
         fixed = TRUE
     )
+    # With a design, without tests or selected models
+    designed <- splat_design(2)
+    msg <- paste(
+        "The object has no non-flat genes: run sc.p.vector() first; if it",
+        "found none, try changing its parameters."
+    )
+    expect_error(sc.t.fit(designed, verbose = FALSE), msg, fixed = TRUE)
     # sc.p.vector() that selected no gene
     none <- suppressMessages(
-        sc.p.vector(splat_design(2), p_value = 1e-300, verbose = FALSE)
+        sc.p.vector(designed, p_value = 1e-300, verbose = FALSE)
     )
     expect_error(sc.t.fit(none, verbose = FALSE), msg, fixed = TRUE)
+    models_msg <- "The object has no selected models: run sc.t.fit() first."
+    no_models <- list(
+        showSol = function() showSol(designed),
+        showCoeff = function() showCoeff(designed),
+        showTS = function() showTS(designed),
+        showGroupCoeff = function() showGroupCoeff(designed),
+        showInflu = function() showInflu(designed),
+        showSigProf = function() showSigProf(designed),
+        sc.filter = function() sc.filter(designed),
+        queryCoeff = function() queryCoeff(designed, verbose = FALSE),
+        plotTrend = function() {
+            plotTrend(designed, splat_sig_gene(), significant = FALSE)
+        }
+    )
+    for (n in names(no_models)) {
+        expect_error(no_models[[n]](), models_msg, fixed = TRUE, info = n)
+    }
     expect_error(sc.cluster.trend(splat_fitted("default")),
         "The object has no significant genes: run sc.filter() first.",
         fixed = TRUE

@@ -156,7 +156,7 @@
       eval(cases[[nm]])
     Condition
       Error:
-      ! 'significance_matrix' is not computed yet
+      ! The object has no selected models: run sc.t.fit() first.
 
 # showCoeff errors before sc.t.fit
 
@@ -164,7 +164,7 @@
       eval(cases[[nm]])
     Condition
       Error:
-      ! 'coefficient_matrix' is not computed yet
+      ! The object has no selected models: run sc.t.fit() first.
 
 # eSparse rejects an unknown assay
 
@@ -212,7 +212,7 @@
       eval(cases[[nm]])
     Condition
       Error:
-      ! No binning information found. Please run 'sc.squeeze()', first.
+      ! The object has no bins: run sc.squeeze() first.
 
 # plotIntersect errors before sc.filter
 
@@ -276,5 +276,5 @@
       eval(cases[[nm]])
     Condition
       Error:
-      ! No binning information found. Please run 'sc.squeeze()', first.
+      ! The object has no bins: run sc.squeeze() first.
 

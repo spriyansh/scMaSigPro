@@ -20,9 +20,7 @@ showCoeff <- function(scmpObj, includeInflu = TRUE) {
     .check_scmp(scmpObj)
 
     # Check if the sol exist
-    .check(!all(dim(scmpObj@Estimate@coefficient_matrix) == c(0, 0)),
-        msg = "'coefficient_matrix' is not computed yet"
-    )
+    .check_models(scmpObj@Estimate@coefficient_matrix)
 
     # Extract
     coefficients <- as.data.frame(scmpObj@Estimate@coefficient_matrix)
@@ -43,9 +41,7 @@ showInflu <- function(scmpObj) {
     .check_scmp(scmpObj)
 
     # After sc.t.fit(), a fit without influential genes has a 0 x 0 matrix
-    .check(!all(dim(scmpObj@Estimate@significance_matrix) == c(0, 0)),
-        msg = "'influential' is not computed yet"
-    )
+    .check_models(scmpObj@Estimate@significance_matrix)
 
     # Extract
     influ <- scmpObj@Estimate@influential
@@ -61,9 +57,7 @@ showTS <- function(scmpObj, includeInflu = TRUE) {
     .check_scmp(scmpObj)
 
     # Check if the sol exist
-    .check(!all(dim(scmpObj@Estimate@t_score_matrix) == c(0, 0)),
-        msg = "tscore is not computed yet"
-    )
+    .check_models(scmpObj@Estimate@t_score_matrix)
 
     # Extract
     tscore <- scmpObj@Estimate@t_score_matrix
@@ -119,9 +113,7 @@ showSol <- function(scmpObj, includeInflu = TRUE) {
     .check_scmp(scmpObj)
 
     # Check if the sol exist
-    .check(!all(dim(scmpObj@Estimate@significance_matrix) == c(0, 0)),
-        msg = "'significance_matrix' is not computed yet"
-    )
+    .check_models(scmpObj@Estimate@significance_matrix)
 
     # Extract
     sol <- as.data.frame(scmpObj@Estimate@significance_matrix)
@@ -142,9 +134,7 @@ showSigProf <- function(scmpObj, includeInflu = FALSE) {
     .check_scmp(scmpObj)
 
     # Check if the sol exist
-    .check(!all(dim(scmpObj@Estimate@significance_matrix) == c(0, 0)),
-        msg = "Sol is not computed yet"
-    )
+    .check_models(scmpObj@Estimate@significance_matrix)
 
     # Extract
     sol <- as.data.frame(showSol(scmpObj, includeInflu = includeInflu))
@@ -168,13 +158,8 @@ showPoly <- function(scmpObj) {
     # Check Object Validity
     .check_scmp(scmpObj)
 
-    # Check if the sol exist
-    .check(
-        all(!is.na(colnames(scmpObj@Design@predictor_matrix)) | length(
-            colnames(scmpObj@Design@predictor_matrix) > 1
-        )),
-        msg = "Please setup the model first, using 'sc.set.poly()'"
-    )
+    # The design of sc.set.poly()
+    .check_design(scmpObj)
 
     # Extract columns
     df.col <- colnames(scmpObj@Design@predictor_matrix)
@@ -272,9 +257,7 @@ showGroupCoeff <- function(scmpObj, includeInflu = TRUE) {
     .check_scmp(scmpObj)
 
     # Check if the sol exist
-    .check(!all(dim(scmpObj@Estimate@path_coefficient_matrix) == c(0, 0)),
-        msg = "path_coefficient_matrix is not computed yet"
-    )
+    .check_models(scmpObj@Estimate@path_coefficient_matrix)
 
     # Extract
     grpCoeff <- as.data.frame(scmpObj@Estimate@path_coefficient_matrix)
