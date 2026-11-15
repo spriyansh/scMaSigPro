@@ -55,13 +55,18 @@
 #' slots that the step replaced. `updateObject()` warns, without changing
 #' the object, and names the step to run again, when the design does not
 #' have the binned pseudotime of the bins of the `Dense` slot, when tests
-#' made with an offset find none in the design, when the models are not
-#' those of non-flat genes with a coefficient for each column of the
-#' design, when the gene lists hold genes without a model, or when the
-#' clusters hold genes that are not in the lists. It cannot tell every such
-#' result from a current one, such as tests of counts that
-#' [pb_counts()] computed again: on an object saved
-#' after a step was run again, run the later steps again.
+#' made with an offset find none in the design, or one that differs from
+#' the offset that [sc.p.vector()] computes
+#' from the pseudo-bulk counts, when the models are not those of non-flat
+#' genes with a coefficient for each column of the design, when the gene
+#' lists hold genes without a model, or when the clusters hold genes that
+#' are not in the lists. The offsets of an object saved with the
+#' `log_offset` parameter followed another rule and are not compared. It
+#' cannot tell every such result from a current one, such as tests without
+#' an offset of counts that [pb_counts()] computed
+#' again, tests that found more non-flat genes or models selected again:
+#' on an object saved after a step was run again, run the later steps
+#' again.
 #'
 #' @return The updated `ScMaSigPro` object.
 #'
@@ -130,7 +135,8 @@ setMethod("updateObject", "ScMaSigPro", function(object, ...,
     # Saved with the log_offset parameter, which chose the scale of the
     # offset: with log_offset = FALSE the fits used the size factors
     params <- object@Parameters
-    if (.hasSlot(params, "log_offset")) {
+    earlier_offsets <- .hasSlot(params, "log_offset")
+    if (earlier_offsets) {
         if (verbose) {
             message("[updateObject] Removing the parameter log_offset.")
         }
@@ -158,7 +164,7 @@ setMethod("updateObject", "ScMaSigPro", function(object, ...,
     validObject(object)
     # Saved after a step was run again by a version that kept the slots of
     # the later steps
-    stale <- .stale_message(object)
+    stale <- .stale_message(object, offsets = !earlier_offsets)
     if (!is.null(stale)) {
         warning(stale, call. = FALSE)
     }
@@ -170,10 +176,12 @@ setMethod("updateObject", "ScMaSigPro", function(object, ...,
 # workflow and the first that fails names the step to run again: the
 # design has the binned pseudotime of the bins of the Dense slot (its first
 # column; the bins may have been renamed or reordered since); tests made
-# with an offset have it in the design; the models are those of non-flat
-# genes, with a coefficient per column of the design; the genes of the
-# lists have a model; the genes of the clusters are in the lists.
-.stale_message <- function(object) {
+# with an offset have it in the design and, unless `offsets` is FALSE (an
+# offset of the rule before 0.6.0), it is the offset of the pseudo-bulk
+# counts; the models are those of non-flat genes, with a coefficient per
+# column of the design; the genes of the lists have a model; the genes of
+# the clusters are in the lists.
+.stale_message <- function(object, offsets = TRUE) {
     design <- object@Design@predictor_matrix
     other_bins <- FALSE
     if (nrow(design) > 0L) {
@@ -195,6 +203,7 @@ setMethod("updateObject", "ScMaSigPro", function(object, ...,
         "sc.p.vector()" = length(object@Profile@p_values) > 0L &&
             isTRUE(object@Parameters@offset) &&
             length(object@Design@offset) == 0L,
+        "sc.p.vector()" = offsets && .other_counts(object),
         "sc.t.fit()" = nrow(coefs) > 0L && other_models,
         "sc.filter()" = !all(genes %in% rownames(sol)),
         "sc.cluster.trend()" = !all(clustered %in% genes)
@@ -205,6 +214,7 @@ setMethod("updateObject", "ScMaSigPro", function(object, ...,
     reasons <- c(
         "its design was built for other bins",
         "its tests used an offset that its design does not hold",
+        "its tests used the offset of other pseudo-bulk counts",
         "its models are those of other genes or of another design",
         "its gene lists hold genes without a model",
         "its clusters hold genes that are not in its gene lists"
@@ -216,6 +226,32 @@ setMethod("updateObject", "ScMaSigPro", function(object, ...,
         "the results of the later steps when a step was run again: run ",
         names(stale)[first], " and the later steps on the object again."
     )
+}
+
+# TRUE when tests made with an offset used another offset than the one
+# sc.p.vector() computes from the pseudo-bulk counts of the bins of the
+# design (of the genes it fits, by min_na), as after pb_counts() was run
+# again by a version that kept the tests. Bins renamed after the design
+# keep the names of the counts, so they are compared too.
+.other_counts <- function(object) {
+    offset <- object@Design@offset
+    dense <- object@Dense
+    tested <- length(object@Profile@p_values) > 0L && length(offset) > 0L
+    if (!tested || !"bulk.counts" %in% assayNames(dense)) {
+        return(FALSE)
+    }
+    counts <- assay(dense, "bulk.counts", withDimnames = FALSE)
+    bins <- rownames(object@Design@predictor_matrix)
+    if (!all(bins %in% colnames(counts))) {
+        return(FALSE)
+    }
+    again <- tryCatch(
+        .bin_offset(.fit_genes(
+            as.matrix(counts[, bins, drop = FALSE]), object@Parameters@min_na
+        )),
+        error = function(e) NULL
+    )
+    !isTRUE(all.equal(as.numeric(again), as.numeric(offset)))
 }
 
 # The error of updateObject() for an object binned by scMaSigPro 0.0.4: the

@@ -67,13 +67,18 @@ again, so an object saved after that may hold results computed from the
 slots that the step replaced. \code{updateObject()} warns, without changing
 the object, and names the step to run again, when the design does not
 have the binned pseudotime of the bins of the \code{Dense} slot, when tests
-made with an offset find none in the design, when the models are not
-those of non-flat genes with a coefficient for each column of the
-design, when the gene lists hold genes without a model, or when the
-clusters hold genes that are not in the lists. It cannot tell every such
-result from a current one, such as tests of counts that
-\code{\link[=pb_counts]{pb_counts()}} computed again: on an object saved
-after a step was run again, run the later steps again.
+made with an offset find none in the design, or one that differs from
+the offset that \code{\link[=sc.p.vector]{sc.p.vector()}} computes
+from the pseudo-bulk counts, when the models are not those of non-flat
+genes with a coefficient for each column of the design, when the gene
+lists hold genes without a model, or when the clusters hold genes that
+are not in the lists. The offsets of an object saved with the
+\code{log_offset} parameter followed another rule and are not compared. It
+cannot tell every such result from a current one, such as tests without
+an offset of counts that \code{\link[=pb_counts]{pb_counts()}} computed
+again, tests that found more non-flat genes or models selected again:
+on an object saved after a step was run again, run the later steps
+again.
 }
 \examples{
 data("scmp.ob", package = "scMaSigPro")

@@ -271,6 +271,8 @@ test_that("updateObject() warns about results computed from other slots", {
     stale$redesigned@Design <- splat_design(3)@Design
     stale$new_terms <- stale$redesigned
     stale$new_terms@Design@offset <- ob@Design@offset
+    stale$recounted <- ob
+    stale$recounted@Dense <- pb_counts(ob, cluster_count_by = "mean")@Dense
     stale$retested <- ob
     stale$retested@Profile <- sc.p.vector(splat_design(2),
         p_value = 0.001, verbose = FALSE
@@ -288,13 +290,15 @@ test_that("updateObject() warns about results computed from other slots", {
         rebinned = "its design was built for other bins",
         redesigned = "its tests used an offset that its design does not hold",
         new_terms = "its models are those of other genes or of another design",
+        recounted = "its tests used the offset of other pseudo-bulk counts",
         retested = "its models are those of other genes or of another design",
         relisted = "its gene lists hold genes without a model",
         reclustered = "its clusters hold genes that are not in its gene lists"
     )
     steps <- c(
         rebinned = "sc.set.poly()", redesigned = "sc.p.vector()",
-        new_terms = "sc.t.fit()", retested = "sc.t.fit()",
+        new_terms = "sc.t.fit()", recounted = "sc.p.vector()",
+        retested = "sc.t.fit()",
         relisted = "sc.filter()", reclustered = "sc.cluster.trend()"
     )
     for (n in names(stale)) {
@@ -325,4 +329,12 @@ test_that("updateObject() warns about results computed from other slots", {
     for (i in seq_along(controls)) {
         expect_no_warning(updateObject(controls[[i]]))
     }
+    # Not compared: the offsets of an object saved with the log_offset
+    # parameter, which followed another rule, and tests without an offset
+    old_rule <- with_log_offset(ob, TRUE)
+    old_rule@Design@offset <- old_rule@Design@offset + 0.01
+    expect_no_warning(updateObject(old_rule))
+    no_offset <- splat_fitted("no_offset")
+    no_offset@Dense <- pb_counts(no_offset, cluster_count_by = "mean")@Dense
+    expect_no_warning(updateObject(no_offset))
 })
