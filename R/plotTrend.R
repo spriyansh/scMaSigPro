@@ -178,6 +178,12 @@ plotTrend <- function(scmpObj,
 # cluster.
 .trendData <- function(scmpObj, feature_id, smoothness, logs, logType,
                        pseudoCount, significant, summary_mode) {
+    # The bins, their counts and the selected models come before the gene:
+    # without them no gene can be plotted
+    .check_bins(scmpObj)
+    .check_dense_counts(scmpObj)
+    betas.table <- showCoeff(scmpObj)
+
     # Offset
     offset_vector <- scmpObj@Design@offset
 
@@ -185,14 +191,11 @@ plotTrend <- function(scmpObj,
     alloc.frame <- as.data.frame(scmpObj@Design@assignment_matrix)
 
     # Extract the bulk counts
-    .check_dense_counts(scmpObj)
     bulk.counts <- assay(scmpObj@Dense, "bulk.counts", withDimnames = FALSE)
 
     # Check
     .check(all(feature_id %in% rownames(bulk.counts)),
-        msg = paste0(
-            "'", feature_id, "' doesn't exist please select another one."
-        )
+        msg = paste0("'", feature_id, "' is not a gene of the object.")
     )
 
     if (significant) {
@@ -219,7 +222,6 @@ plotTrend <- function(scmpObj,
     groups.vector <- scmpObj@Design@groups.vector
 
     # Extract the beta
-    betas.table <- showCoeff(scmpObj)
     betas <- betas.table[rownames(betas.table) %in% feature_id, , drop = FALSE]
 
     # Set Data

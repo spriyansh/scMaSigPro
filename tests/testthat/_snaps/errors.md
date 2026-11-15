@@ -188,7 +188,7 @@
       eval(cases[[nm]])
     Condition
       Error:
-      ! 'NotAGene' doesn't exist please select another one.
+      ! 'NotAGene' is not a gene of the object.
 
 # plotTrend refuses a non-significant feature by default
 

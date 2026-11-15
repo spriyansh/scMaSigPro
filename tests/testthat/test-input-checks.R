@@ -192,6 +192,39 @@ test_that("the readers of the gene lists say which step is missing", {
     )
 })
 
+test_that("plotTrend() checks the bins and the models before the gene", {
+    gene <- splat_sig_gene()
+    for (significant in c(TRUE, FALSE)) {
+        expect_error(plotTrend(splat_scmp(), gene, significant = significant),
+            "The object has no bins: run sc.squeeze() first.",
+            fixed = TRUE, info = significant
+        )
+        for (ob in list(splat_binned(), splat_design(2))) {
+            expect_error(plotTrend(ob, gene, significant = significant),
+                "The object has no selected models: run sc.t.fit() first.",
+                fixed = TRUE, info = significant
+            )
+        }
+    }
+    # Bins without counts, after cDense<- changed their number
+    rebinned <- splat_binned()
+    suppressMessages(cDense(rebinned) <- cDense(rebinned)[-1, ])
+    expect_error(plotTrend(rebinned, gene),
+        "The 'Dense' slot has no 'bulk.counts' assay: run pb_counts()",
+        fixed = TRUE
+    )
+    # A gene that the object does not hold
+    expect_error(plotTrend(splat_fitted("default"), "NotAGene"),
+        "'NotAGene' is not a gene of the object.",
+        fixed = TRUE
+    )
+    # Control: a fitted object draws the gene
+    expect_s3_class(
+        plotTrend(splat_fitted("default"), gene, significant = FALSE),
+        "ggplot"
+    )
+})
+
 test_that("a choice argument takes one of its values, once", {
     two <- function(x) c(x, x)
     ob <- splat_clustered()
