@@ -35,6 +35,15 @@
   [`sc.set.poly()`](https://spriyansh.github.io/scMaSigPro/reference/sc.set.poly.md)
   chooses the reference. The paths were listed in the order of the
   cells.
+- The `show()` method lists the paths in the order of the bins, whose
+  first path is the default reference of
+  [`sc.set.poly()`](https://spriyansh.github.io/scMaSigPro/reference/sc.set.poly.md),
+  and before binning in the order
+  [`sc.squeeze()`](https://spriyansh.github.io/scMaSigPro/reference/sc.squeeze.md)
+  bins them; the numbers of bins and the mean bin sizes of the paths
+  follow the same order. It listed the paths in the order of the cells,
+  and the numbers of bins and the mean bin sizes in the order of the
+  session’s collation.
 - [`sc.cluster.trend()`](https://spriyansh.github.io/scMaSigPro/reference/sc.cluster.trend.md)
   stops with a clear message when `k` is not a single whole number of at
   least 1, unless `"Mclust"` chooses the number of clusters
@@ -60,6 +69,9 @@
   the paths whose bins it leaves out because they are named in none of
   the three, such as a linked path left out of `end_node_list`; they
   were left out without a message.
+- `sc.restruct(verbose = TRUE)` also names the link paths whose bins it
+  leaves out because none of the paths they link is an end path. Their
+  bins were left out without being named.
 - [`plotDiagnostics()`](https://spriyansh.github.io/scMaSigPro/reference/plotDiagnostics.md)
   fits its models on the design columns named by position, as
   [`sc.p.vector()`](https://spriyansh.github.io/scMaSigPro/reference/sc.p.vector.md)
@@ -89,6 +101,16 @@
   earlier version after a step was run again can hold, and names the
   step to run again. It cannot find every such result; its help page
   says which it finds.
+- [`updateObject()`](https://rdrr.io/pkg/BiocGenerics/man/updateObject.html)
+  also warns when the tests of an object fitted with an offset used
+  another offset than the one
+  [`sc.p.vector()`](https://spriyansh.github.io/scMaSigPro/reference/sc.p.vector.md)
+  computes from the pseudo-bulk counts of the object, as after
+  [`pb_counts()`](https://spriyansh.github.io/scMaSigPro/reference/pb_counts.md)
+  was run again by a version that kept the tests; it names
+  [`sc.p.vector()`](https://spriyansh.github.io/scMaSigPro/reference/sc.p.vector.md)
+  as the step to run again. Objects saved with the `log_offset`
+  parameter, whose offsets followed another rule, are not compared.
 - [`plotTrend()`](https://spriyansh.github.io/scMaSigPro/reference/plotTrend.md),
   [`plotDiagnostics()`](https://spriyansh.github.io/scMaSigPro/reference/plotDiagnostics.md),
   [`plotIntersect()`](https://spriyansh.github.io/scMaSigPro/reference/plotIntersect.md)
@@ -107,6 +129,63 @@
   also after a step run again had emptied the gene lists, and
   [`plotDiagnostics()`](https://spriyansh.github.io/scMaSigPro/reference/plotDiagnostics.md)
   asked to run the workflow.
+- Functions that need the result of an earlier step stop with a message
+  that says what is missing and names the step to run: the readers of
+  the selected models
+  ([`showSol()`](https://spriyansh.github.io/scMaSigPro/reference/showSol.md),
+  [`showCoeff()`](https://spriyansh.github.io/scMaSigPro/reference/showSol.md),
+  [`showTS()`](https://spriyansh.github.io/scMaSigPro/reference/showSol.md),
+  [`showGroupCoeff()`](https://spriyansh.github.io/scMaSigPro/reference/showSol.md),
+  [`showInflu()`](https://spriyansh.github.io/scMaSigPro/reference/showSol.md),
+  [`showSigProf()`](https://spriyansh.github.io/scMaSigPro/reference/showSol.md),
+  and through them
+  [`sc.filter()`](https://spriyansh.github.io/scMaSigPro/reference/sc.filter.md),
+  [`queryCoeff()`](https://spriyansh.github.io/scMaSigPro/reference/queryCoeff.md)
+  and `plotTrend(significant = FALSE)`) name
+  [`sc.t.fit()`](https://spriyansh.github.io/scMaSigPro/reference/sc.t.fit.md);
+  [`sc.p.vector()`](https://spriyansh.github.io/scMaSigPro/reference/sc.p.vector.md),
+  [`queryCoeff()`](https://spriyansh.github.io/scMaSigPro/reference/queryCoeff.md)
+  and
+  [`showPoly()`](https://spriyansh.github.io/scMaSigPro/reference/showParams.md)
+  without a design name
+  [`sc.set.poly()`](https://spriyansh.github.io/scMaSigPro/reference/sc.set.poly.md);
+  [`sc.set.poly()`](https://spriyansh.github.io/scMaSigPro/reference/sc.set.poly.md),
+  [`pb_counts()`](https://spriyansh.github.io/scMaSigPro/reference/pb_counts.md),
+  [`sc.restruct()`](https://spriyansh.github.io/scMaSigPro/reference/sc.restruct.md)
+  and
+  [`plotBinTile()`](https://spriyansh.github.io/scMaSigPro/reference/plotBinTile.md)
+  without bins name
+  [`sc.squeeze()`](https://spriyansh.github.io/scMaSigPro/reference/sc.squeeze.md);
+  [`sc.t.fit()`](https://spriyansh.github.io/scMaSigPro/reference/sc.t.fit.md)
+  without non-flat genes names
+  [`sc.p.vector()`](https://spriyansh.github.io/scMaSigPro/reference/sc.p.vector.md);
+  and
+  [`eDense()`](https://spriyansh.github.io/scMaSigPro/reference/eDense.md)
+  after `cDense<-` removed the counts names
+  [`pb_counts()`](https://spriyansh.github.io/scMaSigPro/reference/pb_counts.md).
+  They said, for example, “‘significance_matrix’ is not computed yet” or
+  “No assays found in the object.”, or named a missing column, and
+  [`showPoly()`](https://spriyansh.github.io/scMaSigPro/reference/showParams.md)
+  returned an incomplete formula, `"beta0 + "`, before
+  [`sc.set.poly()`](https://spriyansh.github.io/scMaSigPro/reference/sc.set.poly.md).
+- [`plotTrend()`](https://spriyansh.github.io/scMaSigPro/reference/plotTrend.md)
+  checks the bins, their counts and the selected models before the gene,
+  and names the step to run when one is missing. On an object without
+  bins it said that the gene did not exist, and without selected models
+  it asked for
+  [`sc.filter()`](https://spriyansh.github.io/scMaSigPro/reference/sc.filter.md)
+  instead of
+  [`sc.t.fit()`](https://spriyansh.github.io/scMaSigPro/reference/sc.t.fit.md).
+  A gene that the object does not hold gets the message “‘’ is not a
+  gene of the object.”
+- [`plotTrend()`](https://spriyansh.github.io/scMaSigPro/reference/plotTrend.md)
+  on a gene that is not in the gene lists of
+  [`sc.filter()`](https://spriyansh.github.io/scMaSigPro/reference/sc.filter.md)
+  says so, and that `significant = FALSE` plots it anyway. It said that
+  the gene had not passed the R2 threshold and asked for a lower `rsq`,
+  though the lists also depend on the p-values, `vars` and `intercept`
+  of
+  [`sc.filter()`](https://spriyansh.github.io/scMaSigPro/reference/sc.filter.md).
 - [`plotTrend()`](https://spriyansh.github.io/scMaSigPro/reference/plotTrend.md)
   and
   [`plotDiagnostics()`](https://spriyansh.github.io/scMaSigPro/reference/plotDiagnostics.md)

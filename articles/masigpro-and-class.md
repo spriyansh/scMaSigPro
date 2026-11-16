@@ -42,13 +42,15 @@ vignette; printing it summarises every step that has run:
 ``` r
 
 library(scMaSigPro)
+#> Warning: replacing previous import 'S4Arrays::makeNindexFromArrayViewport' by
+#> 'DelayedArray::makeNindexFromArrayViewport' when loading 'SummarizedExperiment'
 data("scmp.ob", package = "scMaSigPro")
 scmp.ob
 #> Class: ScMaSigProClass
 #> nCells: 200
 #> nFeatures: 100
 #> Pseudotime Range: 1 100
-#> Branching Paths: Path2, Path1
+#> Branching Paths: Path1, Path2
 #> Binned Pseudotime: 1-8(Range), 4.5(Mean), 
 #> Number of bins-> Path1: 8 Path2: 8
 #> Average bin Size-> Path1: 12 Path2: 13
@@ -478,11 +480,11 @@ vignette describes these settings.
 sessionInfo()
 #> R version 4.6.2 (2026-10-29)
 #> Platform: x86_64-pc-linux-gnu
-#> Running under: Ubuntu 24.04.5 LTS
+#> Running under: Ubuntu 26.04.1 LTS
 #> 
 #> Matrix products: default
 #> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
-#> LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0
+#> LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.32.so;  LAPACK version 3.12.0
 #> 
 #> locale:
 #>  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
@@ -514,9 +516,9 @@ sessionInfo()
 #> [23] XVector_0.52.0              Biobase_2.72.0             
 #> [25] withr_3.0.3                 DelayedArray_0.38.2        
 #> [27] cachem_1.1.0                yaml_2.3.12                
-#> [29] otel_0.2.0                  S4Arrays_1.12.1            
+#> [29] otel_0.3.0                  S4Arrays_1.12.1            
 #> [31] tools_4.6.2                 parallel_4.6.2             
-#> [33] BiocParallel_1.46.0         ggplot2_4.0.3              
+#> [33] BiocParallel_1.46.0         ggplot2_4.0.4              
 #> [35] SummarizedExperiment_1.42.0 BiocGenerics_0.58.1        
 #> [37] vctrs_0.7.3                 R6_2.6.1                   
 #> [39] matrixStats_1.5.0           stats4_4.6.2               

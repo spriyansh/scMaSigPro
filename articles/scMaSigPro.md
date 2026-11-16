@@ -91,6 +91,8 @@ path, which serves as its pseudotime, and the label of its path.
 ``` r
 
 library(scMaSigPro)
+#> Warning: replacing previous import 'S4Arrays::makeNindexFromArrayViewport' by
+#> 'DelayedArray::makeNindexFromArrayViewport' when loading 'SummarizedExperiment'
 library(SingleCellExperiment)
 library(ggplot2)
 
@@ -166,7 +168,7 @@ scmp_ob
 #> nCells: 200
 #> nFeatures: 100
 #> Pseudotime Range: 1 100
-#> Branching Paths: Path2, Path1
+#> Branching Paths: Path1, Path2
 ```
 
 ### Bin the cells along pseudotime
@@ -455,11 +457,11 @@ identical(scmpResults(scmp.ob), scmpResults(scmp_ob))
 sessionInfo()
 #> R version 4.6.2 (2026-10-29)
 #> Platform: x86_64-pc-linux-gnu
-#> Running under: Ubuntu 24.04.5 LTS
+#> Running under: Ubuntu 26.04.1 LTS
 #> 
 #> Matrix products: default
 #> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
-#> LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0
+#> LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.32.so;  LAPACK version 3.12.0
 #> 
 #> locale:
 #>  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
@@ -475,7 +477,7 @@ sessionInfo()
 #> [8] base     
 #> 
 #> other attached packages:
-#>  [1] ggplot2_4.0.3               SingleCellExperiment_1.34.0
+#>  [1] ggplot2_4.0.4               SingleCellExperiment_1.34.0
 #>  [3] SummarizedExperiment_1.42.0 Biobase_2.72.0             
 #>  [5] GenomicRanges_1.64.0        Seqinfo_1.2.0              
 #>  [7] IRanges_2.46.0              S4Vectors_0.50.3           
@@ -498,7 +500,7 @@ sessionInfo()
 #> [34] grid_4.6.2          cli_3.6.6           SparseArray_1.12.3 
 #> [37] patchwork_1.3.2     S4Arrays_1.12.1     withr_3.0.3        
 #> [40] scales_1.4.0        rmarkdown_2.32      XVector_0.52.0     
-#> [43] otel_0.2.0          gridExtra_2.3.1     ragg_1.5.2         
+#> [43] otel_0.3.0          gridExtra_2.3.1     ragg_1.5.2         
 #> [46] evaluate_1.0.5      knitr_1.52          UpSetR_1.4.1       
 #> [49] viridisLite_0.4.3   mgcv_1.9-4          rlang_1.3.0        
 #> [52] Rcpp_1.1.2          glue_1.8.1          BiocManager_1.30.27

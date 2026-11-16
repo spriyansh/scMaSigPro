@@ -128,7 +128,7 @@ scmp.ob
 #> nCells: 200
 #> nFeatures: 100
 #> Pseudotime Range: 1 100
-#> Branching Paths: Path2, Path1
+#> Branching Paths: Path1, Path2
 #> Binned Pseudotime: 1-8(Range), 4.5(Mean), 
 #> Number of bins-> Path1: 8 Path2: 8
 #> Average bin Size-> Path1: 12 Path2: 13

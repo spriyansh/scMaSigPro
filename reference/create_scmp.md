@@ -112,5 +112,5 @@ scmp
 #> nCells: 200
 #> nFeatures: 100
 #> Pseudotime Range: 1 100
-#> Branching Paths: Path2, Path1
+#> Branching Paths: Path1, Path2
 ```

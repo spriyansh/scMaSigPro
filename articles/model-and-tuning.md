@@ -22,6 +22,8 @@ changes along that path.
 ``` r
 
 library(scMaSigPro)
+#> Warning: replacing previous import 'S4Arrays::makeNindexFromArrayViewport' by
+#> 'DelayedArray::makeNindexFromArrayViewport' when loading 'SummarizedExperiment'
 library(SingleCellExperiment)
 library(ggplot2)
 
@@ -570,11 +572,11 @@ is a way to compare settings for a study.
 sessionInfo()
 #> R version 4.6.2 (2026-10-29)
 #> Platform: x86_64-pc-linux-gnu
-#> Running under: Ubuntu 24.04.5 LTS
+#> Running under: Ubuntu 26.04.1 LTS
 #> 
 #> Matrix products: default
 #> BLAS:   /usr/lib/x86_64-linux-gnu/openblas-pthread/libblas.so.3 
-#> LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.26.so;  LAPACK version 3.12.0
+#> LAPACK: /usr/lib/x86_64-linux-gnu/openblas-pthread/libopenblasp-r0.3.32.so;  LAPACK version 3.12.0
 #> 
 #> locale:
 #>  [1] LC_CTYPE=C.UTF-8       LC_NUMERIC=C           LC_TIME=C.UTF-8       
@@ -590,7 +592,7 @@ sessionInfo()
 #> [8] base     
 #> 
 #> other attached packages:
-#>  [1] ggplot2_4.0.3               SingleCellExperiment_1.34.0
+#>  [1] ggplot2_4.0.4               SingleCellExperiment_1.34.0
 #>  [3] SummarizedExperiment_1.42.0 Biobase_2.72.0             
 #>  [5] GenomicRanges_1.64.0        Seqinfo_1.2.0              
 #>  [7] IRanges_2.46.0              S4Vectors_0.50.3           
@@ -607,7 +609,7 @@ sessionInfo()
 #> [16] textshaping_1.0.5   jquerylib_0.1.4     abind_1.4-8        
 #> [19] cli_3.6.6           rlang_1.3.0         XVector_0.52.0     
 #> [22] splines_4.6.2       withr_3.0.3         cachem_1.1.0       
-#> [25] DelayedArray_0.38.2 yaml_2.3.12         otel_0.2.0         
+#> [25] DelayedArray_0.38.2 yaml_2.3.12         otel_0.3.0         
 #> [28] S4Arrays_1.12.1     tools_4.6.2         parallel_4.6.2     
 #> [31] BiocParallel_1.46.0 vctrs_0.7.3         R6_2.6.1           
 #> [34] lifecycle_1.0.5     fs_2.1.0            MASS_7.3-66        
