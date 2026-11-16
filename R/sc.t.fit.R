@@ -82,8 +82,8 @@ sc.t.fit <- function(scmpObj,
     # The genes come from sc.p.vector() and the counts from pb_counts()
     .check(length(scmpObj@Profile@non_flat) > 0,
         msg = paste(
-            "No gene with a non-flat profile found. Please run 'sc.p.vector()'",
-            "first; if it found none, try changing its parameters."
+            "The object has no non-flat genes: run sc.p.vector() first; if it",
+            "found none, try changing its parameters."
         )
     )
     .check_dense_counts(scmpObj,

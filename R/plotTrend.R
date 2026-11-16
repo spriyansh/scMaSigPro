@@ -178,6 +178,12 @@ plotTrend <- function(scmpObj,
 # cluster.
 .trendData <- function(scmpObj, feature_id, smoothness, logs, logType,
                        pseudoCount, significant, summary_mode) {
+    # The bins, their counts and the selected models come before the gene:
+    # without them no gene can be plotted
+    .check_bins(scmpObj)
+    .check_dense_counts(scmpObj)
+    betas.table <- showCoeff(scmpObj)
+
     # Offset
     offset_vector <- scmpObj@Design@offset
 
@@ -185,14 +191,11 @@ plotTrend <- function(scmpObj,
     alloc.frame <- as.data.frame(scmpObj@Design@assignment_matrix)
 
     # Extract the bulk counts
-    .check_dense_counts(scmpObj)
     bulk.counts <- assay(scmpObj@Dense, "bulk.counts", withDimnames = FALSE)
 
     # Check
     .check(all(feature_id %in% rownames(bulk.counts)),
-        msg = paste0(
-            "'", feature_id, "' doesn't exist please select another one."
-        )
+        msg = paste0("'", feature_id, "' is not a gene of the object.")
     )
 
     if (significant) {
@@ -202,12 +205,12 @@ plotTrend <- function(scmpObj,
                 "or set 'significant' to FALSE."
             )
         )
+        # The lists depend on every setting of sc.filter(), not only rsq
         .check(
             any(feature_id %in% unique(unlist(scmpObj@Significant@genes))),
-            msg = paste(
-                "Feature Id didn't pass the R2 threshold, please re-run",
-                "sc.filter() with a lower 'rsq' value or set 'significant' to",
-                "'FALSE'"
+            msg = paste0(
+                "'", feature_id, "' is not in the gene lists of sc.filter(): ",
+                "set 'significant' to FALSE to plot it anyway."
             )
         )
     }
@@ -219,7 +222,6 @@ plotTrend <- function(scmpObj,
     groups.vector <- scmpObj@Design@groups.vector
 
     # Extract the beta
-    betas.table <- showCoeff(scmpObj)
     betas <- betas.table[rownames(betas.table) %in% feature_id, , drop = FALSE]
 
     # Set Data

@@ -181,7 +181,13 @@ test_that("cDense<- with another number of bins drops the counts", {
     )
     expect_valid_scmp(ob)
     expect_identical(cDense(ob), bins)
-    expect_error(eDense(ob), "No assays found in the object.", fixed = TRUE)
+    expect_error(eDense(ob),
+        paste(
+            "The 'Dense' slot has no 'bulk.counts' assay: run pb_counts()",
+            "after changing the bins with cDense<-."
+        ),
+        fixed = TRUE
+    )
     ob <- pb_counts(ob)
     expect_identical(eDense(ob), eDense(splat_binned())[, rownames(bins)])
 })

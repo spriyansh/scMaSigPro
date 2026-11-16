@@ -592,6 +592,9 @@ pb_counts <- function(scmpObj,
     # Get assay
     counts <- assay(scmpObj@Sparse, assay_name, withDimnames = FALSE)
 
+    # The bins of sc.squeeze() or of cDense<-
+    .check_bins(scmpObj)
+
     # Get Pseudobulk Profile
     bin_data <- colData(scmpObj@Dense)
     pseudo_bulk_profile <- as.data.frame(bin_data)

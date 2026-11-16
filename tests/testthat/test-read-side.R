@@ -59,7 +59,7 @@ test_that("the assay setters take any matrix and a default name", {
 
 test_that("showInflu() is empty when no gene is influential", {
     expect_error(showInflu(splat_design(2)),
-        "'influential' is not computed yet",
+        "The object has no selected models: run sc.t.fit() first.",
         fixed = TRUE
     )
     # Without the one influential gene of this fit, no gene is influential
@@ -85,10 +85,11 @@ test_that("plotDiagnostics() loads patchwork itself", {
 
 test_that("printing a restructured object lists its bin paths", {
     out <- capture.output(print(multi_restruct()))
-    expect_true("Branching Paths: Y_15, Y_52, Y_18" %in% out)
-    # Control: before binning, the paths of the cells
+    expect_true("Branching Paths: Y_15, Y_18, Y_52" %in% out)
+    # Control: before binning, the paths of the cells, in the order
+    # sc.squeeze() bins them
     out <- capture.output(print(splat_scmp()))
-    expect_true("Branching Paths: Path2, Path1" %in% out)
+    expect_true("Branching Paths: Path1, Path2" %in% out)
 })
 
 test_that("plotTrend() uses every power of the degree", {

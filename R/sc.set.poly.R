@@ -59,6 +59,9 @@ sc.set.poly <- function(scmpObj,
         .check_strings(reference = reference)
     }
 
+    # The bins of sc.squeeze()
+    .check_bins(scmpObj)
+
     # Extract cell metadata
     comp.cell.metadata <- as.data.frame(colData(scmpObj@Dense))
 

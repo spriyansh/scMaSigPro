@@ -93,19 +93,62 @@ test_that("the fits need counts for the bins of the design", {
 })
 
 test_that("the steps say which earlier step is missing", {
-    expect_error(sc.p.vector(splat_binned(), verbose = FALSE),
-        "No polynomial design found. Please run 'sc.set.poly()', first.",
+    # Not binned
+    created <- splat_scmp()
+    bins_msg <- "The object has no bins: run sc.squeeze() first."
+    not_binned <- list(
+        pb_counts = function() pb_counts(created),
+        sc.restruct = function() {
+            sc.restruct(created,
+                end_node_list = list("Path1"), root_node = "Path2",
+                link_node_list = list(), verbose = FALSE
+            )
+        },
+        sc.set.poly = function() sc.set.poly(created),
+        plotBinTile = function() plotBinTile(created)
+    )
+    for (n in names(not_binned)) {
+        expect_error(not_binned[[n]](), bins_msg, fixed = TRUE, info = n)
+    }
+    # Binned, without a design
+    binned <- splat_binned()
+    design_msg <- "The object has no design: run sc.set.poly() first."
+    expect_error(sc.p.vector(binned, verbose = FALSE), design_msg,
         fixed = TRUE
     )
-    msg <- "No gene with a non-flat profile found. Please run 'sc.p.vector()'"
-    expect_error(sc.t.fit(splat_design(2), verbose = FALSE), msg,
+    expect_error(showPoly(binned), design_msg, fixed = TRUE)
+    expect_error(queryCoeff(binned, verbose = FALSE), design_msg,
         fixed = TRUE
     )
+    # With a design, without tests or selected models
+    designed <- splat_design(2)
+    msg <- paste(
+        "The object has no non-flat genes: run sc.p.vector() first; if it",
+        "found none, try changing its parameters."
+    )
+    expect_error(sc.t.fit(designed, verbose = FALSE), msg, fixed = TRUE)
     # sc.p.vector() that selected no gene
     none <- suppressMessages(
-        sc.p.vector(splat_design(2), p_value = 1e-300, verbose = FALSE)
+        sc.p.vector(designed, p_value = 1e-300, verbose = FALSE)
     )
     expect_error(sc.t.fit(none, verbose = FALSE), msg, fixed = TRUE)
+    models_msg <- "The object has no selected models: run sc.t.fit() first."
+    no_models <- list(
+        showSol = function() showSol(designed),
+        showCoeff = function() showCoeff(designed),
+        showTS = function() showTS(designed),
+        showGroupCoeff = function() showGroupCoeff(designed),
+        showInflu = function() showInflu(designed),
+        showSigProf = function() showSigProf(designed),
+        sc.filter = function() sc.filter(designed),
+        queryCoeff = function() queryCoeff(designed, verbose = FALSE),
+        plotTrend = function() {
+            plotTrend(designed, splat_sig_gene(), significant = FALSE)
+        }
+    )
+    for (n in names(no_models)) {
+        expect_error(no_models[[n]](), models_msg, fixed = TRUE, info = n)
+    }
     expect_error(sc.cluster.trend(splat_fitted("default")),
         "The object has no significant genes: run sc.filter() first.",
         fixed = TRUE
@@ -147,6 +190,53 @@ test_that("the readers of the gene lists say which step is missing", {
     expect_s3_class(
         plotTrend(no_lists$fitted, gene, significant = FALSE), "ggplot"
     )
+})
+
+test_that("plotTrend() checks the bins and the models before the gene", {
+    gene <- splat_sig_gene()
+    for (significant in c(TRUE, FALSE)) {
+        expect_error(plotTrend(splat_scmp(), gene, significant = significant),
+            "The object has no bins: run sc.squeeze() first.",
+            fixed = TRUE, info = significant
+        )
+        for (ob in list(splat_binned(), splat_design(2))) {
+            expect_error(plotTrend(ob, gene, significant = significant),
+                "The object has no selected models: run sc.t.fit() first.",
+                fixed = TRUE, info = significant
+            )
+        }
+    }
+    # Bins without counts, after cDense<- changed their number
+    rebinned <- splat_binned()
+    suppressMessages(cDense(rebinned) <- cDense(rebinned)[-1, ])
+    expect_error(plotTrend(rebinned, gene),
+        "The 'Dense' slot has no 'bulk.counts' assay: run pb_counts()",
+        fixed = TRUE
+    )
+    # A gene that the object does not hold
+    expect_error(plotTrend(splat_fitted("default"), "NotAGene"),
+        "'NotAGene' is not a gene of the object.",
+        fixed = TRUE
+    )
+    # Control: a fitted object draws the gene
+    expect_s3_class(
+        plotTrend(splat_fitted("default"), gene, significant = FALSE),
+        "ggplot"
+    )
+})
+
+test_that("plotTrend() says that a gene is not in the gene lists", {
+    ob <- splat_filtered()
+    gene <- splat_nonsig_gene()
+    expect_error(plotTrend(ob, gene),
+        paste0(
+            "'", gene, "' is not in the gene lists of sc.filter(): set ",
+            "'significant' to FALSE to plot it anyway."
+        ),
+        fixed = TRUE
+    )
+    # As the message says, significant = FALSE plots it
+    expect_s3_class(plotTrend(ob, gene, significant = FALSE), "ggplot")
 })
 
 test_that("a choice argument takes one of its values, once", {
@@ -795,4 +885,29 @@ test_that("sc.restruct() takes each path once and names those left out", {
     # Control: every path named, no such message
     msgs <- capture_messages(restruct(verbose = TRUE))
     expect_false(any(startsWith(msgs, left)))
+})
+
+test_that("sc.restruct() names a link path that links no end path", {
+    ob <- multi_binned()
+    link <- "Y_18_links_Y_15"
+    msg <- paste0(
+        "The bins of link paths that link none of the end paths are left ",
+        "out: ", link, "\n"
+    )
+    full <- cDense(multi_restruct())
+    path_col <- ob@Parameters@path_col
+    restruct <- function(ends, verbose = TRUE) {
+        sc.restruct(ob,
+            end_node_list = ends, root_node = "Root",
+            link_node_list = list(link), verbose = verbose
+        )
+    }
+    # Both linked paths left out: the bins of the link go nowhere
+    msgs <- capture_messages(out <- restruct(list("Y_52")))
+    expect_true(msg %in% msgs)
+    expect_identical(cDense(out), full[full[[path_col]] == "Y_52", ])
+    expect_silent(restruct(list("Y_52"), verbose = FALSE))
+    # Control: one linked path left out, the link goes to the other one
+    msgs <- capture_messages(restruct(list("Y_15", "Y_52")))
+    expect_false(msg %in% msgs)
 })

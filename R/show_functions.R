@@ -20,9 +20,7 @@ showCoeff <- function(scmpObj, includeInflu = TRUE) {
     .check_scmp(scmpObj)
 
     # Check if the sol exist
-    .check(!all(dim(scmpObj@Estimate@coefficient_matrix) == c(0, 0)),
-        msg = "'coefficient_matrix' is not computed yet"
-    )
+    .check_models(scmpObj@Estimate@coefficient_matrix)
 
     # Extract
     coefficients <- as.data.frame(scmpObj@Estimate@coefficient_matrix)
@@ -43,9 +41,7 @@ showInflu <- function(scmpObj) {
     .check_scmp(scmpObj)
 
     # After sc.t.fit(), a fit without influential genes has a 0 x 0 matrix
-    .check(!all(dim(scmpObj@Estimate@significance_matrix) == c(0, 0)),
-        msg = "'influential' is not computed yet"
-    )
+    .check_models(scmpObj@Estimate@significance_matrix)
 
     # Extract
     influ <- scmpObj@Estimate@influential
@@ -61,9 +57,7 @@ showTS <- function(scmpObj, includeInflu = TRUE) {
     .check_scmp(scmpObj)
 
     # Check if the sol exist
-    .check(!all(dim(scmpObj@Estimate@t_score_matrix) == c(0, 0)),
-        msg = "tscore is not computed yet"
-    )
+    .check_models(scmpObj@Estimate@t_score_matrix)
 
     # Extract
     tscore <- scmpObj@Estimate@t_score_matrix
@@ -119,9 +113,7 @@ showSol <- function(scmpObj, includeInflu = TRUE) {
     .check_scmp(scmpObj)
 
     # Check if the sol exist
-    .check(!all(dim(scmpObj@Estimate@significance_matrix) == c(0, 0)),
-        msg = "'significance_matrix' is not computed yet"
-    )
+    .check_models(scmpObj@Estimate@significance_matrix)
 
     # Extract
     sol <- as.data.frame(scmpObj@Estimate@significance_matrix)
@@ -142,9 +134,7 @@ showSigProf <- function(scmpObj, includeInflu = FALSE) {
     .check_scmp(scmpObj)
 
     # Check if the sol exist
-    .check(!all(dim(scmpObj@Estimate@significance_matrix) == c(0, 0)),
-        msg = "Sol is not computed yet"
-    )
+    .check_models(scmpObj@Estimate@significance_matrix)
 
     # Extract
     sol <- as.data.frame(showSol(scmpObj, includeInflu = includeInflu))
@@ -168,13 +158,8 @@ showPoly <- function(scmpObj) {
     # Check Object Validity
     .check_scmp(scmpObj)
 
-    # Check if the sol exist
-    .check(
-        all(!is.na(colnames(scmpObj@Design@predictor_matrix)) | length(
-            colnames(scmpObj@Design@predictor_matrix) > 1
-        )),
-        msg = "Please setup the model first, using 'sc.set.poly()'"
-    )
+    # The design of sc.set.poly()
+    .check_design(scmpObj)
 
     # Extract columns
     df.col <- colnames(scmpObj@Design@predictor_matrix)
@@ -272,9 +257,7 @@ showGroupCoeff <- function(scmpObj, includeInflu = TRUE) {
     .check_scmp(scmpObj)
 
     # Check if the sol exist
-    .check(!all(dim(scmpObj@Estimate@path_coefficient_matrix) == c(0, 0)),
-        msg = "path_coefficient_matrix is not computed yet"
-    )
+    .check_models(scmpObj@Estimate@path_coefficient_matrix)
 
     # Extract
     grpCoeff <- as.data.frame(scmpObj@Estimate@path_coefficient_matrix)
@@ -308,13 +291,16 @@ setMethod("show", "ScMaSigPro", function(object) {
     cat("Pseudotime Range:", paste(round(
         range(SingleCellExperiment::colData(object@Sparse)[[object@Parameters@ptime_col]]), 3
     )))
-    # Once binned, the paths of the bins (sc.restruct() folds the root and
-    # link paths into the end paths), in the order of the cells
+    # The paths of the bins (sc.restruct() folds the root and link paths
+    # into the end paths) in their order, whose first path is the default
+    # reference of sc.set.poly(), and before binning the paths of the cells
+    # in the order sc.squeeze() bins them
     path_col <- object@Parameters@path_col
-    paths <- unique(SingleCellExperiment::colData(object@Sparse)[[path_col]])
-    bin_paths <- unique(cDense(object)[[path_col]])
-    if (length(bin_paths) > 0) {
-        paths <- c(intersect(paths, bin_paths), setdiff(bin_paths, paths))
+    paths <- as.character(unique(cDense(object)[[path_col]]))
+    if (length(paths) == 0L && ncol(object@Sparse) > 0L) {
+        paths <- .path_order(
+            SingleCellExperiment::colData(object@Sparse)[[path_col]]
+        )
     }
     cat(paste("\nBranching Paths:", paste(paths, collapse = ", ")))
 
@@ -336,18 +322,18 @@ setMethod("show", "ScMaSigPro", function(object) {
             ), "(Mean), "
         ))
 
-        # Extract info
+        # Extract info, in the order of the paths
         per_path_num_bin <- extract_info(compressed.cell.metadata,
             return_type = "num_bins",
             bin_size_col = object@Parameters@bin_size_col,
             object@Parameters@path_col
-        )
+        )[paths]
         per_path_bin_size <- round(extract_info(
             compressed.cell.metadata,
             return_type = "avg_bin_size",
             bin_size_col = object@Parameters@bin_size_col,
             object@Parameters@path_col
-        ))
+        ))[paths]
 
         # Paste
         cat("\nNumber of bins->", paste(names(per_path_num_bin),

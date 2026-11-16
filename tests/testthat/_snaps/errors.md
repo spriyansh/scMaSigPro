@@ -156,7 +156,7 @@
       eval(cases[[nm]])
     Condition
       Error:
-      ! 'significance_matrix' is not computed yet
+      ! The object has no selected models: run sc.t.fit() first.
 
 # showCoeff errors before sc.t.fit
 
@@ -164,7 +164,7 @@
       eval(cases[[nm]])
     Condition
       Error:
-      ! 'coefficient_matrix' is not computed yet
+      ! The object has no selected models: run sc.t.fit() first.
 
 # eSparse rejects an unknown assay
 
@@ -188,7 +188,7 @@
       eval(cases[[nm]])
     Condition
       Error:
-      ! 'NotAGene' doesn't exist please select another one.
+      ! 'NotAGene' is not a gene of the object.
 
 # plotTrend refuses a non-significant feature by default
 
@@ -196,7 +196,7 @@
       eval(cases[[nm]])
     Condition
       Error:
-      ! Feature Id didn't pass the R2 threshold, please re-run sc.filter() with a lower 'rsq' value or set 'significant' to 'FALSE'
+      ! 'Gene1' is not in the gene lists of sc.filter(): set 'significant' to FALSE to plot it anyway.
 
 # plotTrend needs at least one layer
 
@@ -212,7 +212,7 @@
       eval(cases[[nm]])
     Condition
       Error:
-      ! No binning information found. Please run 'sc.squeeze()', first.
+      ! The object has no bins: run sc.squeeze() first.
 
 # plotIntersect errors before sc.filter
 
@@ -276,5 +276,5 @@
       eval(cases[[nm]])
     Condition
       Error:
-      ! No binning information found. Please run 'sc.squeeze()', first.
+      ! The object has no bins: run sc.squeeze() first.
 

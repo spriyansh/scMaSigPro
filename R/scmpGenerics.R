@@ -250,7 +250,8 @@ setMethod("eDense", signature(object = "ScMaSigPro"), function(object, i = "bulk
         if (length(assays) > 0) {
             return(as.matrix(assay(object@Dense, 1L, withDimnames = FALSE)))
         }
-        stop("No assays found in the object.")
+        # None, after cDense<- changed the number of bins
+        .check_dense_counts(object)
     }
     stop("Assay '", i, "' not found in the object.")
 })

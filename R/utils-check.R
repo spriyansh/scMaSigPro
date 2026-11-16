@@ -88,6 +88,28 @@
     }
 }
 
+# Stop unless an earlier step has filled what a function reads, naming that
+# step: the bins of sc.squeeze() (or sc.restruct()), the design of
+# sc.set.poly() and the selected models of sc.t.fit(). `m` is the matrix of
+# the Estimate slot that a reader returns, 0 x 0 until sc.t.fit() has run.
+.check_bins <- function(scmpObj) {
+    .check(ncol(scmpObj@Dense) > 0L,
+        msg = "The object has no bins: run sc.squeeze() first."
+    )
+}
+
+.check_design <- function(scmpObj) {
+    .check(ncol(scmpObj@Design@predictor_matrix) > 0L,
+        msg = "The object has no design: run sc.set.poly() first."
+    )
+}
+
+.check_models <- function(m) {
+    .check(!all(dim(m) == c(0, 0)),
+        msg = "The object has no selected models: run sc.t.fit() first."
+    )
+}
+
 #' Check the arguments that take a choice or a name
 #'
 #' `.check_choice()` returns `x` if it is one of `choices`, given once, and

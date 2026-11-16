@@ -168,9 +168,7 @@ sc.p.vector <- function(scmpObj, p_value = 0.05, mt_correction = "BH",
     .check_scmp(scmpObj)
 
     # The design comes from sc.set.poly() and the counts from pb_counts()
-    .check(ncol(scmpObj@Design@predictor_matrix) > 0,
-        msg = "No polynomial design found. Please run 'sc.set.poly()', first."
-    )
+    .check_design(scmpObj)
     .check_dense_counts(scmpObj,
         bins = rownames(scmpObj@Design@predictor_matrix)
     )

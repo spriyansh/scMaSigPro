@@ -123,7 +123,7 @@ test_that("sc.p.vector() records a run without genes", {
     )
     expect_identical(rerun@Profile, none@Profile)
     expect_error(sc.t.fit(rerun, verbose = FALSE),
-        "No gene with a non-flat profile found",
+        "The object has no non-flat genes: run sc.p.vector() first",
         fixed = TRUE
     )
 })

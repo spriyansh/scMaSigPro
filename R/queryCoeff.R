@@ -43,10 +43,8 @@ queryCoeff <- function(scmpObj,
                        verbose = TRUE) {
     # Check Validity of the object
     .check_scmp(scmpObj)
-    # Check for group_vector
-    .check(!isEmpty(scmpObj@Design@groups.vector),
-        msg = "'scmpObj@Design@groups.vector' is empty"
-    )
+    # The design of sc.set.poly()
+    .check_design(scmpObj)
 
     # Check for requested change
     if (!is.null(change)) {
